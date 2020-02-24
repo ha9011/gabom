@@ -10,6 +10,7 @@
 <a href="join">회원가입</a>
 <a href="myinfo">나의정보</a>
 
-<a href="myinfo">등록</a>
+<a href="houseRegister">집등록</a>
+<a href="foodshopRegister">음식점등록</a>
 </body>
 </html>
