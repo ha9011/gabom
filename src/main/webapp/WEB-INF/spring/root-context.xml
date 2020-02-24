@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+
+
+
+
+
+	<!-- 로그를 출력하기 해서 DriverSpy이용한 jdbc설정 : Connection 이 1개만 존재 -->
+	<!-- dataSource 이름 하에 db 연결할 수 있는 놈 만듬 -->
+	<!-- DB 설정해야함 -->
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="net.sf.log4jdbc.DriverSpy" />
+		<property name="url"
+			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE" />
+		<property name="username" value="" />
+		<property name="password" value="" />
+	</bean>
+
+
+	<!-- sqlSessionFactory::mybatis가 사용 -->
+	<!-- sqlSessionFactory임.. 공부할 필요가 있음 대충 위에 연결할 DB 아이디 비번이랑 mybatis 연결해해줌 -->
+	<!-- 여기서 중요한건, conf.xml 위치와 mapper할 친구 기재 -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation"
+			value="classpath:icia/project/gabom/dao/mybatis-conf.xml" />
+			
+		<property name="mapperLocations"
+			value="classpath:icia/project/gabom/dao/mapper/*.xml" />
+	</bean>
+
+
+
+	<!-- multipartResolver -->
+	<!-- 파일 업로드 할 때 설정임. 인코딩부터 용량,메모리차지 등등 설정 가능 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<property name="maxUploadSize" value="10000000"></property>  <!-- 10m -->
+		<property name="maxInMemorySize" value="10000000"></property> <!-- 10m -->
+	</bean>
+
+
+	<!--인터페이스를 검색하기위한 패키지 등록 -->
+	<!--인터페이스와 xml을 이용해서 DAO구현체를 만든다 -->
+	<!-- 인터페이스와 xml을 이용해서 DAO구현체를 만든다 -->
+	<mybatis-spring:scan
+		base-package="icia.project.gabom.dao" />
+
+
+
+
+	<!-- DAO 구현체 -->
+	<!-- DAO 일일이 지정해줘야한다는 규칙성이 있다. 하지만.... 위에걸로 한방에 범위 지정 가능 -->
+	<!-- <beans:bean id="mDao" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" /> <beans:property 
+		name="mapperInterface" value="com.board.icia.dao.IMemberDao" /> </beans:bean> -->
+
+
+
+</beans>
