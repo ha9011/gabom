@@ -2,15 +2,21 @@ package icia.project.gabom;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
 
 /**
  * Handles requests for the application home page.zzz
@@ -63,6 +69,9 @@ public class HomeController {
 		return mav;
 	}
 	
+	
+	
+	
 	@RequestMapping(value = "/foodshopRegister", method = RequestMethod.GET)
 	public ModelAndView foodshopRegister() {
 		System.out.println("foodshopRegister");
@@ -71,5 +80,20 @@ public class HomeController {
 		
 		return mav;
 	}
+	
+	
+	@PostMapping(value="/houseRegisterUpload" )
+	public String boardwrite(MultipartHttpServletRequest multi) { 
+	
+		System.out.println("title : " + multi.getParameter("b_title"));
+		System.out.println("filecheck : " + multi.getParameter("filecheck"));
+		List<MultipartFile> files = multi.getFiles("files");
+		System.out.println("files  : " + files.get(0).getOriginalFilename());
+		System.out.println("files  : " + files.get(1).getOriginalFilename());
+		
+		return new Gson().toJson(files);
+	}
+	
+	
 	
 }
