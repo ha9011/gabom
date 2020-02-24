@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Service //@Component
 public class MemberManagement {
 	
-	@Autowired
+	//@Autowired
 	//private IMemberDao mDao;  //Dao 
 	
 	private ModelAndView mav;
