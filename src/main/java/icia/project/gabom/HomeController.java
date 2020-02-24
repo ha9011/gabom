@@ -39,7 +39,7 @@ public class HomeController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
 		System.out.println("login");
-		return "home";
+		return "login/login";
 	}
 	
 	@RequestMapping(value = "/join", method = RequestMethod.GET)

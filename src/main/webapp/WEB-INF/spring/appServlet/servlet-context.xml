@@ -26,6 +26,7 @@
 		up static resources in the ${webappRoot}/resources directory -->
 		<!-- <default-servlet-handler/> -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<!-- <resources mapping="/loginimage/**" location="/loginimage/" /> -->
 
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
