@@ -13,8 +13,11 @@ body{overflow:scroll;}
 </style>
 </head>
 <body>
+
 <div id="house_form">
-<form action="houseRegisterUpload">
+
+<form action="houseRegisterUpload" method="post"
+		enctype="multipart/form-data">
 	<div >
 		<h3>숙소명</h3>
 		<input type="text" name="house_name">
@@ -24,11 +27,13 @@ body{overflow:scroll;}
 		<input type="file" name="house_mainImage">
 		<img alt="" src="">
 	</div>
+	
 	<div>
 		<h3>주소를 입력해주세요</h3>
 		<input type="text" name="house_address">
 		<div id="map"></div>
 	</div>
+	
 	<div>
 		<h3>숙소유형을 선택해주세요</h3>
 		<label><input type="radio" name="house_type" value="1"> 아파트</label>
@@ -51,15 +56,15 @@ body{overflow:scroll;}
 	</div>
 	<div>
 		<h3>방 개수를 입력해주세요</h3>
-		<input type="text" name="house_price">
+		<input type="text" name="house_rooms">
 	</div>
 	<div>
 		<h3>욕실 개수를 입력해주세요</h3>
-		<input type="text" name="house_price">
+		<input type="text" name="house_bathrooms">
 	</div>
 	<div>
 		<h3>침대 개수를 입력해주세요</h3>
-		<input type="text" name="house_price">
+		<input type="text" name="house_beds">
 	</div>
 	<div>
 		<h3>예약 가능 날짜를 선택해주세요</h3>
