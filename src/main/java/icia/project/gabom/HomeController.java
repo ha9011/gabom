@@ -64,9 +64,12 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/foodshopRegister", method = RequestMethod.GET)
-	public String foodshopRegister() {
+	public ModelAndView foodshopRegister() {
 		System.out.println("foodshopRegister");
-		return "home";
+		mav = new ModelAndView();
+		mav.setViewName("foodshopRegister");
+		
+		return mav;
 	}
 	
 }
