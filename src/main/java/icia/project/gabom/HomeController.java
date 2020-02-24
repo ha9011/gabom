@@ -36,4 +36,28 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login() {
+		System.out.println("login");
+		return "home";
+	}
+	
+	@RequestMapping(value = "/join", method = RequestMethod.GET)
+	public String join() {
+		System.out.println("join");
+		return "home";
+	}
+	
+	@RequestMapping(value = "/myinfo", method = RequestMethod.GET)
+	public String myinfo() {
+		System.out.println("myinfo");
+		return "home";
+	}
+	
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public String register() {
+		System.out.println("register");
+		return "home";
+	}
+	
 }
