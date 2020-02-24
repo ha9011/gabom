@@ -45,7 +45,9 @@ public class HomeController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
 		System.out.println("login");
-		return "home";
+		
+		
+		
 	}
 	
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
