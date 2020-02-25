@@ -47,7 +47,7 @@ public class HomeController {
 		System.out.println("login");
 		
 		
-		
+		return "login/login";
 	}
 	
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
@@ -94,6 +94,15 @@ public class HomeController {
 		System.out.println("files  : " + files.get(1).getOriginalFilename());
 		
 		return new Gson().toJson(files);
+	}
+	
+	@RequestMapping(value = "/adminmenu", method = RequestMethod.GET)
+	public ModelAndView adminmenu() {
+		System.out.println("adminmenu");
+		mav = new ModelAndView();
+		mav.setViewName("adminmenu");
+		
+		return mav;
 	}
 	
 	

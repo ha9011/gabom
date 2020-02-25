@@ -12,5 +12,7 @@
 
 <a href="houseRegister">집등록</a>
 <a href="foodshopRegister">음식점등록</a>
+<a href="adminmenu">관리자 메뉴</a>
+
 </body>
 </html>
