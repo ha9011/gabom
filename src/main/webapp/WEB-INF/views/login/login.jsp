@@ -25,7 +25,7 @@
 		.jumbotron {
 			text-shadow: black 0.2em 0.2em 0.2em;
 			color: white;
-			background-image: url(resources/loginimage/b.jpg);
+			background-image: url(resources/loginimage/beach.jpg);
 			background-size: cover;
 			font-size: 30px;
 			font-weight: bold;
@@ -50,8 +50,9 @@
 			font-weight: bold;
 			font-size: 30px;
 			border-radius: 40px;
-			text-shadow: black 0.2em 0.2em 0.2em;
-			background-color: #FE9A2E;
+			color: #58ACFA;
+			background-color: #EFF5FB;
+			text-shadow: black 0.01em 0.01em 0.01em;
 		}
 		#apiLoginContainer{
 			text-align: center;
@@ -79,7 +80,7 @@
 <div class="container">
 	<div class="jumbotron">
 	<form action="" method="post">
-	<div id="loginImage"><img src="resources/loginimage/a.png" class="img-thumbnail" id="loginLogoImage"></div>
+	<div id="loginImage"><img src="resources/loginimage/logo2.png" class="img-thumbnail" id="loginLogoImage"></div>
 	<br/>
 	<br/>
 	<br/>
@@ -91,24 +92,24 @@
 	Password
 	<input type="password" class="col-md-12 col-sm-12 col-xs-12" 
 	id="member_password" name="member_password"><br/>
-	
+	<input type="hidden" name="_csrf" value="${_csrf.token}">
 	<br/>
 	<br/>
 	<br/>
 	<div class="row" id="findContainer">
 		<div class="col-md-6 col-sm-12 col-xs-12 " >
-			<button type="submit" class="btn btn-success" id="findId" formaction="searchuserinfo">find ID</button>
+			<button type="submit" class="btn btn-info" id="findId" formaction="searchuserinfo">find ID</button>
 		</div>
 		<div class="col-md-6 col-sm-12 col-xs-12">
-			<button type="submit" class="btn btn-success" id="findPassword" formaction="searchuserinfo">Forgot your password?</button>
+			<button type="submit" class="btn btn-info" id="findPassword" formaction="searchuserinfo">Forgot your password?</button>
 		</div>
 	</div>
 	<br/>
 	<br/>
-	<input type="submit" class="col-md-12 col-sm-12 col-xs-12 btn btn-success" value="Login" id="loginButton" formaction="access">
+	<input type="submit" class="col-md-12 col-sm-12 col-xs-12 btn btn-info" value="Login" id="loginButton" formaction="login">
 	<br/>
 	<br/>
-	<input type="submit" class="col-md-12 col-sm-12 col-xs-12 btn btn-success" value="Sign-up" id="signUpButton" formaction="signup">
+	<input type="submit" class="col-md-12 col-sm-12 col-xs-12 btn btn-default" value="Sign-up" id="signUpButton" formaction="signup">
 	<br/>
 	<br/>
 	<br/>
