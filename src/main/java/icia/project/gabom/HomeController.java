@@ -96,14 +96,7 @@ public class HomeController {
 		return new Gson().toJson(files);
 	}
 	
-	@RequestMapping(value = "/adminmenu", method = RequestMethod.GET)
-	public ModelAndView adminmenu() {
-		System.out.println("adminmenu");
-		mav = new ModelAndView();
-		mav.setViewName("adminmenu");
-		
-		return mav;
-	}
+	
 	
 	
 	

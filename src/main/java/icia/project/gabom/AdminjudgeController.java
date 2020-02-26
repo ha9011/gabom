@@ -1,28 +1,29 @@
 package icia.project.gabom;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-public class AdminjudgeController {
+import icia.project.gabom.service.AdminjudgeManagement;
 
-private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+@Controller
+public class AdminjudgeController {
 	private ModelAndView mav;
+	@Autowired
+	private AdminjudgeManagement am; //관리자
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ModelAndView servicejudgelist() {
-		System.out.println("");
+	@RequestMapping(value = "/adminmenu", method = RequestMethod.GET)
+	public ModelAndView adminmenu() {
 		mav = new ModelAndView();
+		System.out.println("adminmenu");
 		
-		mav.setViewName("");
+		mav = am.housejudgelist();
 		
+		mav.setViewName("adminmenu");
 		return mav;
 	}
-	
-	
 	
 	
 }
