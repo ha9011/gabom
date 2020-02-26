@@ -7,33 +7,38 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import icia.project.gabom.dao.IhouseDao;
+
 
 @Service
-public class UploadFile {
+public class houseUploadFile {
    //파일 업로드 메소드   
 	//String fullPath = "D:\\springWork\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\SpringMVCBoard\\upload\\";
-	String fullPath = "D:\\springWork\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\SpringMVCBoard\\upload\\";
 	
+	String fullPathmain = "E:\\Spring\\gabom\\src\\main\\webapp\\resources\\housemainImage\\";
+	String fullPathdetail = "E:\\Spring\\gabom\\src\\main\\webapp\\resources\\housedetailImage\\";
 	
-   public boolean fileUp(MultipartHttpServletRequest multi, int bnum){
+	@Autowired
+	private IhouseDao hDao;
+	
+   public boolean fileUpmain(MultipartHttpServletRequest multi, int house_number){
       System.out.println("fileUp");
       //1.이클립스의 물리적 저장경로 찾기
-      String root=multi.getSession().getServletContext().getRealPath("/");
+      String root=fullPathmain;
       System.out.println("root="+root);
-      String path=root+"upload/";
+      
+      String path=root+"upload\\";
+      
       //2.폴더 생성을 꼭 할것...
       File dir=new File(path);
       if(!dir.isDirectory()){  //upload폴더 없다면
@@ -61,34 +66,102 @@ public class UploadFile {
          
          //3.파일을 가져오기-파일태그가 1개 일때
          Map<String,String> fMap=new HashMap<String, String>();
-         fMap.put("bnum", String.valueOf(bnum));
-         List<MultipartFile> fList=multi.getFiles("files");
-         boolean f=false;
+         MultipartFile house_mainImage = multi.getFile("house_mainImage");
+         boolean f1=false;
          
-      for(int i=0;i<fList.size();i++) {
+    
           //파일 메모리에 저장
-         MultipartFile mf=fList.get(i); //실제파일
+         MultipartFile mf=house_mainImage; //실제파일
          String oriFileName=mf.getOriginalFilename();  //a.txt
-         fMap.put("oriFileName", oriFileName);
+         fMap.put("house_number",Integer.toString(house_number));
+         fMap.put("house_oriname", oriFileName);
          //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
          String sysFileName=System.currentTimeMillis()+"."
                +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
-         fMap.put("sysFileName", sysFileName);
+         fMap.put("house_sysname", sysFileName);
          //5.메모리->실제 파일 업로드
          
          try {
             mf.transferTo(new File(path+sysFileName)); // 서버upload에 파일 저장
-            //f=bDao.fileInsert(fMap); // db에 올림
+            f1=hDao.mainfileInsert(fMap); // db에 올림
          }catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
          }
-      } //while or For end
-      if(f)
+         System.out.println("메인사진="+house_mainImage.getSize());
+      if(f1)
          return true;
       
       return false;
    }
+   
+   
+   public boolean fileUpdetail(MultipartHttpServletRequest multi,int house_number){
+	      System.out.println("fileUpdetail");
+	      //1.이클립스의 물리적 저장경로 찾기
+	      String root=fullPathdetail;
+	      System.out.println("root="+root);
+	      
+	      String path=root+"upload\\";
+	      System.out.println(path);
+	      //2.폴더 생성을 꼭 할것...
+	      File dir=new File(path);
+	      if(!dir.isDirectory()){  //upload폴더 없다면
+	         dir.mkdir();  //upload폴더 생성
+	      }
+	      
+	      //3.파일을 가져오기-파일태그가 여러개 일때 이름들 반환
+//	      Iterator<String> files=multi.getFileNames(); //파일태그가 2개이상일때
+//	      
+//	      Map<String,String> fMap=new HashMap<String, String>();
+//	      fMap.put("bnum", String.valueOf(bnum));
+//	      boolean f=false;
+//	      while(files.hasNext()){
+//	         String fileTagName=files.next();
+//	         System.out.println("fileTag="+fileTagName);  
+//	         //파일 메모리에 저장
+//	         MultipartFile mf=multi.getFile(fileTagName); //실제파일
+//	         String oriFileName=mf.getOriginalFilename();  //a.txt
+//	         fMap.put("oriFileName", oriFileName);
+//	         //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
+//	         String sysFileName=System.currentTimeMillis()+"."
+//	               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
+//	         fMap.put("sysFileName", sysFileName);
+//	      }  
+	         
+	         //3.파일을 가져오기-파일태그가 1개 일때
+	         Map<String,String> fMap=new HashMap<String, String>();
+	         List<MultipartFile> fList = multi.getFiles("house_detailImage");
+	         boolean f2=false;
+	         
+	      for(int i=0;i<fList.size();i++) {
+	          //파일 메모리에 저장
+	         MultipartFile mf=fList.get(i); //실제파일
+	         String oriFileName=mf.getOriginalFilename();  //a.txt
+	         System.out.println(oriFileName);
+	         fMap.put("house_number",Integer.toString(house_number));
+	         fMap.put("house_oriname", oriFileName);
+	         //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
+	         String sysFileName=System.currentTimeMillis()+"."
+	               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
+	         fMap.put("house_sysname", sysFileName);
+	         //5.메모리->실제 파일 업로드
+	         
+	         try {
+	            mf.transferTo(new File(path+sysFileName)); // 서버upload에 파일 저장
+	            f2=hDao.detailfileInsert(fMap); // db에 올림
+	         }catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }
+	         System.out.println("디테일 사진="+fList.size());
+	      } //while or For end
+	      if(f2)
+	         return true;
+	      
+	      return false;
+	   }
+   
    
    //파일 다운로드
    

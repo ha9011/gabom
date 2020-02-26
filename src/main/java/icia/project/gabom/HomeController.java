@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 /**
  * Handles requests for the application home page.zzz
  */
+
 @Controller
 public class HomeController {
 	
@@ -38,6 +39,14 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
+		
+		return "home";
+	}
+	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String home() {
+		System.out.println("home");
+		
 		
 		return "home";
 	}
@@ -63,39 +72,20 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/houseRegister", method = RequestMethod.GET)
-	public ModelAndView houseRegister() {
+	public String houseRegister() {
 		System.out.println("houseRegister");
-		mav = new ModelAndView();
-		mav.setViewName("houseRegister");
 		
-		return mav;
+		return "register/houseRegister";
 	}
 	
 	
 	
 	
 	@RequestMapping(value = "/foodshopRegister", method = RequestMethod.GET)
-	public ModelAndView foodshopRegister() {
+	public String foodshopRegister() {
 		System.out.println("foodshopRegister");
-		mav = new ModelAndView();
-		mav.setViewName("foodshopRegister");
 		
-		return mav;
+		return "register/foodshopRegister";
 	}
-	
-	
-	@PostMapping(value="/houseRegisterUpload" )
-	public String boardwrite(MultipartHttpServletRequest multi) { 
-	
-		System.out.println("title : " + multi.getParameter("b_title"));
-		System.out.println("filecheck : " + multi.getParameter("filecheck"));
-		List<MultipartFile> files = multi.getFiles("files");
-		System.out.println("files  : " + files.get(0).getOriginalFilename());
-		System.out.println("files  : " + files.get(1).getOriginalFilename());
-		
-		return new Gson().toJson(files);
-	}
-	
-	
 	
 }
