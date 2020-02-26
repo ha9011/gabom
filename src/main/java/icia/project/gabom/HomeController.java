@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,13 +43,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login() {
-		System.out.println("login");
-		
-		
-		return "login/login";
-	}
+	
 	
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String join() {
@@ -61,6 +56,7 @@ public class HomeController {
 		System.out.println("myinfo");
 		return "home";
 	}
+	
 	
 	@RequestMapping(value = "/houseRegister", method = RequestMethod.GET)
 	public ModelAndView houseRegister() {
