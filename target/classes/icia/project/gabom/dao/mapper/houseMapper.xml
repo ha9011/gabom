@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.IhouseDao">
+
+<insert id="houseRegisterUpload" parameterType="house">
+	INSERT INTO REGISTHOUSE VALUES(SQ_REGISTHOUSE.nextval,'이예상',#{house_name},#{house_address},#{house_person},#{house_parkable},#{house_rooms},#{house_beds},#{house_bathrooms},#{house_mindate},#{house_maxdate},#{house_price},#{house_type},0)
+		<selectKey keyProperty="house_number" resultType="integer" order="AFTER">
+				SELECT SQ_REGISTHOUSE.CURRVAL FROM DUAL
+			</selectKey>
+	</insert>
+	
+</mapper>

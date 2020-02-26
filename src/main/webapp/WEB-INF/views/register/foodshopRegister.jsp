@@ -4,139 +4,96 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- 지도 api -->
+<title>foodshopRegister</title>
 
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a7e29fa39462f45fc2138a8307dbe830&libraries=services"></script>
-
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 
 <style>
 body {
 	overflow: scroll;
 }
 
-#house_form {
-	margin-left: 500px;
-	margin-top: 50px;
-	border: 2px solid green;
-	width: 38%
-}
-
-#sign {
-	margin-left: 300px;
-	width: 100px;
-	height: 40px;
-}
-
-#detailImage_sections {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-.detailPictures {
-	margin: 0 0 0 0;
-	padding: 0 0 0 0;
-	border: 0;
-	display: inline-block;
-}
-
-.detailPictures:nth-child(n+4) {
-	display: none;
+#food_form {
+	margin-top : 10%;
+	margin-left: 40%;
 }
 </style>
+
 </head>
 <body>
-
-	<div id="house_form">
-
-		<form action="houseRegisterUpload" method="post"
-			enctype="multipart/form-data">
+	<div id="food_form">
+		<form action="foodRegisterUpload">
 			<div>
-				<h3>숙소명을 입력해주세요</h3>
-				<input type="text" name="house_name">
+				<h3>상호명 입력해주세요.</h3>
+				<input type="text" name="food_name">
 			</div>
 			<div>
-				<h3>메인사진을 등록해주세요</h3>
-
-				<input id="house_mainImage" type="file" name="house_mainImage"
-					required><br> <img id="image_section" width="80%"
+				<h3>메인사진을 등록해주세요.</h3>
+				<input id="food_mainImage" type="file" name="food_mainImage"required><br> 
+				<img id="image_section" width="80%"
 					src="" alt="메인이미지" />
 			</div>
-
 			<div>
-				<h3>주소를 입력해주세요</h3>
-				<input id="house_address" type="text" name="house_address">
-				<button id="house_address_btn" type="button">입력</button>
+				<h3>주소를 입력해주세요.</h3>
+				<input id="food_address" type="text" name="food_address">
+				<button id="food_address_btn" type="button">입력</button>
 				<div id="map" style="width: 80%; height: 300px;"></div>
-
-				<!-- <input type="text" name="y"  id="y" />
-		<input type="text" name="x"  id="x" /> -->
-			</div>
-
-			<div>
-				<h3>숙소유형을 선택해주세요</h3>
-				<label><input type="radio" name="house_type" value="1">
-					아파트</label> <label><input type="radio" name="house_type" value="2">
-					주택</label> <label><input type="radio" name="house_type" value="3">
-					빌라</label>
+				
+				<!-- 주소 좌표 hide로 숨김. -->
+				<input type="text" name="food_ypoint"  id="y" />
+				<input type="text" name="food_xpoint"  id="x" /> 
+				
 			</div>
 			<div>
-				<h3>숙소사진을 등록해주세요</h3>
-				<input id="house_detailImage" type="file" name="house_detailImage"
-					multiple>
+				<h3>음식점유형을 선택해주세요.</h3>
+				<label><input type="radio" name="food_type" value="1">
+					레스토랑</label> <label><input type="radio" name="food_type" value="2">
+					카페</label> <label><input type="radio" name="food_type" value="3">
+					호프</label>
+			</div>
+			<div>
+				<h3>음식점 메뉴사진/상세사진을 등록해주세요.</h3>
+				<input id="food_menuImages" type="file" name="food_menuImages" multiple>
 				<div>
-					<span id="left"> << </span>
-					<ul id="detailImage_sections">
-
-
-					</ul>
+					<span id="left"></span>
+					<ul id="detailImage_sections"></ul>
 					<span id="right"> >> </span>
 				</div>
 				<br>
-			</div>
-			<div>
-				<h3>가격을 입력해주세요</h3>
-				<input type="text" name="house_price">
-			</div>
+				</div>
 			<div>
 				<h3>주차</h3>
-				<label><input type="radio" name="house_parkable" value="1">주차
-					가능</label> <label><input type="radio" name="house_parkable"
+				<label><input type="radio" name="food_parkable" value="1">주차
+					가능</label> <label><input type="radio" name="food_parkable"
 					value="2">주차 불가능</label>
 			</div>
+
 			<div>
-				<h3>방 개수를 입력해주세요</h3>
-				<input type="text" name="house_rooms">
-			</div>
-			<div>
-				<h3>욕실 개수를 입력해주세요</h3>
-				<input type="text" name="house_bathrooms">
-			</div>
-			<div>
-				<h3>침대 개수를 입력해주세요</h3>
-				<input type="text" name="house_beds">
-			</div>
-			<div>
-				<h3>예약 가능 날짜를 선택해주세요</h3>
-				<input type='date' name='mindate' /> <input type='date'
-					name='maxdate' />
+				<h3>예약 가능 날짜를 선택해주세요.</h3>
+				<input type='date' name='food_mindate' /> <input type='date' name='food_maxdate' /> 
+				<input type="time" name='food_mintime' /> <input type="time" name='food_maxtime' />
 			</div>
 
 			<div>
-				<button type="submit" id="sign">작성완료</button>
+				<button type="submit" id="sign"name="sign">작성완료</button>
 			</div>
-
-		</form>
-	</div>
+			</form>
+		</div>	
 </body>
 <script>
-	$("#house_address_btn").on("click",function(){
+$("#map").hide();
+$("#x").hide();
+$("#y").hide();
+
+
+	$("#food_address_btn").on("click",function(){
+		$("#map").show();
 		
-		var $searchAddr = $("#house_address").val();
+		var $searchAddr = $("#food_address").val();
 		console.log("검색 주소 : " + $searchAddr)
 	
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -159,8 +116,16 @@ body {
 		
 	    // 정상적으로 검색이 완료됐으면 
 	     if (status === kakao.maps.services.Status.OK) {
-
+	    	 x=$("#x").val();
+	    	 y=$("#y").val();
+	    	 
+	    	 x=result[0].x;
+			 y=result[0].y;
+	    	
 	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	        
+			console.dir(x);
+	    	console.dir(y);
 
 	        // 결과값으로 받은 위치를 마커로 표시합니다
 	        var marker = new kakao.maps.Marker({
@@ -173,7 +138,7 @@ body {
 	            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
 	        });
 	        infowindow.open(map, marker);
-
+	        
 	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 	        map.setCenter(coords);
 	    } 
@@ -189,8 +154,9 @@ body {
 
 </script>
 <script>
+$("#detail").hide();
 	//메인사진(1개)만 미리보기
-	$("#house_mainImage").change(function(e){
+	$("#food_mainImage").change(function(e){
 		$('#image_section').attr('src', ""); // 변할 때마다 리셋
 		var files = e.target.files;
 		
@@ -210,7 +176,7 @@ body {
 	
 	
 	//여러사진 한번에 보여주기
-	$("#house_detailImage").change(function(e){
+	$("#food_menuImages").change(function(e){
 		$("#detailImage_sections").empty();  // 변할 때마다 리셋
 		
 		
