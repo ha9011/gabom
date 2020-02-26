@@ -50,4 +50,9 @@
 	<tx:annotation-driven
 		transaction-manager="transactionManager" />
 
+
+
+<!-- Tiles -->
+    
+    
 </beans:beans>

@@ -24,13 +24,11 @@ import com.google.gson.Gson;
 @Controller
 public class HomeController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	private ModelAndView mav;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
@@ -46,6 +44,7 @@ public class HomeController {
 	public String login() {
 		System.out.println("login");
 		
+		return null;
 		
 		
 	}
@@ -56,11 +55,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/myinfo", method = RequestMethod.GET)
-	public String myinfo() {
-		System.out.println("myinfo");
-		return "home";
-	}
+	
 	
 	@RequestMapping(value = "/houseRegister", method = RequestMethod.GET)
 	public ModelAndView houseRegister() {
