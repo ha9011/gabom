@@ -48,9 +48,19 @@ li {
 </style>
 <script>
 	console.log(${housejudge});
-	/* var a ="${housejudge}"
-	var b = JSON.parse(a);
-	console.log(typeof b); */
+	
+
+ 
+	
+	$(function(){
+		
+		$.ajax({
+			url : "",
+			method : "",
+			data : 
+		})
+	})
+	
 	
 	
 </script>
@@ -79,7 +89,7 @@ li {
 		
 		<div id="admin_main">
 			<div id="service_judge">
-				<form action="servicejudgelist">서비스업체 신청내역</form>
+				
 			</div>
 			<div id="tour_judge">
 				<form action="touristjudgelist" method="post">여행계획 신청 내역</form>
