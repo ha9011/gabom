@@ -66,11 +66,11 @@ public class FoodRegisterService {
 		newDateString = formatter.format(d);
 		System.out.println(newDateString);*/
 
-		Timestamp ts = Timestamp.valueOf(multi.getParameter("food_mintime"));
-		Timestamp ts2 =Timestamp.valueOf(multi.getParameter("food_maxtime"));
+		String ts = multi.getParameter("food_mintime");
+		String ts2 =multi.getParameter("food_maxtime");
 		System.out.println(ts);
-		Timestamp food_mintime = ts;//오픈시간
-		Timestamp food_maxtime = ts2;//오픈시간
+		String food_mintime = ts;//오픈시간
+		String food_maxtime = ts2;//오픈시간
 		
 		MultipartFile house_mainImage = multi.getFile("food_mainImage");//메인
 		List<MultipartFile> house_detailImages = multi.getFiles("food_menuImages");//디테일
