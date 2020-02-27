@@ -26,7 +26,8 @@ body {
 </head>
 <body>
 	<div id="food_form">
-		<form action="foodRegisterUpload">
+		<form action="foodRegisterUpload?${_csrf.parameterName}=${_csrf.token}"method="post"
+			enctype="multipart/form-data">
 			<div>
 				<h3>상호명 입력해주세요.</h3>
 				<input type="text" name="food_name">
@@ -42,6 +43,9 @@ body {
 				<input id="food_address" type="text" name="food_address">
 				<button id="food_address_btn" type="button">입력</button>
 				<div id="map" style="width: 80%; height: 300px;"></div>
+				
+				<h3>인원수 입력해주세요.</h3>
+				<input id="food_person" type="text" name="food_person">
 				
 				<!-- 주소 좌표 hide로 숨김. -->
 				<input type="text" name="food_ypoint"  id="y" />
@@ -116,11 +120,13 @@ $("#y").hide();
 		
 	    // 정상적으로 검색이 완료됐으면 
 	     if (status === kakao.maps.services.Status.OK) {
-	    	 x=$("#x").val();
-	    	 y=$("#y").val();
-	    	 
+	    	
 	    	 x=result[0].x;
 			 y=result[0].y;
+			 
+			 $("#x").val(x);
+	    	 $("#y").val(y);
+	    	 
 	    	
 	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 	        

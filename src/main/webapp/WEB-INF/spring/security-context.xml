@@ -32,7 +32,7 @@
 		2-1 시큐리티 어노테이션 활성화
 		2-2 시큐리티 어노테이션 사용-->
 	<sec:http pattern="/" security="none"></sec:http>
-	
+ 	<!-- <sec:http pattern="/houseregisterupload" security="none"></sec:http> -->
 	<bean id="passwordEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder" />
 	<sec:http auto-config="true">
 	<!-- <sec:intercept-url pattern="/**" access="permitAll"/> -->

@@ -4,7 +4,7 @@
 <mapper namespace="icia.project.gabom.dao.IhouseDao">
 
 <insert id="houseRegisterUpload" parameterType="house">
-	INSERT INTO REGISTHOUSE VALUES(SQ_REGISTHOUSE.nextval,'이예상',#{house_name},#{house_address},#{house_person},#{house_parkable},#{house_rooms},#{house_beds},#{house_bathrooms},#{house_mindate},#{house_maxdate},#{house_price},#{house_type},0)
+	INSERT INTO REGISTHOUSE VALUES(SQ_REGISTHOUSE.nextval,#{house_hostid},#{house_name},#{house_address},#{house_person},#{house_parkable},#{house_rooms},#{house_beds},#{house_bathrooms},#{house_mindate},#{house_maxdate},#{house_price},#{house_type},0,#{house_xpoint},#{house_ypoint})
 		<selectKey keyProperty="house_number" resultType="integer" order="AFTER">
 				SELECT SQ_REGISTHOUSE.CURRVAL FROM DUAL
 			</selectKey>
