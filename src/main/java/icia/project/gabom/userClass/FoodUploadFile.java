@@ -12,20 +12,25 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import icia.project.gabom.dao.IfoodDao;
+
+@Service
 public class FoodUploadFile {
 	   //파일 업로드 메소드   
 		//String fullPath = "D:\\springWork\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\SpringMVCBoard\\upload\\";
 		
-		String fullPathmain = "E:\\Spring\\gabom\\src\\main\\webapp\\resources\\housemainImage\\";
-		String fullPathdetail = "E:\\Spring\\gabom\\src\\main\\webapp\\resources\\housedetailImage\\";
+		String fullPathmain = "E:\\Spring\\gabom\\src\\main\\webapp\\resources\\foodmainImage\\";
+		String fullPathdetail = "E:\\Spring\\gabom\\src\\main\\webapp\\resources\\fooddetailImage\\";
 		
-		//@Autowired
-		//private IhouseDao hDao;
+		@Autowired
+		private IfoodDao fDao;
 		
-	   public boolean fileUpmain(MultipartHttpServletRequest multi, int house_number){
+	   public boolean fileUpmain(MultipartHttpServletRequest multi, int food_number){
 	      System.out.println("fileUp");
 	      //1.이클립스의 물리적 저장경로 찾기
 	      String root=fullPathmain;
@@ -67,7 +72,7 @@ public class FoodUploadFile {
 	          //파일 메모리에 저장
 	         MultipartFile mf=house_mainImage; //실제파일
 	         String oriFileName=mf.getOriginalFilename();  //a.txt
-	         fMap.put("house_number",Integer.toString(house_number));
+	         fMap.put("house_number",Integer.toString(food_number));
 	         fMap.put("house_oriname", oriFileName);
 	         //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
 	         String sysFileName=System.currentTimeMillis()+"."
@@ -77,7 +82,7 @@ public class FoodUploadFile {
 	         
 	         try {
 	            mf.transferTo(new File(path+sysFileName)); // 서버upload에 파일 저장
-	           //f1=hDao.mainfileInsert(fMap); // db에 올림
+	           f1=fDao.mainfileInsert(fMap); // db에 올림
 	         }catch (IOException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
@@ -90,7 +95,7 @@ public class FoodUploadFile {
 	   }
 	   
 	   
-	   public boolean fileUpdetail(MultipartHttpServletRequest multi,int house_number){
+	   public boolean fileUpdetail(MultipartHttpServletRequest multi,int food_number){
 		      System.out.println("fileUpdetail");
 		      //1.이클립스의 물리적 저장경로 찾기
 		      String root=fullPathdetail;
@@ -133,7 +138,7 @@ public class FoodUploadFile {
 		         MultipartFile mf=fList.get(i); //실제파일
 		         String oriFileName=mf.getOriginalFilename();  //a.txt
 		         System.out.println(oriFileName);
-		         fMap.put("house_number",Integer.toString(house_number));
+		         fMap.put("house_number",Integer.toString(food_number));
 		         fMap.put("house_oriname", oriFileName);
 		         //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
 		         String sysFileName=System.currentTimeMillis()+"."
@@ -143,7 +148,7 @@ public class FoodUploadFile {
 		         
 		         try {
 		            mf.transferTo(new File(path+sysFileName)); // 서버upload에 파일 저장
-		            //f2=hDao.detailfileInsert(fMap); // db에 올림
+		            f2=fDao.detailfileInsert(fMap); // db에 올림
 		         }catch (IOException e) {
 		            // TODO Auto-generated catch block
 		            e.printStackTrace();

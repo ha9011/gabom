@@ -53,8 +53,9 @@ body {
 
 	<div id="house_form">
 
-		<form action="houseRegisterUpload" method="post"
+		<form action="houseregisterupload?${_csrf.parameterName}=${_csrf.token}" method="post"
 			enctype="multipart/form-data">
+			
 			<div>
 				<h3>숙소명을 입력해주세요</h3>
 				<input type="text" name="house_name">
@@ -128,11 +129,9 @@ body {
 				<input type='date' name='house_mindate' /> <input type='date'
 					name='house_maxdate' />
 			</div>
-
 			<div>
 				<button type="submit" id="sign"name="sign">작성완료</button>
 			</div>
-
 		</form>
 	</div>
 </body>
@@ -168,12 +167,18 @@ $("#y").hide();
 	    // 정상적으로 검색이 완료됐으면 
 	     if (status === kakao.maps.services.Status.OK) {
 			
-	    	y=$("#y").val(result[0].y);
-			x=$("#x").val(result[0].x);
-	    	console.log(x);
-	    	console.log(y);
+	    	
+	    	 
+	    	 x=result[0].x;
+			 y=result[0].y;
+			 
+			 $("#x").val(x);
+	    	 $("#y").val(y);
 	    	
 	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+	        console.dir(x);
+	    	console.dir(y);
 
 	        // 결과값으로 받은 위치를 마커로 표시합니다
 	        var marker = new kakao.maps.Marker({

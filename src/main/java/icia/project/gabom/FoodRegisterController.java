@@ -1,5 +1,6 @@
 package icia.project.gabom;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -22,10 +23,11 @@ public class FoodRegisterController {
 	@Autowired
 	private FoodRegisterService frs;
 	
-	
 	@PostMapping(value = "/foodRegisterUpload") //아이디 받아야함 
-	public ModelAndView foodRegisterUpload(MultipartHttpServletRequest multi ) {
+	public ModelAndView foodRegisterUpload(MultipartHttpServletRequest multi,Principal principal) {
 		System.out.println("음식점 등록 컨트롤러");
+		
+		String member_hostid=principal.getName();
 		System.out.println(multi.getParameter("food_name"));
 		System.out.println(multi.getParameter("house_address"));
 		System.out.println(multi.getParameter("food_ypoint"));
@@ -35,7 +37,7 @@ public class FoodRegisterController {
 		System.out.println(files.size());
 		System.out.println("files="+files.get(0).getOriginalFilename());
 		
-		mav= frs.foodRegisterUpload(multi);
+		mav= frs.foodRegisterUpload(multi,principal);
 		System.out.println("완료되면 뷰로 보여줘");
 		return mav;
 	}

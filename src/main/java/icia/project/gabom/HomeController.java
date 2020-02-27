@@ -51,23 +51,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login() {
-		System.out.println("login");
-		
-		
-		return "login/login";
-	}
-	
-	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public String join() {
-		System.out.println("join");
-		return "home";
-	}
-	
-	
-	
-	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/houseRegister", method = RequestMethod.GET)
 	public String houseRegister() {
 		System.out.println("houseRegister");

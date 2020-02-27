@@ -1,5 +1,6 @@
 package icia.project.gabom.service;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,11 @@ public class HouseRegisterService {
 		private houseUploadFile ul;
 		
 
-		public ModelAndView houseRegisterUpload(MultipartHttpServletRequest multi) {
+		public ModelAndView houseRegisterUpload(MultipartHttpServletRequest multi,Principal principal) {
 			mav=new ModelAndView();
 			String view=null;
 			
-			//int house_number =Integer.parseInt(multi.getParameter("house_number"));
+			String house_hostid=principal.getName();
 			String house_name = multi.getParameter("house_name"); //이름
 			int house_type =Integer.parseInt(multi.getParameter("house_type"));//타입
 			int house_price =Integer.parseInt(multi.getParameter("house_price"));//가격
@@ -42,6 +43,8 @@ public class HouseRegisterService {
 			String house_maxdate = multi.getParameter("house_maxdate");//체크아웃
 			int house_person =Integer.parseInt(multi.getParameter("house_person")); //인원수
 			String house_address = multi.getParameter("house_address");//주소
+			String house_xpoint = multi.getParameter("house_xpoint"); //위도 
+			String house_ypoint = multi.getParameter("house_ypoint");//경도
 			
 			
 			MultipartFile house_mainImage = multi.getFile("house_mainImage");//메인
@@ -55,10 +58,11 @@ public class HouseRegisterService {
 			//Housefile hfile= new Housefile();
 			
 			
-			house.setHouse_address(house_address).setHouse_bathrooms(house_bathrooms).setHouse_beds(house_beds);
+			house.setHouse_address(house_address).setHouse_bathrooms(house_bathrooms).setHouse_beds(house_beds).setHouse_xpoint(house_xpoint).setHouse_ypoint(house_ypoint);
 			house.setHouse_name(house_name).setHouse_person(house_person).setHouse_parkable(house_parkable).setHouse_price(house_price);
 			house.setHouse_rooms(house_rooms).setHouse_type(house_type).setHouse_mindate(house_mindate).setHouse_maxdate(house_maxdate);
 			//hfile.setHouse_imagetype(house_imagetype).setHouse_number(house_number).setHouse_oriname(house_oriname).setHouse_sysname(house_sysname);
+			house.setHouse_hostid(house_hostid);
 			
 			int house_number=hDao.houseRegisterUpload(house); //데이터 담아서 dao로 감.
 			

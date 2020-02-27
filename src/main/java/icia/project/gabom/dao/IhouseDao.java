@@ -10,14 +10,12 @@ import icia.project.gabom.dto.House;
 
 public interface IhouseDao {
 	
-	//@Insert(") ")
-	
 	int houseRegisterUpload(House house);
 
-	@Insert("INSERT INTO HFILE VALUES(#{house_number},#{house_oriname},#{house_sysname},1)")
+	@Insert("INSERT INTO HOUSEFILE VALUES(#{house_number},1,#{house_oriname},#{house_sysname})")
 	boolean mainfileInsert(Map<String, String> fMap);
 
-	@Insert("INSERT INTO HFILE VALUES(#{house_number},#{house_oriname},#{house_sysname},1)")
+	@Insert("INSERT INTO HOUSEFILE VALUES(#{house_number},1,#{house_oriname},#{house_sysname})")
 	boolean detailfileInsert(Map<String, String> fMap);
 	
 }

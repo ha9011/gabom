@@ -76,7 +76,7 @@ public class houseUploadFile {
          fMap.put("house_number",Integer.toString(house_number));
          fMap.put("house_oriname", oriFileName);
          //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
-         String sysFileName=System.currentTimeMillis()+"."
+         String sysFileName="housemainImage"+System.currentTimeMillis()+"."
                +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
          fMap.put("house_sysname", sysFileName);
          //5.메모리->실제 파일 업로드
@@ -142,7 +142,7 @@ public class houseUploadFile {
 	         fMap.put("house_number",Integer.toString(house_number));
 	         fMap.put("house_oriname", oriFileName);
 	         //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
-	         String sysFileName=System.currentTimeMillis()+"."
+	         String sysFileName="housedetailImage"+System.currentTimeMillis()+"."
 	               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
 	         fMap.put("house_sysname", sysFileName);
 	         //5.메모리->실제 파일 업로드
