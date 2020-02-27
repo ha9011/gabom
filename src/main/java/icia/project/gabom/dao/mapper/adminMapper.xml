@@ -15,6 +15,7 @@
 
  -->
 <!--  WHERE HOUSE_GRANTTYPE = 0 -->
+<!-- 등록대기 타입이 0인 애들 출력 -->
 <select id="getHouseList" resultType="house">
 	SELECT HOUSE_NAME,NVL(HOUSE_ADDRESS,0) FROM REGISTHOUSE
 </select>
@@ -41,8 +42,5 @@
 <!-- 	select M_NAME, G_NAME from MINFO member where m_id=#{id} -->
 	
 <!-- </select> -->
-
-
-
 
 </mapper>

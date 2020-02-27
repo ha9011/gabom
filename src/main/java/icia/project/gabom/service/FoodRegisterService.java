@@ -1,15 +1,16 @@
 package icia.project.gabom.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.project.gabom.dao.IhouseDao;
 import icia.project.gabom.userClass.houseUploadFile;
-
+@Service
 public class FoodRegisterService {
 	@Autowired
-	//private IhouseDao hDao;
+	private IhouseDao hDao;
 	
 	private ModelAndView mav;
 	
