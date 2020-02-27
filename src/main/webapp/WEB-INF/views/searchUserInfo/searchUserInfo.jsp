@@ -26,7 +26,8 @@
 	background-image: url(resources/searchuserinfo/al.jpg);
 	background-size: cover;
 }
-#passwordJumbo{
+
+#passwordJumbo {
 	text-shadow: black 0.2em 0.2em 0.2em;
 	color: white;
 	background-image: url(resources/searchuserinfo/lan.jpg);
@@ -43,14 +44,14 @@
 	font-weight: bold;
 }
 
-#member_email,#member_id{
+#member_email, #member_password_id, #member_password_email {
 	height: 50px;
 	border-radius: 30px;
 	color: black;
 	font-weight: bold;
 }
 
-#searchId,#searchpassword {
+#searchId, #searchpassword {
 	height: 100px;
 	font-size: 40px;
 	text-shadow: black 0.1em 0.1em 0.1em;
@@ -58,13 +59,14 @@
 	font-weight: bold;
 }
 
-#alertBox {
+#alertBox, #alertBoxPassword {
 	font-weight: bold;
 	font-size: 13px;
 	text-shadow: black 0em 0em 0em;
 }
-#idContainer,#passwordContainer{
-display: none;
+
+#idContainer, #passwordContainer {
+	display: none;
 }
 </style>
 </head>
@@ -73,7 +75,8 @@ display: none;
 		<div class="jumbotron" id="idJumbo">
 			<div class="col-md-12" id="idTitle">아이디 찾기</div>
 			<br /> <br /> <br /> <br /> <br /> <br />
-			<form action="senduserid" method="post" onsubmit="return checkBox()" name="idform">
+			<form action="senduserid" method="post" onsubmit="return checkBox(1)"
+				name="idform">
 				<div class="col-md-12" id="idEmail">E-mail</div>
 				<br /> <br /> <br /> <br /> <br /> <br />
 				<div>
@@ -82,16 +85,13 @@ display: none;
 				</div>
 				<br /> <br /> <br /> <br />
 				<div class="col-md-12"></div>
-				<br />
-				 <br />
-				  <br />
-				   <br />
+				<br /> <br /> <br /> <br />
 				<div id="alertBox"></div>
 				<br /> <br /> <br /> <br />
 				<div>
 					<input type="submit" class="btn-info col-md-12 col-xs-12 col-sm-12"
 						value="아이디 찾기" id="searchId">
-						<!-- formaction="senduserid" -->
+					<!-- formaction="senduserid" -->
 				</div>
 				<input type="hidden" name="${_csrf.parameterName}"
 					value="${_csrf.token}"> <br /> <br />
@@ -99,65 +99,60 @@ display: none;
 			<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
 		</div>
 	</div>
-		<div class="container" id="passwordContainer">
+	<div class="container" id="passwordContainer">
 		<div class="jumbotron" id="passwordJumbo">
-			<div class="col-md-12" id="idTitle">패스워드 찾기</div>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<div class="col-md-12" id="idEmail">E-mail</div>
-			<br/>
-			<br/>
-			<br/>
-			<div ><input type="text" class="col-md-12 col-sm-12 col-xs-12" id="member_email" name="member_email"></div>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<div class="col-md-12" id="idEmail">ID</div>
-			<br/>
-			<br/>
-			<br/>
-			<div ><input type="text" class="col-md-12 col-sm-12 col-xs-12" id="member_id" name="member_id"></div>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<div id="alertBox"></div>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<div><input type="submit" class="btn-info col-md-12 col-xs-12 col-sm-12" value="패스워드 찾기" id="searchpassword" formaction="senduserpassword"></div>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
+			<form action="senduserpassword" method="post"
+				onsubmit="return checkBox(2)">
+				<div class="col-md-12" id="idTitle">패스워드 찾기</div>
+				<br /> <br /> <br /> <br /> <br /> <br />
+				<div class="col-md-12" id="idEmail">E-mail</div>
+				<br /> <br /> <br />
+				<div>
+					<input type="text" class="col-md-12 col-sm-12 col-xs-12"
+						id="member_password_email" name="member_email">
+				</div>
+				<br /> <br /> <br /> <br /> <br /> <br />
+				<div class="col-md-12" id="idEmail">ID</div>
+				<br /> <br /> <br />
+				<div>
+					<input type="text" class="col-md-12 col-sm-12 col-xs-12"
+						id="member_password_id" name="member_id">
+				</div>
+				<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+				<div id="alertBoxPassword"></div>
+				<br /> <br /> <br /> <br /> <br /> <br />
+				<div>
+					<input type="submit" class="btn-info col-md-12 col-xs-12 col-sm-12"
+						value="패스워드 찾기" id="searchpassword">
+				</div>
+				<br /> <br /> <input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}">
+			</form>
+			<br /> <br />
 		</div>
 	</div>
 	<script type="text/javascript">
 	
-	function checkBox(){
+	function checkBox(number){
+		if(number==1){
 		let checkClass=$('#alertBox').prop("class");
-		console.log("들어옴");
-		if(checkClass=="alert alert-success glyphicon glyphicon-ok col-md-12"){
+		if(checkClass=="alert alert-success glyphicon glyphicon-ok col-md-12 col-sm-12 col-xs-12"){
 			return true;
 		}else{
-			alert("올바른 이메일을 입력해주세요.");
+			alert("올바른 정보를 입력해 주세요.");
 			return false;
 		}
-		
+		}else if(number==2){
+			let checkClassPassword=$('#alertBoxPassword').prop("class");
+			if(checkClassPassword=="alert alert-success glyphicon glyphicon-ok col-md-12 col-sm-12 col-xs-12"){
+				return true;
+			}else{
+				alert("올바른 정보를 입력해 주세요.");
+				return false;
+			}
+			
+			
+		}
 	}
 	let type='${type}';
 	if(type=='id'){
@@ -180,10 +175,10 @@ display: none;
 		let MemberEmail= $('#member_email').val();
 		let patten= /^[A-Za-z][A-Za-z0-9\.]+@[A-Za-z\.]+$/;
 		if(MemberEmail.length==0){
-			return $('#alertBox').attr('class','alert alert-danger')
+			return $('#alertBox').attr('class','alert alert-danger col-md-12 col-sm-12 col-xs-12')
 									.attr('role','alert').text('필수 입력입니다.')
 		}else if (!patten.test(MemberEmail)) {
-			return $('#alertBox').attr('class','alert alert-danger')
+			return $('#alertBox').attr('class','alert alert-danger col-md-12 col-sm-12 col-xs-12')
 			.attr('role','alert').text('이메일 형식 오류')
 		}
 		$('#alertBox').text('');
@@ -206,18 +201,80 @@ display: none;
  			console.log('data=',data);
  			if(data.message==" "){
  				//$('#alertBox').css("display","block");
- 	 			$('#alertBox').attr('class','alert alert-success glyphicon glyphicon-ok col-md-12')
+ 	 			$('#alertBox').attr('class','alert alert-success glyphicon glyphicon-ok col-md-12 col-sm-12 col-xs-12')
  				.attr('role','alert');
  				return
  			}else{
  				//$('#alertBox').css("display","block");
- 			$('#alertBox').attr('class','alert alert-danger')
+ 			$('#alertBox').attr('class','alert alert-danger col-md-12 col-sm-12 col-xs-12')
 			.attr('role','alert').text(data.message);
  			}
 		}).fail((error)=>{
 			console.log('error=',error);
-			$('#alertBox').attr('class','alert alert-danger col-md-12')
+			$('#alertBox').attr('class','alert alert-danger col-md-12 col-sm-12 col-xs-12')
 			.attr('role','alert').text('이메일요청 오류')
+		});
+	}
+	</script>
+	<script type="text/javascript">
+	console.log(type);
+	if(type=='password'){
+	$('#member_password_email').on('blur',function(){
+		if(checkEmailPassword()==true){
+			$('#member_password_id').on('blur',function(){
+				$('#alertBoxPassword').css("display", "block");
+			ajaxMatchIdEmail();//서버와 비동기
+			});
+		}
+	});//email end
+	} //
+	function checkEmailPassword() {
+		MemberEmailPassword= $('#member_password_email').val();
+		pattenPassword= /^[A-Za-z][A-Za-z0-9\.]+@[A-Za-z\.]+$/;
+		if(MemberEmailPassword.length==0){
+			$('#alertBoxPassword').empty();
+			return $('#alertBoxPassword').attr('class','alert alert-danger col-md-12 col-sm-12 col-xs-12')
+									.attr('role','alert').text('필수 입력입니다.')
+		}else if (!pattenPassword.test(MemberEmailPassword)) {
+			$('#alertBoxPassword').empty();
+			return $('#alertBoxPassword').attr('class','alert alert-danger col-md-12 col-sm-12 col-xs-12')
+			.attr('role','alert').text('이메일 형식 오류');
+		}
+		$('#alertBoxPassword').empty();
+		$('#alertBoxPassword').css("display", "none");
+		return true;
+	}
+	function ajaxMatchIdEmail(){
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		});//먼저 보냄
+		member_email=$('#member_password_email').val();
+		let member_id=$('#member_password_id').val();
+		$.ajax({
+ 			method:'post',
+ 			url:"user/password/data",
+ 			data:{member_email,member_id},
+ 			dataType : "json",
+ 		}).done((data)=>{
+ 			console.log('data=',data);
+ 			if(data.message==" "){
+ 				//$('#alertBox').css("display","block");
+ 				$('#alertBoxPassword').empty();
+ 	 			$('#alertBoxPassword').attr('class','alert alert-success glyphicon glyphicon-ok col-md-12 col-sm-12 col-xs-12')
+ 				.attr('role','alert');
+ 				return
+ 			}else{
+ 				//$('#alertBox').css("display","block");
+ 				$('#alertBoxPassword').empty();
+ 			$('#alertBoxPassword').attr('class','alert alert-danger col-md-12 col-sm-12 col-xs-12')
+			.attr('role','alert').text(data.message);
+ 			}
+		}).fail((error)=>{
+			console.log('error=',error);
+			$('#alertBoxPassword').empty();
+			$('#alertBoxPassword').attr('class','alert alert-danger col-md-12 col-sm-12 col-xs-12')
+			.attr('role','alert').text('요청 오류');
 		});
 	}
 	
