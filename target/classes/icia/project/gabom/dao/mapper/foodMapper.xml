@@ -4,7 +4,7 @@
 <mapper namespace="icia.project.gabom.dao.IhouseDao">
 
 <insert id="foodRegisterUpload" parameterType="food">
-	INSERT INTO FOODSHOP VALUES(SQ_FOODSHOP.nextval,#{food_hostid},#{food_name},#{food_address},#{food_parkable},#{food_mindate},#{food_maxdate},#{food_mintime},#{food_maxtime},#{food_type},0,#{house_xpoint},#{house_ypoint})
+	INSERT INTO FOODSHOP VALUES(SQ_FOODSHOP.nextval,#{food_hostid},#{food_name},#{food_address},#{food_parkable},#{food_mindate},#{food_maxdate},#{food_mintime},#{food_maxtime},#{food_type},0,#{food_person},#{house_xpoint},#{house_ypoint})
 			<selectKey keyProperty="food_number" resultType="integer" order="AFTER">
 				SELECT SQ_FOODSHOP.CURRVAL FROM DUAL
 			</selectKey>

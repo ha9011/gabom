@@ -79,7 +79,7 @@ public class FoodRegisterService {
 		
 		food.setFood_address(food_address).setFood_name(food_name).setFood_parkable(food_parkable).setFood_type(food_type);
 		food.setFood_xpoint(food_xpoint).setFood_ypoint(food_ypoint).setFood_person(food_person);
-		food.setFood_maxdate(food_maxdate).setFood_mindate(food_mindate).setFood_maxtime(food_maxtime).setFood_mindtime(food_mintime);
+		food.setFood_maxdate(food_maxdate).setFood_mindate(food_mindate).setFood_maxtime(food_maxtime).setFood_mintime(food_mintime);
 		food.setFood_hostid(food_hostid);
 		
 		int food_number = fDao.foodRegisterUpload(food);

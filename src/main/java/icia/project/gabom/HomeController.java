@@ -48,7 +48,7 @@ public class HomeController {
 	public ModelAndView houseRegister(Principal principal) {
 		System.out.println("houseRegister");
 		mav = new ModelAndView();
-		mav.setViewName("houseRegister");
+		mav.setViewName("register/houseRegister");
 		System.out.println("사용자 정보"+principal.getName());
 		return mav;
 	}

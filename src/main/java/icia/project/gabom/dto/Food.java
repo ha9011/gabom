@@ -30,7 +30,7 @@ public class Food {
 	@DateTimeFormat(pattern="yyyy-mm-dd")
 	private String food_maxdate;
 	
-	private Timestamp food_mindtime;
+	private Timestamp food_mintime;
 	
 	private Timestamp food_maxtime;
 }
