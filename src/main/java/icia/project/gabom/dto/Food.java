@@ -1,10 +1,10 @@
 package icia.project.gabom.dto;
 
+
 import java.sql.Timestamp;
 
 import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.test.annotation.Timed;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -30,7 +30,8 @@ public class Food {
 	@DateTimeFormat(pattern="yyyy-mm-dd")
 	private String food_maxdate;
 	
-	private Timestamp food_mindtime;
-	
-	private Timestamp food_maxtime;
+	@DateTimeFormat(pattern="HH:mm:ss")
+	private String food_mintime;
+	@DateTimeFormat(pattern="HH:mm:ss")
+	private String food_maxtime;
 }

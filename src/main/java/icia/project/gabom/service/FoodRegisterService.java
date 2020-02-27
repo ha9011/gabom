@@ -66,11 +66,11 @@ public class FoodRegisterService {
 		newDateString = formatter.format(d);
 		System.out.println(newDateString);*/
 
-		Timestamp ts = Timestamp.valueOf(multi.getParameter("food_mintime"));
-		Timestamp ts2 =Timestamp.valueOf(multi.getParameter("food_maxtime"));
+		String ts = multi.getParameter("food_mintime");
+		String ts2 =multi.getParameter("food_maxtime");
 		System.out.println(ts);
-		Timestamp food_mintime = ts;//오픈시간
-		Timestamp food_maxtime = ts2;//오픈시간
+		String food_mintime = ts;//오픈시간
+		String food_maxtime = ts2;//오픈시간
 		
 		MultipartFile house_mainImage = multi.getFile("food_mainImage");//메인
 		List<MultipartFile> house_detailImages = multi.getFiles("food_menuImages");//디테일
@@ -79,7 +79,7 @@ public class FoodRegisterService {
 		
 		food.setFood_address(food_address).setFood_name(food_name).setFood_parkable(food_parkable).setFood_type(food_type);
 		food.setFood_xpoint(food_xpoint).setFood_ypoint(food_ypoint).setFood_person(food_person);
-		food.setFood_maxdate(food_maxdate).setFood_mindate(food_mindate).setFood_maxtime(food_maxtime).setFood_mindtime(food_mintime);
+		food.setFood_maxdate(food_maxdate).setFood_mindate(food_mindate).setFood_maxtime(food_maxtime).setFood_mintime(food_mintime);
 		food.setFood_hostid(food_hostid);
 		
 		int food_number = fDao.foodRegisterUpload(food);

@@ -28,9 +28,15 @@ public class FoodRegisterController {
 		
 		String member_hostid=principal.getName();
 		System.out.println(multi.getParameter("food_name"));
-		System.out.println(multi.getParameter("house_address"));
+		System.out.println(multi.getParameter("food_address"));
 		System.out.println(multi.getParameter("food_ypoint"));
 		System.out.println(multi.getParameter("food_xpoint"));
+
+		System.out.println("시간날짜1 : " + multi.getParameter("food_mindate"));
+		System.out.println("시간날짜2: " + multi.getParameter("food_maxdate"));
+		
+		System.out.println("시간민 : " + multi.getParameter("food_mintime"));
+		System.out.println("시간맥스: " + multi.getParameter("food_maxtime"));
 		
 		List<MultipartFile> files=multi.getFiles("food_menuImages");
 		System.out.println(files.size());

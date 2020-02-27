@@ -65,29 +65,30 @@ public class FoodUploadFile {
 	         
 	         //3.파일을 가져오기-파일태그가 1개 일때
 	         Map<String,String> fMap=new HashMap<String, String>();
-	         MultipartFile house_mainImage = multi.getFile("house_mainImage");
+	         MultipartFile food_mainImage = multi.getFile("food_mainImage");
 	         boolean f1=false;
 	         
 	    
 	          //파일 메모리에 저장
-	         MultipartFile mf=house_mainImage; //실제파일
+	         MultipartFile mf=food_mainImage; //실제파일
 	         String oriFileName=mf.getOriginalFilename();  //a.txt
-	         fMap.put("house_number",Integer.toString(food_number));
-	         fMap.put("house_oriname", oriFileName);
+	         fMap.put("food_number",Integer.toString(food_number));
+	         fMap.put("food_oriname", oriFileName);
 	         //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
 	         String sysFileName=System.currentTimeMillis()+"."
 	               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
-	         fMap.put("house_sysname", sysFileName);
+	         fMap.put("food_sysname", sysFileName);
 	         //5.메모리->실제 파일 업로드
 	         
 	         try {
 	            mf.transferTo(new File(path+sysFileName)); // 서버upload에 파일 저장
-	           f1=fDao.mainfileInsert(fMap); // db에 올림
+	            
+	            f1=fDao.mainfileInsert(fMap); // db에 올림
 	         }catch (IOException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
 	         }
-	         System.out.println("메인사진="+house_mainImage.getSize());
+	         System.out.println("메인사진="+food_mainImage.getSize());
 	      if(f1)
 	         return true;
 	      
@@ -130,7 +131,7 @@ public class FoodUploadFile {
 		         
 		         //3.파일을 가져오기-파일태그가 1개 일때
 		         Map<String,String> fMap=new HashMap<String, String>();
-		         List<MultipartFile> fList = multi.getFiles("house_detailImage");
+		         List<MultipartFile> fList = multi.getFiles("food_detailImage");
 		         boolean f2=false;
 		         
 		      for(int i=0;i<fList.size();i++) {
@@ -138,12 +139,12 @@ public class FoodUploadFile {
 		         MultipartFile mf=fList.get(i); //실제파일
 		         String oriFileName=mf.getOriginalFilename();  //a.txt
 		         System.out.println(oriFileName);
-		         fMap.put("house_number",Integer.toString(food_number));
-		         fMap.put("house_oriname", oriFileName);
+		         fMap.put("food_number",Integer.toString(food_number));
+		         fMap.put("food_oriname", oriFileName);
 		         //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
 		         String sysFileName=System.currentTimeMillis()+"."
 		               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
-		         fMap.put("house_sysname", sysFileName);
+		         fMap.put("food_sysname", sysFileName);
 		         //5.메모리->실제 파일 업로드
 		         
 		         try {
