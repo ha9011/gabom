@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,15 +32,10 @@ public class HomeController {
 	private ModelAndView mav;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model, HttpSession sess) {
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
+		System.out.println("첫페이지 ");
+		sess.setAttribute("testuserlogin", sess.getId());
 		return "home";
 	}
 	
@@ -51,19 +48,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login() {
-		System.out.println("login");
-		
-		
-		return "login/login";
-	}
 	
-	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public String join() {
-		System.out.println("join");
-		return "home";
-	}
 	
 	
 	

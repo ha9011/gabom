@@ -16,7 +16,6 @@ import icia.project.gabom.service.FoodRegisterService;
 
 @Controller
 public class FoodRegisterController {
-	private static final Logger logger = LoggerFactory.getLogger(HouseRegisterController.class);
 	private ModelAndView mav;
 	
 	@Autowired
