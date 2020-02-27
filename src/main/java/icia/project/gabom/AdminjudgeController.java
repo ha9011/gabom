@@ -21,9 +21,11 @@ public class AdminjudgeController {
 		
 		mav = am.housejudgelist();
 		
-		mav.setViewName("adminmenu");
+		
+		
 		return mav;
 	}
+	
 	
 	
 }
