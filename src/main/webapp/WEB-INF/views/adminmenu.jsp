@@ -47,6 +47,11 @@ li {
 }
 </style>
 <script>
+	console.log(${housejudge});
+	/* var a ="${housejudge}"
+	var b = JSON.parse(a);
+	console.log(typeof b); */
+	
 	
 </script>
 </head>
@@ -61,6 +66,7 @@ li {
 				</div>
 				<ul class="nav navbar-nav" id="menu_parent">
 					<li><a href="#">서비스업체 등록심사</a></li>
+					<li><input type="text"></li>
 					<li><a href='#'>서비스업체 신고관리</a></li>
 					<li><a href="#"> 여행객계획 등록심사</a></li>
 					<li><a href="#"> 여행객 신고관리</a></li>
@@ -73,7 +79,7 @@ li {
 		
 		<div id="admin_main">
 			<div id="service_judge">
-				<form action="servicejudgelist" method="post">서비스업체 신청내역</form>
+				<form action="servicejudgelist">서비스업체 신청내역</form>
 			</div>
 			<div id="tour_judge">
 				<form action="touristjudgelist" method="post">여행계획 신청 내역</form>
