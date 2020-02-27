@@ -42,9 +42,6 @@ public class HomeController {
 	
 
 
-
-	
-	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/houseRegister", method = RequestMethod.GET)
 	public ModelAndView houseRegister(Principal principal) {
