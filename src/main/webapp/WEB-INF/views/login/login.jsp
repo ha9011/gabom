@@ -50,9 +50,8 @@
 			font-weight: bold;
 			font-size: 30px;
 			border-radius: 40px;
-			color: #58ACFA;
-			background-color: #EFF5FB;
 			text-shadow: black 0.01em 0.01em 0.01em;
+			color: #58ACFA;
 		}
 		#apiLoginContainer{
 			text-align: center;
@@ -85,23 +84,23 @@
 	<br/>
 	<br/>
 	ID
-	<input type="text" class="col-md-12 col-sm-12 col-xs-12" id="member_id" name="member_id"><br/>
+	<input type="text" class="col-md-12 col-sm-12 col-xs-12" id="member_id" name="member_id" class="form-control"><br/>
 	<br/>
 	<br/>
 	<br/>
 	Password
 	<input type="password" class="col-md-12 col-sm-12 col-xs-12" 
-	id="member_password" name="member_password"><br/>
-	<input type="hidden" name="_csrf" value="${_csrf.token}">
+	id="member_password" name="member_password" class="form-control"><br/>
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	<br/>
 	<br/>
 	<br/>
 	<div class="row" id="findContainer">
 		<div class="col-md-6 col-sm-12 col-xs-12 " >
-			<button type="submit" class="btn btn-info" id="findId" formaction="searchuserinfo">find ID</button>
+			<button type="submit" class="btn btn-info" id="findId" formaction="searchuserid">find ID</button>
 		</div>
 		<div class="col-md-6 col-sm-12 col-xs-12">
-			<button type="submit" class="btn btn-info" id="findPassword" formaction="searchuserinfo">Forgot your password?</button>
+			<button type="submit" class="btn btn-info" id="findPassword" formaction="searchuserpassword">Forgot your password?</button>
 		</div>
 	</div>
 	<br/>
@@ -109,7 +108,7 @@
 	<input type="submit" class="col-md-12 col-sm-12 col-xs-12 btn btn-info" value="Login" id="loginButton" formaction="login">
 	<br/>
 	<br/>
-	<input type="submit" class="col-md-12 col-sm-12 col-xs-12 btn btn-default" value="Sign-up" id="signUpButton" formaction="signup">
+	<input type="submit" class="col-md-12 col-sm-12 col-xs-12 btn btn-group" value="Sign-up" id="signUpButton" formaction="signup">
 	<br/>
 	<br/>
 	<br/>

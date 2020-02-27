@@ -16,14 +16,18 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain=true)
 public class Member {
-	private String m_id;
-	private String m_pwd;
-	private String m_name;
-	private String m_birth;
-	private String m_addr;
-	private String m_phone;
-	private int m_point;
+	private String member_id;
+	private String member_password;
+	private String member_name;
+	private String member_phone;
+	private String member_email;
+	private String member_birth;
+	private int member_type;
+	private int member_login_check;
+	private String member_profile_picture;
+	private String member_profile_contents;
 	private int enabled;
+	private int member_money;
 	
 	private String g_name;
 }

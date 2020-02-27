@@ -1,5 +1,6 @@
 package icia.project.gabom;
 
+import java.security.Principal;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -40,24 +41,18 @@ public class HomeController {
 	}
 	
 
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String home() {
-		System.out.println("home");
-		
-		
-		return "home";
-	}
+
+
 	
 	
-	
-	
-	
-	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/houseRegister", method = RequestMethod.GET)
-	public String houseRegister() {
+	public ModelAndView houseRegister(Principal principal) {
 		System.out.println("houseRegister");
-		
-		return "register/houseRegister";
+		mav = new ModelAndView();
+		mav.setViewName("houseRegister");
+		System.out.println("사용자 정보"+principal.getName());
+		return mav;
 	}
 	
 	
