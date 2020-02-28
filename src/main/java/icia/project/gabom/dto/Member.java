@@ -25,6 +25,7 @@ public class Member {
 	private int member_type;
 	private int member_login_check;
 	private String member_profile_picture;
+	private String member_profile_original;
 	private String member_profile_contents;
 	private int enabled;
 	private int member_money;

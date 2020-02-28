@@ -17,9 +17,22 @@
 <!--  WHERE HOUSE_GRANTTYPE = 0 -->
 <!-- 등록대기 타입이 0인 애들 출력 -->
 <insert id="insertJoinMember" parameterType="member">
-	INSERT INTO MEMBER VALUES(#{member_id},#{member_password},#{member_name},#{member_phone},#{member_email},#{member_birth},#{member_type},1,#{member_profile_picture},#{member_profile_contents},1,0)
+	INSERT INTO MEMBER VALUES(#{member_id},#{member_password},#{member_name},#{member_phone},#{member_email},#{member_birth},#{member_type},1,#{member_profile_picture},#{member_profile_contents},1,0,#{member_profile_original})
 </insert>
-	
+
+<insert id="JoinMemberSecurityGrade" >
+	INSERT INTO AUTHORITIES VALUES(#{member_id}, #{securityGrade})
+</insert>
+
+
+<insert id="resultJoinMemberSecurityROLEUSER" >
+	INSERT INTO AUTHORITIES VALUES(#{member_id}, #{ROLE_USER})
+</insert>
+
+
+<select id="idCheck" parameterType="member" resultType="member" >
+	SELECT MEMBER_ID FROM MEMBER where MEMBER_ID = #{member_id}
+</select>
 <!-- <insert id="memberJoin" parameterType="member" > -->
 <!-- 	INSERT INTO M VALUES(#{m_id},#{m_pwd},#{m_name},#{m_birth},#{m_addr},#{m_phone},default,1) -->
 <!-- </insert> -->

@@ -5,11 +5,11 @@
          <Pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</Pattern>
       </encoder>
    </appender>
-   <logger name="com.board.icia " level="info" />
+   <logger name="icia.project.gabom " level="trace" />
    <!-- 테이블에 결과를 출력하기 위해서 info 대신 trace 설정 --> 
    <logger name="jdbc.resultsettable" level="trace" />
    <logger name="jdbc.audit" level="off" />
-   <logger name="jdbc.resultset" level="off" />
+   <logger name="jdbc.resultset" level="trace" />
    <logger name="jdbc.sqlonly" level="debug" />
    <logger name="jdbc.sqltiming" level="off" />
    <logger name="jdbc.connection" level="off" />
