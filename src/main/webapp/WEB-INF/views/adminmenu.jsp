@@ -126,11 +126,19 @@ li {
  	for(var i=0;i<house.length;i++){
  		strh+='<div style="border: 1px solid black; margin-top: 5px; id="house_judge">';
 		strh+='<div id="house_judge">';
-		strh+='<div id="list_left"><img style="height:250px; width:250px;" src="resources/housemainImage/upload/1582626283965.jpg"></div>';
+		//strh+='<div id="list_left"><img style="height:250px; width:250px;" src="resources/housemainImage/upload/1582626283965.jpg"></div>';
 		//풀요청받고 위에꺼랑 변경
-		//str+='<div id="list_left"><img style="height:250px; width:250px;" src="resources/housemainImage/upload/'+house[i].house_sysname+'"></div>';
+		str+='<div id="list_left"><img style="height:250px; width:250px;" src="resources/housemainImage/upload/'+house[i].house_sysname+'"></div>';
 		strh+='<div id="list_right">상호명 : '+house[i].house_name+'<br>';
-		strh+='주소 : '+house[i].house_address+'</div>';
+		if(house[i].house_type == 1){
+			strh+='집 유형 : 아파트 <br>';
+		}else if(house[i].house_type == 2){
+			strh+='집 유형 : 빌라 <br>';
+		}else if(house[i].house_type == 3){
+			strh+='집 유형 : 주택 <br>';
+		}
+		//strh+='집 유형 : '+house[i].house_type+'<br>';
+		strh+='집 주소 : '+house[i].house_address+'</div>';
 		strh+='</div>';
 		strh+='</div>';
 		//house[i].house_sysname
@@ -146,7 +154,15 @@ li {
 		strf+='<div id="food_judge">';
 		strf+='<div id="list_left"><img style="height:250px; width:250px;" src="resources/foodmainImage/upload/'+food[i].food_sysname+'"></div>';
 		strf+='<div id="list_right">상호명 : '+food[i].food_name+'<br>';
-		strf+='주소 : '+food[i].food_address+'</div>';
+		if(food[i].food_type == 1){
+			strf+='집 유형 : 레스토랑 <br>';
+		}else if(food[i].food_type == 2){
+			strf+='집 유형 : 카페 <br>';
+		}else if(food[i].food_type == 3){
+			strf+='집 유형 : 호프 <br>';
+		}
+		//strf+='음식점 유형 : '+food[i].food_type+'<br>';
+		strf+='음식점 주소 : '+food[i].food_address+'</div>';
 		strf+='</div>';
 		strf+='</div>';
  	}
