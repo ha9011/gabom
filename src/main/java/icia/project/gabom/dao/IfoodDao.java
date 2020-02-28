@@ -13,7 +13,7 @@ public interface IfoodDao {
 	@Insert("INSERT INTO FOODFILE VALUES(#{food_number},1,#{food_oriname},#{food_sysname})")
 	boolean mainfileInsert(Map<String, String> fMap);
 	
-	@Insert("INSERT INTO FOODFILE VALUES(#{food_number},1,#{food_oriname},#{food_sysname})")
+	@Insert("INSERT INTO FOODFILE VALUES(#{food_number},2,#{food_oriname},#{food_sysname})")
 	boolean detailfileInsert(Map<String, String> fMap);
 
 }
