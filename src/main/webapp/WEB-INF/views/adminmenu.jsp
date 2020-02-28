@@ -27,11 +27,11 @@
 	
 }
 
-#service_judge {
+#housemain_judge {
 	border: 1px solid black;
 }
 
-#tour_judge {
+#house_judge {
 	height: auto;
 	width: 100%;
 	display: block;
@@ -40,7 +40,19 @@
 	display: block;
 	overflow: auto;
 }
+#foodmain_judge {
+	border: 1px solid black;
+}
 
+#food_judge {
+	height: auto;
+	width: 100%;
+	display: block;
+	border: 1px solid black;
+	width: 100%;
+	display: block;
+	overflow: auto;
+}
 #list_left {
 	float: left;
 	height: 100%;
@@ -84,24 +96,13 @@ li {
 					<li><a href="#"> 여행객 신고관리</a></li>
 					<li><a href="#"> 전체회원 공지사항</a></li>
 					<li><a href="#"> QnA</a></li>
-					<li><button id="test_ajax">@</button></li>
 				</ul>
 			</div>
 		</div>
 		<div>
-			<div>
-				<div id="service_judge">
-
-					<!-- <div style="border: 1px solid black; margin-top: 5px;"
-				id="tour_judge">
-				<div id="tour_judge">
-					<div id="list_left">사진</div>
-					<div id="list_right">내용</div>
-				</div>
-			</div> -->
-
-
-				</div>
+			<div id="service_main">
+				<div id="housemain_judge"></div>
+				<div id="foodmain_judge"></div>
 			</div>
 		</div>
 
@@ -113,32 +114,43 @@ li {
 
 	<script>
 	console.log(${housejudge});
+	console.log("flist=",${foodjudge});
 	const house = ${housejudge};
+	const food = ${foodjudge};
 	console.log("house=",house);
-	console.log("1",house.length);
- 	
+	console.log("food=",food);
+	console.log("house",house.length);
+	console.log("food",food.length);
 	
-	let str=" ";
+	let strh=" ";
  	for(var i=0;i<house.length;i++){
- 		console.log(house[i].house_number);
- 		console.log(house[i].house_sysname);
- 		str+='<div style="border: 1px solid black; margin-top: 5px;';
-		str+='id="tour_judge">';
-		str+='<div id="tour_judge">';
-		str+='<div id="list_left"><img style="height:250px; width:250px;" src="resources/housemainImage/upload/1582626283965.jpg"></div>';
-		//str+='<div id="list_left"><img src="resources/housemainImage/upload/'+house[i].house_sysname+'"></div>';
-		str+='<div id="list_right">상호명 : '+house[i].house_name+'</div>';
-		str+='<div id="list_right">주소 : '+house[i].house_address+'</div>';
-		str+='</div>';
-		str+='</div>';
+ 		strh+='<div style="border: 1px solid black; margin-top: 5px; id="house_judge">';
+		strh+='<div id="house_judge">';
+		strh+='<div id="list_left"><img style="height:250px; width:250px;" src="resources/housemainImage/upload/1582626283965.jpg"></div>';
+		//풀요청받고 위에꺼랑 변경
+		//str+='<div id="list_left"><img style="height:250px; width:250px;" src="resources/housemainImage/upload/'+house[i].house_sysname+'"></div>';
+		strh+='<div id="list_right">상호명 : '+house[i].house_name+'<br>';
+		strh+='주소 : '+house[i].house_address+'</div>';
+		strh+='</div>';
+		strh+='</div>';
 		//house[i].house_sysname
  		/* const b = $("<div></div>").text(a.house_address);
  		const c= $("<div></div>").attr("src",'./resources/housemainImage/'+a.house_sysname); */
- 		
  	}
- 	$("#service_judge").append(str);
+ 	$("#housemain_judge").append(strh);
 
-	
+
+ 	let strf= " ";
+ 	for(var i=0;i<food.length;i++){
+ 		strf+='<div style="border: 1px solid black; margin-top: 5px; id="food_judge">';
+		strf+='<div id="food_judge">';
+		strf+='<div id="list_left"><img style="height:250px; width:250px;" src="resources/foodmainImage/upload/'+food[i].food_sysname+'"></div>';
+		strf+='<div id="list_right">상호명 : '+food[i].food_name+'<br>';
+		strf+='주소 : '+food[i].food_address+'</div>';
+		strf+='</div>';
+		strf+='</div>';
+ 	}
+ 	$("#foodmain_judge").append(strf);
 	
 </script>
 </body>

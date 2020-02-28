@@ -21,8 +21,6 @@ public class AdminjudgeController {
 		
 		mav = am.housejudgelist();
 		
-		
-		
 		return mav;
 	}
 	
