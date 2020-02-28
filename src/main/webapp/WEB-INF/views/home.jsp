@@ -22,6 +22,11 @@
 <a href="adminmenu">관리자 메뉴</a>
 
 <div>
+	<a href="housechoice">숙박</a>
+	<a href="foodmain">맛집</a>
+</div>
+
+<div>
 	<jsp:include page="/WEB-INF/views/footer.jsp"/>
 </div>
 

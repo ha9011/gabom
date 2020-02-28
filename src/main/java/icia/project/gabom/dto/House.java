@@ -40,6 +40,7 @@ public class House {
 	@DateTimeFormat(pattern="yyyy-mm-dd")
 	private String house_maxdate;
 	
-	
-	private Housefile bbbVo;
+	private int house_imagetype;
+	private String house_oriname;
+	private String house_sysname;
 }
