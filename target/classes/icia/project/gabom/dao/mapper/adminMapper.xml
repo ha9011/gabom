@@ -15,12 +15,22 @@
 	<!-- SELECT HOUSE_NAME,NVL(HOUSE_ADDRESS,0) FROM REGISTHOUSE -->
 	<!-- </select> -->
 
-	<!-- <select id="getHouseList" resultType="Map"> -->
-	<!-- SELECT HOUSE_NUMBER, HOUSE_NAME, NVL(HOUSE_ADDRESS,'없음'), -->
-	<!-- HOUSE_TYPE, HOUSE_GRANTTYPE -->
-	<!-- FROM REGISTHOUSE -->
-	<!-- where HOUSE_GRANTTYPE=0 -->
-	<!-- </select> -->
+
+<!-- 셀렉트 조인 맵으로 뽑을때 -->
+<!-- 	 <select id="getHouseList" resultType="HashMap">  -->
+<!-- 	 SELECT  -->
+<!-- 		RH.HOUSE_NUMBER, -->
+<!-- 		RH.HOUSE_NAME, -->
+<!-- 		NVL(RH.HOUSE_ADDRESS,'없음') c,  -->
+<!--  		RH.HOUSE_TYPE, -->
+<!--  		RH.HOUSE_GRANTTYPE, -->
+<!--  		HF.house_sysname -->
+<!-- 	FROM  -->
+<!-- 	REGISTHOUSE RH join HOUSEFILE HF  -->
+<!-- 	on RH.HOUSE_NUMBER = HF.HOUSE_NUMBERR  -->
+<!-- 	where HF.HOUSE_IMAGETYPE = 1  -->
+<!--  	and RH.HOUSE_GRANTTYPE = 0  -->
+<!-- 	 </select>  -->
 
 
 
@@ -55,21 +65,21 @@
 	<!-- and RH.HOUSE_GRANTTYPE =0 -->
 	<!-- </select> -->
 
-	<select id="getHouseList" resultType="admin">
-		SELECT 
-		RH.HOUSE_NUMBER,
-		RH.HOUSE_NAME,
-		NVL(RH.HOUSE_ADDRESS,'없음') as HOUSE_ADDRESS, 
- 		RH.HOUSE_TYPE,
- 		RH.HOUSE_GRANTTYPE,
- 		HF.house_sysname 
-	FROM 
-	REGISTHOUSE RH inner join HOUSEFILE HF 
-	on RH.HOUSE_NUMBER = HF.HOUSE_NUMBER 
-	
-	where HF.HOUSE_IMAGETYPE = 1 
- 	and RH.HOUSE_GRANTTYPE = 0 
-	</select>
+ 	<select id="getHouseList" resultType="admin"> 
+ 		SELECT  
+ 		RH.HOUSE_NUMBER, 
+ 		RH.HOUSE_NAME, 
+ 		NVL(RH.HOUSE_ADDRESS,'없음') as HOUSE_ADDRESS,  
+  		RH.HOUSE_TYPE, 
+  		RH.HOUSE_GRANTTYPE, 
+  		HF.house_sysname  
+ 	FROM  
+ 	REGISTHOUSE RH inner join HOUSEFILE HF  
+ 	on RH.HOUSE_NUMBER = HF.HOUSE_NUMBER  
+
+ 	where HF.HOUSE_IMAGETYPE = 1  
+  	and RH.HOUSE_GRANTTYPE = 0  
+ 	</select> 
 
 	<!-- <insert id="memberJoin" parameterType="member" > -->
 	<!-- INSERT INTO M VALUES(#{m_id},#{m_pwd},#{m_name},#{m_birth},#{m_addr},#{m_phone},default,1) -->

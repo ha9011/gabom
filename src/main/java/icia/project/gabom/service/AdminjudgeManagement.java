@@ -29,7 +29,7 @@ public class AdminjudgeManagement {
 		//	System.out.println(hlist.get(i).get("HOUSE_NAME"));
 		//}
 		
-//		List<Map<String, String>> testj = new ArrayList<Map<String,String>>();
+//		List<Map<String, String>> testj = new ArrayList<>();
 //		Map<String, String> mapj = new HashMap<String, String>();
 //		mapj.put("이름", "하동원");
 //		mapj.put("나이", "31");
@@ -39,10 +39,6 @@ public class AdminjudgeManagement {
 		
 		
 		String json=new Gson().toJson(hlist);
-		
-		
-		
-		
 		System.out.println("json12="+json);
 		mav.addObject("housejudge", json);
 		mav.setViewName("adminmenu");
