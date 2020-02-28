@@ -31,17 +31,17 @@ public class Housecontroller { //검색, 메인, 상세보기 컨트롤러
 	}
 	
 	@RequestMapping(value = "/housemain") // 숙소 메인 jsp
-	public String housemain(House house) {
+	public ModelAndView housemain(House house) {
 		System.out.println("집 목록 보여줘 ");
 		//String member_hostid=principal.getName();
 		
-		List<House> houselist = hDao.getHouseList();
-		System.out.println("houselist"+houselist.size());
-		System.out.println(houselist.toString());
+		//List<House> houselist = hDao.getHouseList();
+		//System.out.println("houselist"+houselist.size());
+		//System.out.println(houselist.toString());
 		
-		//mav=hs.getHouseList(house);
+		mav=hs.getHouseList(house);
 		
-		return "house/housemain";
+		return mav;
 	}
 
 }

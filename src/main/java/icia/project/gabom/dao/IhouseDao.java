@@ -20,8 +20,8 @@ public interface IhouseDao {
 	@Insert("INSERT INTO HOUSEFILE VALUES(#{house_number},2,#{house_oriname},#{house_sysname})")
 	boolean detailfileInsert(Map<String, String> fMap);
 
-	@Select("SELECT * FROM HOUSE_LIST")
-//	@Select("SELECT * FROM registhouse R, housefile HF WHERE R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND HOUSE_IMAGETYPE=1")
+//	@Select("SELECT * FROM HOUSE_LIST")
+	@Select("SELECT * FROM registhouse R, housefile HF WHERE R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND HOUSE_IMAGETYPE=1")
 	List<House> getHouseList();
 	
 	

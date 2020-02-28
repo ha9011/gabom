@@ -21,14 +21,15 @@ public class Houseservice {
 
 	public ModelAndView getHouseList(House house) {
 		System.out.println("여기 오니?");
+		mav = new ModelAndView();
 		String view = null;
 		
 		List<House> houselist = hDao.getHouseList();
 		System.out.println("houselist"+houselist.size());
 		System.out.println(houselist);
 		
-		//mav.addObject("houselist", houselist); // key,value
-		view="housemain.jsp";
+		mav.addObject("houselist", houselist); // key,value
+		view="house/housemain";
 	
 		System.out.println("집목록 ");
 		mav.setViewName(view); //view에 url로 이동
