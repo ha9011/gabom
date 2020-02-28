@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="icia.project.gabom.dao.SearchUserEmailDao">
- 	<select id="searchUserEmail" resultType="boolean">
- 		SELECT COUNT(MEMBER_EMAIL) FROM MEMBER WHERE MEMBER_EMAIL=#{member_email}
- 	</select>
+    <select id="searchUserEmail" resultType="boolean">
+       SELECT COUNT(MEMBER_EMAIL) FROM MEMBER WHERE MEMBER_EMAIL=#{member_email}
+    </select>
 </mapper>
