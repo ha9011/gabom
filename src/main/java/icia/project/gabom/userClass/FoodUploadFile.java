@@ -131,7 +131,7 @@ public class FoodUploadFile {
 		         
 		         //3.파일을 가져오기-파일태그가 1개 일때
 		         Map<String,String> fMap=new HashMap<String, String>();
-		         List<MultipartFile> fList = multi.getFiles("food_detailImage");
+		         List<MultipartFile> fList = multi.getFiles("food_menuImages");
 		         boolean f2=false;
 		         
 		      for(int i=0;i<fList.size();i++) {

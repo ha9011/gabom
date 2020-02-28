@@ -42,7 +42,7 @@
 			login-page="/login"
 			login-processing-url="/login"
 			default-target-url="/" 
-			authentication-failure-url="/login/?fail=true"/>
+			authentication-failure-url="/login"/>
 		<sec:logout 
 			logout-url="/logout" 
 			logout-success-url="/"/>

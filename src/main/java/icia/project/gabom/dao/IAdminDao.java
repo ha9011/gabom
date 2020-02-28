@@ -1,17 +1,15 @@
 package icia.project.gabom.dao;
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import icia.project.gabom.dto.House;
+import icia.project.gabom.dto.Adminhouse;
 
 
 
 public interface IAdminDao {
 	
-	List<HashMap<String, String>> getHouseList();
+	List<Adminhouse> getHouseList();
 	
 	
 }

@@ -1,6 +1,5 @@
 package icia.project.gabom.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 
 import icia.project.gabom.dao.IAdminDao;
+import icia.project.gabom.dto.Adminhouse;
 
 @Service
 public class AdminjudgeManagement {
@@ -19,7 +19,7 @@ public class AdminjudgeManagement {
 	
 	public ModelAndView housejudgelist() {
 		mav = new ModelAndView();
-		List<HashMap<String, String>> hlist = aDao.getHouseList();
+		List<Adminhouse> hlist = aDao.getHouseList();
 		System.out.println("List="+hlist);
 		System.out.println("List="+hlist.get(0));
 		System.out.println("hlist="+hlist.size());
