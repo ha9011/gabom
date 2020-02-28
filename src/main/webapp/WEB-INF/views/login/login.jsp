@@ -22,13 +22,13 @@
 			text-align: center;
 			
 		}
-		.jumbotron {
+		#loginBox {
 			text-shadow: black 0.2em 0.2em 0.2em;
-			color: white;
 			background-image: url(resources/loginimage/beach.jpg);
 			background-size: cover;
 			font-size: 30px;
 			font-weight: bold;
+			color: white;
 		}
 		#loginLogoImage{
 			border-radius: 30px;
@@ -74,12 +74,14 @@
 	</style>
 </head>
 <body>
-
+<header>
+<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
+</header>
 
 <div class="container">
-	<div class="jumbotron">
+	<div class="jumbotron" id="loginBox">
 	<form action="" method="post">
-	<div id="loginImage"><img src="resources/loginimage/logo2.png" class="img-thumbnail" id="loginLogoImage"></div>
+	<!-- <div id="loginImage"><img src="resources/loginimage/logo2.png" class="img-thumbnail" id="loginLogoImage"></div> -->
 	<br/>
 	<br/>
 	<br/>
