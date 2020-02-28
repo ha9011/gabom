@@ -119,7 +119,13 @@
 	<br/>
 	</div>
 </div>
+	<script type="text/javascript">
+	let result="${message.message}"
+		if(result!=''&&result!=undefined){
+			alert(result);
+		}
 	
+	</script>
 	
 </body>
 </html>
