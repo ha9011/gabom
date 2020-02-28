@@ -20,7 +20,6 @@ public class AdminjudgeManagement {
 		List<House> hlist = aDao.getHouseList();
 		System.out.println("hlist="+hlist.size());
 		
-		
 		return mav;
 	} //housejudgelist End
 	
