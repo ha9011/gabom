@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 //@NoArgsConstructor
 //@AllArgsConstructor
 
-@Alias("admin")
+@Alias("adminhouse")
 @Data
 @Accessors(chain=true)
 public class Adminhouse {

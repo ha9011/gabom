@@ -15,28 +15,38 @@
 	<!-- SELECT HOUSE_NAME,NVL(HOUSE_ADDRESS,0) FROM REGISTHOUSE -->
 	<!-- </select> -->
 
-	<!-- <select id="getHouseList" resultType="Map"> -->
-	<!-- SELECT HOUSE_NUMBER, HOUSE_NAME, NVL(HOUSE_ADDRESS,'없음'), -->
-	<!-- HOUSE_TYPE, HOUSE_GRANTTYPE -->
-	<!-- FROM REGISTHOUSE -->
-	<!-- where HOUSE_GRANTTYPE=0 -->
+
+	<!-- 셀렉트 조인 맵으로 뽑을때 -->
+	<!-- <select id="getHouseList" resultType="HashMap"> -->
+	<!-- SELECT -->
+	<!-- RH.HOUSE_NUMBER, -->
+	<!-- RH.HOUSE_NAME, -->
+	<!-- NVL(RH.HOUSE_ADDRESS,'없음') c, -->
+	<!-- RH.HOUSE_TYPE, -->
+	<!-- RH.HOUSE_GRANTTYPE, -->
+	<!-- HF.house_sysname -->
+	<!-- FROM -->
+	<!-- REGISTHOUSE RH join HOUSEFILE HF -->
+	<!-- on RH.HOUSE_NUMBER = HF.HOUSE_NUMBERR -->
+	<!-- where HF.HOUSE_IMAGETYPE = 1 -->
+	<!-- and RH.HOUSE_GRANTTYPE = 0 -->
 	<!-- </select> -->
 
 
 
-<!-- 	<resultMap type="hfile" id="Housefile"> -->
-<!-- 		<result column="HOUSE_NUMBER" property="house_number" /> -->
-<!-- 		<result column="HOUSE_SYSNAME" property="house_sysname" /> -->
-<!-- 	</resultMap> -->
+	<!-- <resultMap type="hfile" id="Housefile"> -->
+	<!-- <result column="HOUSE_NUMBER" property="house_number" /> -->
+	<!-- <result column="HOUSE_SYSNAME" property="house_sysname" /> -->
+	<!-- </resultMap> -->
 
-<!-- 	<resultMap type="house" id="House1"> -->
-<!-- 		<result column="HOUSE_NUMBER" property="house_number" /> -->
-<!-- 		<result column="HOUSE_NAME" property="house_name" /> -->
-<!-- 		<result column="HOUSE_ADDRESS" property="house_address" /> -->
-<!-- 		<result column="HOUSE_TYPE" property="house_type" /> -->
-<!-- 		<result column="HOUSE_GRANTTYPE" property="house_granttype" /> -->
-<!-- 		<collection property="bbbVo" resultMap="Housefile" /> -->
-<!-- 	</resultMap> -->
+	<!-- <resultMap type="house" id="House1"> -->
+	<!-- <result column="HOUSE_NUMBER" property="house_number" /> -->
+	<!-- <result column="HOUSE_NAME" property="house_name" /> -->
+	<!-- <result column="HOUSE_ADDRESS" property="house_address" /> -->
+	<!-- <result column="HOUSE_TYPE" property="house_type" /> -->
+	<!-- <result column="HOUSE_GRANTTYPE" property="house_granttype" /> -->
+	<!-- <collection property="bbbVo" resultMap="Housefile" /> -->
+	<!-- </resultMap> -->
 
 
 	<!-- <select id="getHouseList" resultMap="House1"> -->
@@ -55,22 +65,26 @@
 	<!-- and RH.HOUSE_GRANTTYPE =0 -->
 	<!-- </select> -->
 
-	<select id="getHouseList" resultType="admin">
-		SELECT 
-		RH.HOUSE_NUMBER,
-		RH.HOUSE_NAME,
-		NVL(RH.HOUSE_ADDRESS,'없음') as HOUSE_ADDRESS, 
- 		RH.HOUSE_TYPE,
- 		RH.HOUSE_GRANTTYPE,
- 		HF.house_sysname 
-	FROM 
-	REGISTHOUSE RH inner join HOUSEFILE HF 
-	on RH.HOUSE_NUMBER = HF.HOUSE_NUMBER 
-	
-	where HF.HOUSE_IMAGETYPE = 1 
- 	and RH.HOUSE_GRANTTYPE = 0 
-	</select>
+	<select id="getHouseList" resultType="adminhouse">
+		SELECT
+		RH.HOUSE_NUMBER, RH.HOUSE_NAME, NVL(RH.HOUSE_ADDRESS,'없음') as HOUSE_ADDRESS, RH.HOUSE_TYPE,
+		RH.HOUSE_GRANTTYPE, HF.house_sysname
+		FROM
+		REGISTHOUSE RH join HOUSEFILE HF
+		on RH.HOUSE_NUMBER = HF.HOUSE_NUMBER
 
+		where HF.HOUSE_IMAGETYPE = 1
+		and RH.HOUSE_GRANTTYPE = 0
+	</select>
+	
+	<select id="getFoodList" resultType="adminfood">
+		SELECT 
+		FS.FOOD_NUMBER, FS.FOOD_NAME, FS.FOOD_ADDRESS, FS.FOOD_TYPE, FS.FOOD_GRANTTYPE, FF.FOOD_SYSNAME
+		FROM FOODSHOP FS JOIN FOODFILE FF
+		ON FS.FOOD_NUMBER = FF.FOOD_NUMBER
+		WHERE FF.FOOD_IMAGETYPE = 1
+		AND FS.FOOD_GRANTTYPE = 0
+	</select>
 	<!-- <insert id="memberJoin" parameterType="member" > -->
 	<!-- INSERT INTO M VALUES(#{m_id},#{m_pwd},#{m_name},#{m_birth},#{m_addr},#{m_phone},default,1) -->
 	<!-- </insert> -->

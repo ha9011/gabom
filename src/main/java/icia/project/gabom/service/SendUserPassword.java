@@ -14,6 +14,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,12 +30,18 @@ public class SendUserPassword {
 	public Map<String, String> sendUserpassword(Member member) {
 		HashMap<String, String> message = new HashMap<String, String>();
 		Random random= new Random();
-		int temporaryPassword= random.nextInt(5);//4자리수로 바꿀것
+		int temporaryPassword= random.nextInt(5000);//4자리수로 바꿀것
 		//4자리수를 bctype인코더로 바꿀것
+		//인코더로 바꾸고 인설트
 		System.out.println("임시 비밀번호="+temporaryPassword);
-		boolean result=temporaryPasswordDao.temporaryPasswordDao(member,temporaryPassword);
+		String stringTemporaryPassword=Integer.toString(temporaryPassword);
+		BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder(); //암호화 시작
+		String member_password = pwdEncoder.encode(stringTemporaryPassword); //암호화 입력
+		System.out.println("암호화 : " + member_password);
+		boolean result=temporaryPasswordDao.temporaryPasswordDao(member,member_password);
 		if(result==true) {
-			System.out.println("가따온 다음 패스워스"+member.getMember_password());
+			System.out.println("가따온 다음 패스워스 암호화"+member.getMember_password());
+			System.out.println("Dao 후 입력값"+temporaryPassword);
 			// Mail Server 설정
 			String host = "smtp.gmail.com";
 			String username = "kohkss993";
@@ -47,7 +54,7 @@ public class SendUserPassword {
 			// 회원가입 메일 내용
 			subject = "Gabom 임시 비밀번호 발송";
 			
-			msg +="회원 님의 임시 비밀번호는   "+ member.getMember_password() + " 마이페이지에 수정 해주세요.";
+			msg +="회원 님의 임시 비밀번호는   "+ temporaryPassword + " 마이페이지에 수정 해주세요.";
 
 			Properties props = System.getProperties();
 			props.put("mail.smtp.host", host);
