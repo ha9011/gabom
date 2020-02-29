@@ -81,16 +81,6 @@ color: #064D84;
 	</div>
 
 
-	<%-- <sec:authorize access="isAnonymous()">
-		<a href="login">로그인</a>
-		<a href="joinmember">회원가입</a>
-	</sec:authorize>
-	<sec:authorize access="isAuthenticated()">
-		<a href="myinfo">나의정보</a>
-		<form method="post" action="/gabom/logout">
-			<input type="submit" value="로그아웃"> <input type="hidden"
-				name="${_csrf.parameterName}" value="${_csrf.token}" />
-		</form>
-	</sec:authorize> --%>
+	
 </body>
 </html>
