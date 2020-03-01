@@ -33,7 +33,7 @@
 
 
 <a href="login">로그인</a>
-<a href="joinmember">회원가입</a>
+<a href="joinselecttype">회원가입</a>
 <a href="myinfo">나의정보</a>
 <a href="serviceinfo">회사정보</a>
 <a href="houseRegister">집등록</a>

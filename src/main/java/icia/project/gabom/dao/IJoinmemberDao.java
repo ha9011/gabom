@@ -15,5 +15,7 @@ public interface IJoinmemberDao {
 	
 	//@Select("SELECT MEMBER_ID FROM MEMBER where MEMBER_ID = #{userid}")
 	Member idCheck(Member mb);
+
+	Member emailCheck(Member mb);
 	
 }

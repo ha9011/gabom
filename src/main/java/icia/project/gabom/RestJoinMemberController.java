@@ -31,4 +31,22 @@ public class RestJoinMemberController {
 		
 	}
 	
+	@RequestMapping(value = "/useremail", produces="text/plain;charset=utf-8")
+	public String emailCheck(Member mb){
+		System.out.println("ajax 접근");
+		System.out.println("id="+mb.getMember_id());
+		
+		Member resultMember_email = JMMM.emailCheck(mb);
+		String result = null;
+		if( resultMember_email == null) {
+			result="0";  //없을 경우
+		}else {
+			result="1"; // 있을 경우
+		}
+		return result;
+		
+	}
+	
+	
+	
 }

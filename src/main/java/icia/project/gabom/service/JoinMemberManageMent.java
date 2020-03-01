@@ -131,6 +131,18 @@ public class JoinMemberManageMent {
 		return result;
 	}
 
+	public Member emailCheck(Member mb) {
+		Member result = ijDao.emailCheck(mb);
+		System.out.println("result : " + result);
+		if( result == null) {
+			System.out.println("이메일이 존재 하지 않습니다.");
+		}else {
+			System.out.println("이메일이 존재 합니다.");
+		}
+		
+		return result;
+	}
+
 	
 	
 	

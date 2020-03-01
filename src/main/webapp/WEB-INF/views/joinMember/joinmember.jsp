@@ -15,7 +15,7 @@
 			onsubmit="return checkForm();">
 
 			<div id="profilePic">
-				<img src="./resources/loginimage/a.png" width="80px" height="80px">
+				<img src="./resources/userprofileimage/upload/basicprofile.jpg" width="80px" height="80px" id="previewPic">
 				<!-- 기본 이미지 -->
 				<br> <input type="file" name="member_profile_picture"
 					id="member_profile_picture" >
@@ -57,11 +57,10 @@
 				생년월일 : <input type="date" name="member_birth" id="member_birth">
 			</div>
 
-			<div id="insertType">
-				타 입 : <input type="radio" name="member_type" id="member_type_Travel"
-					checked="checked" value="1">여행자 <input type="radio"
-					name="member_type" id="member_type_Servicer" value="2">서비스
-			</div>
+			
+			<!-- type은 전 페이지에서 mav로 받아옴 -->
+			<input type="hidden" name="member_type" id="member_type">
+			
 
 			<div id="insertIntroduce">
 				<input type="text" name="member_profile_contents"
@@ -76,15 +75,44 @@
 		</form>
 	</div>
 
-	<script type="text/javascript">
-		
-	console.log("유효성검사 시작")
+</body>
+
+<script type="text/javascript">
+	console.log("넘어온 type 확인 : " + ${type})
+	var type = "${type}"
+	$("#member_type").val(type);
+	
+	console.log("유효성검사 시작");
 	var userPic = $("#member_profile_picture");
-	userPic.on("change",function(){
+	var preview = $("#previewPic");
+	
+	userPic.on("change",function(e){
 		if(userPic.val().length===0){
 			$("#profillCheck").val("0");
+			// 미리 보기 심기
+			
+			preview.attr("src","");
+			preview.attr('src', "./resources/userprofileimage/upload/basicprofile.jpg");
+			
+			
 		}else{
 			$("#profillCheck").val("1");
+			
+			preview.attr('src', ""); // 변할 때마다 리셋
+			var files = e.target.files;
+			
+			console.log(files[0]); // 파일 어떤 내용들었는지 보기 1개니깐 [0]
+			
+			if(!files[0]["type"].match("image.*")){
+				alert("확장자는 이미지 확장자만 가능함")
+				return 
+			}
+			
+			 var reader = new FileReader();
+	         reader.onload = function(e) {
+	        	 preview.attr('src', e.target.result);
+	         }
+	         reader.readAsDataURL(files[0]);
 		}
 	
 	})
@@ -201,13 +229,9 @@
 
 	$("#member_id").on("blur", function(e){
 		console.log("아이디 중복 확인 blur");
-		
-
 		var userCheck = $("#checkID");
 		var id = e.target.value;
 		console.log(id);
-		
-		
 		$.ajax({
 			url:"join/userid",
 			data:"member_id="+id,
@@ -226,40 +250,128 @@
 				
 				// 아이디 입력 유무 체크
 				
-			
-				
 				if (id == '') {
 					userCheck.empty()
 					userCheck.css("color","red").text("필수 기재 사항입니다.")
-					userId.focus();
 				}else if (!/^[A-Za-z0-9]{4,20}$/.test(id)) {   
 					userCheck.empty()
 					userCheck.css("color","red").text("영문,숫자 4~20 조합하셔야 합니다.")
-					userId.focus();
 				}else if(rest == 1){
 					userCheck.empty()
 					userCheck.css("color","red").text("이미 사용된 아이디입니다.")
 				}else if(rest == 0){
 					userCheck.empty()
 					userCheck.css("color","green").text("사용가능한 아이디 입니다.")
-					userId.focus();
 				}	
-					
-				
-				
-				
-				
 				
 		})
 		.fail((rest)=>{console.log("실패 : " + rest)});
 		
 		
-		
+	})
+	
+	
+	$("#member_email").on("blur", function(e){
+		console.log("이메일 중복 확인 blur");
+		var checkEmail = $("#checkEmail");
+		var email = e.target.value;
+		console.log(email);
+		$.ajax({
+			url:"join/useremail",
+			data:"member_email="+email,
+			method:"get",
+			dataType:"json",
+			//콜백지옥을 해결하기 위해 [es6] promise-await,async   
+			// jquery 방식은 - deferred객체를 쓴다. 
+		})
+		.done((rest)=>{
+				
+				console.log("rest : " +rest);
+				var checkEmail = $("#checkEmail");
+				checkEmail.empty()
+				var userEmail = $("#member_email");
+				
+				// 아이디 입력 유무 체크
+				var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+				if (email == '') {
+					console.log("e1")
+					checkEmail.empty()
+					checkEmail.css("color","red").text("필수 기재 사항입니다.")
+				}else if (!regExp.test(email)) {   
+					console.log("e2")
+					checkEmail.empty()
+					checkEmail.css("color","red").text("이메일형식으로 넣어야합니다..")
+				}else if(rest == 1){
+					console.log("e3")
+					checkEmail.empty()
+					checkEmail.css("color","red").text("이미 사용중인 이메일입니다.")
+				}else if(rest == 0){
+					console.log("e4")
+					checkEmail.empty()
+					checkEmail.css("color","green").text("사용가능한 이메일 입니다.")
+				}	
+		})
+		.fail((rest)=>{console.log("실패 : " + rest)});
 		
 	})
 		
-	</script>
-</body>
-
+		
+		// 비밀번호 정규식 검사
+		
+		
+		$("#member_password").on("blur", function(e){
+			console.log("비밀번호 정규식 확인 blur1");
+			var checkPWD = $("#checkPWD");
+			var PWD = e.target.value;
+			console.log(PWD);
+					
+					checkPWD.empty()
+					var userPWD = $("#member_password");
+					
+					// 비밀번호 입력, 정규식 등등 유무
+					var regExp = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/;
+					if (PWD == '') {
+						console.log("e1")
+						checkPWD.empty()
+						checkPWD.css("color","red").text("필수 기재 사항입니다.")
+					}else if (!regExp.test(PWD)) {   
+						console.log("e2")
+						checkPWD.empty()
+						checkPWD.css("color","red").text("비밀번호는 특수문자 1개이상, 대문자 1개이상, 소문자, 숫자 조합입니다.")
+					}
+		})
+		
+		$("#member_password_check").on("blur", function(e){
+			console.log("비밀번호 정규식 확인 blur2");
+			var checkPWD = $("#checkPWD");
+			var PWD = e.target.value;
+			console.log(PWD);
+					
+					checkPWD.empty();
+					var userCheckPWD = $("#member_password_check").val();
+					var userPWD = $("#member_password").val();
+					console.log("userCheckPWD : " +userCheckPWD);
+					console.log("userPWD : " +userPWD);
+					// 비밀번호 입력, 정규식 등등 유무
+					var regExp = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/;
+					
+					if (PWD == '') {
+						console.log("e1")
+						checkPWD.empty()
+						checkPWD.css("color","red").text("필수 기재 사항입니다.")
+					}else if (!regExp.test(PWD)) {   
+						console.log("e2")
+						checkPWD.empty()
+						checkPWD.css("color","red").text("비밀번호는 특수문자 1개이상, 대문자 1개이상, 소문자, 숫자 조합입니다.")
+					}else if (userCheckPWD === userPWD) {   
+						console.log("e2")
+						checkPWD.empty()
+						checkPWD.css("color","green").text("비밀번호가 일치 합니다.")
+					}else if(userCheckPWD !== userPWD){
+						checkPWD.empty()
+						checkPWD.css("color","red").text("비밀번호가 일치 하지 않습니다.")
+					}
+		});
+</script>
 
 </html>
