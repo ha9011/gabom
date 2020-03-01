@@ -19,43 +19,46 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Jua&display=swap&subset=korean" rel="stylesheet">
 <style type="text/css">
-#idJumbo {
-	text-shadow: black 0.2em 0.2em 0.2em;
-	color: white;
+#idContainer {
+	color: #585858;
 	background-image: url(resources/searchuserinfo/al.jpg);
 	background-size: cover;
+	height: 600px;
 }
 
-#passwordJumbo {
-	text-shadow: black 0.2em 0.2em 0.2em;
-	color: white;
+#passwordContainer {
+	text-shadow: black 0em 0em 0em;
+	color: #585858;
 	background-image: url(resources/searchuserinfo/lan.jpg);
 	background-size: cover;
+	height: 600px;
 }
 
 #idTitle {
-	font-size: 50px;
+	font-size: 23px;
 	font-weight: bold;
+	color:#58ACFA; 
 }
 
 #idEmail {
-	font-size: 30px;
+	font-size: 15px;
 	font-weight: bold;
 }
 
 #member_email, #member_password_id, #member_password_email {
-	height: 50px;
+	height: 40px;
 	border-radius: 30px;
-	color: black;
+	color: #585858;
 	font-weight: bold;
 }
 
 #searchId, #searchpassword {
-	height: 100px;
-	font-size: 40px;
-	text-shadow: black 0.1em 0.1em 0.1em;
-	border-radius: 25px;
+	height: 40px;
+	font-size: 20px;
+	text-shadow: black 0em 0em 0em;
+	border-radius: 10px;
 	font-weight: bold;
 }
 
@@ -68,26 +71,35 @@
 #idContainer, #passwordContainer {
 	display: none;
 }
+.jumbotron{
+		color: #585858;
+		width: 430px;
+		height: 500px;
+		margin: 0 auto;
+		margin-top: 40px;
+		font-family: 'Jua' ;
+		}
 </style>
 </head>
 <body>
-	<div class="container" id="idContainer">
-		<div class="jumbotron" id="idJumbo">
-			<div class="col-md-12" id="idTitle">아이디 찾기</div>
+<header>
+<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
+</header>
+	<div class="container-fluid" id="idContainer">
+			<div class="jumbotron">
+			<div class="col-md-12" id="idTitle">아이디 찾기/<a href="searchuserpassword" style="color:#585858;">비밀번호 찾기</a></div>
 			<br /> <br /> <br /> <br /> <br /> <br />
 			<form action="senduserid" method="post" onsubmit="return checkBox(1)"
 				name="idform">
-				<div class="col-md-12" id="idEmail">E-mail</div>
-				<br /> <br /> <br /> <br /> <br /> <br />
+				<div class="col-md-12" id="idEmail">이메일</div>
+				<br /> <br />
 				<div>
 					<input type="text" class="col-md-12 col-sm-12 col-xs-12"
 						id="member_email" name="member_email">
 				</div>
 				<br /> <br /> <br /> <br />
-				<div class="col-md-12"></div>
-				<br /> <br /> <br /> <br />
 				<div id="alertBox"></div>
-				<br /> <br /> <br /> <br />
+				<br /><br/> <br /> <br /> <br />
 				<div>
 					<input type="submit" class="btn-info col-md-12 col-xs-12 col-sm-12"
 						value="아이디 찾기" id="searchId">
@@ -97,30 +109,33 @@
 					value="${_csrf.token}"> <br /> <br />
 			</form>
 			<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
-		</div>
+			</div>
 	</div>
-	<div class="container" id="passwordContainer">
-		<div class="jumbotron" id="passwordJumbo">
+	<div class="container-fluid" id="passwordContainer">
+			<div class="jumbotron">
 			<form action="senduserpassword" method="post"
 				onsubmit="return checkBox(2)">
-				<div class="col-md-12" id="idTitle">패스워드 찾기</div>
-				<br /> <br /> <br /> <br /> <br /> <br />
-				<div class="col-md-12" id="idEmail">E-mail</div>
+				<div class="col-md-12" id="idTitle">패스워드 찾기/<a href="searchuserid" style="color:#585858;">아이디 찾기</a></div>
 				<br /> <br /> <br />
+				<div class="col-md-12" id="idEmail">E-mail</div>
 				<div>
 					<input type="text" class="col-md-12 col-sm-12 col-xs-12"
 						id="member_password_email" name="member_email">
-				</div>
-				<br /> <br /> <br /> <br /> <br /> <br />
+				</div><br/><br/><br/><br/><br/>
 				<div class="col-md-12" id="idEmail">ID</div>
-				<br /> <br /> <br />
+				<br/>
 				<div>
 					<input type="text" class="col-md-12 col-sm-12 col-xs-12"
 						id="member_password_id" name="member_id">
 				</div>
-				<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+				<br /> 
+				<br /> 
+				<br/>
+				<br/>
 				<div id="alertBoxPassword"></div>
-				<br /> <br /> <br /> <br /> <br /> <br />
+				<br /> 
+				<br />
+				<br/><br/><br/>
 				<div>
 					<input type="submit" class="btn-info col-md-12 col-xs-12 col-sm-12"
 						value="패스워드 찾기" id="searchpassword">
@@ -129,7 +144,7 @@
 					value="${_csrf.token}">
 			</form>
 			<br /> <br />
-		</div>
+			</div>
 	</div>
 	<script type="text/javascript">
 	
@@ -156,10 +171,12 @@
 	}
 	let type='${type}';
 	if(type=='id'){
-		$("#idContainer").css("display","block");
+		$("#idContainer").fadeIn('slow');
+		//$("#idContainer").css("display","block");
 		$("#passwordContainer").css("display","none");
 	}else if(type=='password'){
-		$("#passwordContainer").css("display","block");
+		$("#passwordContainer").fadeIn('slow');
+		//$("#passwordContainer").css("display","block");
 		$("#idContainer").css("display","none");
 	}
 	//type이 아이디일경우 id div 비밀번호일경우 비밀번호 div

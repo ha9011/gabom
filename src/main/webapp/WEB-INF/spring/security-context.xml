@@ -33,6 +33,7 @@
 		2-2 시큐리티 어노테이션 사용-->
 	<!-- <sec:http pattern="/" security="none"></sec:http> -->
  	<!-- <sec:http pattern="/houseregisterupload" security="none"></sec:http> -->
+ 	<sec:http pattern="/resources/**" security="none"/>
 	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	<sec:http auto-config="true">
 	<!-- <sec:intercept-url pattern="/**" access="permitAll"/> -->
@@ -42,7 +43,7 @@
 			login-page="/login"
 			login-processing-url="/login"
 			default-target-url="/" 
-			authentication-failure-url="/login"/>
+			authentication-failure-url="/login?fail=true"/>
 		<sec:logout 
 			logout-url="/logout" 
 			logout-success-url="/"/>
