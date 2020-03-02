@@ -1,5 +1,7 @@
 package icia.project.gabom;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,29 @@ public class AdminjudgeController {
 		
 		return mav;
 	}
+	
+	//미사용
+//	@RequestMapping(value = "/sucess")
+//	public ModelAndView judgedetail(HttpServletRequest req) {
+//		mav = new ModelAndView();
+//		System.out.println("modal");
+//		//System.out.println("타입"+req.getAttribute("type"));
+//		mav = am.detailjudge();
+//		
+//		return mav;
+//	}
+	
+	//미사용
+//	@RequestMapping(value = "/judgemodal")
+//	public ModelAndView judgeModal() {
+//		mav = new ModelAndView();
+//		System.out.println("modal");
+//		//System.out.println("타입"+req.getAttribute("type"));
+//		mav = am.modaljudge();
+//		
+//		return mav;
+//	}
+	
 	
 	
 	
