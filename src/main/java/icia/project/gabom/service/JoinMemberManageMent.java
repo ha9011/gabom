@@ -49,7 +49,7 @@ public class JoinMemberManageMent {
 			member_profile_original = multi.getFile("member_profile_picture").getOriginalFilename();
 			System.out.println("member_profile_original : "+member_profile_original); //member_profile_picture : loginpic.jpg
 			
-			 member_profile_picture=member_id+System.currentTimeMillis()+"."
+			 member_profile_picture = "./resources/userprofileimage/upload/"+member_id+System.currentTimeMillis()+"."
 		               +member_profile_original.substring(member_profile_original.lastIndexOf(".")+1);
 		
 		
@@ -57,7 +57,7 @@ public class JoinMemberManageMent {
 			System.out.println("파일없음");
 			member_profile_original = "bagicProfile.jpg";
 			System.out.println("member_profile_original : "+member_profile_original); //member_profile_picture : loginpic.jpg
-			member_profile_picture=member_profile_original;
+			member_profile_picture= "./resources/userprofileimage/upload/"+member_profile_original;
 		
 		}
 		
@@ -89,7 +89,22 @@ public class JoinMemberManageMent {
 		//db에 데이터 넣기
 		int resultJoinMember = ijDao.insertJoinMember(mb);  
 		
-		System.out.println("insert 성공여부 reulst = " + resultJoinMember);
+		if(profillCheck.equals("1")) {
+			System.out.println("파일있음");
+			member_profile_original = multi.getFile("member_profile_picture").getOriginalFilename();
+			System.out.println("member_profile_original : "+member_profile_original); //member_profile_picture : loginpic.jpg
+			 member_profile_picture = member_id+System.currentTimeMillis()+"."
+		               +member_profile_original.substring(member_profile_original.lastIndexOf(".")+1);
+		}else {
+			System.out.println("파일없음");
+			member_profile_original = "basicprofile.jpg";
+			System.out.println("member_profile_original : "+member_profile_original); //member_profile_picture : loginpic.jpg
+			member_profile_picture= member_profile_original;
+		}
+		
+		
+		
+				System.out.println("insert 성공여부 reulst = " + resultJoinMember);
 		if(resultJoinMember == 1) { // 성공일 경우 파일 업로드 하고, 파일 업로드까지 성공 할 경우, 
 			int resultJoinMemberSecurityGrade = ijDao.JoinMemberSecurityGrade(member_id,securityGrade); // 시큐리티 등급 
 			int resultJoinMemberSecurityROLEUSER = ijDao.resultJoinMemberSecurityROLEUSER(member_id,"ROLE_USER"); // 시큐리티 등급 
@@ -118,6 +133,8 @@ public class JoinMemberManageMent {
 		return mav;
 	}
 
+	
+	
 	public Member idCheck(Member mb) {
 		
 		Member result = ijDao.idCheck(mb);
