@@ -210,7 +210,8 @@ li {
 		strf+='</div>';
  	}
  	$("#foodmain_judge").append(strf);
-	
+	 
+ 	
  	$('.house').on('click',function(e){
  		console.log(e.target.dataset.number);
  		var params = e.target.dataset.number;
@@ -228,12 +229,37 @@ li {
                 type : "get",
                 data : {"num":params}, 
                 success : function(response) {
-                    console.log("123",response);
+                	//console.log("123__",response); 	
+ 					//var response = "";
+ 					response = JSON.parse(response);
+ 					
+                	/* var w = new Array();
+                    for ( var i=0;i<1;i++){ 
+                    		w.push(response)	
+                            console.log("123",w);
+                    }
                     
+                	let strj = " " ; */
+ 
                     let strj = " ";
+                    strj += '<div class="modal-body">';
+                    strj += '등록번호 : '+response[i].house_number+'<br>';
+                    strj += '아이디 : '+response[i].house_hostid+'<br>';
+                    strj += '이름 : '+response[i].house_name+'<br>';
+                    strj += '주소 : '+response[i].house_address+'<br>';
+                    strj += '집유형 : '+response[i].house_type+'<br>';
+                    strj += '수용인원 : '+response[i].house_person+'<br>';
+                    strj += '주차공간 : '+response[i].house_parkable+'<br>';
+                    strj += '방갯수 : '+response[i].house_rooms+'<br>';
+                    strj += '침대수 : '+response[i].house_beds+'<br>';
+                    strj += '욕실 : '+response[i].house_bathrooms+'<br>';
+                    strj += '체크인 : '+response[i].house_mindate+'<br>';
+                    strj += '체크아웃 : '+response[i].house_maxdate+'<br>';
+                    strj += '1박가격 : '+response[i].house_price+'<br>';
+                    strj += '</div>';
+                    /*
                     for(var i=0;i<1;i++){
-                    	console.log("i",i);
-                    	console.log("asdasd11",response.house_number);	
+                        console.log("123__",response); 
                     strj += '<div class="modal-body">';
                     strj += '등록번호 '+response[i].house_number+'<br>';
                     strj += '아이디 '+response[i].house_hosrid+'<br>';
@@ -253,6 +279,8 @@ li {
                     strj += '사진';
                     strj += '</div>';
                     } 
+                    */
+                    
                     $("#judge_modal").append(strj);
                 }, error : function(jqXHR, status, e) {
                     //console.error(status + " :asdasd " + e);
