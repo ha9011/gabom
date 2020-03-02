@@ -1,12 +1,16 @@
 package icia.project.gabom;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.project.gabom.dao.IhouseDao;
@@ -43,5 +47,16 @@ public class Housecontroller { //검색, 메인, 상세보기 컨트롤러
 		
 		return mav;
 	}
+	
+	@GetMapping(value = "/searchhouse") //메인에서 검색된 결과 페이지 
+	public ModelAndView searchhouse(String house_address,House house) {
+		System.out.println(house_address);
+		System.out.println("검색화면 가줘 ");
+		
+		mav = hs.searchhouse(house_address,house);
+		
+		return mav;
+	}
+	
 
 }
