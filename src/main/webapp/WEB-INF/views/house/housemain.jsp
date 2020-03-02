@@ -20,9 +20,10 @@
 
 </head>
 <body>
-	<form action="searchdetail"> <!-- housemain page에서 검색하는 것  -->
-	<div id="searchbox">
-			검색창<input id="subsearch" type="text" name="house_address">
+	<form action="searchhouse" method="get" > <!-- housemain page에서 검색하는 것  -->
+		<div id="searchbox">
+			검색창<input id="searchhouse" type="text" name="house_address">
+				<button type="submit" id="searchbtn">검색</button>
 		</div>
 	</form>
 	
@@ -44,5 +45,8 @@
 	console.log($(this).attr("name"));
     location.href="housedetail?house_number="+$(this).attr("name");
 })	 
+</script>
+<script>
+	 
 </script>
 </html>
