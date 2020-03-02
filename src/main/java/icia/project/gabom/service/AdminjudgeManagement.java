@@ -30,6 +30,7 @@ public class AdminjudgeManagement {
 		
 		
 		String hson = new Gson().toJson(hlist);
+		
 		String fson = new Gson().toJson(flist);
 		
 		
@@ -42,6 +43,22 @@ public class AdminjudgeManagement {
 		mav.setViewName("adminmenu");
 		return mav;
 	} //housejudgelist End
+
+	//미사용
+//	public ModelAndView detailjudge() {
+//		mav = new ModelAndView();
+//		//이프 타입.이퀄"house","food"
+//		List<String> jlist = aDao.getjudgedetail();
+//		return null;
+//	}
+	//미사용
+//	public ModelAndView modaljudge() {
+//		mav = new ModelAndView();
+//		System.out.println("111");
+//		List<String> jlist = aDao.getjudgemodal();
+//		System.out.println("222");
+//		return null;
+//	}
 	
 	
 }//class End
