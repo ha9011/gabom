@@ -23,11 +23,14 @@ public interface IhouseDao {
 	@Select("SELECT * FROM registhouse R, housefile HF WHERE R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND HOUSE_IMAGETYPE=1 AND HOUSE_GRANTTYPE=1")
 	List<House> getHouseList();
 	
-	@Select("SELECT * FROM registhouse R, housefile HF where R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND HOUSE_ADDRESS LIKE '%'||#{house_address}||'%' AND HOUSE_IMAGETYPE=1 AND HOUSE_GRANTTYPE=1")
+	@Select("SELECT * FROM registhouse R, housefile HF WHERE R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND HOUSE_ADDRESS LIKE '%'||#{house_address}||'%' AND HOUSE_IMAGETYPE=1 AND HOUSE_GRANTTYPE=1")
 	List<House> searchhouse(String house_address);
 	
 	@Select("SELECT * FROM registhouse R, housefile HF where R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND HOUSE_ADDRESS LIKE '%'||#{house_address}||'%' AND HOUSE_IMAGETYPE=1 AND HOUSE_GRANTTYPE=1")
 	List<House> changesearch(String house_address);
+
+	@Select("select * from registhouse r, housefile HF WHERE R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND R.HOUSE_NUMBER=#{house_number}")
+	List<House> detailhouse(String house_number);
 	
 	
 	

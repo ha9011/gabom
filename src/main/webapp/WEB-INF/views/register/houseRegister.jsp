@@ -69,7 +69,8 @@ body {
 			</div>
 
 			<div>
-				<h3>주소를 입력해주세요</h3>
+				<h3>전체주소를 입력해주세요</h3>
+				<h5>ex)인천광역시 남동구 구월동 OOO번지 OOO동 -OOO호</h5>
 				<input id="house_address" type="text" name="house_address">
 				<button id="house_address_btn" type="button">입력</button>
 				<div id="map" style="width: 80%; height: 300px; "></div>
@@ -88,7 +89,7 @@ body {
 			</div>
 			
 			<div>
-				<h3>숙소사진을 등록해주세요</h3>
+				<h3>숙소사진을 4개이상 등록해주세요</h3>
 				<input id="house_detailImage" type="file" name="house_detailImage" multiple>
 				<div id="detail">
 					<span id="left"> << </span>

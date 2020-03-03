@@ -66,8 +66,7 @@ public class HomeController {
 		System.out.println("foodshopRegister");
 		
 		return "register/foodshopRegister";
-	}
-	
+	}	
 
 	
 

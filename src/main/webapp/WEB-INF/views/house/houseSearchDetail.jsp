@@ -7,10 +7,23 @@
 <meta charset="UTF-8">
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a7e29fa39462f45fc2138a8307dbe830"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <title>검색결과</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- 검색창 부트스트랩 -->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <style>
+body{overflow:scroll;}
+.form-control-borderless {
+    border:none;
+}
+
+.form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
 
 #middle{
 	display:flex; 
@@ -42,10 +55,27 @@ img{
 
  <!-- searchdetail page에서 재검색하는 것  -->
  
-		<div id="searchbox">
-			검색창<input id="changesearch" type="text" name="house_address">
-				<button type="submit" id="searchbtn">검색</button>
-		</div>
+		<div class="container">
+	<div class="row justify-content-center">
+                        <div class="col-12 col-md-10 col-lg-8">
+                                <div class="card-body row no-gutters align-items-center">
+                                    <div class="col-auto"> <!-- 돋보기 -->
+                                        <i class="fas fa-search h4 text-body"></i>
+                                    </div>
+                                    <!--end of col-->
+                                    <div class="col"><!-- 검색창 -->
+                                        <input id="housechangesearch" name="house_address" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
+                                    </div>
+                                    <!--end of col-->
+                                    <div class="col-auto"><!-- 검색버튼 -->
+                                        <button id="searchbtn" class="btn btn-lg btn-success" type="submit">Search</button>
+                                    </div>
+                                    <!--end of col-->
+                                </div>
+                        </div>
+                        <!--end of col-->
+                    </div>
+</div>
 
 <div id="middle">
 		<div id="house_list" class="house_list">
@@ -66,12 +96,18 @@ var house_list = document.getElementById("house_list");
 for(i of test ){
 	console.log("집리스트 보여줘",i)
 	 var out = $('<div class="house" name ='+[i.house_number]+'></div>')
-	 var img = $('<div class="img"><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="./resources/housemainImage/upload/'+[i.house_sysname]+'"></div>')
+	 var img = $('<div class="img"><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>')
 	 var info = $('<div class="info">'+"이름"+[i.house_name]+"<br>"+"가격"+[i.house_price]+"<br>"+"주소"+[i.house_address]+'</div>')
 
 	$("#house_list").append(out);
 	out.append(img);
 	out.append(info);
+	
+	$(".house").on('click', function() { // 이미지 클릭시 url 이동
+		console.log("집 클릭") 
+		console.log($(this).attr("name"));
+	    location.href="housedetail?house_number="+$(this).attr("name");
+	});	
 } 
 
 
@@ -133,12 +169,12 @@ for (var i = 0; i < positions.length; i ++) {
 //---------------------------------------------------------------------------------------------------------
  $("#searchbtn").on("click", function() {
 	 	console.log("ajax 재검색")
-		var changesearch=$("#changesearch").val();
+		var changesearch=$("#housechangesearch").val();
 		console.log(changesearch);
 	 	
 		$.ajax({
 		       type:'get',
-		        url:'rest/changesearch',
+		        url:'rest/housechangesearch',
 		        data:{"data":changesearch},
 		        dataType:"json",
 		        
@@ -156,13 +192,19 @@ for (var i = 0; i < positions.length; i ++) {
 			         for(i of data ){
 			        		console.log("집리스트 보여줘",i)
 			        		 var out = $('<div class="house" name ='+[i.house_number]+'></div>')
-			        		 var img = $('<div class="img"><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="./resources/housemainImage/upload/'+[i.house_sysname]+'"></div>')
+			        		 var img = $('<div id="mainimg" name ='+[i.house_number]+'><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>')
 			        		 var info = $('<div class="info">'+"이름"+[i.house_name]+"<br>"+"가격"+[i.house_price]+"<br>"+"주소"+[i.house_address]+'</div>')
 
 			        		$("#house_list").append(out);
 			        		out.append(img);
 			        		out.append(info);
 			         };
+			         
+			         $("#mainimg").on('click', function() { // 이미지 클릭시 url 이동
+			     		console.log("집 클릭") 
+			     		console.log($(this).attr("name"));
+			     	    location.href="housedetail?house_number="+$(this).attr("name");
+			     	});	
 			        		
 			         		for(i of data){
 			        			console.log(i)
