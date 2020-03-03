@@ -45,7 +45,6 @@ public class Houseservice {
 		String json = null;
 		
 		List<House> searchhouse = hDao.searchhouse(house_address);
-		//mav.addObject("searchhouse",searchhouse);
 		System.out.println("searchhouse="+searchhouse);
 		System.out.println(house_address);
 		view="house/houseSearchDetail";
@@ -74,6 +73,26 @@ public class Houseservice {
 		System.out.println("검색결과 보여줘 ");
 		
 		return json;
+	}
+
+
+	public ModelAndView housedetail(String house_number) {
+		mav = new ModelAndView();
+		String view = null;
+		String json = null;
+		
+		List<House> detailhouse = hDao.detailhouse(house_number);
+		System.out.println("detailhouse="+detailhouse);
+		System.out.println(house_number);
+		view="house/housedetail";
+		
+		
+		json = new Gson().toJson(detailhouse);
+		System.out.println("json="+json);
+		mav.addObject("detailhouse",json);
+		System.out.println("해당 방 정보 보여줘");
+		mav.setViewName(view); //view에 url로 이동
+		return mav;
 	}
 
 

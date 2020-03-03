@@ -30,8 +30,8 @@ public class Food {
 	@DateTimeFormat(pattern="yyyy-mm-dd")
 	private String food_maxdate;
 	
-	@DateTimeFormat(pattern="HH:mm:ss")
+	@DateTimeFormat(pattern="HH:mm")
 	private String food_mintime;
-	@DateTimeFormat(pattern="HH:mm:ss")
+	@DateTimeFormat(pattern="HH:mm")
 	private String food_maxtime;
 }

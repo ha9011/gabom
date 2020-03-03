@@ -38,7 +38,6 @@ public class Housecontroller { //검색, 메인, 상세보기 컨트롤러
 	public ModelAndView housemain(House house) {
 		System.out.println("집 목록 보여줘 ");
 		//String member_hostid=principal.getName();
-		
 		//List<House> houselist = hDao.getHouseList();
 		//System.out.println("houselist"+houselist.size());
 		//System.out.println(houselist.toString());
@@ -57,6 +56,16 @@ public class Housecontroller { //검색, 메인, 상세보기 컨트롤러
 		
 		return mav;
 	}
+	
+	@RequestMapping(value = "/housedetail", method = RequestMethod.GET)
+	public ModelAndView housedetail(String house_number) {
+		System.out.println("housedetail");
+		System.out.println("집번호는"+house_number);
+		
+		mav = hs.housedetail(house_number);
+		return mav;
+	}
+	
 	
 
 }

@@ -77,8 +77,7 @@ public class FoodUploadFile {
 	         //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
 	         String sysFileName="foodmainImage"+System.currentTimeMillis()+"."
 	               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
-	         String sysFileNameDB="./resources/foodmainImage/upload/"+System.currentTimeMillis()+"."
-		               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
+	         String sysFileNameDB="./resources/foodmainImage/upload/"+sysFileName;
 	         
 	         fMap.put("food_sysname", sysFileNameDB);
 	         //5.메모리->실제 파일 업로드
@@ -147,8 +146,7 @@ public class FoodUploadFile {
 		         //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
 		         String sysFileName="fooddetailImage"+System.currentTimeMillis()+"."
 		               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
-		         String sysFileNameDB2="./resources/fooddetailImage/upload/"+System.currentTimeMillis()+"."
-			               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
+		         String sysFileNameDB2="./resources/fooddetailImage/upload/"+sysFileName;
 		         
 		         fMap.put("food_sysname", sysFileNameDB2);
 		         //5.메모리->실제 파일 업로드

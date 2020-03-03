@@ -79,8 +79,7 @@ public class houseUploadFile {
          String sysFileName="housemainImage"+System.currentTimeMillis()+"."
                +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
          
-         String sysFileNameDB="./resources/housemainImage/upload/"+System.currentTimeMillis()+"."
-                 +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
+         String sysFileNameDB="./resources/housemainImage/upload/"+sysFileName;
          
          fMap.put("house_sysname", sysFileNameDB);
          //5.메모리->실제 파일 업로드
@@ -149,8 +148,7 @@ public class houseUploadFile {
 	         String sysFileName="housedetailImage"+System.currentTimeMillis()+"."
 	               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
 	         
-	         String sysFileNameDB2="./resources/housedetailImage/upload/"+System.currentTimeMillis()+"."
-		               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
+	         String sysFileNameDB2="./resources/housedetailImage/upload/"+sysFileName;
 	         fMap.put("house_sysname", sysFileNameDB2);
 	         //5.메모리->실제 파일 업로드
 	         

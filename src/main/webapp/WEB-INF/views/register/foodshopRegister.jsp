@@ -60,7 +60,7 @@ body {
 					호프</label>
 			</div>
 			<div>
-				<h3>음식점 메뉴사진/상세사진을 등록해주세요.</h3>
+				<h3>음식점 메뉴사진/상세사진을 4개이상 등록해주세요.</h3>
 				<input id="food_menuImages" type="file" name="food_menuImages" multiple>
 				<div>
 					<span id="left"></span>

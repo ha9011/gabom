@@ -42,6 +42,7 @@
 <div>
 	<a href="housechoice">숙박</a>
 	<a href="foodmain">맛집</a>
+	<a href="somo">소모임 폼</a>
 </div>
 
 <div>
