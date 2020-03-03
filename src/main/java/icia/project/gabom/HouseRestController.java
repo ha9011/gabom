@@ -12,7 +12,7 @@ import icia.project.gabom.service.Houseservice;
 
 @RestController
 @RequestMapping(value = "/rest")
-public class houseRestController {
+public class HouseRestController {
 
 	private ModelAndView mav;
 	
@@ -22,12 +22,12 @@ public class houseRestController {
 	@Autowired
 	private IhouseDao hDao;
 
-	@GetMapping(value = "/changesearch" ,produces = "application/json;charset=utf-8")// ajax로 재검색 
-	public String changesearch(@RequestParam("data")String house_address) {
+	@GetMapping(value = "/housechangesearch" ,produces = "application/json;charset=utf-8")// ajax로 재검색 
+	public String housechangesearch(@RequestParam("data")String house_address) {
 		System.out.println(house_address);
-		System.out.println("재검색화면 가줘 ");
+		System.out.println("집재검색화면 가줘 ");
 		
-		String json = hs.changesearch(house_address);
+		String json = hs.housechangesearch(house_address);
 		
 		return json;
 	}

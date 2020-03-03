@@ -66,14 +66,7 @@ public class HomeController {
 		System.out.println("foodshopRegister");
 		
 		return "register/foodshopRegister";
-	}
-	
-	@RequestMapping(value = "/somo", method = RequestMethod.GET) //소모임 폼 생성 임시로 확인용
-	public String somo() {
-		
-		
-		return "/somo";
-	}
+	}	
 
 	
 

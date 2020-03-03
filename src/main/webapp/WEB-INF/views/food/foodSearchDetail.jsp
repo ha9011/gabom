@@ -28,12 +28,12 @@ body{overflow:scroll;}
 #middle{
 	display:flex; 
 }
-#house_list{
+#food_list{
 	
 	width:45%;
 	
 }
-.house{
+.food{
 	margin:15px;
 	width:80%;
 	border-bottom:2px solid gray;
@@ -64,7 +64,7 @@ img{
                                     </div>
                                     <!--end of col-->
                                     <div class="col"><!-- 검색창 -->
-                                        <input id="housechangesearch" name="house_address" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
+                                        <input id="foodchangesearch" name="food_address" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto"><!-- 검색버튼 -->
@@ -78,7 +78,7 @@ img{
 </div>
 
 <div id="middle">
-		<div id="house_list" class="house_list">
+		<div id="food_list" class="food_list">
 		</div>
 		
 		<div id="maparea">
@@ -88,25 +88,25 @@ img{
 
 </body>
 <script>
-var test = ${searchhouse};
+var test = ${searchfood};
 console.log(test);
 
-var house_list = document.getElementById("house_list");
+var food_list = document.getElementById("food_list");
 
 for(i of test ){
 	console.log("집리스트 보여줘",i)
-	 var out = $('<div class="house" name ='+[i.house_number]+'></div>')
-	 var img = $('<div class="img"><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>')
-	 var info = $('<div class="info">'+"이름"+[i.house_name]+"<br>"+"가격"+[i.house_price]+"<br>"+"주소"+[i.house_address]+'</div>')
+	 var out = $('<div class="food" name ='+[i.food_number]+'></div>')
+	 var img = $('<div class="img"><img alt='+[i.food_sysname]+'name ='+[i.food_number]+' src="'+[i.food_sysname]+'"></div>')
+	 var info = $('<div class="info">'+"이름"+[i.food_name]+"<br>"+"가격"+[i.food_price]+"<br>"+"주소"+[i.food_address]+'</div>')
 
-	$("#house_list").append(out);
+	$("#food_list").append(out);
 	out.append(img);
 	out.append(info);
 	
-	$(".house").on('click', function() { // 이미지 클릭시 url 이동
+	$(".food").on('click', function() { // 이미지 클릭시 url 이동
 		console.log("집 클릭") 
 		console.log($(this).attr("name"));
-	    location.href="housedetail?house_number="+$(this).attr("name");
+	    location.href="fooddetail?food_number="+$(this).attr("name");
 	});	
 } 
 
@@ -119,10 +119,10 @@ let yavg =0;
 for(i of test){
 	console.log(i)
 	let innerList = {  
-		latlng: new kakao.maps.LatLng(i.house_ypoint, i.house_xpoint)
+		latlng: new kakao.maps.LatLng(i.food_ypoint, i.food_xpoint)
 	};
-	yavg += Number(i.house_ypoint);
-	xavg +=  Number(i.house_xpoint);
+	yavg += Number(i.food_ypoint);
+	xavg +=  Number(i.food_xpoint);
 	
 	positions.push(innerList)
 }
@@ -169,13 +169,13 @@ for (var i = 0; i < positions.length; i ++) {
 //---------------------------------------------------------------------------------------------------------
  $("#searchbtn").on("click", function() {
 	 	console.log("ajax 재검색")
-		var changesearch=$("#housechangesearch").val();
+		var changesearch=$("#foodchangesearch").val();
 		console.log(changesearch);
 	 	
 		$.ajax({
 		       type:'get',
-		        url:'rest/housechangesearch',
-		        data:{"data":changesearch},
+		        url:'rest/foodchangesearch',
+		        data:{"data":foodchangesearch},
 		        dataType:"json",
 		        
 		        success:function(data){
@@ -185,17 +185,17 @@ for (var i = 0; i < positions.length; i ++) {
 		        	 yavg =0;
 		        	
 					console.log("성공");
-					 $('#house_list').empty();
+					 $('#food_list').empty();
 					 $('#map').empty();
 			         console.log(data);
 			         
 			         for(i of data ){
 			        		console.log("집리스트 보여줘",i)
-			        		 var out = $('<div class="house" name ='+[i.house_number]+'></div>')
-			        		 var img = $('<div id="mainimg" name ='+[i.house_number]+'><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>')
-			        		 var info = $('<div class="info">'+"이름"+[i.house_name]+"<br>"+"가격"+[i.house_price]+"<br>"+"주소"+[i.house_address]+'</div>')
+			        		 var out = $('<div class="food" name ='+[i.food_number]+'></div>')
+			        		 var img = $('<div id="mainimg" name ='+[i.food_number]+'><img alt='+[i.food_sysname]+'name ='+[i.food_number]+' src="'+[i.food_sysname]+'"></div>')
+			        		 var info = $('<div class="info">'+"이름"+[i.food_name]+"<br>"+"가격"+[i.food_price]+"<br>"+"주소"+[i.food_address]+'</div>')
 
-			        		$("#house_list").append(out);
+			        		$("#food_list").append(out);
 			        		out.append(img);
 			        		out.append(info);
 			         };
@@ -203,16 +203,16 @@ for (var i = 0; i < positions.length; i ++) {
 			         $("#mainimg").on('click', function() { // 이미지 클릭시 url 이동
 			     		console.log("집 클릭") 
 			     		console.log($(this).attr("name"));
-			     	    location.href="housedetail?house_number="+$(this).attr("name");
+			     	    location.href="fooddetail?food_number="+$(this).attr("name");
 			     	});	
 			        		
 			         		for(i of data){
 			        			console.log(i)
 			        			let innerList = {  
-			        				latlng: new kakao.maps.LatLng(i.house_ypoint, i.house_xpoint)
+			        				latlng: new kakao.maps.LatLng(i.food_ypoint, i.food_xpoint)
 			        			};
-			        			yavg += Number(i.house_ypoint);
-			        			xavg +=  Number(i.house_xpoint);
+			        			yavg += Number(i.food_ypoint);
+			        			xavg +=  Number(i.food_xpoint);
 			        			
 			        			positions.push(innerList)
 			        		}

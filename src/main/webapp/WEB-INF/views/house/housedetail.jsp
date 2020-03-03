@@ -10,6 +10,12 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+<!-- 달력 부트스트랩 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 <style>
 body{overflow:scroll;}
 .form-control-borderless {
@@ -144,7 +150,8 @@ body{overflow:scroll;}
 
 						<input type="hidden" name="regnum" id="regnum"><br>
 						<button style="width: 200px">예약하기</button>
-					</form>				
+					</form>
+					<input type="text" name="datefilter" value="" />			
 				</div>
 			</div>
 			<div id="bottom"><!-- 주의사항, 후기, 문의사항  display:flex -->
@@ -214,6 +221,24 @@ var house_info= $('<div class="info"><img alt=집 width="30px" height="25px" src
         '</div>')
 $("#info").append(house_info);
 //-----------------------------------------------------------------------------------------info영역
+$(function() {
+
+  $('input[name="datefilter"]').daterangepicker({
+      autoUpdateInput: false,
+      locale: {
+          cancelLabel: 'Clear'
+      }
+  });
+
+  $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+  });
+
+  $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+  });
+
+});
 </script>
 
 </html>
