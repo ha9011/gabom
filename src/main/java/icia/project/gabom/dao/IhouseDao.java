@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import icia.project.gabom.dto.House;
+import icia.project.gabom.dto.Housereservation;
 
 
 public interface IhouseDao {
@@ -31,6 +33,12 @@ public interface IhouseDao {
 
 	@Select("select * from registhouse r, housefile HF WHERE R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND R.HOUSE_NUMBER=#{house_number}")
 	List<House> detailhouse(String house_number);
+	
+	//----------------------------------------------------------------------------------------------------------예약
+	int housereservation(Housereservation hreservation);
+	
+	@Select("select * from HOUSERESERVATION WHERE HOUSE_NUMBER=#{house_number} order by RESERVATION_CHECKIN")
+	List<Housereservation> detailreser(@Param("house_number") String house_number); 
 	
 	
 	
