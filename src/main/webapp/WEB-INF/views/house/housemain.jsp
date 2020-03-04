@@ -6,7 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>가봄 숙소</title>
+<!-- jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <!-- 검색창 부트스트랩 -->
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -22,15 +24,18 @@
     box-shadow: none;
 }
 #house_list{
-	display:flex;
+	width:100%;
+
 }
-#house{
+.house{
+	width:15%;
+	display:inline-block;
 	margin:20px; 
 }
 img{
-	width:200px;
-	height:100px;
-	margin:5px;
+	width:250px;
+	height:150px;
+	margin:5px 0;
 }
 </style>
 
@@ -50,7 +55,7 @@ img{
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto"><!-- 검색버튼 -->
-                                        <button id="searchbtn" class="btn btn-lg btn-success" type="submit">Search</button>
+                                        <button style="background-color:#064D84" id="searchbtn" class="btn btn-lg btn-success" type="submit">Search</button>
                                     </div>
                                     <!--end of col-->
                                 </div>
@@ -69,19 +74,28 @@ var houselist=${houselist};
  	var house_list = document.getElementById("house_list");
 
 
- 	for(i of houselist ){
- 		 var out = $('<div id="house" name ='+[i.house_number]+'></div>')
+ 	let index =0;
+ 	for(let i of houselist ){
+ 		 if(index%5==0){
+ 			 console.log(index);
+ 			var br = $('<br><br>');
+ 			$("#house_list").append(br);
+ 		} 
+ 		 
+ 		 var out = $('<div class="house" name ='+[i.house_number]+'></div>')
  		 var img = $('<div id="mainimg" name ='+[i.house_number]+'><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>')
- 		 var info = $('<div id="info">'+"이름"+[i.house_name]+"<br>"+"가격"+[i.house_price]+"<br>"+"주소"+[i.house_address]+'</div>')
+ 		 var info = $('<div id="info">'+"이름"+[i.house_name]+"<br>"+"가격"+[i.house_price]+"만원"+"<br>"+"주소"+[i.house_address]+'</div>')
 
  		$("#house_list").append(out);
  		out.append(img);
  		out.append(info);
- 	 
- $("#mainimg").on('click', function() {
+ 		
+ $(".house").on('click', function() {
+	console.log("사진클릭")
 	console.log($(this).attr("name"));
     location.href="housedetail?house_number="+$(this).attr("name");
 	});
+ index++;
  }
 </script>
 </html>

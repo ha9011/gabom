@@ -6,15 +6,17 @@
 <meta charset="UTF-8">
 <title>숙박예약</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript"src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
 <!-- 검색창 부트스트랩 -->
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <!-- 달력 부트스트랩 -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 <style>
 body{overflow:scroll;}
@@ -28,8 +30,9 @@ body{overflow:scroll;}
     box-shadow: none;
 }
 #title{/*숙소명 */
-	margin:50px 48%;
-	width:200px; 
+	text-align:center;
+	margin:50px 40%;
+	width:300px; 
 }
 #Imagearea{/*사진영역 */
 	margin:10px 5%;
@@ -48,7 +51,7 @@ body{overflow:scroll;}
 	width:50%
 }
 .detail{
-	margin-right:3px;
+	margin:3px;
 }
 #middle{/*숙소정보, 예약 */
 	display:flex;
@@ -95,13 +98,15 @@ body{overflow:scroll;}
 	border:2px solid black;
 	
 }
+#nolist{display:flex;}
 </style>
 
 </head>
 <body>
 		
-<div class="container">
-	<div class="row justify-content-center">
+<form action="searchhouse" method="get" > <!-- housemain page에서 검색하는 것  -->
+	<div class="container">
+		<div class="row justify-content-center">
                         <div class="col-12 col-md-10 col-lg-8">
                                 <div class="card-body row no-gutters align-items-center">
                                     <div class="col-auto"> <!-- 돋보기 -->
@@ -109,18 +114,19 @@ body{overflow:scroll;}
                                     </div>
                                     <!--end of col-->
                                     <div class="col"><!-- 검색창 -->
-                                        <input id="changesearch" name="house_address" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
+                                        <input id="searchhouse" name="house_address" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto"><!-- 검색버튼 -->
-                                        <button id="searchbtn" class="btn btn-lg btn-success" type="submit">Search</button>
+                                        <button style="background-color:#064D84" id="searchbtn" class="btn btn-lg btn-success" type="submit">Search</button>
                                     </div>
                                     <!--end of col-->
                                 </div>
                         </div>
                         <!--end of col-->
-                    </div>
-</div>
+          </div>
+	</div>
+	</form>
 		
 		<div id="house_main"><!-- 타이틀, 사진, 정보, 주의사항, 댓글, 후기, 예약이 담긴 div-->
 			<div id="title"></div><!-- house_name -->
@@ -137,47 +143,50 @@ body{overflow:scroll;}
 				<div id="info">숙소정보</div>
 				<div id="reservation">
 				예약선택
-					<form action="reservation">
+					<form action="housereservation?${_csrf.parameterName}=${_csrf.token}" method="post">
+					
 						<img alt="예약달력" width="30px" height="30px" src="./resources/houseimg/date1.JPG"> 
-						<input class="date" type="text" name="sdate" id="datepicker1">
-						~~ <img alt="예약달력" width="30px" height="30px"src="./resources/houseimg/date2.JPG"> 
-						<input class="date" type="text" name="edate" id="datepicker2">
+						<input class="date" type="text" name="reservation_checkin" id="datepicker1">
+						~~ 
+						<img alt="예약달력" width="30px" height="30px"src="./resources/houseimg/date2.JPG"> 
+						<input class="date" type="text" name="reservation_checkout" id="datepicker2">
 						<button type="button" id="dtcommit">날짜확정</button><br> 
-						총액 : <input name="tprice" type="text" id="totalprice" placeholder="">만원<br>
-						인원 : <input name="tperson" type="number" id="person" value="">명 
-						<input type="hidden" name="hostid" id="hostid" > 
-
-
-						<input type="hidden" name="regnum" id="regnum"><br>
-						<button style="width: 200px">예약하기</button>
+						
+						총액 : <input name="reservation_totalprice" type="text" id="totalprice" placeholder="">만원<br>
+						인원 : <input name="reservation_person" type="number" id="person" value="">명 
+						
+						<input type="hidden" name="house_hostid" id="hostid" > 
+						<input type="hidden" name="house_number" id="house_number"><br>
+						
+						<button style="width: 200px" type="submit" id="insert">예약하기</button>
 					</form>
-					<input type="text" name="datefilter" value="" />			
 				</div>
 			</div>
+			
 			<div id="bottom"><!-- 주의사항, 후기, 문의사항  display:flex -->
 				<div id="prarea"><!-- 주의사항,후기  display:flex -->
 					<div id="Precautions"><!-- 주의사항 -->
 						<h2>주의사항</h2>
-						<h4>체크인:오후 4:00 - 오후 10:00</h4>
-						<h4>체크아웃:오전 11:00</h4>
+						<h5>체크인:오후 4:00 - 오후 10:00</h5>
+						<h5>체크아웃:오전 11:00</h5>
 					
 						<div id="nolist">
 							<div>
-								<!-- <img width="50px;" height="50px;" src="./img/no.JPG">흡연금지 -->
+								 <img width="50px;" height="50px;" src="./resources/houseimg/no.JPG">흡연금지
 							</div>
 						
 							<div>
-								<!-- img width="50px;" height="50px;" src="./img/nopet.JPG">애완동물
-								출입금지 -->
+								 <img width="50px;" height="50px;" src="./resources/houseimg/nopet.JPG">애완동물
+								출입금지 
 							</div>
 						
 							<div>
-								<!-- <img width="50px;" height="50px;" src="./img/party.png">파티금지 -->
+								<img width="50px;" height="50px;" src="./resources/houseimg/party.png">파티금지 
 							</div>
 						</div>
 					<h4>예약 취소</h4>
-					<h5>48시간 동안 취소 수수료 없음</h5>
-					<h5>그 이후로 체크인 5일 전까지 취소하면 서비스 수수료를 제외한 전액이 환불됩니다.</h5>
+					<h6>48시간 동안 취소 수수료 없음</h6>
+					<h6>그 이후로 체크인 5일 전까지 취소하면 서비스 수수료를 제외한 전액이 환불됩니다.</h6>
 						
 					</div>
 					<div id="review"><!-- 후기 -->
@@ -191,9 +200,17 @@ body{overflow:scroll;}
 		</div>
 		
 </body>
+
 <script>
 var house =${detailhouse};
+var test =${detailreser};
 console.log(house[0]);
+console.log(test);
+
+$(document).ready(function() {
+    $('#hostid').val(house[0].house_hostid);
+    $('#house_number').val(house[0].house_number);
+});
 
 var title = $('<h1>'+house[0].house_name+'</h1>'); // 집 이름 
 $("#title").append(title);
@@ -201,10 +218,10 @@ $("#title").append(title);
 var mainimg =$('<img style="width:100%;height:470px" alt='+house[0].house_sysname+' src="'+house[0].house_sysname+'">');
 $("#mainimg").append(mainimg);
 
-var a=$('<img class="detail" style="width:49%;height:235px" alt='+house[1].house_sysname+' src="'+house[1].house_sysname.substr(2)+'">');
-var b=$('<img style="width:49%;height:235px" alt='+house[1].house_sysname+' src="'+house[2].house_sysname+'">');
-var c=$('<img class="detail" style="width:49%;height:235px" alt='+house[1].house_sysname+' src="'+house[3].house_sysname+'">');
-var d=$('<img style="width:49%;height:235px" alt='+house[1].house_sysname+' src="'+house[4].house_sysname+'">');
+var a=$('<img class="detail" style="width:48%;height:235px" alt='+house[1].house_sysname+' src="'+house[1].house_sysname.substr(2)+'">');
+var b=$('<img class="detail" style="width:48%;height:235px" alt='+house[1].house_sysname+' src="'+house[2].house_sysname+'">');
+var c=$('<img class="detail" style="width:48%;height:235px" alt='+house[1].house_sysname+' src="'+house[3].house_sysname+'">');
+var d=$('<img class="detail" style="width:48%;height:235px" alt='+house[1].house_sysname+' src="'+house[4].house_sysname+'">');
 $("#detailimg1").append(a);
 $("#detailimg1").append(b);
 $("#detailimg2").append(c);
@@ -221,24 +238,224 @@ var house_info= $('<div class="info"><img alt=집 width="30px" height="25px" src
         '</div>')
 $("#info").append(house_info);
 //-----------------------------------------------------------------------------------------info영역
-$(function() {
+ 
+ $("#totalprice").attr('placeholder', 'PRICE PER night : '+house[0].house_price +"원"  ); 
+ $("#person").attr('placeholder', '최대인원 : '+house[0].house_person+"명"  ); // 넘길때 이벤트 줘야함.
 
-  $('input[name="datefilter"]').daterangepicker({
-      autoUpdateInput: false,
-      locale: {
-          cancelLabel: 'Clear'
-      }
-  });
+ //인원 버튼 
+   $("#person").keyup(function(){
+	   console.log(typeof house[0].house_person)
+	   if($(this).val()>Number(house[0].house_person)){
+		   alert("수용인원을 초과하였습니다. 최대인원 : "+house[0].house_person);   
+		   $(this).val("")	;
+		   $(this).focus()	;
+	   }else{
+		      
+	   }
+	    
+   })
+ //-----------------------------------------------------------------------------------------------인원 및 총가격
+	var disabledDays = [];  //"2020-01-15"
+		
+	$(document).ready(function(){
+		$("#datepicker1").datepicker({
+			
+		 	dateFormat: 'yy-mm-dd',
+		    prevText: '이전 달',
+		    nextText: '다음 달',
+		    monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+		    dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+		    dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+		    showMonthAfterYear: true,
+		  
+		    minDate:new Date(),
+		    maxDate: new Date(house[0].house_maxdate.substr(0,10)),
+			beforeShowDay:function(date){
+				console.log("date:",date);
+		        var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+		        return [ disabledDays.indexOf(string) == -1 ]
+		    },
+ 		    onSelect: function(dateText) {  
+		    	console.log(typeof dateText)
+		    	console.log(dateText)  // 2020-01-21
+		    	var select = new Date(dateText);
+		    	
+		    	if(a=="Invalid Date"){
+		    		
+		    	}else{
+		    		$("#datepicker1").datepicker('option', 'minDate', new Date(dateText));
+		    		$("#datepicker2").datepicker('option', 'minDate', new Date(dateText));
+	    			
+		    		
+		    		for(i in disabledDays){
+		    			var ss = new Date(disabledDays[i])
+		    			console.log(select.getDate());
+		    			console.log(ss.getDate());
+		    			console.log(ss.getDate()-select.getDate())
+		    			if(ss.getDate()-select.getDate()>0){ //양수일때  // 1일차이일때 이벤트도 줘야함.
+		    				$("#datepicker1").datepicker('option', 'maxDate', new Date(disabledDays[i]));
+		    				$("#datepicker2").datepicker('option', 'maxDate', new Date(disabledDays[i]));
+		    				break;
+		    			}else{ //음수일때
+		    				
+		    			}
+		    			
+		    		}
+		    		
+		    	}
+		    	
+ 		    }
 
-  $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-      $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-  });
 
-  $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
-      $(this).val('');
-  });
 
-});
+			});
+		
+		
+	$("#datepicker2").datepicker({
+			
+		 	dateFormat: 'yy-mm-dd',
+		    prevText: '이전 달',
+		    nextText: '다음 달',
+		    monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+		    dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+		    dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+		    showMonthAfterYear: true,
+		  
+		    minDate:new Date(),
+		    maxDate: new Date(house[0].house_maxdate.substr(0,10)),
+			beforeShowDay:function(date){
+		        var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+		        return [ disabledDays.indexOf(string) == -1 ]
+		    },
+ 		    onSelect: function(dateText) {  
+		    	console.log(dateText)
+		    	var a = new Date(disabledDays[0]);
+		    	
+ 		    }
+
+
+
+			});
+			
+			
+		
+	});
+	
+	$('#dtcommit').on('click',function(){
+		console.log("testtest");
+		
+		var sdate = $('#datepicker1').val();  
+		var ddate = $('#datepicker2').val();  
+		  
+		var ar1 = sdate.split('-');
+	    var ar2 = ddate.split('-');  
+	    
+	    var da1 = new Date(ar1[0], ar1[1], ar1[2]);
+	    var da2 = new Date(ar2[0], ar2[1], ar2[2]);
+		  
+	    var dif = da2 - da1;
+	    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+	    var cMonth = cDay * 30;// 월 만듬
+	    var cYear = cMonth * 12; // 년 만듬
+		
+	    if(sdate && ddate){
+			console.log(parseInt(dif/cDay))
+			$("#totalprice").val(parseInt(dif/cDay)*house[0].house_price);
+		 } 
+
+	})
+	
+	
+var listDate = [];
+var checkeddate = ${detailreser};
+for(i of checkeddate){
+	
+	var st = new Date(i.reservation_checkin);
+
+	var smonth = st.getUTCMonth() + 1; //months from 1-12
+	var sday = st.getUTCDate();
+	if(sday<10){
+		sday = "0"+sday;
+	}		
+	
+	
+	
+	var syear = st.getUTCFullYear();
+	if(smonth<10){
+		st = syear + "-0" + smonth + "-" + sday;
+			
+	}else{
+		st = syear + "-" + smonth + "-" + sday;
+		
+	}
+	
+	
+	
+	console.log("st : " +st)
+	//
+	var ed = new Date(i.reservation_checkout);
+
+	var emonth = ed.getUTCMonth() + 1; //months from 1-12
+	var eday = ed.getUTCDate();
+	if(eday<10){
+		eday = "0"+eday;
+	}	
+	var eyear = ed.getUTCFullYear();
+
+	if(emonth<10){
+		ed = eyear + "-0" + emonth + "-" + eday;
+			
+	}else{
+		ed = eyear + "-" + emonth + "-" + eday;
+		
+	}
+	
+	console.log("ed : " +ed)
+	//
+	disabledDays = getDateRange(st,ed,disabledDays)
+	console.log()
+} 
+
+	function getDateRange(startDate, endDate, listDate){
+
+        var dateMove = new Date(startDate);
+        var strDate = startDate;
+
+        if (startDate == endDate){
+
+            var strDate = dateMove.toISOString().slice(0,10);
+			console.log("strDate ",strDate);
+            listDate.push(strDate);
+
+        }else{
+
+            while (strDate < endDate){
+
+                var strDate = dateMove.toISOString().slice(0, 10);
+                console.log("strDate ",strDate);
+                listDate.push(strDate);
+
+                dateMove.setDate(dateMove.getDate() + 1);
+
+            }
+
+        }
+
+        return listDate;
+
+    };
+   
+	
+	console.log(disabledDays);
+
+
+ 
+
+
 </script>
 
 </html>
