@@ -61,7 +61,6 @@ public class HouseRegisterService {
 			house.setHouse_address(house_address).setHouse_bathrooms(house_bathrooms).setHouse_beds(house_beds).setHouse_xpoint(house_xpoint).setHouse_ypoint(house_ypoint);
 			house.setHouse_name(house_name).setHouse_person(house_person).setHouse_parkable(house_parkable).setHouse_price(house_price);
 			house.setHouse_rooms(house_rooms).setHouse_type(house_type).setHouse_mindate(house_mindate).setHouse_maxdate(house_maxdate);
-			//hfile.setHouse_imagetype(house_imagetype).setHouse_number(house_number).setHouse_oriname(house_oriname).setHouse_sysname(house_sysname);
 			house.setHouse_hostid(house_hostid);
 			
 			int house_number=hDao.houseRegisterUpload(house); //데이터 담아서 dao로 감.

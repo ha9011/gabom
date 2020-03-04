@@ -43,4 +43,6 @@ public class House {
 	private int house_imagetype;
 	private String house_oriname;
 	private String house_sysname;
+	
+	private Housereservation housereservation;
 }
