@@ -15,8 +15,36 @@
  -->
 <!--  WHERE HOUSE_GRANTTYPE = 0 -->
 <!-- 등록대기 타입이 0인 애들 출력 -->
+
+
 <insert id="InsertSomoimMake" parameterType="somoim">
-	INSERT INTO SOMOIM VALUES(SEQ_SOMOIM.nextval, #{somoim_maker},#{somoim_name},#{somoim_introduce},#{somoim_location},#{somoim_detail_location},#{somoim_interest},#{somoim_person},#{somoim_mainpicture},#{somoim_sys_mainpicture})
+   INSERT INTO SOMOIM VALUES(SEQ_SOMOIM.nextval, #{somoim_maker},#{somoim_name},#{somoim_introduce},#{somoim_location},#{somoim_detail_location},#{somoim_interest},#{somoim_person},#{somoim_mainpicture},#{somoim_sys_mainpicture}, sysdate)
+    <selectKey resultType="int" keyProperty="somoim_number" order="AFTER">
+        SELECT SEQ_SOMOIM.CURRVAL FROM DUAL
+    </selectKey>        
 </insert>
 
+
+<insert id="InsertOwnerMember" parameterType="somoim">
+	INSERT INTO SOMOIM_MEMBER VALUES(#{somoim_number},  #{somoim_maker}, 1, 2, sysdate )
+</insert>
+
+<select id="selectMainSomoim" parameterType="String" resultType="Map">
+	SELECT 
+	 s.somoim_number,
+	 s.somoim_location,
+	 s.somoim_name,
+	 s.somoim_sys_mainpicture,
+	 sm.member_date,
+	 sm.member_grade 
+	FROM 
+	 somoim s,
+	 somoim_member sm 
+	where 
+	 s.somoim_number = sm.somoim_number 
+	 and sm.member_status = 1 
+	 and sm.member_name = #{name}
+</select>
+
 </mapper>
+

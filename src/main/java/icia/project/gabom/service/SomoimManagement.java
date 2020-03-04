@@ -1,10 +1,16 @@
 package icia.project.gabom.service;
 
+import java.security.Principal;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
 
 import icia.project.gabom.dao.ISomoimDao;
 import icia.project.gabom.dto.Somoim;
@@ -22,11 +28,13 @@ public class SomoimManagement {
 	@Autowired
 	private SomoimUploadFile sUpload;
 	
-	public String InsertSomoim(MultipartHttpServletRequest multi) {
+	public String InsertSomoim(MultipartHttpServletRequest multi, Principal pr) {
 		// TODO Auto-generated method stub
 		sm = new Somoim();
 		
-		String somoim_maker = "aaa";
+		System.out.println("multi.getParameter(\"somoim_maker\") : " +multi.getParameter("somoim_maker"));
+		
+		String somoim_maker = pr.getName();
 		String somoim_name = multi.getParameter("somoim_name");
 		String somoim_introduce = multi.getParameter("somoim_introduce");
 		String somoim_location = multi.getParameter("somoim_location");
@@ -37,7 +45,9 @@ public class SomoimManagement {
 		MultipartFile somoim_mainpicture_file = multi.getFile("somoim_mainpicture");
 		String somoim_mainpicture = somoim_mainpicture_file.getOriginalFilename();  // 사진 원래 이름
 		
-		String somoim_sys_mainpicture = "./resources/somoimimage/upload/"+somoim_name+System.currentTimeMillis()+"."
+		
+		String somoim_name_noblank = somoim_name.replaceAll(" ", "");
+		String somoim_sys_mainpicture = "./resources/somoimimage/upload/"+somoim_name_noblank+System.currentTimeMillis()+"."
 	               +somoim_mainpicture.substring(somoim_mainpicture.lastIndexOf(".")+1);
 		
 		String sysfile = somoim_name+System.currentTimeMillis()+"."
@@ -49,20 +59,38 @@ public class SomoimManagement {
 		
 		System.out.println("sm : " +sm.toString());
 		
-		int result = sDao.InsertSomoimMake(sm);
+		int result = sDao.InsertSomoimMake(sm);  
 		System.out.println("insert : " + result);
+		System.out.println("currvar : " + sm.getSomoim_number());  // 현재 번호
+		
+		int currval = sm.getSomoim_number();
+		
+		sDao.InsertOwnerMember(sm);
 		
 		String view = null;
 		
 		if(result == 1) {
 			sUpload.fileUpProfilePic(multi, sysfile);
-			view = "somoim/mainsomoim";
+			view = "mainsomoim";
 		}else {
 			System.out.println("회원등록 실패");
-			view = "somoim/makesomoim";
+			view = "makesomoim";
 		}
-		
+		System.out.println("view = " + view);
 		return view;
+	}
+
+	
+	public ModelAndView selectMainSomoim(Principal pr, ModelAndView mav) {
+		// TODO Auto-generated method stub
+		
+		List<Map<String,Object>> sList = sDao.selectMainSomoim(pr.getName());
+		
+		String json = new Gson().toJson(sList);
+		System.out.println("json : " + json);
+		mav.addObject("joinMoim", json);
+		mav.setViewName("somoim/mainsomoim");
+		return mav;
 	}
 	
 	
