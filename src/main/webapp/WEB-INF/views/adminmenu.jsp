@@ -16,20 +16,14 @@
 <!-- 부트스트랩 -->
 
 <style>
-#admin_div {
-	border: 1px solid black;
-	width: 99%;
-	height: 99%;
-}
-
-#admin_list {
-	/* 	float: right; */
-	
+#admin_nav{
+/* 	background-color: aquamarine; */
+	background-color: #16AEF6;
 }
 
 #housemain_judge {
-	/* 	border: 1px solid black; */
 	width: 70%;
+	margin-left: 5%;
 }
 
 #house_judge {
@@ -43,12 +37,11 @@
 }
 
 #foodmain_judge {
-	border: 1px solid black;
 	width: 70%;
+	margin-left: 5%;
 }
 
 #food_judge {
-	/* 	height: auto; */
 	display: block;
 	border: 1px solid black;
 	width: 100%;
@@ -62,7 +55,6 @@
 	width: 20%;
 	display: block;
 	padding: 6px;
-	height: 100%;
 }
 
 #list_right_sec {
@@ -149,8 +141,8 @@ li {
 
 	<script>
 	//house 리스트 출력
-	const house = ${housejudge};
-	const food = ${foodjudge};
+	const house = ${housejudge}; //house 리스트 json
+	const food = ${foodjudge}; //food 리스트 json
 	console.log("house=",house);
 	console.log("food=",food);
 	console.log("house",house.length);
@@ -158,14 +150,14 @@ li {
 //	console.log("housemodal",${housemodal});
 	let strh=" ";
 	
- 	for(var i=0;i<house.length;i++){
+ 	for(let i=0;i<house.length;i++){
  		if(i>=2){
  			console.log("house break");
  			break;
  		}
  		strh+='<div style="border: 1px solid black; margin-top: 5px; id="house_judge">';
 		strh+='<div id="house_judge">';
-		strh+='<div id="list_left"><img style="height:250px; width:250px;" src="'+house[i].house_sysname+'"></div>';
+		strh+='<div id="list_left"><img style="height:250px; width:100%;" src="'+house[i].house_sysname+'"></div>';
 		strh+='<div id="list_right_sec">';
 		strh+='<div id="list_right">상 호 명 : '+house[i].house_name+'<br>';
 		if(house[i].house_type == 1){
@@ -175,8 +167,6 @@ li {
 		}else if(house[i].house_type == 3){
 			strh+='집 유 형 : 주택 <br>';
 		}
-		//strh+='<input type="hidden" value="house" name="type">';
-		//strh+='집 유형 : '+house[i].house_type+'<br>';
 		strh+='집 주 소 : '+house[i].house_address+'</div>';
 		strh+='<div id="list_button" class="house"><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-number="'+house[i].house_number+'">승인/거절</button></div>';
 		strh+='</div>';
@@ -184,17 +174,18 @@ li {
 		strh+='</div>';
  	}
  	$("#housemain_judge").append(strh); //house 리스트 End
- 	
+ 	console.log("food : ",food);
 	//food 리스트 출력
  	let strf= " ";
- 	for(var i=0;i<2;i++){
+ 	for(let i=0;i<food.length;i++){
+
  		if(i>=2){
  			console.log("food break");
  			break;
  		}
  		strf+='<div style="border: 1px solid black; margin-top: 5px; id="food_judge">';
 		strf+='<div id="food_judge">';
-		strf+='<div id="list_left"><img style="height:250px; width:250px;" src="'+food[i].food_sysname+'"></div>';
+		strf+='<div id="list_left"><img style="height:250px; width:100%;" src="'+food[i].food_sysname+'"></div>';
 		strf+='<div id="list_right_sec">';
 		strf+='<div id="list_right">상 호 명 : '+food[i].food_name+'<br>';
 		if(food[i].food_type == 1){
@@ -244,19 +235,25 @@ li {
                     strj += '아이디 : '+response[i].house_hostid+'<br>';
                     strj += '집이름 : '+response[i].house_name+'<br>';
                     strj += '주소 : '+response[i].house_address+'<br>';
-                    strj += '집유형 : '+response[i].house_type+'<br>';
+                    if(response[i].house_type == 1){
+            			strj+='집 유 형 : 아파트 <br>';
+            		}else if(response[i].house_type == 2){
+            			strj+='집 유 형 : 빌라 <br>';
+            		}else if(response[i].house_type == 3){
+            			strj+='집 유 형 : 주택 <br>';
+            		}
                     strj += '<input type="hidden" name="type" value="house">';
-                    strj += '수용인원 : '+response[i].house_person+'<br>';
-                    strj += '주차공간 : '+response[i].house_parkable+'<br>';
-                    strj += '방갯수 : '+response[i].house_rooms+'<br>';
-                    strj += '침대수 : '+response[i].house_beds+'<br>';
-                    strj += '욕실 : '+response[i].house_bathrooms+'<br>';
+                    strj += '수용인원 : '+response[i].house_person+' 명<br>';
+                    strj += '주차공간 : '+response[i].house_parkable+' 대<br>';
+                    strj += '방갯수 : '+response[i].house_rooms+' 개<br>';
+                    strj += '침대수 : '+response[i].house_beds+' 개<br>';
+                    strj += '욕실 : '+response[i].house_bathrooms+' 개<br>';
                     strj += '체크인 : '+response[i].house_mindate+'<br>';
                     strj += '체크아웃 : '+response[i].house_maxdate+'<br>';
-                    strj += '1박가격 : '+response[i].house_price+'<br>';
+                    strj += '1박가격 : '+response[i].house_price+' 원<br>';
                     strj += '</div>';
                     strj += '<div>';
-                    for(var j=0;j<response.length;j++){
+                    for(var j=0;j<response.length;j++){ //사진 for문 시작
                         console.log("123__",response); 
                         console.log("111",response[j].house_sysname);
                     strj += '<img style="height:100px; width:200px;"src='+response[j].house_sysname+'">';
@@ -305,17 +302,23 @@ li {
                     strj += '아이디 : '+response[i].food_hostid+'<br>';
                     strj += '상호명 : '+response[i].food_name+'<br>';
                     strj += '주소 : '+response[i].food_address+'<br>';
-                    strj += '가게유형 : '+response[i].food_type+'<br>';
+                    if(response[i].food_type == 1){
+            			strj+='집 유 형 : 레스토랑 <br>';
+            		}else if(response[i].food_type == 2){
+            			strj+='집 유 형 : 카페 <br>';
+            		}else if(response[i].food_type == 3){
+            			strj+='집 유 형 : 호프 <br>';
+            		}
                     strj += '<input type="hidden" name="type" value="food">';
-                    strj += '수용인원 : '+response[i].food_person+'<br>';
-                    strj += '주차공간 : '+response[i].food_parkable+'<br>';
+                    strj += '수용인원 : '+response[i].food_person+' 명<br>';
+                    strj += '주차공간 : '+response[i].food_parkable+' 대<br>';
                     strj += '오픈시간 : '+response[i].food_mintime+'<br>';
                     strj += '마감시간 : '+response[i].food_maxtime+'<br>';
                     strj += '</div>';
                     strj += '<div>';
-                    for(var j=0;j<response.length;j++){
+                    for(var j=0;j<response.length;j++){//사진 for문 시작
                     strj += '<img style="height:100px; width:200px;"src='+response[j].food_sysname+'">';
-                    	} 
+                    	} //사진 for문 종료
                     strj += '</div>';
                 	}//for문 종료
                     
