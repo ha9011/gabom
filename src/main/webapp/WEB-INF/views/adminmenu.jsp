@@ -347,9 +347,11 @@ li {
  		}
  		strh+='<div style="border: 1px solid black; margin-top: 5px; id="house_judge">';
 		strh+='<div id="house_judge">';
+
 		strh+='<div id="list_left"><img style="height:200px; width:100%;" src="'+house[i].house_sysname+'"></div>';
 		strh+='<div id="list_right_sec">';
 		strh+='<div id="list_right">상 호 명 : '+house[i].house_name+'<br>';
+
 		if(house[i].house_type == 1){
 			strh+='집 유 형 : 아파트 <br>';
 		}else if(house[i].house_type == 2){

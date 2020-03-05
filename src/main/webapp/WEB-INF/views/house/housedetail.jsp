@@ -10,14 +10,11 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
-
 <!-- 검색창 부트스트랩 -->
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <!-- 달력 부트스트랩 -->
-
 <style>
 body{overflow:scroll;}
 .form-control-borderless {
@@ -64,7 +61,7 @@ body{overflow:scroll;}
 	height:200px;
 	border:2px solid black;
 }
-#reservation{/*예약 */
+#reser{/*예약 */
 	margin-left:20px;
 	width:50%;
 	height:200px;
@@ -141,10 +138,9 @@ body{overflow:scroll;}
 			</div>
 			<div id="middle"><!-- 숙소정보, 예약 display:flex-->
 				<div id="info">숙소정보</div>
-				<div id="reservation">
+				<div id="reser">
 				예약선택
-					<form action="housereservation?${_csrf.parameterName}=${_csrf.token}" method="post">
-					
+					<form id="reservation" name="reservation" method="post">
 						<img alt="예약달력" width="30px" height="30px" src="./resources/houseimg/date1.JPG"> 
 						<input class="date" type="text" name="reservation_checkin" id="datepicker1">
 						~~ 
@@ -154,11 +150,10 @@ body{overflow:scroll;}
 						
 						총액 : <input name="reservation_totalprice" type="text" id="totalprice" placeholder="">만원<br>
 						인원 : <input name="reservation_person" type="number" id="person" value="">명 
-						
 						<input type="hidden" name="house_hostid" id="hostid" > 
 						<input type="hidden" name="house_number" id="house_number"><br>
 						
-						<button style="width: 200px" type="submit" id="insert">예약하기</button>
+						<button style="width: 200px" type="submit" id="insertbtn">예약하기</button>
 					</form>
 				</div>
 			</div>
@@ -255,6 +250,41 @@ $("#info").append(house_info);
 	    
    })
  //-----------------------------------------------------------------------------------------------인원 및 총가격
+  $("#insertbtn").on("click", function (e) {
+	  	e.preventDefault();
+	 	console.log("ajax 예약");
+        //var formData = $("#reservation").serializeObject();
+       var formData = new FormData(document.getElementById("reservation")); 
+        	
+       console.log(formData.get("reservation_checkin"));
+       $.ajaxSetup({         
+    	      beforeSend : function(xhr){
+    	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+    	      });//먼저 보냄
+        
+        $.ajax({
+            url:'hrest/housereservation',
+            type:'post',
+            data:formData,
+            processData:false,
+            contentType:false,  //제이슨 아니니깐 까보지마!!
+             dataType:"json", //rest 컨트롤 이용   
+            success:function(data){
+               alert("예약완료");
+               console.log(data)
+               $("#reservation")[0].reset();
+               
+            },
+            error:function(error){
+               alert("예약실패")
+               console.log(error);
+            }
+            
+         })
+    });
+ 
+ </script>
+ <script>
 	var disabledDays = [];  //"2020-01-15"
 		
 	$(document).ready(function(){
