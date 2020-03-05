@@ -135,7 +135,7 @@
 				<div id="alertBoxPassword"></div>
 				<br /> 
 				<br />
-				<br/><br/><br/>
+				<br/>
 				<div>
 					<input type="submit" class="btn-info col-md-12 col-xs-12 col-sm-12"
 						value="패스워드 찾기" id="searchpassword">

@@ -17,9 +17,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="https://fonts.googleapis.com/css?family=Jua&display=swap&subset=korean" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css?family=Jua&display=swap&subset=korean" rel="stylesheet"/>
 <style>
 body {
 	/* background-image: url(images/tree-247122_1280.jpg);
@@ -27,7 +26,6 @@ body {
 }
 
 #headerContainer {
-	width: 1480px;
 	margin-top: 10px;
 	border-radius: 20px;
 	background-color: white;
@@ -40,7 +38,7 @@ img {
 	align-items: center;
 	width: 250px;
 	height: 75px;
-	margin-top: 40px;
+	margin-bottom: 40px;
 }
 
 li {
@@ -52,20 +50,35 @@ li {
 border: 0;
 outline: 0;
 background-color: white;
-margin-top: 12px;
-margin-left: 8px;
-color: #064D84;
+color: #337ab7;
 font-family: 'Jua' ;
+width: 85px;
+height: 50px;
 }
+#logout:hover{
+background-color: #E6E6E6
+}
+.nav-tabs{
+
+			/* background-color: #16AEF6;  */
+			background-color : white; 
+			border: 0;
+			border-radius: 10px;
+			padding-left: 30px;
+			
+		}
+		.nav-tabs li a{
+			/*color: #2E2E2E;*/
+			color: black;
+			font-size: 19px;
+			margin-left: 20px;
+			
+		}
 </style>
 </head>
 <body>
-	<div class="container-fluid" id="headerContainer">
-		<div class="col-md-12 col-sm-12 col-xs-12"><a href="/gabom/">
-			<img src="resources/headerImage/logo3.png">
-			</a>
-		</div>
-		<div class="col-md-12 col-sm-12 col-xs-12">
+	<div class="container" id="headerContainer">
+	<div class="col-md-12 col-sm-12 col-xs-12">
 		<ul class="nav navbar-nav navbar-right">
 			<sec:authorize access="isAnonymous()">
 				<li><a href="login" >로그인</a></li>
@@ -78,13 +91,72 @@ font-family: 'Jua' ;
 						<input type="submit" value="로그아웃" id="logout"> <input type="hidden"
 							name="${_csrf.parameterName}" value="${_csrf.token}" />
 					</form>
-
 				</li>
 			</sec:authorize>
 		</ul>
 		</div>
+		<div class="col-md-12 col-sm-12 col-xs-12"><a href="/gabom/">
+			<img src="resources/headerImage/logo3.png">
+			</a>
 		</div>
-
-	
+		</div>
+		<div class="container-fluid" id="navContainer">
+			<ul class="nav nav-tabs nav-justified">
+				<li><a href="#" id="travel">여행</a></li>
+				<li><a href="snsmain" id="sns" >SNS</a></li>
+				<li><a href="#" id="room" >숙박</a></li>
+				<li><a href="#" id="popularRestaurant">맛집</a></li>
+				<li><a href="#" id="vip">VIP</a></li>
+				<li><a href="#" id="service">고객센터</a></li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+		//호버시 아이콘 변환 스크립트
+			$("#travel").hover(function () {
+				$("#travel").html('<i class="fas fa-plane-departure"></i>');
+			},function(){
+				$("#travel").html('여행');	
+			});
+			
+			$("#sns").hover(function () {
+				$("#sns").html('<i class="far fa-comments"></i>');
+			},function(){
+				$("#sns").html('SNS');
+			});
+			
+			$("#room").hover(function () {
+				$("#room").html('<i class="fas fa-hotel"></i>');
+			},function(){
+				$("#room").html('숙박');
+			});
+			
+			$("#popularRestaurant").hover(function () {
+				$('#popularRestaurant').html('<i class="fas fa-utensils"></i>');
+			},function(){
+				$('#popularRestaurant').html('맛집');
+			});
+			
+			$("#vip").hover(function () {
+				$('#vip').html('<i class="fas fa-crown"></i>');
+			},function(){
+				$('#vip').html('VIP');
+			});
+			
+			$("#service").hover(function () {
+				$('#service').html('<i class="fas fa-headset"></i>');
+			},function(){
+				$('#service').html('고객센터');
+			});
+		</script>
+		<script type="text/javascript">
+		$(function() {
+		    $("body").css("display", "none");
+		    $("body").fadeIn(500);
+		    $("#sns").click(function(event){
+		        $("body").fadeOut(500);
+		    });
+		});
+		
+		</script>
 </body>
 </html>

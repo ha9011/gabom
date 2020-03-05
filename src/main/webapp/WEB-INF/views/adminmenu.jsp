@@ -128,7 +128,7 @@ li {
 		strh+='<div id="house_judge">';
 		//strh+='<div id="list_left"><img style="height:250px; width:250px;" src="resources/housemainImage/upload/1582626283965.jpg"></div>';
 		//풀요청받고 위에꺼랑 변경
-		str+='<div id="list_left"><img style="height:250px; width:250px;" src="resources/housemainImage/upload/'+house[i].house_sysname+'"></div>';
+		strh+='<div id="list_left"><img style="height:250px; width:250px;" src="resources/housemainImage/upload/'+house[i].house_sysname+'"></div>';
 		strh+='<div id="list_right">상호명 : '+house[i].house_name+'<br>';
 		if(house[i].house_type == 1){
 			strh+='집 유형 : 아파트 <br>';

@@ -95,9 +95,7 @@
 	
 	$(function () {
 		$('#loginBox').fadeIn("slow");			
-		
-	}
-	);
+	});
 	
 	</script>
 </head>
@@ -109,7 +107,6 @@
 <div class="container-fluid" id="loginBox">
 	<div class="jumbotron" id="jumbotronBox">
 	<form action="" method="post">
-	<br/>
 	<div id="idText">아이디</div>
 	<input type="text" class="col-md-12 col-sm-12 col-xs-12" id="member_id" name="member_id" class="form-control"><br/>
 	<br/>
