@@ -14,16 +14,14 @@ public class AdminjudgeController {
 	@Autowired
 	private AdminjudgeManagement am; //관리자
 	
+	//어드민페이지로 이동
 	@RequestMapping(value = "/adminmenu", method = RequestMethod.GET)
 	public ModelAndView adminmenu() {
 		mav = new ModelAndView();
 		System.out.println("adminmenu");
-		
 		mav = am.housejudgelist();
 		
 		return mav;
 	}
-	
-	
 	
 }

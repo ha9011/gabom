@@ -36,10 +36,6 @@ public class FoodRegisterService {
 	private FoodUploadFile ful;
 	
 
-
-
-
-
 	public ModelAndView foodRegisterUpload(MultipartHttpServletRequest multi,Principal principal) {
 		mav=new ModelAndView();
 		String view=null;

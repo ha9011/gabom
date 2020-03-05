@@ -10,81 +10,55 @@
 		하는 경우 List 쓰지말고 그냥 DTO 타입만 명시 6.#{} 문자열인 경우 자동으로 '' 추가 됨 <-> ${} 이놈은 그냥 문자열 
 		변환이 없다 7. 파라미터 타입은 생략가능하지만 가독성을 위해 비권장!! -->
 	<!-- WHERE HOUSE_GRANTTYPE = 0 -->
-	<!-- 등록대기 타입이 0인 애들 출력 -->
-	<!-- <select id="getHouseList" resultType="house"> -->
-	<!-- SELECT HOUSE_NAME,NVL(HOUSE_ADDRESS,0) FROM REGISTHOUSE -->
-	<!-- </select> -->
 
-
-	<!-- 셀렉트 조인 맵으로 뽑을때 -->
-	<!-- <select id="getHouseList" resultType="HashMap"> -->
-	<!-- SELECT -->
-	<!-- RH.HOUSE_NUMBER, -->
-	<!-- RH.HOUSE_NAME, -->
-	<!-- NVL(RH.HOUSE_ADDRESS,'없음') c, -->
-	<!-- RH.HOUSE_TYPE, -->
-	<!-- RH.HOUSE_GRANTTYPE, -->
-	<!-- HF.house_sysname -->
-	<!-- FROM -->
-	<!-- REGISTHOUSE RH join HOUSEFILE HF -->
-	<!-- on RH.HOUSE_NUMBER = HF.HOUSE_NUMBERR -->
-	<!-- where HF.HOUSE_IMAGETYPE = 1 -->
-	<!-- and RH.HOUSE_GRANTTYPE = 0 -->
-	<!-- </select> -->
-
-
-
-	<!-- <resultMap type="hfile" id="Housefile"> -->
-	<!-- <result column="HOUSE_NUMBER" property="house_number" /> -->
-	<!-- <result column="HOUSE_SYSNAME" property="house_sysname" /> -->
-	<!-- </resultMap> -->
-
-	<!-- <resultMap type="house" id="House1"> -->
-	<!-- <result column="HOUSE_NUMBER" property="house_number" /> -->
-	<!-- <result column="HOUSE_NAME" property="house_name" /> -->
-	<!-- <result column="HOUSE_ADDRESS" property="house_address" /> -->
-	<!-- <result column="HOUSE_TYPE" property="house_type" /> -->
-	<!-- <result column="HOUSE_GRANTTYPE" property="house_granttype" /> -->
-	<!-- <collection property="bbbVo" resultMap="Housefile" /> -->
-	<!-- </resultMap> -->
-
-
-	<!-- <select id="getHouseList" resultMap="House1"> -->
-	<!-- SELECT -->
-	<!-- RH.HOUSE_NUMBER, -->
-	<!-- RH.HOUSE_NAME, -->
-	<!-- NVL(RH.HOUSE_ADDRESS,'없음') as HOUSE_ADDRESS, -->
-	<!-- RH.HOUSE_TYPE, -->
-	<!-- RH.HOUSE_GRANTTYPE, -->
-	<!-- HF.house_sysname -->
-	<!-- FROM -->
-	<!-- REGISTHOUSE RH inner join HOUSEFILE HF -->
-	<!-- on RH.HOUSE_NUMBER = HF.HOUSE_NUMBER -->
-
-	<!-- where HF.HOUSE_IMAGETYPE = 1 -->
-	<!-- and RH.HOUSE_GRANTTYPE =0 -->
-	<!-- </select> -->
-
+	<!-- 하우스리스트 출력 -->
 	<select id="getHouseList" resultType="adminhouse">
-		SELECT
-		RH.HOUSE_NUMBER, RH.HOUSE_NAME, NVL(RH.HOUSE_ADDRESS,'없음') as HOUSE_ADDRESS, RH.HOUSE_TYPE,
-		RH.HOUSE_GRANTTYPE, HF.house_sysname
-		FROM
-		REGISTHOUSE RH join HOUSEFILE HF
-		on RH.HOUSE_NUMBER = HF.HOUSE_NUMBER
-
-		where HF.HOUSE_IMAGETYPE = 1
-		and RH.HOUSE_GRANTTYPE = 0
+		SELECT * FROM REGISTHOUSE JOIN HOUSEFILE ON REGISTHOUSE.HOUSE_NUMBER = HOUSEFILE.HOUSE_NUMBER 
+		WHERE REGISTHOUSE.HOUSE_GRANTTYPE = 0 AND HOUSE_IMAGETYPE = 1 ORDER BY REGISTHOUSE.HOUSE_NUMBER DESC
 	</select>
 	
+	<!-- 음식점 리스트 출력 -->
 	<select id="getFoodList" resultType="adminfood">
-		SELECT 
-		FS.FOOD_NUMBER, FS.FOOD_NAME, FS.FOOD_ADDRESS, FS.FOOD_TYPE, FS.FOOD_GRANTTYPE, FF.FOOD_SYSNAME
-		FROM FOODSHOP FS JOIN FOODFILE FF
-		ON FS.FOOD_NUMBER = FF.FOOD_NUMBER
-		WHERE FF.FOOD_IMAGETYPE = 1
-		AND FS.FOOD_GRANTTYPE = 0
+		SELECT FS.FOOD_HOSTID, FS.FOOD_NUMBER, FS.FOOD_NAME, FS.FOOD_ADDRESS, FS.FOOD_TYPE, FS.FOOD_GRANTTYPE, 
+		FF.FOOD_SYSNAME FROM FOODSHOP FS JOIN FOODFILE FF ON FS.FOOD_NUMBER = FF.FOOD_NUMBER
+		WHERE FF.FOOD_IMAGETYPE = 1 AND FS.FOOD_GRANTTYPE = 0 ORDER BY FOOD_NUMBER DESC
 	</select>
+	
+	<!-- 하우스 모달창 데이터 -->
+	<select id="gethousemodal" parameterType="String" resultType="adminhouse">
+		SELECT * FROM REGISTHOUSE JOIN HOUSEFILE ON REGISTHOUSE.HOUSE_NUMBER = HOUSEFILE.HOUSE_NUMBER 
+		WHERE registhouse.house_number = #{num} 
+	</select>
+	
+	<!-- 음식점 모달창 데이터 -->
+	<select id="getfoodmodal" parameterType="String" resultType="adminfood">
+		SELECT * FROM FOODSHOP JOIN FOODFILE ON FOODSHOP.FOOD_NUMBER = FOODFILE.FOOD_NUMBER
+		WHERE FOODSHOP.FOOD_NUMBER = #{num}
+	</select>
+	
+	<!-- 하우스 승인 granttype = 1 변경-->
+	<update id="houseApproved" parameterType="String">
+		UPDATE REGISTHOUSE SET HOUSE_GRANTTYPE = 1 WHERE HOUSE_NUMBER = #{number}
+	</update>
+	
+	<!-- 음식점 승인 granttype = 1변경 -->
+	<update id="foodApproved" parameterType="String">
+		UPDATE FOODSHOP SET FOOD_GRANTTYPE = 1 WHERE FOOD_NUMBER = #{number}
+	</update>
+	
+	<!-- 하우스 거절 granttype = 2 변경-->
+	<update id="housefuse" parameterType="String">
+		UPDATE REGISTHOUSE SET HOUSE_GRANTTYPE = 2 WHERE HOUSE_NUMBER = #{number}
+	</update>
+	
+	<!-- 음식점 거절 granttype = 2변경 -->
+	<update id="foodfuse" parameterType="String">
+		UPDATE FOODSHOP SET FOOD_GRANTTYPE = 2 WHERE FOOD_NUMBER = #{number}
+	</update>
+	
+<!-- 	<select id="getjudgedetail" > -->
+<!-- 		SELECT * FROM  -->
+<!-- 	</select> -->
 	<!-- <insert id="memberJoin" parameterType="member" > -->
 	<!-- INSERT INTO M VALUES(#{m_id},#{m_pwd},#{m_name},#{m_birth},#{m_addr},#{m_phone},default,1) -->
 	<!-- </insert> -->

@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import icia.project.gabom.dto.House;
+import icia.project.gabom.dto.Housereservation;
 
 
 public interface IhouseDao {
@@ -20,9 +22,23 @@ public interface IhouseDao {
 	@Insert("INSERT INTO HOUSEFILE VALUES(#{house_number},2,#{house_oriname},#{house_sysname})")
 	boolean detailfileInsert(Map<String, String> fMap);
 
-//	@Select("SELECT * FROM HOUSE_LIST")
-	@Select("SELECT * FROM registhouse R, housefile HF WHERE R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND HOUSE_IMAGETYPE=1")
+	@Select("SELECT * FROM registhouse R, housefile HF WHERE R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND HOUSE_IMAGETYPE=1 AND HOUSE_GRANTTYPE=1")
 	List<House> getHouseList();
+	
+	@Select("SELECT * FROM registhouse R, housefile HF WHERE R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND HOUSE_ADDRESS LIKE '%'||#{house_address}||'%' AND HOUSE_IMAGETYPE=1 AND HOUSE_GRANTTYPE=1")
+	List<House> searchhouse(String house_address);
+	
+	@Select("SELECT * FROM registhouse R, housefile HF where R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND HOUSE_ADDRESS LIKE '%'||#{house_address}||'%' AND HOUSE_IMAGETYPE=1 AND HOUSE_GRANTTYPE=1")
+	List<House> changesearch(String house_address);
+
+	@Select("select * from registhouse r, housefile HF WHERE R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND R.HOUSE_NUMBER=#{house_number}")
+	List<House> detailhouse(String house_number);
+	
+	//----------------------------------------------------------------------------------------------------------예약
+	int housereservation(Housereservation hreservation);
+	
+	@Select("select * from HOUSERESERVATION WHERE HOUSE_NUMBER=#{house_number} order by RESERVATION_CHECKIN")
+	List<Housereservation> detailreser(@Param("house_number") String house_number); 
 	
 	
 	
