@@ -91,7 +91,7 @@ li {
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#home">서비스업체 등록심사</a>
+      <a class="nav-link active" data-toggle="tab" href="#jodge">서비스업체 등록심사</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#menu1">서비스업체 신고관리</a>
@@ -103,7 +103,7 @@ li {
       <a class="nav-link" data-toggle="tab" href="#menu3">여행객 신고관리</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#menu4">전체회원 공지사항</a>
+      <a class="nav-link" data-toggle="tab" href="#all_notices">전체회원 공지사항</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#menu5">QnA</a>
@@ -114,33 +114,62 @@ li {
   </ul>
 	 <!-- Tab 내용 -->
   <div class="tab-content">
-    <div id="home" class="container tab-pane active"><br>
+    <div id="jodge" class="container tab-pane active"><br>
     	<div>
 			<div id="service_main">
 				<div id="housemain_judge"><h3>House심사대기 List</h3></div>
-
 				<div id="foodmain_judge"><h3>Food심사대기 List</h3></div>
 			</div>
 		</div>
     </div>
     <div id="menu1" class="container tab-pane fade"><br>
-    <h3>Menu 1</h3>
+    <h3>서비스업체 신고관리</h3>
     <p>메 뉴 1</p>
     </div>
     <div id="menu2" class="container tab-pane fade"><br>
-      <h3>Menu 2</h3>
+      <h3>여행객계획 등록심사</h3>
       <p>메뉴2</p>
     </div>
     <div id="menu3" class="container tab-pane fade"><br>
-      <h3>Menu 3</h3>
+      <h3>여행객 신고관리</h3>
       <p>메뉴3</p>
     </div>
-    <div id="menu4" class="container tab-pane fade"><br>
-      <h3>Menu 4</h3>
-      <p>메뉴4</p>
+    <div id="all_notices" class="container tab-pane fade"><br>
+      <h3>전체회원 공지사항</h3>
+          <div>
+				<table id="boards" class="table table-hover">
+					<colgroup>
+						<!-- 열너비 지정 -->
+						<col width="15%">
+						<col width="45%">
+						<col width="20%">
+						<col width="20%">
+					</colgroup>
+					<thead>
+						<tr>
+				            <th>글번호</th>
+				            <th>제목</th>
+				            <th>날짜</th>
+				            <th>조회수</th>
+						</tr>
+					</thead>
+					<tbody id="notices_body">
+					</tbody>
+				</table>
+            </div>
+             <!-- pagination 영역 -->
+				<div style="text-align: center;">
+					<ul id="pagination" class="pagination"></ul>
+				</div>
+
+				<!-- 글쓰기 번튼 영역 -->
+				<div style="text-align: center;" id="write_button_area">
+					<!-- html 으로 버튼을 만든다. -->
+					<!-- <button class="btn btn-success custom">글쓰기</button> -->
+				</div>
     </div>
     <div id="menu5" class="container tab-pane fade"><br>
-      <h3>Menu 5</h3>
+      <h3>QnA</h3>
       <p>메뉴5</p>
     </div>
   </div>
@@ -188,6 +217,144 @@ li {
 	</div>
 
 	<script>
+	
+	function getToday() {
+		const today = new Date();
+		let dd=today.getDate(); //일 반환
+		let mm=today.getMonth()+1; //월 반환 (1월이 0이기 때문에 +1)
+		let yyyy=today.getFullYear();
+		if(dd<10)
+			dd='0'+dd; //1자리 숫자 앞에 0 붙이기
+		if(mm<10)
+			mm='0'+mm; //1자리 숫자 앞에 0 붙이기
+		return yyyy+"-"+mm+"-"+dd;
+	}
+	
+	/* $('#all_notices').on('click',function(e){ 
+ 		console.log(e.target.dataset.number);
+ 		var params = e.target.dataset.number; }*/
+	
+	
+	/* function printData() {
+				const boards = page.boards; //게시글만 저장
+				
+				const pagination = getPagination(page); //pagination 저장
+				//게시판 글들만 출력
+				const $tbody = $("#boards tbody");
+				
+				$.each(boards, function(i, $board) {
+					const $tr=$("<tr>").appendTo($tbody);
+					$("<td>").text($board.bno).appendTo($tr); //글번호 추가
+					
+					//두번째 td : 제목을 출력 하고 링크 걸기
+					const $td=$("<td></td>").text($board.title).appendTo($tr);
+					const $link = $("<a>").attr("href", "/kim_client/board/read.html?bno=" + $board.bno);
+					$($td).wrapInner($link); //부모안에 쏴라
+					//제목에 a태그
+
+					//세번째td: 날짜, 오늘 작성한 글은 시분초를 , 그이전글은 년월일 출력
+					const writeDate=$board.writeDate.split(" ");  //split(쪼개다)
+					console.log(writeDate[0]); //년 월 일
+					console.log(writeDate[1]); //시 분 초
+					
+					const today = getToday(); //오늘 날짜를 직접 정의
+					
+					if(today==writeDate[0]){
+						$("<td>").text(writeDate[1]).appendTo($tr);
+					}else{
+						$("<td>").text(writeDate[0]).appendTo($tr);
+					}
+					//네번째td : 조회수 출력
+					$("<td>").text($board.readCnt).appendTo($tr);
+					
+				}); //end each
+				
+				const $ul = $("#pagination");
+				//페이지가 계속 추가 되어 출력된다면 empty
+				//$ul.empty(); //선택한 요소의 내용을 지웁니다. 태그까지 지울땐 .remove()를 사용
+				let li;
+				if(pagination.prev>0){ //1번 페이지그룹 0, 2번째 페이지 그룹이 1
+					li = $("<li>").text('이전').appendTo($ul); //앞에 페이지 그룹이 있으면 이전창 생성
+					if(queryString.match(/writer/)) //글쓴이를 선택한 상테에서 페이지
+						li.wrapInner($("<a>").attr('href','/kim_client/board/list.html?pageno='+pagination.prev+'&writer='+writer));
+					else //글쓴이가 선택되지 않은 상태에서 페이지
+						li.wrapInner($("<a>").attr('href','/kim_client/board/list.html?pageno='+pagination.prev));
+				}
+				for(let i = pagination.startPage; i<=pagination.endPage; i++){ //변수i는 시작페이지, i는 끝페이지까지
+					li = $("<li>").text(i).appendTo($ul);
+					if(page.pageno==i) //현재페이지인 경우
+					
+					li.attr("class","active").wrapInner($("<a></a>").attr('href','/kim_client/board/list.html?pageno='+i).prop('disabled',true)); //또는('href','#')
+					else //다른페이지 클릭시
+						if(queryString.match(/writer/)) //글쓴이를 선택한 상테에서 페이지
+							li.wrapInner($("<a>").attr('href','/kim_client/board/list.html?pageno='+i+'&writer='+writer));
+						else //글쓴이가 선택되지 않은 상태에서 페이지
+							li.wrapInner($("<a>").attr('href','/kim_client/board/list.html?pageno='+i));
+				}
+				if(pagination.next>0){ //현재그룹에서 다음그룹이 남아있을경우
+					li = $("<li>").text('다음').appendTo($ul);
+					if(queryString.match(/writer/)) //글쓴이를 선택한 상테에서 페이지
+						li.wrapInner($("<a>").attr('href','/kim_client/board/list.html?pageno='+pagination.next+'&writer='+writer));
+					else //글쓴이가 선택되지 않은 상태에서 페이지
+						li.wrapInner($("<a>").attr('href','/kim_client/board/list.html?pageno='+pagination.next));
+				}
+				
+			} //printData end */
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//전체공지 출력
+	const board = ${allnotices}; 
+	console.log("ㅁㄴㅇㅁㄴㅇ",board);
+	
+	let strb = " ";
+	for(let i = 0;i<board.length;i++){
+		strb += '<tr>';
+		strb += '<td>'+board[i].all_notices_number+'</td>';
+		strb += '<td><a href="board[i].all_notices_number">'+board[i].all_notices_title+'</a></td>';
+		
+		const writeDate=board[i].all_notices_date.split(" ");  //split(쪼개다)
+		console.log(writeDate[0]); //년 월 일
+		console.log(writeDate[1]); //시 분 초
+		
+		const today = getToday(); //오늘 날짜를 직접 정의
+		
+		if(today==writeDate[0]){
+		strb += '<td>'+writeDate[1]+'</td>';
+		}else{
+			strb += '<td>'+writeDate[0]+'</td>';
+		}
+		strb += '<td>'+board[i].all_notices_views+'</td>';
+		strb += '</tr>';
+	}
+	$("#notices_body").append(strb);
+
+	//글쓰기 버튼 jQuery로 만들어 보기
+	$("<button>").addClass("btn btn-success custom").attr("id","write").text("글쓰기").appendTo($("#write_button_area"));
+	$("#write").on("click",function(){
+		
+	});
+
+	
 	//house 리스트 출력
 	const house = ${housejudge}; //house 리스트 json
 	const food = ${foodjudge}; //food 리스트 json
@@ -416,32 +583,7 @@ li {
 	               console.log("data",data);
 	               location.href="adminmenu";
 	               
-/* 	               $("#housemain_judge").empty();
-	               let strh=" ";
-	            	for(var i=0;i<data.length;i++){
-	            		if(i>=2){
-	            			console.log("housemodal break");
-	            			break;
-	            		}
-	            	strh+='<div style="border: 1px solid black; margin-top: 5px; id="house_judge">';
-	           		strh+='<div id="house_judge">';
-	           		strh+='<div id="list_left"><img style="height:250px; width:250px;" src="'+data[i].house_sysname+'"></div>';
-	           		strh+='<div id="list_right_sec">';
-	           		strh+='<div id="list_right">상 호 명 : '+data[i].house_name+'<br>';
-	           		if(data[i].house_type == 1){
-	           			strh+='집 유 형 : 아파트 <br>';
-	           		}else if(data[i].house_type == 2){
-	           			strh+='집 유 형 : 빌라 <br>';
-	           		}else if(data[i].house_type == 3){
-	           			strh+='집 유 형 : 주택 <br>';
-	           		}
-	           		strh+='집 주 소 : '+data[i].house_address+'</div>';
-	           		strh+='<div id="list_button" class="house"><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-number="'+data[i].house_number+'">승인/거절</button></div>';
-	           		strh+='</div>';
-	           		strh+='</div>';
-	           		strh+='</div>';
-	            	}
-	            	$("#housemain_judge").append(strh); */
+
 	            },
 	            error:function(err){
 	            	console.log("승인거절 에러");

@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import icia.project.gabom.dao.IAdminDao;
 import icia.project.gabom.dto.Adminfood;
 import icia.project.gabom.dto.Adminhouse;
+import icia.project.gabom.dto.Adminnotices;
 
 @Service
 public class AdminjudgeManagement {
@@ -24,23 +25,27 @@ public class AdminjudgeManagement {
 
 		List<Adminhouse> hlist = aDao.getHouseList(); // house 등록타입0번인 리스트 담아오기
 		List<Adminfood> flist = aDao.getFoodList(); // food 등록타입 0번인 리스트 담아오기
-
+		List<Adminnotices> nlist = aDao.getadnotices(); //전체공지 정보 출력
 		System.out.println("List=" + hlist);
 		System.out.println("flist=" + flist);
+		System.out.println("nlist="+nlist);
 
 		String hson = new Gson().toJson(hlist);
 		String fson = new Gson().toJson(flist);
+		String nson = new Gson().toJson(nlist);
 
 		mav.addObject("housejudge", hson);
 		mav.addObject("foodjudge", fson);
+		mav.addObject("allnotices",nson);
 		System.out.println("hson=" + hson);
 		System.out.println("fson=" + fson);
+		System.out.println("nson=" + nson);
 
 		mav.setViewName("adminmenu");
 		return mav;
 	} // housejudgelist End
 
-	// 심사 승인 서비스(rest)
+	// 심사 승인 서비스(Rest)
 	public String judgeApproved(String number, String type) {
 		System.out.println("am승인은 오니?");
 		String json = null;
