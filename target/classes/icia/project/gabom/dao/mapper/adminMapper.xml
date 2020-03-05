@@ -56,6 +56,12 @@
 		UPDATE FOODSHOP SET FOOD_GRANTTYPE = 2 WHERE FOOD_NUMBER = #{number}
 	</update>
 	
+	<!-- 음식점 모달창 데이터 -->
+	<select id="getadnotices" parameterType="String" resultType="adminnotices">
+		SELECT ALL_NOTICES_NUMBER, ALL_NOTICES_TITLE, ALL_NOTICES_BODY, ALL_NOTICES_DATE, 
+		ALL_NOTICES_VIEWS FROM ALL_NOTICES_BOARD
+	</select>
+	
 <!-- 	<select id="getjudgedetail" > -->
 <!-- 		SELECT * FROM  -->
 <!-- 	</select> -->

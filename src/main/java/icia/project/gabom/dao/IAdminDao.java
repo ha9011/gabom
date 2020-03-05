@@ -4,6 +4,7 @@ import java.util.List;
 
 import icia.project.gabom.dto.Adminfood;
 import icia.project.gabom.dto.Adminhouse;
+import icia.project.gabom.dto.Adminnotices;
 
 public interface IAdminDao {
 	//하우스 0번타입 리스트 출력
@@ -22,5 +23,7 @@ public interface IAdminDao {
 	boolean housefuse(String number);
 	//food 거절
 	boolean foodfuse(String number);
+	//notices 전체출력
+	List<Adminnotices> getadnotices();
 	
 }
