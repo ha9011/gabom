@@ -104,8 +104,8 @@ background-color: #E6E6E6
 			<ul class="nav nav-tabs nav-justified">
 				<li><a href="#" id="travel">여행</a></li>
 				<li><a href="snsmain" id="sns" >SNS</a></li>
-				<li><a href="#" id="room" >숙박</a></li>
-				<li><a href="#" id="popularRestaurant">맛집</a></li>
+				<li><a href="housechoice" id="room" >숙박</a></li>
+				<li><a href="foodmain" id="popularRestaurant">맛집</a></li>
 				<li><a href="#" id="vip">VIP</a></li>
 				<li><a href="#" id="service">고객센터</a></li>
 			</ul>

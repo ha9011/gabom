@@ -23,7 +23,6 @@ public class Housereservation {
 	
 	private int reservation_person;
 	private int reservation_totalprice;
-	private int reservation_type;
 	
 
 }

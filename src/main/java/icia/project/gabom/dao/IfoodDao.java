@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import icia.project.gabom.dto.Food;
+import icia.project.gabom.dto.Foodreservation;
+import icia.project.gabom.dto.Housereservation;
 
 public interface IfoodDao {
 
@@ -30,4 +32,11 @@ public interface IfoodDao {
 	@Select("select * from foodshop F, foodfile FF WHERE F.FOOD_NUMBER = FF.FOOD_NUMBER AND F.FOOD_NUMBER=#{food_number}")
 	List<Food> detailfood(String food_number);
 
+	
+	int foodreservation(Foodreservation  freservation);
+
+	@Select("select * from FOODRESERVATION WHERE FOOD_NUMBER=#{food_number} order by FOODRESERVATION_DATE")
+	List<Foodreservation> detailfoodreser(String food_number);
+	
+	
 }

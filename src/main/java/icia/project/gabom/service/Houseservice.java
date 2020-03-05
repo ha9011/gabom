@@ -107,20 +107,16 @@ public class Houseservice {
 	}
 
 
-	public ModelAndView housereservation(HttpServletRequest request, Principal principal) {
-		mav = new ModelAndView();
-		String view = null;
-	
-		
+	public String housereservation(Principal principal, Housereservation hreservation) {
+		String json = null;
+		System.out.println("예약하러  오니?");
 		String member_guestid=principal.getName();
-		int house_number= Integer.parseInt(request.getParameter("house_number"));
-		String house_hostid= request.getParameter("house_hostid");
-		int reservation_totalprice=Integer.parseInt(request.getParameter("reservation_totalprice"));
-		int reservation_person=Integer.parseInt(request.getParameter("reservation_person"));
-		String reservation_checkin= request.getParameter("reservation_checkin");
-		String reservation_checkout= request.getParameter("reservation_checkout");
-		
-		Housereservation hreservation= new Housereservation();
+		int house_number= hreservation.getHouse_number();
+		String house_hostid= hreservation.getHouse_hostid();
+		int reservation_totalprice=hreservation.getReservation_totalprice();
+		int reservation_person=hreservation.getReservation_person();
+		String reservation_checkin=hreservation.getReservation_checkin();
+		String reservation_checkout=hreservation.getReservation_checkout();		
 		
 		hreservation.setHouse_hostid(house_hostid).setHouse_number(house_number).setMember_guestid(member_guestid);
 		hreservation.setReservation_checkin(reservation_checkin).setReservation_checkout(reservation_checkout);
@@ -128,14 +124,11 @@ public class Houseservice {
 		
 		int reservation_number = hDao.housereservation(hreservation);
 		
-		if(true) {//insert 성공
-			view="reservationsuccess";
-		}else {// insert 실패
-			view="housedetail?house_number=house_number"; //jsp
-		}
+		json = new Gson().toJson(hreservation);
+		System.out.println("json="+json);
+		System.out.println("예약했니?");
 		
-		mav.setViewName(view);
-		return mav;
+		return json;
 	}
 
 

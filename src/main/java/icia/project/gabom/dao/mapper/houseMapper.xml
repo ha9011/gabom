@@ -11,7 +11,7 @@
 	</insert>
 	
 	<insert id="housereservation" parameterType="hreservation" >
-	INSERT INTO HOUSERESERVATION VALUES(SQ_HOUSERESERVATION.nextval,#{house_number},#{house_hostid},#{member_guestid},#{reservation_checkin},#{reservation_checkout},#{reservation_person},#{reservation_totalprice},0)
+	INSERT INTO HOUSERESERVATION VALUES(SQ_HOUSERESERVATION.nextval,#{house_number},#{house_hostid},#{member_guestid},#{reservation_checkin},#{reservation_checkout},#{reservation_person},#{reservation_totalprice})
 		<selectKey keyProperty="reservation_number" resultType="integer" order="AFTER">
 				SELECT SQ_HOUSERESERVATION.CURRVAL FROM DUAL
 			</selectKey>
