@@ -119,6 +119,33 @@ height: 700px;
 		display: flex;
 		margin-top: 0;
 		}
+		#travelPlan{
+		margin-bottom: 40px;
+		}
+		#writeButton{
+			background-color: #337ab7;
+			font-family: 'Jua' ;
+			width: 100px;
+		}
+		img.myImage{
+			border-radius: 50%;
+			width: 90px;
+			height: 50px;
+			margin: 0;
+			margin-bottom: 10px;
+		}
+		.security select{
+			height: 45px;
+			font-family: 'Jua' ;
+			font-weight: bold;
+			font-size: 17px;
+			margin-bottom: 30px;
+		}
+		.security select option{
+			font-family: 'Jua' ;
+			font-weight: bold;
+			font-size: 17px;
+		}
 </style>
 
 <script type="text/javascript">
@@ -211,25 +238,41 @@ $(function () {
 	},function(){
 		$("#travelPlan a").html('여행계획');
 	});
+	</script>
+<script type="text/javascript">
+//글쓰기칸 만드는 작업
+	$("#snsWirte").click(function (){
+		let photo="";
+		photo+='<div class="row">';
+		photo+='<img src="resources/snsImage/sns7.jpg" class="img-responsive col-xs-4 col-md-2 col-sm-4 myImage">';
+		photo+='<div class="container col-xs-4 col-md-2 col-sm-4 pull-right security">';
+		photo+='<select class="form-control">';
+		photo+='<option>전체 공개</option>';
+		photo+='<option>나만 보기</option>';
+		photo+='<option>친구 공개</option>';
+		photo+='</select>';
+		photo+='</div>';
+		photo+='</div>';
+		photo+='<div class="input-group" id="writeContents">';
+		photo+='<textarea class="form-control" aria-describedby="basic-addon1" rows="7" cols="185" placeholder="무슨 생각을 하고 계신가요?"></textarea>';
+		photo+='</div>';
+		photo+='<div class="row">';
+		photo+='<div class="filebox col-xs-4 col-md-2 col-sm-4">';
+		photo+='<label for="ex_file"><i class="fas fa-image fa-2x"></i></label>';
+		photo+='<input type="file" id="ex_file">';
+		photo+='</div>';
+		photo+='<div class="col-xs-8 col-md-10 col-sm-8" >';
+		photo+='<button class="btn btn-info pull-right" id="writeButton">작성</button>';
+		photo+='</div>';
+		photo+='</div>';
+		photo+='<div id="coverBox">';
+		photo+='</div>';
+		$("#writeBox").html(photo);
 	$(".filebox label").hover(function () {
 		$(".filebox label").html('<i class="fas fa-plus fa-2x"></i>');
 	},function(){
 		$(".filebox label").html('<i class="fas fa-image fa-2x"></i>');
 	});
-	</script>
-<script type="text/javascript">
-	$("#snsWirte").click(function (){
-		let photo="";
-		photo+='<div class="input-group" id="writeContents">';
-		photo+='<textarea class="form-control" aria-describedby="basic-addon1" rows="7" cols="185" placeholder="무슨 생각을 하고 계신가요?"></textarea>';
-		photo+='</div>';
-		photo+='<div class="filebox">';
-		photo+='<label for="ex_file"><i class="fas fa-image fa-2x"></i></label>';
-		photo+='<input type="file" id="ex_file">';
-		photo+='</div>'
-		photo+='<div id="coverBox">'
-		photo+='</div>';
-		$("#writeBox").html(photo);
 	});
 </script>
 <script type="text/javascript">
