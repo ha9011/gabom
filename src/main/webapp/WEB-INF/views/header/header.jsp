@@ -150,6 +150,7 @@ background-color: #E6E6E6
 		</script>
 		<script type="text/javascript">
 		$(function() {
+			//여기에 로딩이 끝나고 시큐리티에 아이디가 있으면 ajax로 로그인 상태를 체크 해야됨
 		    $("body").css("display", "none");
 		    $("body").fadeIn(500);
 		    $("#sns").click(function(event){
