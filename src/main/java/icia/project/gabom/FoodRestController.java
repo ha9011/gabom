@@ -1,17 +1,23 @@
 package icia.project.gabom;
 
+import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.project.gabom.dao.IfoodDao;
+import icia.project.gabom.dto.Foodreservation;
 import icia.project.gabom.service.Foodservice;
 
 @RestController
-@RequestMapping(value = "/rest")
+@RequestMapping(value = "/frest")
 public class FoodRestController {
 
 private ModelAndView mav;
@@ -31,4 +37,16 @@ private ModelAndView mav;
 		
 		return json;
 	}
+	
+	@RequestMapping(value = "/foodreservation",produces = "application/json;charset=utf-8") //메인에서 검색된 결과 페이지 
+	public String foodreservation(Principal principal,Foodreservation freservation) {
+		System.out.println("예약하러 컨트롤러 오니?");
+		System.out.println(freservation.toString());
+		
+		String json = fs.foodreservation(freservation,principal);
+		
+		return json;
+	
+	}
+
 }

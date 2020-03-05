@@ -58,7 +58,7 @@ public class Housecontroller { //검색, 메인, 상세보기 컨트롤러
 	
 	@RequestMapping(value = "/housedetail", method = RequestMethod.GET)
 	public ModelAndView housedetail(String house_number,Housereservation reserlist) {
-		System.out.println("reserlist");
+		System.out.println("reserlist="+reserlist);
 		System.out.println("housedetail");
 		System.out.println("집번호는"+house_number);
 		
@@ -66,29 +66,6 @@ public class Housecontroller { //검색, 메인, 상세보기 컨트롤러
 		return mav;
 	}
 	
-	@PostMapping(value = "/housereservation") //메인에서 검색된 결과 페이지 
-	public ModelAndView housereservation(HttpServletRequest request,Principal principal) {
-		String member_guestid=principal.getName();
-		String house_number= request.getParameter("house_number");
-		String house_hostid= request.getParameter("house_hostid");
-		String reservation_totalprice= request.getParameter("reservation_totalprice");
-		String reservation_person= request.getParameter("reservation_person");
-		String reservation_checkin= request.getParameter("reservation_checkin");
-		String reservation_checkout= request.getParameter("reservation_checkout");
-		
-		
-		System.out.println("방번호"+house_number);
-		System.out.println("주인아이디"+house_hostid);
-		System.out.println("예약자 아이디"+member_guestid);
-		System.out.println("총금액"+reservation_totalprice);
-		System.out.println("인원"+reservation_person);
-		System.out.println("체크인"+reservation_checkin);
-		System.out.println("체크아웃"+reservation_checkout);
-		
-		mav = hs.housereservation(request,principal);
-		
-		return mav;
 	
-	}
 
 }
