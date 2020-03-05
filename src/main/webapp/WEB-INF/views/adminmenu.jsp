@@ -4,22 +4,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>서비스업체 등록 심사</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+<!-- <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> 
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
 <!-- 제이쿼리 -->
-<script
+<!-- <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<!-- 부트스트랩 -->
+부트스트랩 -->
 
 <style>
-#admin_nav{
-/* 	background-color: aquamarine; */
-	background-color: #16AEF6;
-}
 
 #housemain_judge {
 	width: 70%;
@@ -32,7 +33,6 @@
 	display: block;
 	border: 1px solid black;
 	width: 100%;
-	display: block;
 	overflow: auto;
 }
 
@@ -45,7 +45,6 @@
 	display: block;
 	border: 1px solid black;
 	width: 100%;
-	display: block;
 	overflow: auto;
 }
 
@@ -84,55 +83,104 @@ li {
 
 </head>
 <body>
-	<h3>adminmenu.jsp</h3>
-	<div id="admin_page">
-		<header id="header"> </header>
-		<div id="admin_nav">
-			<nav class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="home">HOME</a>
-				</div>
-				<ul class="nav navbar-nav" id="menu_parent">
-					<li><a href="#">서비스업체 등록심사</a></li>
-					<li><a href='#'>서비스업체 신고관리</a></li>
-					<li><a href="#"> 여행객계획 등록심사</a></li>
-					<li><a href="#"> 여행객 신고관리</a></li>
-					<li><a href="#"> 전체회원 공지사항</a></li>
-					<li><a href="#"> QnA</a></li>
-				</ul>
-			</nav>
-		</div>
-		<div>
+	<h3>adminmenu.jsp header</h3>
+	
+	<div class="container">
+  <h2>Toggleable Tabs</h2>
+  <br>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#home">서비스업체 등록심사</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu1">서비스업체 신고관리</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu2">여행객계획 등록심사</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu3">여행객 신고관리</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu4">전체회원 공지사항</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu5">QnA</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="home">Home</a>
+    </li>
+  </ul>
+	 <!-- Tab 내용 -->
+  <div class="tab-content">
+    <div id="home" class="container tab-pane active"><br>
+    	<div>
 			<div id="service_main">
 				<div id="housemain_judge"><h3>House심사대기 List</h3></div>
 
 				<div id="foodmain_judge"><h3>Food심사대기 List</h3></div>
 			</div>
 		</div>
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">서비스업 등록 심사</h4>
-					</div>
-					<form id="sFrm">
-						<div class="modal-body" id="judge_modal">내용</div>
-						<div class="modal-footer">
-							<button id="approved" value="승인" class="btn btn-primary judge"
-								data-dismiss="modal">승인</button>
-							<button id="refuse" value="거절" class="btn btn-primary judge"
-								data-dismiss="modal">거절</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
+    </div>
+    <div id="menu1" class="container tab-pane fade"><br>
+    <h3>Menu 1</h3>
+    <p>메 뉴 1</p>
+    </div>
+    <div id="menu2" class="container tab-pane fade"><br>
+      <h3>Menu 2</h3>
+      <p>메뉴2</p>
+    </div>
+    <div id="menu3" class="container tab-pane fade"><br>
+      <h3>Menu 3</h3>
+      <p>메뉴3</p>
+    </div>
+    <div id="menu4" class="container tab-pane fade"><br>
+      <h3>Menu 4</h3>
+      <p>메뉴4</p>
+    </div>
+    <div id="menu5" class="container tab-pane fade"><br>
+      <h3>Menu 5</h3>
+      <p>메뉴5</p>
+    </div>
+  </div>
+  
+  
+  <!-- The Modal -->
+   <div class="modal" id="myModal">
+    <div class="modal-dialog "><!-- modal-dialog-scrollable -->
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h1 class="modal-title">서비스업 등록 심사</h1>
+          <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+
+        <form id="sFrm">
+        <div class="modal-body" id="judge_modal">
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+        	<button id="approved" value="승인" class="btn btn-primary judge"data-dismiss="modal">승인</button>
+			<button id="refuse" value="거절" class="btn btn-primary judge"data-dismiss="modal">거절</button>
+         	<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>  
+  <!-- Modal End -->
+  
+</div> <!-- container End -->
+	
+	
+	
+	<div id="admin_page">
+		
+		
+
 
 	</div>
 	<div>
@@ -157,7 +205,7 @@ li {
  		}
  		strh+='<div style="border: 1px solid black; margin-top: 5px; id="house_judge">';
 		strh+='<div id="house_judge">';
-		strh+='<div id="list_left"><img style="height:250px; width:100%;" src="'+house[i].house_sysname+'"></div>';
+		strh+='<div id="list_left"><img style="height:200px; width:100%;" src="'+house[i].house_sysname+'"></div>';
 		strh+='<div id="list_right_sec">';
 		strh+='<div id="list_right">상 호 명 : '+house[i].house_name+'<br>';
 		if(house[i].house_type == 1){
@@ -168,7 +216,7 @@ li {
 			strh+='집 유 형 : 주택 <br>';
 		}
 		strh+='집 주 소 : '+house[i].house_address+'</div>';
-		strh+='<div id="list_button" class="house"><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-number="'+house[i].house_number+'">승인/거절</button></div>';
+		strh+='<div id="list_button" class="house"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-number="'+house[i].house_number+'">승인/거절</button></div>';
 		strh+='</div>';
 		strh+='</div>';
 		strh+='</div>';
@@ -185,7 +233,7 @@ li {
  		}
  		strf+='<div style="border: 1px solid black; margin-top: 5px; id="food_judge">';
 		strf+='<div id="food_judge">';
-		strf+='<div id="list_left"><img style="height:250px; width:100%;" src="'+food[i].food_sysname+'"></div>';
+		strf+='<div id="list_left"><img style="height:200px; width:100%;" src="'+food[i].food_sysname+'"></div>';
 		strf+='<div id="list_right_sec">';
 		strf+='<div id="list_right">상 호 명 : '+food[i].food_name+'<br>';
 		if(food[i].food_type == 1){
@@ -196,7 +244,7 @@ li {
 			strf+='집 유 형 : 호프 <br>';
 		}
 		strf+='음식점 주소 : '+food[i].food_address+'</div>';
-		strf+='<div id="list_button" class="food"><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-number="'+food[i].food_number+'">승인/거절</button></div>';
+		strf+='<div id="list_button" class="food"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-number="'+food[i].food_number+'">승인/거절</button></div>';
 		strf+='</div>';
 		strf+='</div>';
 		strf+='</div>';
@@ -256,7 +304,7 @@ li {
                     for(var j=0;j<response.length;j++){ //사진 for문 시작
                         console.log("123__",response); 
                         console.log("111",response[j].house_sysname);
-                    strj += '<img style="height:100px; width:200px;"src='+response[j].house_sysname+'">';
+                    strj += '<img style="height:100px; width:200px; margin: 1px;"src="'+response[j].house_sysname+'">';
                     	} //사진for문 종료
                     strj += '</div>';
                 	}//for문 종료
@@ -317,7 +365,7 @@ li {
                     strj += '</div>';
                     strj += '<div>';
                     for(var j=0;j<response.length;j++){//사진 for문 시작
-                    strj += '<img style="height:100px; width:200px;"src='+response[j].food_sysname+'">';
+                    strj += '<img style="height:100px; width:200px; margin: 1px;"src="'+response[j].food_sysname+'">';
                     	} //사진 for문 종료
                     strj += '</div>';
                 	}//for문 종료
@@ -364,7 +412,7 @@ li {
 	               
 	               alert('성공');
 	               console.log("data",data);
-	              	location.href="adminmenu";
+	               location.href="adminmenu";
 	               
 /* 	               $("#housemain_judge").empty();
 	               let strh=" ";
