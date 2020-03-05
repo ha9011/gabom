@@ -16,6 +16,5 @@ public class Adminnotices {
 	private int all_notices_views;
 	
 	@DateTimeFormat(pattern="yyyy-mm-dd")
-	private int all_notices_date;
-	
+	private String all_notices_date;
 }

@@ -153,7 +153,7 @@ li {
 				            <th>조회수</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="notices_body">
 					</tbody>
 				</table>
             </div>
@@ -229,9 +229,13 @@ li {
 			mm='0'+mm; //1자리 숫자 앞에 0 붙이기
 		return yyyy+"-"+mm+"-"+dd;
 	}
-
-
-	function printData() {
+	
+	/* $('#all_notices').on('click',function(e){ 
+ 		console.log(e.target.dataset.number);
+ 		var params = e.target.dataset.number; }*/
+	
+	
+	/* function printData() {
 				const boards = page.boards; //게시글만 저장
 				
 				const pagination = getPagination(page); //pagination 저장
@@ -279,9 +283,7 @@ li {
 				for(let i = pagination.startPage; i<=pagination.endPage; i++){ //변수i는 시작페이지, i는 끝페이지까지
 					li = $("<li>").text(i).appendTo($ul);
 					if(page.pageno==i) //현재페이지인 경우
-					<!-- button or <li>태그에 class='active'를 추가하면 클릭할때 느낌이 산다. -->
-					<!-- 부트스트랩의 페이지네이션에서 a태그가 필요하기 때문에 삭제하면 페이징 깨짐 -->
-					<!--부트스트랩 버튼 효과-->
+					
 					li.attr("class","active").wrapInner($("<a></a>").attr('href','/kim_client/board/list.html?pageno='+i).prop('disabled',true)); //또는('href','#')
 					else //다른페이지 클릭시
 						if(queryString.match(/writer/)) //글쓴이를 선택한 상테에서 페이지
@@ -297,38 +299,61 @@ li {
 						li.wrapInner($("<a>").attr('href','/kim_client/board/list.html?pageno='+pagination.next));
 				}
 				
-			} //printData end
+			} //printData end */
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//전체공지 출력
+	const board = ${allnotices}; 
+	console.log("ㅁㄴㅇㅁㄴㅇ",board);
+	
+	let strb = " ";
+	for(let i = 0;i<board.length;i++){
+		strb += '<tr>';
+		strb += '<td>'+board[i].all_notices_number+'</td>';
+		strb += '<td><a href="board[i].all_notices_number">'+board[i].all_notices_title+'</a></td>';
+		
+		const writeDate=board[i].all_notices_date.split(" ");  //split(쪼개다)
+		console.log(writeDate[0]); //년 월 일
+		console.log(writeDate[1]); //시 분 초
+		
+		const today = getToday(); //오늘 날짜를 직접 정의
+		
+		if(today==writeDate[0]){
+		strb += '<td>'+writeDate[1]+'</td>';
+		}else{
+			strb += '<td>'+writeDate[0]+'</td>';
+		}
+		strb += '<td>'+board[i].all_notices_views+'</td>';
+		strb += '</tr>';
+	}
+	$("#notices_body").append(strb);
 
 	//글쓰기 버튼 jQuery로 만들어 보기
-			$("<button>").addClass("btn btn-success custom").attr("id","write").text("글쓰기").appendTo($("#write_button_area"));
-			$("#write").on("click",function(){
-				location.href = "/kim_client/board/write.html";
-			});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	$("<button>").addClass("btn btn-success custom").attr("id","write").text("글쓰기").appendTo($("#write_button_area"));
+	$("#write").on("click",function(){
+		
+	});
+
 	
 	//house 리스트 출력
 	const house = ${housejudge}; //house 리스트 json

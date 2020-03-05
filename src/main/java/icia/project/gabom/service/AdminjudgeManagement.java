@@ -25,7 +25,7 @@ public class AdminjudgeManagement {
 
 		List<Adminhouse> hlist = aDao.getHouseList(); // house 등록타입0번인 리스트 담아오기
 		List<Adminfood> flist = aDao.getFoodList(); // food 등록타입 0번인 리스트 담아오기
-		List<Adminnotices> nlist = aDao.getadnotices(); //notices 정보 출력
+		List<Adminnotices> nlist = aDao.getadnotices(); //전체공지 정보 출력
 		System.out.println("List=" + hlist);
 		System.out.println("flist=" + flist);
 		System.out.println("nlist="+nlist);

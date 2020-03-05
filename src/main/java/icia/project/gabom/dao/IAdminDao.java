@@ -23,7 +23,7 @@ public interface IAdminDao {
 	boolean housefuse(String number);
 	//food 거절
 	boolean foodfuse(String number);
-	//notices 전체출력
+	//notices 전체공지사항 출력
 	List<Adminnotices> getadnotices();
 	
 }
