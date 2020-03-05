@@ -1,7 +1,6 @@
 package icia.project.gabom.dto;
 
 
-import java.sql.Timestamp;
 
 import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,4 +33,8 @@ public class Food {
 	private String food_mintime;
 	@DateTimeFormat(pattern="HH:mm")
 	private String food_maxtime;
+	
+	private int food_imagetype;
+	private String food_oriname;
+	private String food_sysname;
 }
