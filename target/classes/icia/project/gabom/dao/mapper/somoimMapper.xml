@@ -46,5 +46,40 @@
 	 and sm.member_name = #{name}
 </select>
 
+<select id="selectRoomInfo" parameterType="String" resultType="somoim">
+	SELECT * FROM somoim where somoim_number = #{roomnum}
+</select>
+
+<select id="selectRoomMember" parameterType="String" resultType="Map">
+	select m.member_profile_picture, m.member_profile_contents, m.member_name, sm.member_grade from SOMOIM_MEMBER sm, Member m where sm.MEMBER_NAME = m.MEMBER_ID and sm.somoim_number = #{roomnum} and sm.member_status = 1 
+</select>
+
+
+<insert id="insertMakeJunmoRoom" parameterType="jungmoroom" >
+	INSERT INTO JUNGMO_ROOM VALUES(SEQ_JUNGMO_ROOM.nextval,  #{somoim_number}, #{jungmo_name}, #{jungmo_date}, #{jungmo_time}, #{jungmo_location}, #{jungmo_money}, sysdate )
+</insert>
+
+<select id="selecttMakeJunmoRoom" parameterType="int" resultType="jungmoroom">
+	<![CDATA[
+	select * from JUNGMO_ROOM where SOMOIM_NUMBER = #{somoim_number} and jungmo_date > sysdate order by jungmo_date
+	]]>
+	
+</select>
+
+<select id="selectAttendJunmoRoom"  resultType="jungmoroom">
+	select jr.somoim_number, jr.jungmo_number, jr.jungmo_date ,jm.member_id as jungmo_join_id  from JUNGMO_ROOM jr, jungmo_member jm where jr.jungmo_number = jm.jungmo_number and jr.SOMOIM_NUMBER = #{somoim_number} and jm.member_id =#{id}   and jr.jungmo_date > sysdate order by jungmo_date 
+	
+</select>
+
+
+<insert id="insertAttendjungmo"  parameterType="jungmoroom">
+	insert into jungmo_member values(SEQ_jungmo_member.nextval, #{jungmo_number}, #{somoim_number}, #{jungmo_join_id}, sysdate)
+</insert>
+
+<delete id="deleteAttendjungmo"  parameterType="jungmoroom">
+	DELETE FROM jungmo_member WHERE jungmo_number = #{jungmo_number} and somoim_number = #{somoim_number} and MEMBER_ID =  #{jungmo_join_id} 
+</delete>
+
+
 </mapper>
 

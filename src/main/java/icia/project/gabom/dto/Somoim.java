@@ -4,6 +4,7 @@ package icia.project.gabom.dto;
 import java.sql.Date;
 
 import org.apache.ibatis.type.Alias;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -21,6 +22,7 @@ public class Somoim {
 	private String somoim_interest;
 	private String somoim_person;
 	private String somoim_mainpicture;
+	@DateTimeFormat(pattern="yyyy-mm-dd")
 	private Date somoim_date;
 
 	private String somoim_sys_mainpicture;  // 파일 경로

@@ -1,11 +1,13 @@
 package icia.project.gabom.service;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 
 import icia.project.gabom.dao.ISomoimDao;
+import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.Somoim;
 import icia.project.gabom.userClass.SomoimUploadFile;
 
@@ -92,6 +95,86 @@ public class SomoimManagement {
 		mav.setViewName("somoim/mainsomoim");
 		return mav;
 	}
+
+	
+	public ModelAndView somoimRoomData(ModelAndView mav, String roomnum, Principal pr) {
+		
+		//1-1정보 단계 (제목, 타이틀, 위치 등등...)
+		sm = new Somoim();
+		sm = sDao.selectRoomInfo(roomnum);
+		System.out.println(sm.toString());
+		String JsonBasicInfo = new Gson().toJson(sm);
+		System.out.println("sm json : " + JsonBasicInfo);
+		mav.addObject("JsonBasicInfo", JsonBasicInfo);  // 기본정보 받아옴
+		mav.addObject("roomnum", roomnum);
+		
+		//1-2회원  
+		List<Map<String,Object>> mList = sDao.selectRoomMember(roomnum);
+		String JsonMemberList = new Gson().toJson(mList);
+		System.out.println("sm JsonMemberList : " + JsonMemberList);
+		mav.addObject("JsonMemberList", JsonMemberList);  // 기본정보 받아옴
+		
+		//1-3 정모방 // 그리고 참석인원
+		//(1)정모방
+		List<Jungmoroom> Jlist = sDao.selecttMakeJunmoRoom(Integer.parseInt(roomnum)); // 방만 뽑기
+		String JsonJungmoRoom = new Gson().toJson(Jlist);
+		System.out.println("sm JsonJungmoRoom : " + JsonJungmoRoom);
+		
+		mav.addObject("JsonJungmoRoom", JsonJungmoRoom);
+		
+		//(2)참석인원
+		List<Jungmoroom> attendlist = sDao.selectAttendJunmoRoom(Integer.parseInt(roomnum), pr.getName()); // 방만 뽑기
+		String JsonAttendlist = new Gson().toJson(attendlist);
+		mav.addObject("JsonAttendlist", JsonAttendlist);
+		System.out.println("sm JsonAttendlist : " + JsonAttendlist);
+		
+		
+		
+		mav.setViewName("somoim/somoimroom");
+		return mav;
+	}
+
+
+	public String insertSelecttMakeJunmoRoom(Jungmoroom jungmoroom) {
+		//아이디, 내용
+		int result = sDao.insertMakeJunmoRoom(jungmoroom);  // 인서트
+		System.out.println("insert 확인 : " + result);
+		List<Jungmoroom> Jlist = sDao.selecttMakeJunmoRoom(jungmoroom.getJungmo_number()); // 셀렉트
+		String jsonJungmoRooms = new Gson().toJson(Jlist);
+		return jsonJungmoRooms;
+	}
+
+
+	public String attendjungmo(Principal pr, HashMap<String, String> map, Jungmoroom jungmoroom) {
+		map.put("MEMBER_ID",pr.getName());
+		for( String a : map.keySet()) {
+			System.out.println(a+ " : " + map.get(a));
+		}
+		jungmoroom.setJungmo_number(Integer.parseInt(map.get("jungmo_number"))).setSomoim_number(Integer.parseInt(map.get("somoim_number")));
+		jungmoroom.setJungmo_join_id(map.get("MEMBER_ID"));
+		System.out.println(" jungmoroom : " + jungmoroom.toString());
+		int result = sDao.insertAttendjungmo(jungmoroom);
+		
+		return "참석";
+	}
+
+
+	public String cancelAttendjunmo(Principal pr, HashMap<String, String> map, Jungmoroom jungmoroom) {
+		map.put("MEMBER_ID",pr.getName());
+		for( String a : map.keySet()) {
+			System.out.println(a+ " : " + map.get(a));
+		}
+		jungmoroom.setJungmo_number(Integer.parseInt(map.get("jungmo_number"))).setSomoim_number(Integer.parseInt(map.get("somoim_number")));
+		jungmoroom.setJungmo_join_id(map.get("MEMBER_ID"));
+		System.out.println(" jungmoroom : " + jungmoroom.toString());
+		int result = sDao.deleteAttendjungmo(jungmoroom);
+		return "참석취소";
+	}
+
+
+	
+
+
 	
 	
 	
