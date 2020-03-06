@@ -2,6 +2,8 @@ package icia.project.gabom.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import icia.project.gabom.dto.Adminfood;
 import icia.project.gabom.dto.Adminhouse;
 import icia.project.gabom.dto.Adminnotices;
@@ -29,5 +31,7 @@ public interface IAdminDao {
 	List<Adminnotices> getnoticesmodal(String num);
 	//조회수 update
 	boolean viewsUpdate(String num);
+	//글작성 등록
+	boolean getnoticeswrite(@Param("title") String title,@Param("content") String content);
 	
 }

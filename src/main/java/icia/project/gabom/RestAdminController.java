@@ -90,7 +90,7 @@ public class RestAdminController {
 
 			boolean views = am.viewsUpdate(num); //조회수 업데이트
 			System.out.println("조회수업데이트 다녀왔니?");
-			
+			System.out.println("views="+views);
 			List<Adminnotices> nlist = aDao.getnoticesmodal(num);
 			System.out.println("레스트컨트룰러 노티스모달" + nlist);
 
@@ -105,7 +105,8 @@ public class RestAdminController {
 			System.out.println("레스트컨트룰러 글작성모달");
 			System.out.println("글작성 제목 : " + title);
 			System.out.println("글작성 내용 : " + content);
-			
+			boolean result = aDao.getnoticeswrite(title,content);
+			System.out.println("글작성 성공?"+result);
 
 			return null;
 		}

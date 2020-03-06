@@ -234,7 +234,7 @@ li {
 			<button type="button" class="close" data-dismiss="modal">×</button>
         </div>
         <div class="modal-body" id="write_modal_body">
-        <textarea class="form-control" rows="5" id="content"
+        <textarea class="form-control" rows="5" id="notices_body"
 							name="content"></textarea>
         </div>
         <!-- Modal footer -->
@@ -437,9 +437,16 @@ li {
 	//글쓰기 모달 생성
 	$("#write_modal_button").on("click",function(){
 		console.log("글쓰기 클릭");
-		var formData = new FormData(document.getElementById("write_notices"));
-		console.log("글쓰기=",formData.get("title"));
-		console.log("글내용=",formData.get("content"));
+		var formData = new FormData();
+		formData.append("title",document.getElementById("title").value);
+		
+		var str = document.getElementById("notices_body").value;
+		str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+		document.getElementById("notices_body").value=str;
+		formData.append("content",document.getElementById("notices_body").value);
+		//document.getElementById("content");
+		//console.log("글쓰기=",formData.get("title"));
+		//console.log("글내용=",formData.get("content"));
 		$.ajaxSetup({         
 			beforeSend : function(xhr){
 		    xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
