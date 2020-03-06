@@ -24,23 +24,27 @@ section{
 width:100%;
 height:800px;
 }
+h1{
+letter-spacing:10px;
+}
+
 </style>
 
 </head>
 <body>
 <header style="background-color:#064D84" class="bg-primary text-center py-5 mb-4">
   <div class="container">
-    <h1 style="font-weight:bold;" class="font-weight-light text-white">Select Your HouseType</h1>
+    <h1 class="font-weight-bold text-white">Select Your HouseType</h1>
   </div>
 </header>
 
 <!-- Page Content -->
 <section class="container" id="imgzone">
   
-    <!-- Team Member 1 -->
+ 
     <div class="col-xl-3 col-md-6 mb-4" id="out">
       <div class="card border-0 shadow" id="sub">
-        <img id="gabom_house" style="width:1000px;height:400px;" src="./resources/houseimg/gabomhouse.jpg" class="card-img-top" alt="...">
+        <img id="gabom_house" style="width:1000px;height:400px;cursor: pointer;" src="./resources/houseimg/gabomhouse.jpg" class="card-img-top" alt="...">
         <div class="card-body text-center">
           <h4 class="card-title mb-0">Gabom House</h4>
           <div class="card-text text-black-50">Join Gabom House</div>
@@ -48,10 +52,9 @@ height:800px;
       </div>
     </div>
     
-    <!-- Team Member 2 -->
     <div class="col-xl-3 col-md-6 mb-4">
       <div class="card border-0 shadow" id="sub">
-        <img id="hotel" style="width:1000px;height:400px;" src="./resources/houseimg/hotel.JPG" class="card-img-top" alt="...">
+        <img id="hotel" style="width:1000px;height:400px;cursor: pointer;" src="./resources/houseimg/hotel.JPG" class="card-img-top" alt="...">
         <div class="card-body text-center">
           <h4 class="card-title mb-0">Hotel</h4>
           <div class="card-text text-black-50">Join Hotel</div>

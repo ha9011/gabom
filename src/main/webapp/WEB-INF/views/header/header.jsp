@@ -82,7 +82,7 @@ background-color: #E6E6E6
 		<ul class="nav navbar-nav navbar-right">
 			<sec:authorize access="isAnonymous()">
 				<li><a href="login" >로그인</a></li>
-				<li><a href="joinmember">회원가입</a></li>
+				<li><a href="joinselecttype">회원가입</a></li>
 			</sec:authorize>
 			<sec:authorize access="isAuthenticated()">
 				<li><a href="myinfo">나의 정보</a></li>

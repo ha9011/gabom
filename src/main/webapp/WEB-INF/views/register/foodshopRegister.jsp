@@ -1,97 +1,230 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>foodshopRegister</title>
-
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a7e29fa39462f45fc2138a8307dbe830&libraries=services"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
 <style>
-body {
-	overflow: scroll;
+:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: 0.75rem;
 }
 
-#food_form {
-	margin-top : 10%;
-	margin-left: 40%;
+.login,
+.image {
+  min-height: 100vh;
 }
+
+.bg-image {
+  background-image: url('./resources/houseimg/foodfrm.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.login-heading {
+  font-weight: 300;
+}
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+  border-radius: 2rem;
+}
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+  height: auto;
+  border-radius: 2rem;
+}
+
+.form-label-group>label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  cursor: text;
+  /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+  padding-bottom: calc(var(--input-padding-y) / 3);
+}
+
+.form-label-group input:not(:placeholder-shown)~label {
+  padding-top: calc(var(--input-padding-y) / 3);
+  padding-bottom: calc(var(--input-padding-y) / 3);
+  font-size: 12px;
+  color: #777;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+
+@supports (-ms-ime-align: auto) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+
 </style>
-
 </head>
 <body>
-	<div id="food_form">
-		<form action="foodRegisterUpload?${_csrf.parameterName}=${_csrf.token}"method="post"
-			enctype="multipart/form-data">
-			<div>
-				<h3>상호명 입력해주세요.</h3>
-				<input type="text" name="food_name">
-			</div>
-			<div>
-				<h3>메인사진을 등록해주세요.</h3>
-				<input id="food_mainImage" type="file" name="food_mainImage"required><br> 
-				<img id="image_section" width="80%"
-					src="" alt="메인이미지" />
-			</div>
-			<div>
-				<h3>전체 지번주소를 입력해주세요</h3>
-				<input type="text" id="sample4_postcode" name="food_address" placeholder="우편번호">
-				<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
-				<span id="guide" style="color:#999;display:none"></span>
-				<button id="food_address_btn" type="button">주소확인</button>
+<div class="container-fluid">
+  <div class="row no-gutter">
+    <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+    <div class="col-md-8 col-lg-6">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 col-lg-8 mx-auto">
+              <h3 class="login-heading mb-4">Food Shop Register</h3>
+              
+              <!-- 전송 폼 -->
+              <form action="foodRegisterUpload?${_csrf.parameterName}=${_csrf.token}"method="post"
+					enctype="multipart/form-data">
+                 
+                 <div class="form-label-group">
+                  Shop Name
+                  <input name="food_name"  type="text" class="form-control" placeholder="Password" >
+                </div>
+                
+                 <div class="form-label-group">
+                  Shop Address
+                  <input name="food_address"  id="sample4_postcode" type="text"  class="form-control" placeholder="우편번호" >
+                  <button onclick="sample4_execDaumPostcode()"class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">find address</button>
+                <span id="guide" style="color:#999;display:none"></span>
+               	<button id="food_address_btn"class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">Map</button>
 				<input type="hidden" id="sample4_extraAddress" placeholder="참고항목">
 				<div id="map" style="width: 80%; height: 300px; "></div>
 				
 				<!-- 주소 좌표 hide로 숨김. -->
 				<input type="text" name="food_ypoint"  id="y" />
 				<input type="text" name="food_xpoint"  id="x" /> 
+                </div>
+                
+                
+              <div class="custom-control custom-checkbox mb-3">
+                Parkable
+               	<label style="margin:0 15px;" ><input type="checkbox" name="food_parkable" value="1">주차가능</label> 
+				<label style="margin:0 15px;" ><input type="checkbox" name="food_parkable" value="2">주차 불가능</label>
+                </div>
+                
+               <div class="custom-control custom-checkbox mb-3">
+                Shop Type
+               	<label style="margin:0 15px;" ><input type="checkbox" name="food_type" value="1">레스토랑</label> 
+				<label style="margin:0 15px;" ><input type="checkbox" name="food_type" value="2">카페</label>
+				<label style="margin:0 15px;" ><input type="checkbox" name="food_type" value="3">호프</label> 
+                </div>
+                
+                 <div class="form-label-group">
+                 Person
+                  <input name="food_person"type="text" class="form-control" placeholder="Password" required>
+                </div>
+                
+                 <div class="form-label-group">
+                 Reservation Start Date
+                  <input name='food_mindate' type="date" class="form-control" placeholder="Password" required>
+                </div>
+                <div class="form-label-group">
+                 Reservation End Date
+                  <input name='food_maxdate' type="date" class="form-control" placeholder="Password" required>
+                </div>
+                <div class="form-label-group">
+                 Reservation Start time
+                  <input name='food_mintime' type="time" class="form-control" placeholder="Password" required>
+                </div>
+                <div class="form-label-group">
+                 Reservation Start time
+                  <input name='food_maxtime' type="time" class="form-control" placeholder="Password" required>
+                </div>
+                
+                 <div class="form-label-group">
+                 Main Image
+                  <input  id="food_mainImage" name="food_mainImage" type="file" class="form-control" >
+                  <br> <img id="image_section" width="70%" src="" alt="메인이미지" />
+                </div>
+                
+                <div class="form-label-group">
+                Detail Image
+                  <input id="food_detailImage" name="food_detailImage" type="file" class="form-control" multiple>
+                	<div id="detail">
+						<span id="left"> << </span>
+						<ul id="detailImage_sections"></ul>
+						<span id="right"> >> </span>
+					</div>
+                </div>
 
-				<h3>인원수 입력해주세요.</h3>
-				<input id="food_person" type="text" name="food_person">
-				
-				
-				
-			</div>
-			<div>
-				<h3>음식점유형을 선택해주세요.</h3>
-				<label><input type="radio" name="food_type" value="1">
-					레스토랑</label> <label><input type="radio" name="food_type" value="2">
-					카페</label> <label><input type="radio" name="food_type" value="3">
-					호프</label>
-			</div>
-			<div>
-				<h3>음식점 메뉴사진/상세사진을 4개이상 등록해주세요.</h3>
-				<input id="food_menuImages" type="file" name="food_menuImages" multiple>
-				<div>
-					<span id="left"></span>
-					<ul id="detailImage_sections"></ul>
-					<span id="right"> >> </span>
-				</div>
-				<br>
-				</div>
-			<div>
-				<h3>주차</h3>
-				<label><input type="radio" name="food_parkable" value="1">주차
-					가능</label> <label><input type="radio" name="food_parkable"
-					value="2">주차 불가능</label>
-			</div>
+                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Upload Now</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-			<div>
-				<h3>예약 가능 날짜를 선택해주세요.</h3>
-				<input type='date' name='food_mindate' /> <input type='date' name='food_maxdate' /> 
-				<input type="time" name='food_mintime' /> <input type="time" name='food_maxtime' />
-			</div>
-
-			<div>
-				<button type="submit" id="sign"name="sign">작성완료</button>
-			</div>
-			</form>
-		</div>	
 </body>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -213,6 +346,7 @@ $("#y").hide();
 </script>
 <script>
 $("#detail").hide();
+$("#image_section").hide();
 	//메인사진(1개)만 미리보기
 	$("#food_mainImage").change(function(e){
 		$('#image_section').attr('src', ""); // 변할 때마다 리셋
@@ -230,11 +364,12 @@ $("#detail").hide();
              $('#image_section').attr('src', e.target.result);
          }
          reader.readAsDataURL(files[0]);
+         $("#image_section").show();
 	})
 	
 	
 	//여러사진 한번에 보여주기
-	$("#food_menuImages").change(function(e){
+	$("#food_detailImage").change(function(e){
 		$("#detailImage_sections").empty();  // 변할 때마다 리셋
 		
 		
@@ -259,6 +394,7 @@ $("#detail").hide();
 	         	$("#detailImage_sections").append($tt);
 	         }
 	         reader.readAsDataURL(f);
+	         $("#detail").show();
 		});//end forEach
 	})
 	
@@ -279,7 +415,5 @@ $("#detail").hide();
 		var $li = $(".detailPictures")[$lastNumber];
 		$("#detailImage_sections").prepend($li);
 	})
-	
-	
-</script>
+</script>	
 </html>

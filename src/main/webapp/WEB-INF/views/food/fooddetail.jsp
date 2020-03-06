@@ -8,14 +8,13 @@
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<!-- 날짜 시간 --><!-- 
-<link rel="stylesheet" href="./resources/css/timepicker-addon.css" />
+<!-- 날짜 시간 -->
+ 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="resources/css/timepicker-addon.css" />
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
+<script src="resources/js/timepicker-addon.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
 
 <!-- 검색창 부트스트랩 -->
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -145,12 +144,8 @@ body{overflow:scroll;}
 				<div id="reser">
 				예약선택
 					<form id="reservation" name="reservation"  method="post">
-						<!-- <img alt="예약달력" width="30px" height="30px" src="./resources/houseimg/date1.JPG"> 
-						<input class="date" type="text" name="foodreservation_date" id="datepicker1">
-						<img alt="예약시간" width="30px" height="30px" src="./resources/houseimg/time.JPG"> 
-						<input class="time" type="time" name="foodreservation_time" id="time"> -->
-						날짜:<input type="text" id="datepicker" class="datepicker" />
-                                                          시간:<input type="text" id="timepicker" class="timepicker" />
+						날짜:<input type="text" id="datepicker" class="datepicker" name="foodreservation_date" />
+                                                          시간:<input type="text" id="timepicker" class="timepicker" name="foodreservation_time" />
 						인원 : <input name="foodreservation_person" type="number" id="person">명 
 						<input type="hidden" name="food_hostid" id="hostid" > 
 						<input type="hidden" name="food_number" id="food_number"><br>
@@ -177,6 +172,7 @@ body{overflow:scroll;}
 				</div>
 			</div>
 		</div>
+		
 		
 </body>
 <script>
@@ -265,7 +261,7 @@ $(function() {
        ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
        ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
        ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
-       ,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+       ,minDate: "newdate" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
        ,maxDate: "+1Y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                    
       
    });
@@ -285,5 +281,7 @@ $(function() {
    //From의 초기값을 오늘 날짜로 설정
    $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
    });
+   var date = $("#datepicker").val();
+   console.log(date);
 </script>
 </html>

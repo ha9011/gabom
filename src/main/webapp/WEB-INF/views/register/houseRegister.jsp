@@ -1,142 +1,241 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- 지도 api -->
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a7e29fa39462f45fc2138a8307dbe830&libraries=services"></script>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <style>
-body {
-	overflow: scroll;
+:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: 0.75rem;
 }
 
-#house_form {
-	margin-left: 500px;
-	margin-top: 50px;
-	border: 2px solid green;
-	width: 38%
+.login,
+.image {
+  min-height: 100vh;
 }
 
-#sign {
-	margin-left: 300px;
-	width: 100px;
-	height: 40px;
+.bg-image {
+  background-image: url('./resources/houseimg/housefrm.JPG');
+  background-size: cover;
+  background-position: center;
 }
 
-#detailImage_sections {
-	list-style: none;
-	margin: 0;
-	padding: 0;
+.login-heading {
+  font-weight: 300;
 }
 
-.detailPictures {
-	margin: 0 0 0 0;
-	padding: 0 0 0 0;
-	border: 0;
-	display: inline-block;
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+  border-radius: 2rem;
 }
 
-.detailPictures:nth-child(n+4) {
-	display: none;
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
 }
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+  height: auto;
+  border-radius: 2rem;
+}
+
+.form-label-group>label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  cursor: text;
+  /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+  padding-bottom: calc(var(--input-padding-y) / 3);
+}
+
+.form-label-group input:not(:placeholder-shown)~label {
+  padding-top: calc(var(--input-padding-y) / 3);
+  padding-bottom: calc(var(--input-padding-y) / 3);
+  font-size: 12px;
+  color: #777;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+
+@supports (-ms-ime-align: auto) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+
 </style>
 </head>
 <body>
-
-	<div id="house_form">
-
-		<form action="houseregisterupload?${_csrf.parameterName}=${_csrf.token}" method="post"
-			enctype="multipart/form-data">
-			
-			<div>
-				<h3>숙소명을 입력해주세요</h3>
-				<input type="text" name="house_name">
-			</div>
-			<div>
-				<h3>메인사진을 등록해주세요</h3>
-
-				<input id="house_mainImage" type="file" name="house_mainImage"
-					required><br> <img id="image_section" width="80%"
-					src="" alt="메인이미지" />
-			</div>
-
-			<div>
-				<h3>전체 지번주소를 입력해주세요</h3>
-				<input type="text" id="sample4_postcode" name="house_address" placeholder="우편번호">
-				<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
-				<span id="guide" style="color:#999;display:none"></span>
-				<button id="house_address_btn" type="button">주소확인</button>
+<div class="container-fluid">
+  <div class="row no-gutter">
+    <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+    <div class="col-md-8 col-lg-6">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 col-lg-8 mx-auto">
+              <h3 class="login-heading mb-4">House Register</h3>
+              
+              <!-- 전송 폼 -->
+              <form action="houseregisterupload?${_csrf.parameterName}=${_csrf.token}" method="post"
+					enctype="multipart/form-data">
+                 
+                 <div class="form-label-group">
+                  House Name
+                  <input name="house_name"  type="text" class="form-control" placeholder="Password" >
+                </div>
+                
+                 <div class="form-label-group">
+                  House Address
+                  <input name="house_address"  id="sample4_postcode" type="text"  class="form-control" placeholder="우편번호" >
+                  <button onclick="sample4_execDaumPostcode()"class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">find address</button>
+                <span id="guide" style="color:#999;display:none"></span>
+               	<button id="house_address_btn"class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">Map</button>
 				<input type="hidden" id="sample4_extraAddress" placeholder="참고항목">
 				<div id="map" style="width: 80%; height: 300px; "></div>
 				
 				<!-- 주소 좌표 hide로 숨김. -->
 				<input type="text" name="house_ypoint"  id="y" />
 				<input type="text" name="house_xpoint"  id="x" /> 
-			</div>
+                </div>
+                
+                 <div class="form-label-group">
+                  House price
+                  <input name="house_price" type="text" class="form-control" placeholder="Password" >
+                </div>
+                
+              <div class="custom-control custom-checkbox mb-3">
+                Parkable
+               	<label style="margin:0 15px;" ><input type="checkbox" name="house_parkable" value="1">주차가능</label> 
+				<label style="margin:0 15px;" ><input type="checkbox" name="house_parkable" value="2">주차 불가능</label>
+                </div>
+                
+               <div class="custom-control custom-checkbox mb-3">
+                House Type
+               	<label style="margin:0 15px;" ><input type="checkbox" name="house_type" value="1">아파트</label> 
+				<label style="margin:0 15px;" ><input type="checkbox" name="house_type" value="2">주택</label>
+				<label style="margin:0 15px;" ><input type="checkbox" name="house_type" value="3">빌라</label> 
+                </div>
+                
+                 <div class="form-label-group">
+                 Person
+                  <input name="house_person" name="house_rooms" type="text" class="form-control" placeholder="Password" required>
+                </div>
+                
+                 <div class="form-label-group">
+                 Rooms
+                  <input name="house_rooms" name="house_rooms" type="text" class="form-control" placeholder="Password" required>
+                </div>
+                
+                 <div class="form-label-group">
+                 Bathrooms
+                  <input name="house_bathrooms" type="text" class="form-control" placeholder="Password" required>
+                </div>
+                
+                 <div class="form-label-group">
+                 Beds
+                  <input  name="house_beds" type="text" class="form-control" placeholder="Password" required>
+                </div>
+                
+                 <div class="form-label-group">
+                 Reservation Start Date
+                  <input name='house_mindate' type="date" class="form-control" placeholder="Password" required>
+                </div>
+                <div class="form-label-group">
+                 Reservation End Date
+                  <input name='house_maxdate' type="date" class="form-control" placeholder="Password" required>
+                </div>
+                
+                 <div class="form-label-group">
+                 Main Image
+                  <input  id="house_mainImage" name="house_mainImage" type="file" class="form-control" >
+                  <br> <img id="image_section" width="70%" src="" alt="메인이미지" />
+                </div>
+                
+                <div class="form-label-group">
+                Detail Image
+                  <input id="house_detailImage" name="house_detailImage" type="file" class="form-control" multiple>
+                	<div id="detail">
+						<span id="left"> << </span>
+						<ul id="detailImage_sections"></ul>
+						<span id="right"> >> </span>
+					</div>
+                </div>
 
-			<div>
-				<h3>숙소유형을 선택해주세요</h3>
-				<label><input type="radio" name="house_type" value="1">
-					아파트</label> <label><input type="radio" name="house_type" value="2">
-					주택</label> <label><input type="radio" name="house_type" value="3">
-					빌라</label>
-			</div>
-			
-			<div>
-				<h3>숙소사진을 4개이상 등록해주세요</h3>
-				<input id="house_detailImage" type="file" name="house_detailImage" multiple>
-				<div id="detail">
-					<span id="left"> << </span>
-					<ul id="detailImage_sections"></ul>
-					<span id="right"> >> </span>
-				</div>
-				<br>
-			</div>
-			
-			<div>
-				<h3>가격을 입력해주세요</h3>
-				<input type="text" name="house_price">
-			</div>
-			<div>
-				<h3>주차</h3>
-				<label><input type="radio" name="house_parkable" value="1">주차
-					가능</label> <label><input type="radio" name="house_parkable"
-					value="2">주차 불가능</label>
-			</div>
-			<div>
-				<h3>수용 가능 인원을  입력해주세요</h3>
-				<input type="text" name="house_person">
-			</div>
-			<div>
-				<h3>방 개수를 입력해주세요</h3>
-				<input type="text" name="house_rooms">
-			</div>
-			<div>
-				<h3>욕실 개수를 입력해주세요</h3>
-				<input type="text" name="house_bathrooms">
-			</div>
-			<div>
-				<h3>침대 개수를 입력해주세요</h3>
-				<input type="text" name="house_beds">
-			</div>
-			<div>
-				<h3>예약 가능 날짜를 선택해주세요</h3>
-				<input type='date' name='house_mindate' /> <input type='date'
-					name='house_maxdate' />
-			</div>
-			<div>
-				<button type="submit" id="sign"name="sign">작성완료</button>
-			</div>
-		</form>
-	</div>
+                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Upload Now</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -190,6 +289,7 @@ $("#map").hide();
 $("#x").hide();
 $("#y").hide();
 
+
 	$("#house_address_btn").on("click",function(){
 		$("#map").show();
 		var $searchAddr = $("#sample4_postcode").val();
@@ -238,7 +338,7 @@ $("#y").hide();
 
 	        // 인포윈도우로 장소에 대한 설명을 표시합니다
 	        var infowindow = new kakao.maps.InfoWindow({
-	            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+	            content: '<div style="width:150px;text-align:center;padding:6px 0;">HOUSE</div>'
 	        });
 	        infowindow.open(map, marker);
 			
@@ -258,7 +358,7 @@ $("#y").hide();
 </script>
 <script>
 $("#detail").hide(); //디테일 사진 영역 숨김
-
+$("#image_section").hide();
 	//메인사진(1개)만 미리보기
 	$("#house_mainImage").change(function(e){
 		$('#image_section').attr('src', ""); // 변할 때마다 리셋
@@ -276,6 +376,7 @@ $("#detail").hide(); //디테일 사진 영역 숨김
              $('#image_section').attr('src', e.target.result);
          }
          reader.readAsDataURL(files[0]);
+         $("#image_section").show();
 	})
 	
 	
