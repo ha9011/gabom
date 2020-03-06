@@ -68,7 +68,7 @@ img{
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto"><!-- 검색버튼 -->
-                                        <button id="searchbtn" class="btn btn-lg btn-success" type="submit">Search</button>
+                                        <button style="background-color:#064D84" id="searchbtn" class="btn btn-lg btn-success" type="submit">Search</button>
                                     </div>
                                     <!--end of col-->
                                 </div>

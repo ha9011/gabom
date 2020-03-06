@@ -50,7 +50,7 @@ img{
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto"><!-- 검색버튼 -->
-                                        <button id="searchbtn" class="btn btn-lg btn-success" type="submit">Search</button>
+                                        <button id="searchbtn" style="background-color:#064D84" class="btn btn-lg btn-success" type="submit">Search</button>
                                     </div>
                                     <!--end of col-->
                                 </div>
@@ -68,20 +68,27 @@ var foodlist=${foodlist};
  	
  	var food_list = document.getElementById("food_list");
 
-
- 	for(i of foodlist ){
+ 	let index =0;
+ 		for(i of foodlist ){
+ 	 		 if(index%5==0){
+ 	 			console.log(index);
+ 	 			var br = $('<br><br>');
+ 	 			$("#food_list").append(br);
+ 	 		} 
+ 		
  		 var out = $('<div id="food" name ='+[i.food_number]+'></div>')
  		 var img = $('<div id="mainimg" name ='+[i.food_number]+'><img alt='+[i.food_sysname]+'name ='+[i.food_number]+' src="'+[i.food_sysname]+'"></div>')
- 		 var info = $('<div id="info">'+"이름"+[i.food_name]+"<br>"+"가격"+[i.food_price]+"<br>"+"주소"+[i.food_address]+'</div>')
+ 		 var info = $('<div id="info">'+"상호명: "+[i.food_name]+"<br>"+"주소: "+[i.food_address]+'</div>')
 
  		$("#food_list").append(out);
  		out.append(img);
  		out.append(info);
- 	 
+ 	 	
  $("#mainimg").on('click', function() {
 	console.log($(this).attr("name"));
     location.href="fooddetail?food_number="+$(this).attr("name");
 	});
+ index++;
  }
 </script>
 </html>
