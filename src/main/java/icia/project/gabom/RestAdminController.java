@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import icia.project.gabom.dao.IAdminDao;
 import icia.project.gabom.dto.Adminfood;
 import icia.project.gabom.dto.Adminhouse;
+import icia.project.gabom.dto.Adminnotices;
 import icia.project.gabom.service.AdminjudgeManagement;
 
 @RestController
@@ -80,4 +81,34 @@ public class RestAdminController {
 		
 		return result;
 	}
+	
+	//게시판 디테일 모달 출력
+		@GetMapping(value = "/noticesmodal", produces = "text/plain;charset=UTF-8")
+		public String noticesmodal(@RequestParam("num") String num) {
+			System.out.println("레스트컨트룰러 노티스모달");
+			System.out.println("게시판번호 : " + num);
+
+			boolean views = am.viewsUpdate(num); //조회수 업데이트
+			System.out.println("조회수업데이트 다녀왔니?");
+			
+			List<Adminnotices> nlist = aDao.getnoticesmodal(num);
+			System.out.println("레스트컨트룰러 노티스모달" + nlist);
+
+			String json = new Gson().toJson(nlist);
+			System.out.println(json);
+
+			return json;
+		}
+		//글등록
+		@PostMapping(value = "/noticeswrite", produces = "text/plain;charset=UTF-8")
+		public String noticeswrite(@RequestParam("title") String title, @RequestParam("content") String content) {
+			System.out.println("레스트컨트룰러 글작성모달");
+			System.out.println("글작성 제목 : " + title);
+			System.out.println("글작성 내용 : " + content);
+			
+
+			return null;
+		}
+		
+	
 }

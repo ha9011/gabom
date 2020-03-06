@@ -91,4 +91,14 @@ public class AdminjudgeManagement {
 		return json;
 	}//judgerefuse End
 
+	public boolean viewsUpdate(String num) {
+		System.out.println("조회수 am 오니?");
+		System.out.println("뭘 들고있지?"+num);
+		boolean views = aDao.viewsUpdate(num);
+		System.out.println(views);
+		System.out.println("view="+views);
+		
+		return views;
+	}
+
 }// class End
