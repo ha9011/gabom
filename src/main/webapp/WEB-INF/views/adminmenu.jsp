@@ -163,10 +163,7 @@ li {
 				</div>
 
 				<!-- 글쓰기 번튼 영역 -->
-				<div style="text-align: center;" id="write_button_area">
-					<!-- html 으로 버튼을 만든다. -->
-					<!-- <button class="btn btn-success custom">글쓰기</button> -->
-				</div>
+				<div style="text-align: center;" id="write_button_area"> </div>
     </div>
     <div id="menu5" class="container tab-pane fade"><br>
       <h3>QnA</h3>
@@ -175,7 +172,7 @@ li {
   </div>
   
   
-  <!-- The Modal -->
+  <!-- 서비스업 Modal -->
    <div class="modal" id="myModal">
     <div class="modal-dialog "><!-- modal-dialog-scrollable -->
       <div class="modal-content">
@@ -189,6 +186,8 @@ li {
         <form id="sFrm">
         <div class="modal-body" id="judge_modal">
         </div>
+        <div class="modal-body" id="notices_modal">
+        </div>
         
         <!-- Modal footer -->
         <div class="modal-footer">
@@ -201,6 +200,52 @@ li {
     </div>
   </div>  
   <!-- Modal End -->
+  
+   <!-- 공지사항 Modal -->
+   <div class="modal" id="noticesModal">
+    <div class="modal-dialog "><!-- modal-dialog-scrollable -->
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header" id="notices_modal_header">
+          <h1 class="modal-title"></h1>
+          <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        <div class="modal-body" id="notices_modal_body">
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+         	<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <!-- noticesModal End -->
+  
+   <!-- 글쓰기 Modal -->
+   <div class="modal" id="write_modal">
+    <div class="modal-dialog "><!-- modal-dialog-scrollable -->
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <form id="write_notices">
+        <div class="modal-header" id="write_modal_header">
+          <!-- <h1 class="modal-title"></h1> -->
+			<label for="title">제목:</label> 
+			<input type="text"class="form-control" id="title" placeholder="제목" name="title">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        <div class="modal-body" id="write_modal_body">
+        <textarea class="form-control" rows="5" id="content"
+							name="content"></textarea>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+         	<button type="button" id="write_modal_button" class="btn btn-info" data-dismiss="modal">등록</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>  
+  <!-- write_modal End -->
   
 </div> <!-- container End -->
 	
@@ -316,43 +361,107 @@ li {
 	
 	
 	
+			
 	
-	
-	
-	
-	
-	
+		
 	//전체공지 출력
 	const board = ${allnotices}; 
-	console.log("ㅁㄴㅇㅁㄴㅇ",board);
+	console.log("board",board);
 	
 	let strb = " ";
 	for(let i = 0;i<board.length;i++){
 		strb += '<tr>';
-		strb += '<td>'+board[i].all_notices_number+'</td>';
-		strb += '<td><a href="board[i].all_notices_number">'+board[i].all_notices_title+'</a></td>';
-		
+		strb += '<td>'+board[i].all_notices_number+'</td>'; //글번호
+		strb += '<td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+board[i].all_notices_number+'">'+board[i].all_notices_title+'</a></button>';
+		//strb += '<td><input type="hidden" id="notices_detail" class="notices_detail" data-number="'+board[i].all_notices_number+'"value="'+board[i].all_notices_title+'">';
+		strb += '</td>'; //제목
+		//<input type="hidden" id="notices_detail" class="notices_detail" data-number="'+board[i].all_notices_number+'">
+		//board[i].all_notices_number
 		const writeDate=board[i].all_notices_date.split(" ");  //split(쪼개다)
 		console.log(writeDate[0]); //년 월 일
 		console.log(writeDate[1]); //시 분 초
 		
 		const today = getToday(); //오늘 날짜를 직접 정의
 		
-		if(today==writeDate[0]){
+		if(today==writeDate[0]){ //날 짜
 		strb += '<td>'+writeDate[1]+'</td>';
 		}else{
 			strb += '<td>'+writeDate[0]+'</td>';
 		}
-		strb += '<td>'+board[i].all_notices_views+'</td>';
+		strb += '<td id="'+'board'+board[i].all_notices_number+'">'+board[i].all_notices_views+'</td>'; //조 회 수
 		strb += '</tr>';
-	}
+	}//for문 종료
 	$("#notices_body").append(strb);
-
-	//글쓰기 버튼 jQuery로 만들어 보기
-	$("<button>").addClass("btn btn-success custom").attr("id","write").text("글쓰기").appendTo($("#write_button_area"));
-	$("#write").on("click",function(){
+	
+	//notices modal 생성
+	$(".notices_detail").on("click",function(e){
+		console.log("게시글번호 클릭");
+		var params = e.target.dataset.number; 
+		console.log("게시글",params);
 		
-	});
+		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+          	console.log("notices ajax시작");
+          	console.log(params);
+          $.ajax({
+              url : "noticesmodal",
+              type : "get",
+              data : {"num":params}, 
+              success : function(response) {
+					$("#notices_modal_header").empty();
+					$("#notices_modal_body").empty();
+					response = JSON.parse(response);
+					console.log("notices",response);
+					let strn = " ";
+					strn += '<div>'+response[0].all_notices_title+'</div>';
+					$("#notices_modal_header").append(strn);
+					strn = " ";
+					strn += '<div>작성일 : '+response[0].all_notices_date  +'<span> 조 회 수 : '+  response[0].all_notices_views+'</div>';
+					strn += '<div>'+response[0].all_notices_body+'</div>';
+					$("#notices_modal_body").append(strn);
+					console.log("modal생성"); 
+					console.log(response[0].all_notices_views);
+					$("#board"+response[0].all_notices_number).text(response[0].all_notices_views); //조회수 변경
+              }, error : function(jqXHR, status, e) {
+                  console.error("게시판출력모달 에러");
+              }
+          });	 
+	}); //notices모달 click End
+	
+
+	//글쓰기 버튼 생성
+	$("<button>").addClass("btn btn-info custom").attr("id","write").attr("data-toggle","modal").attr("data-target","#write_modal").text("글쓰기").appendTo($("#write_button_area"));
+	
+	//글쓰기 모달 생성
+	$("#write_modal_button").on("click",function(){
+		console.log("글쓰기 클릭");
+		var formData = new FormData(document.getElementById("write_notices"));
+		console.log("글쓰기=",formData.get("title"));
+		console.log("글내용=",formData.get("content"));
+		$.ajaxSetup({         
+			beforeSend : function(xhr){
+		    xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		    });
+        	console.log("글쓰기 ajax시작");
+        	
+		$.ajax({
+			url : "noticeswrite",
+            type : "Post",
+            data : formData, 
+			processData:false,//application/x-www-form-urlencoded(쿼리스트링)
+            contentType:false,//multipart의 경우 contentType을 false로
+            
+            success : function(response) {
+            	console.log("글쓰기 성공");
+            }, error : function(jqXHR, status, e) {
+                console.log("글쓰기 에러");
+            }
+            
+		});
+            
+	});//글쓰기 ajax End 
 
 	
 	//house 리스트 출력
@@ -391,6 +500,7 @@ li {
 		strh+='</div>';
  	}
  	$("#housemain_judge").append(strh); //house 리스트 End
+ 	
  	console.log("food : ",food);
 	//food 리스트 출력
  	let strf= " ";

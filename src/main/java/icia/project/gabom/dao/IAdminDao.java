@@ -25,5 +25,9 @@ public interface IAdminDao {
 	boolean foodfuse(String number);
 	//notices 전체공지사항 출력
 	List<Adminnotices> getadnotices();
+	//notices 디테일모달 출력
+	List<Adminnotices> getnoticesmodal(String num);
+	//조회수 update
+	boolean viewsUpdate(String num);
 	
 }
