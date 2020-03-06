@@ -1,84 +1,220 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>JOIN NOW</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<style>
+:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: 0.75rem;
+}
+
+.login,
+.image {
+  min-height: 100vh;
+}
+
+.bg-image {
+  background-image: url('./resources/houseimg/joinfrm.JPG');
+  background-size: cover;
+  background-position: center;
+}
+
+.login-heading {
+  font-weight: 300;
+}
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+  border-radius: 2rem;
+}
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+  height: auto;
+  border-radius: 2rem;
+}
+
+.form-label-group>label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  cursor: text;
+  /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+  padding-bottom: calc(var(--input-padding-y) / 3);
+}
+
+.form-label-group input:not(:placeholder-shown)~label {
+  padding-top: calc(var(--input-padding-y) / 3);
+  padding-bottom: calc(var(--input-padding-y) / 3);
+  font-size: 12px;
+  color: #777;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+
+@supports (-ms-ime-align: auto) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+
+</style>
 </head>
 <body>
-	<div id="main">
-		<form action="joinmemberAction?${_csrf.parameterName}=${_csrf.token}"
-			method="post" enctype="multipart/form-data"
-			onsubmit="return checkForm();">
-
-			<div id="profilePic">
-				<img src="./resources/userprofileimage/upload/basicprofile.jpg" width="80px" height="80px" id="previewPic">
-				<!-- 기본 이미지 -->
-				<br> <input type="file" name="member_profile_picture"
-					id="member_profile_picture" >
+<div class="container-fluid">
+  <div class="row no-gutter">
+    <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+    <div class="col-md-8 col-lg-6">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 col-lg-8 mx-auto">
+              <h1 class="login-heading mb-4">Join</h1>
+              
+              <!-- 전송 폼 -->
+              <div id="main">
+              <form action="joinmemberAction?${_csrf.parameterName}=${_csrf.token}"
+					method="post" enctype="multipart/form-data"
+					onsubmit="return checkForm();">
 					
-				<input type="hidden" name="profillCheck" id="profillCheck" value="0">	
-				
-			</div>
-
-			<div id="insertID">
-				아이디 : <input type="text" name="member_id" id="member_id"><br>
-				<div id="checkID"></div><br>
-			</div>
-
-			<div id="insertEmail">
-				이메일 : <input type="text" name="member_email" id="member_email"><br>
-				<div id="checkEmail"></div><br>
-			</div>
-
-			<div id="insertPWD">
-				비 밀 번 호 : <input type="password" name="member_password"
-					id="member_password"><br> 비밀번호확인 :<input
+                 <div id="profilePic" class="form-label-group">
+               	  <img src="./resources/userprofileimage/upload/basicprofile.jpg" style="margin:20px 140px" width="300px" height="200px" id="previewPic">
+                  <!-- 기본 이미지 -->
+                  <br><input  type="file" name="member_profile_picture" id="member_profile_picture" class="form-control" >
+                  <input type="hidden" name="profillCheck" id="profillCheck" value="0">
+                </div>
+                 
+                 <div id="insertID" class="form-label-group">
+                  ID
+                  <input name="member_id" id="member_id"  type="text" class="form-control"><br>
+                  <div id="checkID"></div><br>
+                </div>
+                
+                <div id="insertEmail" class="form-label-group">
+                  Email
+                  <input name="member_email" id="member_email" type="text" class="form-control"><br>
+                 <div id="checkEmail"></div><br>
+                </div>
+                
+                <div id="insertPWD" class="form-label-group">
+                 Password
+                  <input type="password" name="member_password"
+					id="member_password" class="form-control" placeholder="Password" ><br>
+				 Check Password
+				  <input type="password" name="member_password"
 					type="password" name="member_password_check"
-					id="member_password_check"><br>
-			</div>
-			<div id="checkPWD"></div><br>
+					id="member_password_check" class="form-control" placeholder="Password" >
+                </div>
+                <div id="checkPWD"></div><br>
+             
+                <div id="insertName" class="form-label-group">
+                  Name
+                  <input name="member_name" id="member_name"  type="text" class="form-control"><br>
+                </div>
+                <div id="checkName"></div><br>
+                
+                <div id="insertPhone" class="form-label-group">
+                  Phone Number
+                  <input name="member_phone" id="member_phone"  type="text" class="form-control"><br>
+                </div>
+                <div id="checkPhone"></div><br>
+                
+                <div id="insertBirth" class="form-label-group">
+                  Name
+                  <input type="date" name="member_birth" id="member_birth" class="form-control"><br>
+                </div>
+                
+                <!-- type은 전 페이지에서 mav로 받아옴 -->
+				<input type="hidden" name="member_type" id="member_type">
+				
+				Content
+				<div id="insertIntroduce" class="form-label-group">
+                  <input type="text" name="member_profile_contents"
+						id="member_profile_contents" class="form-control"><br>
+                </div>
 
-
-			<div id="insertName">
-				이름 :<input type="text" name="member_name" id="member_name">
-			</div>
-			<div id="checkName"></div><br>
-
-			<div id="insertPhone">
-				전화번호 : <input type="text" name="member_phone" id="member_phone">
-			</div>
-			<div id="checkPhone"></div><br>
-
-			<div id="insertBirth">
-				생년월일 : <input type="date" name="member_birth" id="member_birth">
-			</div>
-
-			
-			<!-- type은 전 페이지에서 mav로 받아옴 -->
-			<input type="hidden" name="member_type" id="member_type">
-			
-
-			<div id="insertIntroduce">
-				<input type="text" name="member_profile_contents"
-					id="member_profile_contents">
-			</div>
-
-
-			<br> <br> <input type="submit" value="회원가입" />
-			<button id="joinCancel">취소</button>
-
-
-		</form>
-	</div>
+                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">JOIN NOW</button>
+                <button id="joinCancel" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">RESET</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
 </body>
 
 <script type="text/javascript">
-	console.log("넘어온 type 확인 : " + ${type})
+	console.log("넘어온 type 확인 : " + "${type}")
 	var type = "${type}"
 	$("#member_type").val(type);
 	

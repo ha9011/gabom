@@ -19,23 +19,32 @@
 }
 
 .form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
-    border: none;
     outline: none;
     box-shadow: none;
+    border:1px solid lightgray;
 }
 #house_list{
 	width:100%;
 
 }
 .house{
+
 	width:15%;
 	display:inline-block;
-	margin:20px; 
+	margin:20px;
+	box-shadow:5px 5px 3px lightgray;
+	text-align:center;
 }
 img{
-	width:250px;
-	height:150px;
+	width:100%;
+	height:200px;
 	margin:5px 0;
+}
+#info{
+	color:#848484;
+}
+h4{
+margin:0;
 }
 </style>
 
@@ -64,8 +73,8 @@ img{
           </div>
 	</div>
 	</form>
-	<div id="house_list">
-	</div>
+	
+	<div id="house_list"> </div>
 </body>
 <script>
 var houselist=${houselist};
@@ -82,12 +91,14 @@ var houselist=${houselist};
  			$("#house_list").append(br);
  		} 
  		 
- 		 var out = $('<div class="house" name ='+[i.house_number]+'></div>')
- 		 var img = $('<div id="mainimg" name ='+[i.house_number]+'><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>')
- 		 var info = $('<div id="info">'+"이름"+[i.house_name]+"<br>"+"가격"+[i.house_price]+"만원"+"<br>"+"주소"+[i.house_address]+'</div>')
+ 		 var out = $('<div class="house" name ='+[i.house_number]+'></div>');
+ 		 var img = $('<div id="mainimg" name ='+[i.house_number]+'><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>');
+ 		 var title=$('<h4>'+[i.house_name]+'</h4>');
+ 		 var info = $('<div id="info">'+"<br>"+"가격    "+[i.house_price]+"만원"+"<br>"+[i.house_address]+'</div>');
 
  		$("#house_list").append(out);
  		out.append(img);
+		out.append(title);
  		out.append(info);
  		
  $(".house").on('click', function() {

@@ -58,14 +58,5 @@ public class HomeController {
 		return mav;
 	}
 	
-	
-	
-	
-	@RequestMapping(value = "/foodshopRegister", method = RequestMethod.GET)
-	public String foodshopRegister() {
-		System.out.println("foodshopRegister");
-		
-		return "register/foodshopRegister";
-	}	
 
 }
