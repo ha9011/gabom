@@ -252,8 +252,22 @@ height: 700px;
 //페이지 불러올때 ajax
 $(function () {
 	$('body').fadeIn();
-	makeTimeLine();
 	getProflie();
+	
+	$.ajaxSetup({
+		beforeSend : function(xhr){
+ 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	});//먼저 보냄
+	$.ajax({
+			method:'get',
+			url:"sns/timeline",
+			dataType : "json"
+	}).done((timeLineJson)=>{
+		console.log("타임라인 통신 성공")
+		makeTimeLine(timeLineJson);
+	});
+	
+	
 });//onload End
 </script>
 </head>
@@ -438,7 +452,7 @@ $("#writeBox").on('change','#ex_file',function(){
 <script type="text/javascript">
 
 	//타임 라인 생성 함수
-	function makeTimeLine() {
+	function makeTimeLine(timeLineJson) {
 		let $timeLine = "";
 		$timeLine += '<div class="jumbotron" id="posts">';
 		$timeLine += '<div class="row">';
