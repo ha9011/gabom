@@ -22,9 +22,9 @@ body{overflow:scroll;}
 }
 
 .form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
-    border: none;
     outline: none;
     box-shadow: none;
+    border:1px solid lightgray;
 }
 #title{/*숙소명 */
 	text-align:center;
@@ -95,7 +95,20 @@ body{overflow:scroll;}
 	border:2px solid black;
 	
 }
-#nolist{display:flex;}
+#nolist{
+	display:flex;
+}
+#insertbtn{
+margin:-30px 65%;
+}
+#reservation{
+margin:0 10%;
+}
+input{
+width:200px;
+height:30px;
+margin:5px;
+}
 </style>
 
 </head>
@@ -139,21 +152,21 @@ body{overflow:scroll;}
 			<div id="middle"><!-- 숙소정보, 예약 display:flex-->
 				<div id="info">숙소정보</div>
 				<div id="reser">
-				예약선택
+				<br>
 					<form id="reservation" name="reservation" method="post">
 						<img alt="예약달력" width="30px" height="30px" src="./resources/houseimg/date1.JPG"> 
 						<input class="date" type="text" name="reservation_checkin" id="datepicker1">
 						~~ 
 						<img alt="예약달력" width="30px" height="30px"src="./resources/houseimg/date2.JPG"> 
 						<input class="date" type="text" name="reservation_checkout" id="datepicker2">
-						<button type="button" id="dtcommit">날짜확정</button><br> 
+						<button style="background-color:#064D84" type="button" id="dtcommit" class="btn btn-primary">날짜확정</button><br> 
 						
 						총액 : <input name="reservation_totalprice" type="text" id="totalprice" placeholder="">만원<br>
 						인원 : <input name="reservation_person" type="number" id="person" value="">명 
 						<input type="hidden" name="house_hostid" id="hostid" > 
 						<input type="hidden" name="house_number" id="house_number"><br>
 						
-						<button style="width: 200px" type="submit" id="insertbtn">예약하기</button>
+						<button style="width: 300px;background-color:#064D84" type="submit" id="insertbtn" class="btn btn-secondary btn-lg">예약하기</button>
 					</form>
 				</div>
 			</div>
@@ -213,7 +226,7 @@ $("#title").append(title);
 var mainimg =$('<img style="width:100%;height:470px" alt='+house[0].house_sysname+' src="'+house[0].house_sysname+'">');
 $("#mainimg").append(mainimg);
 
-var a=$('<img class="detail" style="width:48%;height:235px" alt='+house[1].house_sysname+' src="'+house[1].house_sysname.substr(2)+'">');
+var a=$('<img class="detail" style="width:48%;height:235px" alt='+house[1].house_sysname+' src="'+house[1].house_sysname+'">');
 var b=$('<img class="detail" style="width:48%;height:235px" alt='+house[1].house_sysname+' src="'+house[2].house_sysname+'">');
 var c=$('<img class="detail" style="width:48%;height:235px" alt='+house[1].house_sysname+' src="'+house[3].house_sysname+'">');
 var d=$('<img class="detail" style="width:48%;height:235px" alt='+house[1].house_sysname+' src="'+house[4].house_sysname+'">');
@@ -284,10 +297,12 @@ $("#info").append(house_info);
     });
  
  </script>
+ 
  <script>
 	var disabledDays = [];  //"2020-01-15"
 		
 	$(document).ready(function(){
+		
 		$("#datepicker1").datepicker({
 			
 		 	dateFormat: 'yy-mm-dd',
@@ -481,11 +496,6 @@ for(i of checkeddate){
    
 	
 	console.log(disabledDays);
-
-
- 
-
-
 </script>
 
 </html>
