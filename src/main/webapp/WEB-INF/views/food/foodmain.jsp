@@ -17,20 +17,30 @@
 }
 
 .form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
-    border: none;
+    border:1px solid lightgray;
     outline: none;
     box-shadow: none;
 }
 #food_list{
-	display:flex;
+	width:100%;
 }
 #food{
-	margin:20px; 
+	width:15%;
+	display:inline-block;
+	margin:20px;
+	box-shadow:5px 5px 3px lightgray;
+	text-align:center;
 }
 img{
-	width:200px;
-	height:100px;
-	margin:5px;
+	width:100%;
+	height:200px;
+	margin:5px 0;
+}
+#info{
+	color:#848484;
+}
+h4{
+margin:0;
 }
 </style>
 
@@ -78,10 +88,12 @@ var foodlist=${foodlist};
  		
  		 var out = $('<div id="food" name ='+[i.food_number]+'></div>')
  		 var img = $('<div id="mainimg" name ='+[i.food_number]+'><img alt='+[i.food_sysname]+'name ='+[i.food_number]+' src="'+[i.food_sysname]+'"></div>')
- 		 var info = $('<div id="info">'+"상호명: "+[i.food_name]+"<br>"+"주소: "+[i.food_address]+'</div>')
+ 		 var title=$('<h4>'+[i.food_name]+'</h4>');
+ 		 var info = $('<div id="info">'+"주소: "+[i.food_address]+'</div>')
 
  		$("#food_list").append(out);
  		out.append(img);
+ 		out.append(title);
  		out.append(info);
  	 	
  $("#mainimg").on('click', function() {
