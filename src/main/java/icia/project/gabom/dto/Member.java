@@ -29,4 +29,6 @@ public class Member {
 	private String member_profile_contents;
 	private int enabled;
 	private int member_money;
+	
+	private String g_name; 
 }
