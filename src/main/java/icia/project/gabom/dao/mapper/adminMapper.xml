@@ -71,6 +71,10 @@
 		ALL_NOTICES_VIEWS FROM ALL_NOTICES_BOARD WHERE ALL_NOTICES_NUMBER = #{num}
 	</select>
 	
+	<insert id="getnoticeswrite" parameterType="String">
+		INSERT INTO ALL_NOTICES_BOARD VALUES (SEQ_ALL_NOTICES_NUMBER.nextval, #{title}, #{content}, SYSDATE, 0)
+	</insert>
+	
 <!-- 	<select id="getjudgedetail" > -->
 <!-- 		SELECT * FROM  -->
 <!-- 	</select> -->
