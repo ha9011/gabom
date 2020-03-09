@@ -61,19 +61,43 @@
 		SELECT ALL_NOTICES_NUMBER, ALL_NOTICES_TITLE, ALL_NOTICES_DATE, 
 		ALL_NOTICES_VIEWS FROM ALL_NOTICES_BOARD ORDER BY ALL_NOTICES_DATE DESC
 	</select>
+	
 	<!-- 조회수 업데이트 -->
 	<update id="viewsUpdate">
 		UPDATE ALL_NOTICES_BOARD SET ALL_NOTICES_VIEWS = ALL_NOTICES_VIEWS + 1 WHERE ALL_NOTICES_NUMBER = #{num}
 	</update>
+	
 	<!-- 전체공지 디테일 모달 띄우기 -->
 	<select id="getnoticesmodal" resultType="adminnotices">
 		SELECT ALL_NOTICES_NUMBER, ALL_NOTICES_TITLE, ALL_NOTICES_BODY, ALL_NOTICES_DATE, 
 		ALL_NOTICES_VIEWS FROM ALL_NOTICES_BOARD WHERE ALL_NOTICES_NUMBER = #{num}
 	</select>
-	
+	<!-- 글쓰기 등록 -->
 	<insert id="getnoticeswrite" parameterType="String">
 		INSERT INTO ALL_NOTICES_BOARD VALUES (SEQ_ALL_NOTICES_NUMBER.nextval, #{title}, #{content}, SYSDATE, 0)
 	</insert>
+	
+	<!-- qna전체리스트 출력 -->
+	<select id="getqnaboard" resultType="qnaboard">
+		SELECT QNA_NUMBER, QNA_TITLE, QNA_BODY, QNA_MEMBER_ID, QNA_DATE  FROM QNA_BOARD ORDER BY QNA_DATE DESC
+	</select>
+	
+	<!-- 전체공지,답글 디테일 모달 띄우기 -->
+	<select id="getqnamodal" resultType="qnaboard">
+		SELECT QNA_NUMBER, QNA_TITLE, QNA_BODY, QNA_MEMBER_ID, QNA_DATE,QNA_ANSWER_NUMBER, QNA_REPLY 
+		FROM QNA_BOARD JOIN QNA_ANSWER ON QNA_BOARD.QNA_NUMBER = QNA_ANSWER.QNA_ANSWER_NUMBER WHERE QNA_NUMBER = #{num}
+	</select>
+	
+	<!-- qna답글쓰기 등록 -->
+	<insert id="getqnaanswer" parameterType="String">
+		INSERT INTO QNA_ANSWER VALUES (#{number}, #{qnaanswer})
+	</insert>
+	<!-- 질문 답글 띄우기 -->
+	<!-- <select id="getqnaanswer" resultType="qnaboard">
+		SELECT QNA_ANSWER_NUMBER, QNA_REPLY FROM QNA_ANSWER WHERE QNA_ANSWER_NUMBER = #{num}
+	</select> -->
+	
+	
 	
 <!-- 	<select id="getjudgedetail" > -->
 <!-- 		SELECT * FROM  -->
