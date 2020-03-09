@@ -142,11 +142,12 @@
 	margin-left: 10px;
 }
 
-/* var attendListFrame = $("<div class='attendListFrame'> </div>"); */
-/* 					var attendPic = $("<div> <img src='"+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>"); */
-/* 		  			var attendCont =  $("<div class='attendCont'> </div>");	 */
-/* 		  			var attendTitle = $("<div class='attendTitle'>"+v.member_name+"</div>");	 */
-/* 		  			var attendIntroduce = $("<div class='attendIntroduce'>"+v.member_profile_contents+"</div>"); */
+/* 게시글 */
+.boardCamera{
+	width:20%;
+	height: 20%
+}
+
 </style>
 
 </head>
@@ -196,15 +197,21 @@
 						<hr>
 						<div>
 							<button id="dropout" data-somoimnum=${roomnum
-								} class="btn btn-danger">탈퇴하기</button></div>
+								}
+								class="btn btn-danger">탈퇴하기</button>
+						</div>
 					</div>
 
 					<div id="board" class="container tab-pane fade">
 						<br>
-						<h3>Menu 1</h3>
-						<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco
-							laboris nisi ut aliquip ex ea commodo consequat.</p>
+						<div>
+							<button data-toggle="modal" data-target="#myBoardModal"
+								id="boardWriteBtn" class="btn btn-info">글쓰기</button>
+						</div>
+						<jsp:include page="/WEB-INF/views/somoim/jungmoboard.jsp" />
+
 					</div>
+
 
 					<div id="album" class="container tab-pane fade">
 						<br>
@@ -251,8 +258,109 @@
 		</div>
 	</div>
 
+	<!-- The Modal 작은창 -->
+	<div class="modal fade" id="myBoardModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">글쓰기</h4>
+					<button type="button" class="close" data-dismiss="modal">×</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+
+					<form>
+						<label for="type">종 류</label> <select name="boardtype"
+							class="custom-select" required="required">
+							<option selected>선택하세요</option>
+							<option value="introduce">가입인사</option>
+							<option value="free">자유게시판</option>
+							<option value="noti">공지사항</option>
+						</select> <br>
+						<br>
+						<div class="form-group">
+							<label for="title">글 제목</label> <input type="text"
+								class="form-control" placeholder="글 제목(20)" name="boardtitle"
+								id="boardtitle">
+						</div>
+
+						<div class="form-group">
+							<label for="content">글 내용 </label>
+							<textarea placeholder="글 내용" class="form-control" rows="5" id="boardCont" name="boardCont"></textarea>
+							
+						</div>
+
+
+						<div>
+							<label for="title">사진 </label><br>
+							<img id="imgfirstPic" data-input="firstPic" class="boardCamera" src="../resources/somoimimage/camera.PNG"  />
+							<img id="imgsecondPic" data-input="secondPic" class="boardCamera" src="../resources/somoimimage/camera.PNG"  />
+							<img id="imgthirdPic" data-input="thirdPic" class="boardCamera" src="../resources/somoimimage/camera.PNG"  />
+						</div>
+						
+						<input type="file" id="firstPic" name="firstPic" class='boardInputFile' style="display: none">
+						<input type="file" id="secondPic" name="secondPic" class='boardInputFile'  style="display: none">
+						<input type="file" id="thirdPic" name="thirdPic" class='boardInputFile' style="display: none;">
+					
+					
+						<br><br>
+						<div class="form-group form-check">
+							<label class="form-check-label"> <input
+								class="form-check-input" type="checkbox" name="mainboard" id="mainboard" value="고정">게시글 상위고정
+							</label>
+						</div>
+						
+						<button type="button">작성하기</button>
+					</form>
+
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
 </body>
 <script type="text/javascript">
+// $(document).ready(function(){
+// 	console.log("tlwkrtlwkr")
+// 	var timer ;
+// 	var istrue = false;
+	
+	
+// 	function mouseDown(){
+// 		istrue = true;
+// 		timer = setTimeout(() => {
+// 			holding();
+// 		}, 2000);
+// 	}
+
+// 	function holding(){
+// 		if(timer)
+// 			clearTimeout(timer);
+// 		if(istrue){
+// 			alert('holding');
+// 		}
+// 	}	
+// 	function mouseUp(){
+// 		istrue=false;
+// 	}
+	
+// 	function dbClick(){
+// 		alert('db click')
+// 	}
+	
+// })
+
 console.log("회원",${JsonMemberList})
 console.log("정모모임",${JsonJungmoRoom})
 console.log("내참석리스트",${JsonAttendlist})
@@ -554,7 +662,45 @@ console.log("기본정보",${JsonBasicInfo})
 		
 		//window.close();
 		
+	})//탈퇴 end
+	
+	
+	
+	
+	
+	
+// 	$('#firstPic').bind('click', function () {  });
+// 	$('#secondPic').bind('click', function () { alert('2') });
+// 	$('#thirdPic').bind('click', function () { alert('3') });
+	$(".boardCamera").on("click",function(e){
+		console.log("...사진클릭")
+		console.log(e.target.dataset.input)  // firstPic  secondPic  thirdPic
+		 $("#"+e.target.dataset.input).click();
 	})
+
+	$(".boardInputFile").on("change",function(e){
+		console.log(e)
+		console.dir(e)
+		console.log(e.target.name)
+		
+		var id = "#img"+e.target.name
+		$(id).attr('src', "../resources/somoimimage/camera.PNG" );
+		var get_file = e.target.files;
+		 
+        var preview = document.querySelector(id);
+        
+        if (get_file && get_file[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                    $(id).attr('src', e.target.result);
+                }
+
+              reader.readAsDataURL(get_file[0]);
+            }
+
+	});
+
 	
 	
 </script>
