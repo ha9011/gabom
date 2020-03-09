@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import icia.project.gabom.dto.Adminfood;
 import icia.project.gabom.dto.Adminhouse;
 import icia.project.gabom.dto.Adminnotices;
+import icia.project.gabom.dto.Qnaboard;
 
 public interface IAdminDao {
 	//하우스 0번타입 리스트 출력
@@ -33,5 +34,11 @@ public interface IAdminDao {
 	boolean viewsUpdate(String num);
 	//글작성 등록
 	boolean getnoticeswrite(@Param("title") String title,@Param("content") String content);
+	//질문게시글 전체출력
+	List<Qnaboard> getqnaboard();
+	//질문 디테일 모달출력
+	List<Qnaboard> getqnamodal(String num);
+	//질문 답글등록
+	boolean getqnaanswer(@Param("number")String number,@Param("qnaanswer") String qnaanswer);
 	
 }
