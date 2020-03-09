@@ -319,15 +319,33 @@ $(function () {
 	</div>
 	<script type="text/javascript">
 	$("#writeBox").on("click","#writeButton",function(){
-		let str = $("#writeContent").val();
+		let str = $("#sns_posts_content").val();
 
 		str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 
-		$("#writeContent").val(str);
-			
-		console.log($("#writeContent").val());
-		//security
-		console.log($("#security").val());
+		$("#sns_posts_content").val(str);
+		let form=$("#writeBoxForm")[0];	
+		
+		var WriteData= new FormData(form);
+		
+		
+		
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+ 			method:'post',
+ 			url:"sns/write/insert",
+ 			data:WriteData,
+ 			dataType : "json",
+ 			processData: false,
+            contentType: false,
+		}).done((json)=>{
+			setProfile(json);
+		});
+		
+		
 	});
 	
 	
@@ -393,11 +411,11 @@ $(function () {
 	//글쓰기칸 만드는 함수
 	function makewriteBox() {
 		let photo="";
-		photo+='<form name="writeBoxForm" method="post" enctype="multipart/form-data">';
+		photo+='<form name="writeBoxForm" method="post" enctype="multipart/form-data" id="writeBoxForm">';
 		photo+='<div class="row">';
 		photo+='<img src='+jsonPicture+' class="img-responsive col-xs-4 col-md-2 col-sm-4 myImage" id="writeProfileImage">';
 		photo+='<div class="container col-xs-4 col-md-2 col-sm-4 pull-right security">';
-		photo+='<select class="form-control" id="security">';
+		photo+='<select class="form-control" id="security" name="security">';
 		photo+='<option>전체 공개</option>';
 		photo+='<option>나만 보기</option>';
 		photo+='<option>친구 공개</option>';
@@ -405,12 +423,12 @@ $(function () {
 		photo+='</div>';
 		photo+='</div>';
 		photo+='<div class="input-group" id="writeContents">';
-		photo+='<textarea class="form-control" aria-describedby="basic-addon1" rows="7" cols="185" placeholder="무슨 생각을 하고 계신가요?" id="writeContent"></textarea>';
+		photo+='<textarea class="form-control" aria-describedby="basic-addon1" rows="7" cols="185" placeholder="무슨 생각을 하고 계신가요?" id="sns_posts_content" name="sns_posts_content"></textarea>';
 		photo+='</div>';
 		photo+='<div class="row">';
 		photo+='<div class="filebox col-xs-4 col-md-2 col-sm-4">';
 		photo+='<label for="ex_file"><i class="fas fa-image fa-2x"></i></label>';
-		photo+='<input type="file" id="ex_file" multiple="multiple">';
+		photo+='<input type="file" id="ex_file" multiple="multiple" accept="image/jpeg, image/png, image/gif, image/jpg" name="snsWriteImage">';
 		photo+='</div>';
 		photo+='<div class="col-xs-8 col-md-10 col-sm-8" id="writeButtonBox" >';
 		photo+='<button class="btn btn-Default pull-right" id="cancel">취소</button>';
@@ -521,8 +539,7 @@ $("div").on("click","#cancel",function(){
 function setProfile(json) {
 	$("#snsProfileImg img").attr("src",json.member_profile_picture);
 	$("#snsProfileName").html(json.member_name+"님");
-	jsonPicture=json.member_profile_picture;
-	console.log(jsonPicture);	
+	jsonPicture=json.member_profile_picture;	
 }
 
 {
