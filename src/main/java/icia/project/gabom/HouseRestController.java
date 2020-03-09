@@ -39,7 +39,7 @@ public class HouseRestController {
 		return json;
 	}
 	
-	@RequestMapping(value = "/housereservation",produces = "application/json;charset=utf-8")//ajax로 insert
+	@PostMapping(value = "/housereservation",produces = "application/json;charset=utf-8")//ajax로 insert
 	public String housereservation(Principal principal, Housereservation hreservation) {
 		System.out.println("예약하러 컨트롤러 오니?");
 		System.out.println(hreservation.toString());
