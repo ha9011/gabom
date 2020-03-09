@@ -180,7 +180,8 @@
 		console.log($(this)[0].dataset.roomnumber)
 		var room = $(this)[0].dataset.roomnumber;
 		var url = "./somoimroom?roomnumber="+room;  
-        window.open(url, "new_window",'location=yes, directories=yes, width=#, height=#'); 
+        //window.open(url, "new_window",'location=yes, directories=yes, width=#, height=#'); 
+        location.href = url;
 	})
 </script>
 </html>

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 
 import icia.project.gabom.dao.ISomoimDao;
+import icia.project.gabom.dto.JungmoAttend;
 import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.Somoim;
 import icia.project.gabom.userClass.SomoimUploadFile;
@@ -98,7 +99,7 @@ public class SomoimManagement {
 
 	
 	public ModelAndView somoimRoomData(ModelAndView mav, String roomnum, Principal pr) {
-		
+		System.out.println("내프로젝트의 루트경로는?  " + System.getProperty("user.dir")); 
 		//1-1정보 단계 (제목, 타이틀, 위치 등등...)
 		sm = new Somoim();
 		sm = sDao.selectRoomInfo(roomnum);
@@ -169,6 +170,42 @@ public class SomoimManagement {
 		System.out.println(" jungmoroom : " + jungmoroom.toString());
 		int result = sDao.deleteAttendjungmo(jungmoroom);
 		return "참석취소";
+	}
+
+
+	public String showAttendList(String jungmoNumber) {
+		
+		int jungmoNumberInt = Integer.parseInt(jungmoNumber);
+		// 타입 변경해야함 일단은 이렇게.
+		List<JungmoAttend> attendList= sDao.selectshowAttendList(jungmoNumberInt); 
+		
+		//System.out.println("attendList : " +attendList.toString());
+		
+		String result = new Gson().toJson(attendList);
+		System.out.println("JsonattendListOb : " + result);
+		
+		return result;
+	}
+
+
+	public String deleteSomoim(int somoimnum, String name, String somoimmaker) {
+		
+		//방장인지 아닌지에 따라 분기
+		int result = 0;
+		if(name.equals(somoimmaker)==true) { //방장이니 방도 지우고, 맴버도 지우기 casecade
+			
+			result = sDao.deleteOurSomoim(somoimnum); // 모든 회원부터 지우기
+			System.out.println("모든 맴버 삭제 : " + result);
+			result = sDao.deleteSomoimRoom(somoimnum); // 소모임지우기
+			System.out.println("방삭제 : " + result);
+		}else { // 방 그냥 탈퇴
+			result = sDao.deleteMySomoim(somoimnum, name); //나만
+			System.out.println("나만 탈퇴: " + result);
+		}
+		
+		String a = (result != 0) ? "삭제" : "뭔가잘못됨"; 
+		System.out.println("결과 : " + a);
+		return a;
 	}
 
 

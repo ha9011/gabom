@@ -80,6 +80,30 @@
 	DELETE FROM jungmo_member WHERE jungmo_number = #{jungmo_number} and somoim_number = #{somoim_number} and MEMBER_ID =  #{jungmo_join_id} 
 </delete>
 
+<select id="selectshowAttendList"   resultType="jungmoattend">
+	 select
+    m.member_name,
+    m.member_profile_picture,
+    m.member_profile_contents,
+    sm.member_grade,
+    jm.somoim_number
+    from JUNGMO_MEMBER jm, MEMBER m, SOMOIM_MEMBER sm  
+    where jm.member_id = m.member_id and jm.member_id=sm.member_name and jm.somoim_number=sm.somoim_number and  jungmo_number = #{jungmoNumber}  
+
+</select>
+
+
+<delete id="deleteOurSomoim"  parameterType="int">
+	DELETE FROM somoim_member WHERE SOMOIM_NUMBER = #{somoimnum}   
+</delete>
+
+<delete id="deleteSomoimRoom"  parameterType="int">
+	DELETE FROM somoim WHERE SOMOIM_NUMBER = #{somoimnum}  
+</delete>
+
+<delete id="deleteMySomoim"  parameterType="int">
+	DELETE FROM somoim_member WHERE SOMOIM_NUMBER = #{somoimnum} and  MEMBER_NAME =#{name}
+</delete>
 
 </mapper>
 

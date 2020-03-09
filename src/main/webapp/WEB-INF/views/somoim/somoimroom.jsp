@@ -22,6 +22,19 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
 <style>
+#dropout {
+	width: 100%;
+}
+
+.tab-content {
+	height: 93%;
+	overflow: auto;
+}
+
+#noti {
+	
+}
+
 #main {
 	width: 100%;
 	height: 1000px;
@@ -108,6 +121,32 @@
 	align-items: center;
 	justify-content: space-between;
 }
+
+.attendListFrame {
+	border: 1px solid black;
+	margin-top: 3px;
+	display: flex;
+}
+
+.attendPic {
+	width: 100%;
+	height: 100%;
+	margin
+}
+
+.attendPicFrame {
+	width: 15%;
+}
+
+.attendCont {
+	margin-left: 10px;
+}
+
+/* var attendListFrame = $("<div class='attendListFrame'> </div>"); */
+/* 					var attendPic = $("<div> <img src='"+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>"); */
+/* 		  			var attendCont =  $("<div class='attendCont'> </div>");	 */
+/* 		  			var attendTitle = $("<div class='attendTitle'>"+v.member_name+"</div>");	 */
+/* 		  			var attendIntroduce = $("<div class='attendIntroduce'>"+v.member_profile_contents+"</div>"); */
 </style>
 
 </head>
@@ -145,7 +184,7 @@
 							<div>
 
 								<img data-somoimnum=${roomnum } data-toggle="modal"
-									data-target="#myModal" id="makeSomoim" width="85px"
+									data-target="#mySMModal" id="makeSomoim" width="85px"
 									height="85px" src="../resources/somoimimage/makemoim.PNG">&nbsp정모만들기
 
 							</div>
@@ -153,9 +192,11 @@
 						</div>
 
 						<hr>
-						<div>회원 회원</div>
+						<div id="MemberList">회원 회원</div>
 						<hr>
-						<div>탈퇴하기</div>
+						<div>
+							<button id="dropout" data-somoimnum=${roomnum
+								} class="btn btn-danger">탈퇴하기</button></div>
 					</div>
 
 					<div id="board" class="container tab-pane fade">
@@ -167,9 +208,10 @@
 
 					<div id="album" class="container tab-pane fade">
 						<br>
-						<h3>Menu 2</h3>
-						<p>Sed ut perspiciatis unde omnis iste natus error sit
-							voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+						<h3>사진첩</h3>
+						<div>
+							<jsp:include page="/WEB-INF/views/somoim/jungmoalbum.jsp" />
+						</div>
 					</div>
 				</div>
 			</div>
@@ -186,8 +228,8 @@
 	</div>
 
 
-	<!-- The Modal -->
-	<div class="modal fade" id="myModal">
+	<!-- The Modal 작은창 -->
+	<div class="modal fade" id="mySMModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 
@@ -208,6 +250,7 @@
 			</div>
 		</div>
 	</div>
+
 </body>
 <script type="text/javascript">
 console.log("회원",${JsonMemberList})
@@ -224,7 +267,6 @@ console.log("기본정보",${JsonBasicInfo})
 		$(".modal-body").empty();
 		
 		 $(".modal-body").load("../resources/jsp/somoim/jungmomake.jsp");
-		
 		
 	})
 
@@ -264,7 +306,6 @@ console.log("기본정보",${JsonBasicInfo})
 			alert("fail")
 			console.log(error);
 		}
-		
 	})
 }
 	
@@ -279,9 +320,7 @@ console.log("기본정보",${JsonBasicInfo})
 		var frame = $("<div class='basicInfoframe' data-jungmonum='"+i.jungmo_number +"'></div>")
 		var img = $("<div class='jmimg' ><div class='upDate btn btn-danger btn-sm'>"+week[new Date(i.jungmo_date).getDay()] +"</div><div class='downDate'><div class='jmday'>"+new Date(i.jungmo_date).getDate()+"</div></div></div>")
 		var detail = $("<div class='jmdetail'><div><img width='13px' height='13px' src='"+"../resources/somoimimage/time.PNG"+"' >&nbsp&nbsp"+getFormatTime(i.jungmo_date, i.jungmo_time) +"</div><div><img width='13px' height='13px' src='"+"../resources/somoimimage/location.PNG"+"' >&nbsp&nbsp"+i.jungmo_location +"</div><div><img width='13px' height='18px' src='"+"../resources/somoimimage/coin.PNG"+"' >&nbsp&nbsp"+i.jungmo_money +"</div></div>")
-		
 		var btns = $("<div class='Jungmobtns'></div>");
-		
 		var joinbtn ;
 		
 		
@@ -292,7 +331,6 @@ console.log("기본정보",${JsonBasicInfo})
 			if(i.jungmo_number === j.jungmo_number){
 				joinbtn= $("<div><button data-jungmonum='"+i.jungmo_number +"' data-somoim='"+i.somoim_number +"' class='jungmojoinbtn'>취소</button></div>");
 				Attendlist.splice(JsonAttendlistIDX, 1)
-				
 			}else{
 				joinbtn= $("<div><button data-jungmonum='"+i.jungmo_number +"' data-somoim='"+i.somoim_number +"' class='jungmojoinbtn'>참석</button></div>");
 			}	
@@ -305,7 +343,7 @@ console.log("기본정보",${JsonBasicInfo})
 			
 		
 		
-		var showjoinlist = $("<div><button>참석자</button></div>");
+		var showjoinlist = $("<div><button data-toggle='modal' data-title='"+getFormatTime(i.jungmo_date, i.jungmo_time)+"'data-target='#mySMModal' class='showAttendList' data-jungmonum='"+i.jungmo_number +"'>참석자</button></div>");
 		btns.append(joinbtn);
 		btns.append(showjoinlist);
 		
@@ -408,10 +446,116 @@ console.log("기본정보",${JsonBasicInfo})
 		
 		
 		
+	})//end
+	
+	
+	//참석리스트 보기
+	$(".showAttendList").on("click", function(e){
+		console.log("gg")
+		console.log("정모번호 : ", e.target.dataset.jungmonum);
+		$(".modal-title").text("");  // 작은 모달 초기화
+		$(".modal-body").empty(); // 작은 모달 초기화
 		
+		$(".modal-title").text(e.target.dataset.title);  // title 제목  ;;
 		
+		//ajax로 리스트 부르기
+		var JungmoNumber = {"JungmoNumber" : e.target.dataset.jungmonum}
+		
+		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");} 
+		});
+
+		
+		$.ajax({
+	  		url: "jungmoattendlist",
+	  		type: 'post',
+	  		data: JungmoNumber,
+	  		dataType: "json", //rest 컨트롤 이용	
+	  		success:function(data){
+	  			console.log("success");
+	  			console.log(data)
+				//$(".modal-body").empty(); // 작은 모달 초기화
+				for(let v of data){
+					var attendListFrame = $("<div class='attendListFrame'> </div>");
+					var attendPic = $("<div class='attendPicFrame'> <img src='."+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
+		  			var attendCont =  $("<div class='attendCont'> </div>");	
+		  			var attendTitle = $("<div class='attendTitle'>"+v.member_name+"</div>");	
+		  			var attendIntroduce = $("<div class='attendIntroduce'>"+v.member_profile_contents+"</div>");
+		  			attendCont.append(attendTitle);
+		  			attendCont.append(attendIntroduce);
+		  			
+		  			attendListFrame.append(attendPic);
+		  			attendListFrame.append(attendCont);
+		  			
+		  			$(".modal-body").append(attendListFrame);
+		  			
+				}
+	  		},
+	  		error:function(error){
+	  			alert("fail")
+	  			console.log(error);
+	  		}
+	  		
+	  	}) //ajax end
+	
+	})//참석 리스트 end
+	
+	//맴버 리스트 모두 호출 class 이름 조심.... 
+	var JsonMemberList = ${JsonMemberList};
+	for( v of JsonMemberList){
+		var MemberListFrame = $("<div class='attendListFrame'> </div>");
+		var MemberListPic = $("<div class='attendPicFrame'> <img src='."+v.MEMBER_PROFILE_PICTURE+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
+			var MemberListCont =  $("<div class='attendCont'> </div>");	
+			var MemberListTitle = $("<div class='attendTitle'>"+v.MEMBER_NAME+"</div>");	
+			var MemberListIntroduce = $("<div class='attendIntroduce'>"+v.MEMBER_PROFILE_CONTENTS+"</div>");
+			
+			MemberListCont.append(MemberListTitle);
+			MemberListCont.append(MemberListIntroduce);
+			
+			MemberListFrame.append(MemberListPic);
+			MemberListFrame.append(MemberListCont);
+			
+			$("#MemberList").append(MemberListFrame);
+			
+	}
+	
+	
+	$("#dropout").on("click",function(e){
+		
+		console.log("삭제버튼 클릭")
+		
+		//var somoimnum = {"somoimnum" : e.target.dataset.somoimnum};
+		var data = {"somoimnum" : e.target.dataset.somoimnum,
+					"somoimmaker" : ${JsonBasicInfo}.somoim_maker};
+		console.log(data)
+		
+		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");} 
+		});
+		$.ajax({
+	  		url: "dropoutsomoim",
+	  		type: 'post',
+	  		data : data,
+	  		dataType: "json", //rest 컨트롤 이용	
+	  		success:function(data){
+	  			alert("success");
+	  			console.log(data)
+	  			location.href = "./mainsomoim";
+			
+	  		},
+	  		error:function(error){
+	  			alert("fail")
+	  			console.log(error);
+	  		}
+	  		
+	  	}) //ajax end
+		
+		//window.close();
 		
 	})
+	
 	
 </script>
 </html>

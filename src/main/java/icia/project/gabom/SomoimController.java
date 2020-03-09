@@ -70,5 +70,5 @@ public class SomoimController {
 		return mav;
 	}
 	
-	
+
 }

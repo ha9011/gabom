@@ -1,12 +1,11 @@
 package icia.project.gabom.dao;
 
-import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import icia.project.gabom.dto.JungmoAttend;
 import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.Somoim;
 
@@ -33,6 +32,20 @@ public interface ISomoimDao {
 	int insertAttendjungmo(Jungmoroom jungmoroom);
 
 	int deleteAttendjungmo(Jungmoroom jungmoroom);
+
+	List<JungmoAttend> selectshowAttendList(@Param("jungmoNumber")int jungmoNumberInt);
+
+	int deleteSomoim(@Param("somoimnum")int somoimnum, @Param("name")String name);
+
+	
+	//소모임 회원 모두 삭제
+	int deleteOurSomoim(@Param("somoimnum")int somoimnum);
+
+	//소모임 방 삭제
+	int deleteSomoimRoom(@Param("somoimnum")int somoimnum);
+
+	// 나만 탈퇴
+	int deleteMySomoim(@Param("somoimnum")int somoimnum, @Param("name")String name);
 
 	
 }
