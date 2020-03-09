@@ -323,7 +323,7 @@ li {
 		return yyyy+"-"+mm+"-"+dd;
 	}
 	
-	//qna 전체 출력
+	//---------------------------------------------------------------------qna 전체 출력---------------------------------------------------------------------
 	 $("#qna_board_click").on("click",function(){
 		console.log("qna 클릭");
 		
@@ -369,7 +369,7 @@ li {
 		      
 	}); //qna function End
 	
-	//qna 상세 모달창
+	//---------------------------------------------------------------------qna 상세 모달창---------------------------------------------------------------------
 	$(document).on("click", "#qna_detail",function(e){
 		console.log("qna상세 클릭");
 		
@@ -400,7 +400,7 @@ li {
 					strn += '<div>'+response[0].qna_body+'</div>';
 					strn += '<div id="qna_reply_div" style="border-top: 1px solid #D8D8D8">댓글</div>';
 						for(i=0;i<response.length;i++){
-							strn += '<div style="border-top: 1px solid #D8D8D8">'+response[i].qna_reply+'</div>';
+							strn += '<div class="qna_reply_div" style="border-top: 1px solid #D8D8D8">'+response[i].qna_reply+'</div>';
 						}
 					strn += '<textarea class="form-control" rows="5" id="qnaanswer" name="qnaanswer"></textarea>';
 					$("#qna_modal_body").append(strn);
@@ -412,21 +412,21 @@ li {
           });	  
 	}); //qna 상세모달 End
 	
-	//qna 답글 작성
+	//---------------------------------------------------------------------qna 답글 작성---------------------------------------------------------------------
 	$('.answer').on('click',function(e){
 		console.log("답글작성 클릭");
 		/* var formData = new FormData(document.getElementById("afrm"));
 		console.log('답글번호',formData.get("number")[0]);
 		console.log('답글내용',formData.get("qnaanswer")[0]); */
 		var formData = new FormData();
-  		formData.append("number",document.getElementById("number").value);
+  		formData.append("num",document.getElementById("number").value);
   		
 		var str = $('#qnaanswer').val();
 		str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 		document.getElementById("qnaanswer").value=str;
 		formData.append("qnaanswer",document.getElementById("qnaanswer").value); 
 		
-		console.log('답글번호1',formData.get("number"));
+		console.log('답글번호1',formData.get("num"));
 		console.log('답글내용1',formData.get("qnaanswer"));
 		
 		$.ajaxSetup({         
@@ -438,16 +438,19 @@ li {
       			url : "qnaanswer",
                   type : "Post",
                   data : formData, 
+                  dataType : 'json',
       			processData:false,//application/x-www-form-urlencoded(쿼리스트링)
                   contentType:false,//multipart의 경우 contentType을 false로
                   
                   success : function(response) {
-                  	console.log("답글쓰기 성공");
-                  	
-                  	$('#qna_reply_div')
-                  	
-                  	//$("#board"+response[0].all_notices_number).text(response[0].all_notices_views); //전체회원 공지사항 변경
-                  	//notices_body
+                  	console.log("답글쓰기",response);
+                  	document.getElementById("qnaanswer").value=" "; //답글 textarea 리셋
+                  	$(".qna_reply_div").empty(); //댓글div 리셋
+                  	let strn = " ";
+                  	for(i=0;i<response.length;i++){
+						strn += '<div class="qna_reply_div" style="border-top: 1px solid #D8D8D8">'+response[i].qna_reply+'</div>';
+					}
+                  	$("#qna_reply_div").append(strn);
                   	
                   }, error : function(jqXHR, status, e) {
                       console.log("답글쓰기 에러");
@@ -457,7 +460,7 @@ li {
 		
 	}); //qna 답글작성 End
 
-	//전체공지 출력
+	//----------------------------------------------전체공지 출력---------------------------------------------------------------------
 	$("#all_notices_click").on("click",function(){
 		console.log("notices 클릭");
 		$.ajaxSetup({         
@@ -475,8 +478,6 @@ li {
 				$("#notices_body").empty();
 				let strb = " ";
 				for(var i = 0;i<response.length;i++){
-					//console.log("11",response[i].all_notices_number);
-					//console.log("12",response[i].all_notices_title);
 					strb += '<tr>';
 					strb += '<td>'+response[i].all_notices_number+'</td>'; //글번호
 					strb += '<td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a>';
@@ -503,7 +504,7 @@ li {
        });
 	});//notices function End
 	
-	//notices modal 생성
+	//---------------------------------------------------------------------notices modal 생성---------------------------------------------------------------------
 	$(document).on("click", "#notices_detail",function(e){
 		console.log("게시글번호 클릭");
 		var params = e.target.dataset.number; 
@@ -540,21 +541,16 @@ li {
           });	  
 	}); //notices모달 click End
 	
-
-	//글쓰기 버튼 생성
+	//---------------------------------------------------------------------글쓰기 버튼 생성---------------------------------------------------------------------
 	$("<button>").addClass("btn btn-info custom").attr("id","write").attr("data-toggle","modal").attr("data-target","#write_modal").text("글쓰기").appendTo($("#write_button_area"));
 	
-	//글쓰기 모달 생성
+	//---------------------------------------------------------------------글쓰기 모달 생성---------------------------------------------------------------------
 	$("#write_modal_button").on("click",function(){
 		console.log("글쓰기 클릭");
-		//$("#write_modal_header").empty();
-		//$("#write_modal_body").empty();
-		
 		
 		var formData = new FormData();
 		formData.append("title",document.getElementById("title").value);
 		
-		//var str = document.getElementById("notices_body").value;
 		var str = $('#content').val();
 		str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 		document.getElementById("content").value=str;
@@ -571,14 +567,37 @@ li {
 			url : "noticeswrite",
             type : "Post",
             data : formData, 
+            dataType : 'json',
 			processData:false,//application/x-www-form-urlencoded(쿼리스트링)
             contentType:false,//multipart의 경우 contentType을 false로
             
             success : function(response) {
-            	console.log("글쓰기 성공");
+            	console.log("글쓰기 성공",response);
+            	document.getElementById("title").value = " ";
+            	document.getElementById("content").value = " ";
             	
-            	//$("#board"+response[0].all_notices_number).text(response[0].all_notices_views); //전체회원 공지사항 변경
-            	//notices_body
+            	$("#notices_body").empty();
+				let strb = " ";
+				for(var i = 0;i<response.length;i++){
+					strb += '<tr>';
+					strb += '<td>'+response[i].all_notices_number+'</td>'; //글번호
+					strb += '<td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a>';
+					strb += '</td>'; //제목
+					const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
+					//console.log(writeDate[0]); //년 월 일
+					//console.log(writeDate[1]); //시 분 초
+					
+					const today = getToday(); //오늘 날짜를 직접 정의
+					
+					if(today==writeDate[0]){ //날 짜
+					strb += '<td>'+writeDate[1]+'</td>';
+					}else{
+						strb += '<td>'+writeDate[0]+'</td>';
+					}
+					strb += '<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'; //조 회 수
+					strb += '</tr>';
+				}//for문 종료
+				$("#notices_body").append(strb);
             	
             }, error : function(jqXHR, status, e) {
                 console.log("글쓰기 에러");
@@ -589,7 +608,7 @@ li {
 	});//글쓰기 ajax End 
 
 	
-	//house 리스트 출력
+	//---------------------------------------------------------------------house 리스트 출력---------------------------------------------------------------------
 	const house = ${housejudge}; //house 리스트 json
 	const food = ${foodjudge}; //food 리스트 json
 	console.log("house=",house);
@@ -627,7 +646,7 @@ li {
  	$("#housemain_judge").append(strh); //house 리스트 End
  	
  	console.log("food : ",food);
-	//food 리스트 출력
+	//---------------------------------------------------------------------food 리스트 출력---------------------------------------------------------------------
  	let strf= " ";
  	for(let i=0;i<food.length;i++){
 
@@ -655,7 +674,7 @@ li {
  	}
  	$("#foodmain_judge").append(strf); //food 리스트 End
 	
- 	//하우스 모달 ajax 시작
+ 	//---------------------------------------------------------------------하우스 모달 ajax 시작---------------------------------------------------------------------
  	$('.house').on('click',function(e){ 
  		console.log(e.target.dataset.number);
  		var params = e.target.dataset.number;
@@ -722,7 +741,7 @@ li {
             });	 
  	}); //house모달 End
  	
- 	//음식점 모달 ajax 시작
+ 	//---------------------------------------------------------------------음식점 모달 ajax 시작---------------------------------------------------------------------
  	 $('.food').on('click',function(e){ 
  		console.log(e.target.dataset.number);
  		var params = e.target.dataset.number;
@@ -783,7 +802,7 @@ li {
  		
  	}); //food모달 End
  	
-	//승인거절 ajax
+	//---------------------------------------------------------------------승인거절 ajax---------------------------------------------------------------------
 	$('.judge').on('click',function(e){
 		console.log(e.target.value);
 		var formData = new FormData(document.getElementById("sFrm"));

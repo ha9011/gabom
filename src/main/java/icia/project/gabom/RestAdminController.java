@@ -110,7 +110,13 @@ public class RestAdminController {
 		boolean result = aDao.getnoticeswrite(title, content);
 		System.out.println("글작성 성공?" + result);
 
-		return null;
+		List<Adminnotices> nlist = aDao.getadnotices(); // 전체공지 정보 출력
+		System.out.println("noticeslist=" + nlist);
+
+		String json = new Gson().toJson(nlist);
+		System.out.println(json);
+
+		return json;
 	}
 
 	// 전체공지사항 출력
@@ -161,15 +167,19 @@ public class RestAdminController {
 	}
 	// qna답글 작성 출력
 	@PostMapping(value = "/qnaanswer", produces = "text/plain;charset=UTF-8")
-	public String qnaanswer(@RequestParam("number") String number, @RequestParam("qnaanswer") String qnaanswer) {
+	public String qnaanswer(@RequestParam("num") String num, @RequestParam("qnaanswer") String qnaanswer) {
 		System.out.println("레스트컨트룰러 qna답글");
 		
-		System.out.println("글작성 번호 : " + number);
+		System.out.println("글작성 번호 : " + num);
 		System.out.println("글작성 내용 : " + qnaanswer);
-		boolean result = aDao.getqnaanswer(number, qnaanswer);
+		boolean result = aDao.getqnaanswer(num, qnaanswer);
 		System.out.println("글작성 성공?" + result);
+		List<Qnaboard> nlist = aDao.getqnamodal(num); // 선택질문,답글 정보 출력
+		System.out.println("글작성후 dao=" + nlist);
+		String json = new Gson().toJson(nlist);
+		System.out.println("글작성후 dao="+json);
 		
-		return null;
+		return json;
 	}
 
 }
