@@ -94,6 +94,18 @@ public class RestSomoimController {
 		map.put("result", result);
 		return new Gson().toJson(map); 
 	}
+	
+	//소모임탈퇴
+		@RequestMapping(value = "/boardwrite", produces="text/plain;charset=utf-8")
+		public String boardwrite(MultipartHttpServletRequest multi, Principal pr ) {
+			mav = new ModelAndView();
+			System.out.println("글쓰기 // 아이디 : " +pr.getName());  // 참석자를 확인할 정모의 고유번호
+			
+			String result = simm.insertSomoimBoard(multi, pr.getName());
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("result", result);
+			return new Gson().toJson(map); 
+		}
 
 	
 	

@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import icia.project.gabom.dto.JungmoAttend;
 import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.Somoim;
+import icia.project.gabom.dto.SomoimBoard;
 
 public interface ISomoimDao {
 
@@ -46,6 +47,8 @@ public interface ISomoimDao {
 
 	// 나만 탈퇴
 	int deleteMySomoim(@Param("somoimnum")int somoimnum, @Param("name")String name);
+
+	int insertSomoimBoard(SomoimBoard smb);
 
 	
 }

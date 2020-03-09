@@ -143,11 +143,10 @@
 }
 
 /* 게시글 */
-.boardCamera{
-	width:20%;
+.boardCamera {
+	width: 20%;
 	height: 20%
 }
-
 </style>
 
 </head>
@@ -184,7 +183,7 @@
 
 							<div>
 
-								<img data-somoimnum=${roomnum } data-toggle="modal"
+								<img data-somoimnum=${roomnum} data-toggle="modal"
 									data-target="#mySMModal" id="makeSomoim" width="85px"
 									height="85px" src="../resources/somoimimage/makemoim.PNG">&nbsp정모만들기
 
@@ -216,8 +215,20 @@
 					<div id="album" class="container tab-pane fade">
 						<br>
 						<div>
-						
-	
+							<%-- 						<jsp:include page="/WEB-INF/views/somoim/jungmoalbum.jsp" /> --%>
+
+
+							<form id="uploadimg" name="uploadimg" method="post"
+								enctype="multipart/form-data">
+								<div id="btnbox" class="filebox bs3-primary">
+									<input class="upload-name" value="파일선택" disabled="disabled">
+									<label for="ex_filename">사진선택</label> <input type="file"
+										id="ex_filename" class="upload-hidden" multiple>
+									<button type="submit" id="upload_btn">사진 등록</button>
+								</div>
+							</form>
+
+
 						</div>
 					</div>
 				</div>
@@ -258,7 +269,7 @@
 		</div>
 	</div>
 
-	<!-- The Modal 작은창 -->
+	<!-- The Modal 작은창 board창  -->
 	<div class="modal fade" id="myBoardModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -272,15 +283,16 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 
-					<form>
-						<label for="type">종 류</label> <select name="boardtype"
+					<form action="boardwrite" name="boardFrm" id="boardFrm" method="post" enctype="multipart/form-data" >
+						<label for="type">종 류</label> 
+						<select name="boardtype"
 							class="custom-select" required="required">
 							<option selected>선택하세요</option>
 							<option value="introduce">가입인사</option>
 							<option value="free">자유게시판</option>
 							<option value="noti">공지사항</option>
-						</select> <br>
-						<br>
+							<option value="jungmo">정모</option>
+						</select> <br> <br>
 						<div class="form-group">
 							<label for="title">글 제목</label> <input type="text"
 								class="form-control" placeholder="글 제목(20)" name="boardtitle"
@@ -289,31 +301,37 @@
 
 						<div class="form-group">
 							<label for="content">글 내용 </label>
-							<textarea placeholder="글 내용" class="form-control" rows="5" id="boardCont" name="boardCont"></textarea>
-							
+							<textarea placeholder="글 내용" class="form-control" rows="5"
+								id="boardCont" name="boardCont"></textarea>
+
 						</div>
 
 
 						<div>
-							<label for="title">사진 </label><br>
-							<img id="imgfirstPic" data-input="firstPic" class="boardCamera" src="../resources/somoimimage/camera.PNG"  />
-							<img id="imgsecondPic" data-input="secondPic" class="boardCamera" src="../resources/somoimimage/camera.PNG"  />
-							<img id="imgthirdPic" data-input="thirdPic" class="boardCamera" src="../resources/somoimimage/camera.PNG"  />
+							<label for="title">사진 </label><br> <img id="imgfirstPic"
+								data-input="firstPic" class="boardCamera"
+								src="../resources/somoimimage/camera.PNG" /> <img
+								id="imgsecondPic" data-input="secondPic" class="boardCamera"
+								src="../resources/somoimimage/camera.PNG" /> <img
+								id="imgthirdPic" data-input="thirdPic" class="boardCamera"
+								src="../resources/somoimimage/camera.PNG" />
 						</div>
-						
-						<input type="file" id="firstPic" name="firstPic" class='boardInputFile' style="display: none">
-						<input type="file" id="secondPic" name="secondPic" class='boardInputFile'  style="display: none">
-						<input type="file" id="thirdPic" name="thirdPic" class='boardInputFile' style="display: none;">
-					
-					
-						<br><br>
+
+						<input type="file" id="firstPic" name="firstPic"
+							class='boardInputFile' style="display: none"> <input
+							type="file" id="secondPic" name="secondPic"
+							class='boardInputFile' style="display: none"> <input
+							type="file" id="thirdPic" name="thirdPic" class='boardInputFile'
+							style="display: none;"> <br>
+						<br>
 						<div class="form-group form-check">
 							<label class="form-check-label"> <input
-								class="form-check-input" type="checkbox" name="mainboard" id="mainboard" value="고정">게시글 상위고정
+								class="form-check-input" type="checkbox" name="mainboard"
+								id="mainboard" value="고정">게시글 상위고정
 							</label>
 						</div>
-						
-						<button type="button">작성하기</button>
+
+						<button type="button" onclick="formBoardData()" class="btn btn-primary">작성하기</button>
 					</form>
 
 				</div>
@@ -701,7 +719,42 @@ console.log("기본정보",${JsonBasicInfo})
 
 	});
 
-	
+	//boardFrm
+	const formBoardData =()=>{
+		console.log("boardData")
+		
+		var formdata = new FormData(document.getElementById("boardFrm"));
+		formdata.append("somoim_number", ${JsonBasicInfo}.somoim_number)
+		console.log("==")
+		for(var k of formdata.keys()){
+			console.log(k+ " : ",formdata.get(k))
+			
+		}
+		
+		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+		      
+		$.ajax({
+			url:'boardwrite',
+			type:'post',
+			data:formdata,
+			processData:false,
+			contentType:false,  //제이슨 아니니깐 까보지마!!
+		 	dataType:"json", //rest 컨트롤 이용	
+			success:function(data){
+				alert("success");
+				console.log(data)
+			},
+			error:function(error){
+				alert("fail")
+				console.log(error);
+			}
+			
+		})
+	}
 </script>
 
+</script>		
 </html>

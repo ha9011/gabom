@@ -1,6 +1,7 @@
 package icia.project.gabom.service;
 
 import java.security.Principal;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import icia.project.gabom.dao.ISomoimDao;
 import icia.project.gabom.dto.JungmoAttend;
 import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.Somoim;
+import icia.project.gabom.dto.SomoimBoard;
 import icia.project.gabom.userClass.SomoimUploadFile;
 
 @Service
@@ -25,6 +27,7 @@ public class SomoimManagement {
 	
 	
 	private Somoim sm;
+	private SomoimBoard smb;
 	private ModelAndView mav;
 	@Autowired
 	private ISomoimDao sDao;
@@ -208,7 +211,83 @@ public class SomoimManagement {
 		return a;
 	}
 
-	
+	public String insertSomoimBoard(MultipartHttpServletRequest multi, String name) {
+		smb = new SomoimBoard();
+		
+//		Enumeration<String> a = multi.getParameterNames();
+//		while(a.hasMoreElements()) {
+//			System.out.println(a.nextElement());
+//		}
+		
+		
+		
+		int somoim_number = Integer.parseInt(multi.getParameter("somoim_number"));
+		String board_writer = name;
+		String board_type = multi.getParameter("boardtype");
+		String board_title = multi.getParameter("boardtitle");
+		String board_content = multi.getParameter("boardCont");
+		String board_fix = null;
+		if("고정".equals(multi.getParameter("mainboard"))) {
+			board_fix = "고정";
+		}else {
+			board_fix = "비고정";
+		}
+		smb.setSomoim_number(somoim_number).setBoard_writer(board_writer).setBoard_type(board_type);
+		smb.setBoard_title(board_title).setBoard_content(board_content).setBoard_fix(board_fix);
+		
+//	member_profile_picture = "./resources/userprofileimage/upload/"+member_id+System.currentTimeMillis()+"."
+//	+member_profile_original.substring(member_profile_original.lastIndexOf(".")+1);
+//	
+		
+		
+		System.out.println("firstPic : " +multi.getFile("firstPic").getOriginalFilename());
+		System.out.println("secondPic : " +multi.getFile("secondPic").getOriginalFilename());
+		System.out.println("thirdPic : " +multi.getFile("thirdPic").getOriginalFilename());
+		System.out.println("firstPic t : " +multi.getFile("firstPic").isEmpty());
+		System.out.println("secondPic t  : " +multi.getFile("secondPic").isEmpty());
+		System.out.println("thirdPic t : " +multi.getFile("thirdPic").isEmpty());
+		
+		String board_first_pic = "";
+		String board_first_syspic = "";
+		if(!multi.getFile("firstPic").isEmpty()){
+			board_first_pic = multi.getFile("firstPic").getOriginalFilename();
+			board_first_syspic = "./resources/somoimboard/upload/"+System.currentTimeMillis()+"."
+					+board_first_pic.substring(board_first_pic.lastIndexOf(".")+1);
+			
+			smb.setBoard_first_pic(board_first_pic).setBoard_first_syspic(board_first_syspic);
+		}
+		
+		
+		String board_second_pic = "";
+		String board_second_syspic = "";
+		if(!multi.getFile("secondPic").isEmpty()){
+			board_second_pic = multi.getFile("secondPic").getOriginalFilename();
+			board_second_syspic = "./resources/somoimboard/upload/"+System.currentTimeMillis()+"."
+					+board_second_pic.substring(board_second_pic.lastIndexOf(".")+1);
+
+			smb.setBoard_second_pic(board_second_pic).setBoard_second_syspic(board_second_syspic);
+		}
+		
+		String board_third_pic = "";
+		String board_third_syspic = "";
+		if(!multi.getFile("thirdPic").isEmpty()){
+			
+			board_third_pic = multi.getFile("thirdPic").getOriginalFilename();
+			board_third_syspic = "./resources/somoimboard/upload/"+System.currentTimeMillis()+"."
+					+board_third_pic.substring(board_third_pic.lastIndexOf(".")+1);
+			
+			smb.setBoard_third_pic(board_third_pic).setBoard_third_syspic(board_third_syspic);
+		}
+		
+		
+		System.out.println("smb : " +smb.toString());
+		
+		int result = sDao.insertSomoimBoard(smb);
+		
+		
+		
+		return null;
+	}
 	
 	
 	
@@ -257,6 +336,9 @@ public class SomoimManagement {
 		
 		return json;
 	}
+
+
+	
 
 
 	
