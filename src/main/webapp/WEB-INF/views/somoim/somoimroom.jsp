@@ -208,9 +208,9 @@
 
 					<div id="album" class="container tab-pane fade">
 						<br>
-						<h3>사진첩</h3>
 						<div>
-							<jsp:include page="/WEB-INF/views/somoim/jungmoalbum.jsp" />
+						
+	
 						</div>
 					</div>
 				</div>
@@ -556,6 +556,6 @@ console.log("기본정보",${JsonBasicInfo})
 		
 	})
 	
-	
 </script>
+
 </html>
