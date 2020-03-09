@@ -208,6 +208,56 @@ public class SomoimManagement {
 		return a;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//-------------------------------------------------------------------------------------------------이예상
+
+	public String somoimalbum(int somoimnum, MultipartHttpServletRequest multi) {
+		String json=null;
+		
+		
+		return json;
+	}
+
 
 	
 

@@ -7,10 +7,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -91,5 +94,52 @@ public class RestSomoimController {
 		map.put("result", result);
 		return new Gson().toJson(map); 
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//--------------------------------------------------------------------------------이예상 
+	@PostMapping(value = "/somoimalbum", produces="text/plain;charset=utf-8")
+	public String somoimalbum(@RequestParam("data")int somoimnum,MultipartHttpServletRequest multi) {
+		System.out.println("소모임 사진 저장하자");
+		System.out.println(multi.getParameter("somoimnum"));
+		
+		List<MultipartFile> files=multi.getFiles("somoimimg");
+		System.out.println(files.size());
+		System.out.println("files="+files.get(0).getOriginalFilename());
+		
+		String json = simm.somoimalbum(somoimnum,multi);
+		
+		return json;
+	}
+	
+	
 	
 }

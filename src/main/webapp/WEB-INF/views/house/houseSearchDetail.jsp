@@ -174,7 +174,7 @@ for (var i = 0; i < positions.length; i ++) {
 	 	
 		$.ajax({
 		       type:'get',
-		        url:'rest/housechangesearch',
+		        url:'housechangesearch',
 		        data:{"data":changesearch},
 		        dataType:"json",
 		        
