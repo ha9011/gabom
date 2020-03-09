@@ -220,6 +220,7 @@ height: 700px;
 			font-weight: bold;
 			font-size: 19px;
 			margin-top: 15px;
+			padding-top: 12px;
 		}
 		#snsComment{
 			font-family: 'Jua';
@@ -248,12 +249,68 @@ height: 700px;
 </style>
 
 <script type="text/javascript">
+
 //페이지 불러올때 ajax
 $(function () {
 	$('body').fadeIn();
-	makeTimeLine();
 	getProflie();
+	
+	$.ajaxSetup({
+		beforeSend : function(xhr){
+ 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	});//먼저 보냄
+	$.ajax({
+			method:'get',
+			url:"sns/timeline",
+			dataType : "json"
+	}).done((timeLineJson)=>{
+		console.log("타임라인 통신 성공")
+		makeTimeLine(timeLineJson);
+	});
+	
+	
 });//onload End
+
+//내글만 보기  ajax
+$(function mytime() {
+	getProflie();
+	
+	$.ajaxSetup({
+		beforeSend : function(xhr){
+ 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	});//먼저 보냄
+	$.ajax({
+			method:'get',
+			url:"sns/mytimeline",
+			dataType : "json"
+	}).done((timeLineJson)=>{
+		console.log("타임라인 통신 성공")
+		makeTimeLine(timeLineJson);
+	});
+	
+	
+});//내글만보기  End
+
+//친구글 같이 보기  ajax
+$(function friendtime() {
+	getProflie();
+	
+	$.ajaxSetup({
+		beforeSend : function(xhr){
+ 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	});//먼저 보냄
+	$.ajax({
+			method:'get',
+			url:"sns/friendtimeline",
+			dataType : "json"
+	}).done((timeLineJson)=>{
+		console.log("타임라인 통신 성공")
+		makeTimeLine(timeLineJson);
+	});
+	
+	
+});//친구글만 보기  End
+
 </script>
 </head>
 <body>
@@ -270,7 +327,7 @@ $(function () {
 	<div class="row">
 	<aside class="container col-xs-4 col-md-2 col-sm-4" id="snsAside">
 		<div id="snsProfileImg">
-		<img src="resources/snsImage/sns7.jpg" class="img-responsive img-thumbnail">
+		<img src="" class="img-responsive img-thumbnail">
 		</div>
 		<br/>
 		<div class="snsProfile">
@@ -291,9 +348,9 @@ $(function () {
 	</aside>
 	<div class="jumbotron col-xs-8 col-md-10 col-sm-8" id="snsTimeLine">
 			<div class="navbar-default navbar-right" id="snsTimeLinefilter">
-	  							<a href="#">전체</a>&nbsp;/
-	  							<a href="#">친구</a>&nbsp;/
-	  							<a href="#">내글</a>
+	  							<a href="sns/timeline">전체</a>&nbsp;/
+	  							<a href="sns/friendtimeline" onclick="friendtime();">친구</a>&nbsp;/
+	  							<a href="sns/mytimeline" onclick="mytime();">내글</a>
 				</div><br/><br/>
 				<hr/>
 	<div id="writeBox" class="container"></div>
@@ -302,6 +359,39 @@ $(function () {
 		</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+	$("#writeBox").on("click","#writeButton",function(){
+		let str = $("#sns_posts_content").val();
+
+		str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+
+		$("#sns_posts_content").val(str);
+		let form=$("#writeBoxForm")[0];	
+		
+		var WriteData= new FormData(form);
+		
+		
+		
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+ 			method:'post',
+ 			url:"sns/write/insert",
+ 			data:WriteData,
+ 			dataType : "json",
+ 			processData: false,
+            contentType: false,
+		}).done((json)=>{
+			setProfile(json);
+		});
+		
+		
+	});
+	
+	
+	</script>
 	<!-- 호버시 아이콘 변환 스크립트 -->
 	<script type="text/javascript">
 	//호버시 아이콘 변환 스크립트
@@ -363,10 +453,11 @@ $(function () {
 	//글쓰기칸 만드는 함수
 	function makewriteBox() {
 		let photo="";
+		photo+='<form name="writeBoxForm" method="post" enctype="multipart/form-data" id="writeBoxForm">';
 		photo+='<div class="row">';
 		photo+='<img src='+jsonPicture+' class="img-responsive col-xs-4 col-md-2 col-sm-4 myImage" id="writeProfileImage">';
 		photo+='<div class="container col-xs-4 col-md-2 col-sm-4 pull-right security">';
-		photo+='<select class="form-control">';
+		photo+='<select class="form-control" id="security" name="security">';
 		photo+='<option>전체 공개</option>';
 		photo+='<option>나만 보기</option>';
 		photo+='<option>친구 공개</option>';
@@ -374,20 +465,21 @@ $(function () {
 		photo+='</div>';
 		photo+='</div>';
 		photo+='<div class="input-group" id="writeContents">';
-		photo+='<textarea class="form-control" aria-describedby="basic-addon1" rows="7" cols="185" placeholder="무슨 생각을 하고 계신가요?"></textarea>';
+		photo+='<textarea class="form-control" aria-describedby="basic-addon1" rows="7" cols="185" placeholder="무슨 생각을 하고 계신가요?" id="sns_posts_content" name="sns_posts_content"></textarea>';
 		photo+='</div>';
 		photo+='<div class="row">';
 		photo+='<div class="filebox col-xs-4 col-md-2 col-sm-4">';
 		photo+='<label for="ex_file"><i class="fas fa-image fa-2x"></i></label>';
-		photo+='<input type="file" id="ex_file">';
+		photo+='<input type="file" id="ex_file" multiple="multiple" accept="image/jpeg, image/png, image/gif, image/jpg" name="snsWriteImage">';
 		photo+='</div>';
-		photo+='<div class="col-xs-8 col-md-10 col-sm-8" >';
+		photo+='<div class="col-xs-8 col-md-10 col-sm-8" id="writeButtonBox" >';
 		photo+='<button class="btn btn-Default pull-right" id="cancel">취소</button>';
-		photo+='<button class="btn btn-info pull-right" id="writeButton">작성</button>';
+		photo+='<button type="button" class="btn btn-info pull-right" id="writeButton">작성</button>';
 		photo+='</div>';
 		photo+='</div>';
 		photo+='<div id="coverBox">';
 		photo+='</div>';
+		photo+='</form>';
 		$("#writeBox").html(photo);	
 	}
 	
@@ -396,17 +488,18 @@ $(function () {
 <!-- 이미지 미리보기 스크립트 -->
 <script type="text/javascript">
 function readURL(input) {
-	let $coverBox=$("<div class='cover'>");
-	let $imageBox=$('<img class="img-thumbnail img-responsive">');
-	$imageBox.appendTo($coverBox);
-    if (input.files && input.files[0]) {
-		console.log(input.files);
+    if (input.files.length!=0 && input.files!=undefined) {
+    for(let i=0;i<input.files.length;i++){	
+		let $coverBox=$("<div class='cover'>");
+		let $imageBox=$('<img class="img-thumbnail img-responsive">');
+		$imageBox.appendTo($coverBox);
     var reader = new FileReader();
     reader.onload = function (e) {
             $imageBox.attr('src', e.target.result);        //cover src로 붙여지고
         }
-      reader.readAsDataURL(input.files[0]);
+      reader.readAsDataURL(input.files[i]);
 		$coverBox.appendTo($("#coverBox"));
+    }
     }
 }
 $("#writeBox").on('change','#ex_file',function(){
@@ -419,7 +512,7 @@ $("#writeBox").on('change','#ex_file',function(){
 <script type="text/javascript">
 
 	//타임 라인 생성 함수
-	function makeTimeLine() {
+	function makeTimeLine(timeLineJson) {
 		let $timeLine = "";
 		$timeLine += '<div class="jumbotron" id="posts">';
 		$timeLine += '<div class="row">';
@@ -488,8 +581,7 @@ $("div").on("click","#cancel",function(){
 function setProfile(json) {
 	$("#snsProfileImg img").attr("src",json.member_profile_picture);
 	$("#snsProfileName").html(json.member_name+"님");
-	jsonPicture=json.member_profile_picture;
-	console.log(jsonPicture);	
+	jsonPicture=json.member_profile_picture;	
 }
 
 {
