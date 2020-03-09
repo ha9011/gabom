@@ -249,6 +249,7 @@ height: 700px;
 </style>
 
 <script type="text/javascript">
+
 //페이지 불러올때 ajax
 $(function () {
 	$('body').fadeIn();
@@ -269,6 +270,47 @@ $(function () {
 	
 	
 });//onload End
+
+//내글만 보기  ajax
+$(function mytime() {
+	getProflie();
+	
+	$.ajaxSetup({
+		beforeSend : function(xhr){
+ 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	});//먼저 보냄
+	$.ajax({
+			method:'get',
+			url:"sns/mytimeline",
+			dataType : "json"
+	}).done((timeLineJson)=>{
+		console.log("타임라인 통신 성공")
+		makeTimeLine(timeLineJson);
+	});
+	
+	
+});//내글만보기  End
+
+//친구글 같이 보기  ajax
+$(function friendtime() {
+	getProflie();
+	
+	$.ajaxSetup({
+		beforeSend : function(xhr){
+ 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	});//먼저 보냄
+	$.ajax({
+			method:'get',
+			url:"sns/friendtimeline",
+			dataType : "json"
+	}).done((timeLineJson)=>{
+		console.log("타임라인 통신 성공")
+		makeTimeLine(timeLineJson);
+	});
+	
+	
+});//친구글만 보기  End
+
 </script>
 </head>
 <body>
@@ -306,9 +348,9 @@ $(function () {
 	</aside>
 	<div class="jumbotron col-xs-8 col-md-10 col-sm-8" id="snsTimeLine">
 			<div class="navbar-default navbar-right" id="snsTimeLinefilter">
-	  							<a href="#">전체</a>&nbsp;/
-	  							<a href="#">친구</a>&nbsp;/
-	  							<a href="#">내글</a>
+	  							<a href="sns/timeline">전체</a>&nbsp;/
+	  							<a href="sns/friendtimeline" onclick="friendtime();">친구</a>&nbsp;/
+	  							<a href="sns/mytimeline" onclick="mytime();">내글</a>
 				</div><br/><br/>
 				<hr/>
 	<div id="writeBox" class="container"></div>

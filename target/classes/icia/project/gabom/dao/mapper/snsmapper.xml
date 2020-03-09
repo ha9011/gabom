@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.IsnstimelineDao">
+
+	<select id="getfriendtimeline" resultType="snspost">
+		SELECT * FROM SNS_POSTS S ,(SELECT FRIEND_ID FROM SNS_FRIEND WHERE FRIEND_MY_ID = #{friend_my_id} UNION      
+				SELECT FRIEND_MY_ID FROM SNS_FRIEND WHERE FRIEND_MY_ID = #{friend_my_id} AND ROWNUM = 1) F
+				WHERE S.SNS_POSTS_WRITER = F.FRIEND_ID ORDER BY SNS_POSTS_DATE
+	</select> 
+</mapper>
