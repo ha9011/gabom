@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +27,41 @@
 부트스트랩 -->
 
 <style>
+#headerContainer {
+	margin-top: 10px;
+	border-radius: 20px;
+	background-color: white;
+}
+
+img {
+	float: none;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	width: 250px;
+	height: 75px;
+	margin-bottom: 40px;
+}
+
+li {
+	font-size: 16px;
+	font-weight: 700;
+	font-family: 'Jua' ;
+}
+#logout{
+border: 0;
+outline: 0;
+background-color: white;
+color: #337ab7;
+font-family: 'Jua' ;
+width: 85px;
+height: 50px;
+}
+#logout:hover{
+background-color: #E6E6E6
+}
+
+/* -------------------------------------------------------------- */
 #housemain_judge {
 	width: 70%;
 	margin-left: 5%;
@@ -86,13 +123,34 @@ li {
 
 </head>
 <body>
-	<h3>adminmenu.jsp header</h3>
-
+	<div class="container" id="headerContainer">
+		<%-- <div class="col-md-12 col-sm-12 col-xs-12">
+			<ul class="nav navbar-nav navbar-right">
+				<sec:authorize access="isAnonymous()">
+					<li><a href="login" >로그인</a></li>
+					<li><a href="joinselecttype">회원가입</a></li>
+				</sec:authorize>
+				<sec:authorize access="isAuthenticated()">
+					<li><a href="myinfo">나의 정보</a></li>
+					<li>
+						<form method="post" action="/gabom/logout">	
+							<input type="submit" value="로그아웃" id="logout"> <input type="hidden"
+								name="${_csrf.parameterName}" value="${_csrf.token}" />
+						</form>
+					</li>
+				</sec:authorize>
+			</ul>
+		</div> --%>
+		<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 40px;"><a href="/gabom/">
+			<img src="resources/headerImage/logo3.png">
+			</a>
+		</div>
+	</div>
 	<div class="container">
-		<h2>Toggleable Tabs</h2>
+		<!-- <h2>Toggleable Tabs</h2> -->
 		<br>
 		<!-- Nav tabs -->
-		<ul class="nav nav-tabs" role="tablist">
+		<ul class="nav nav-tabs" role="tablist" style="background-color: infobackground;">
 			<li class="nav-item"><a class="nav-link active"
 				data-toggle="tab" href="#jodge">서비스업체 등록심사</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab"
@@ -196,7 +254,6 @@ li {
 				</div>
 			</div>
 		</div>
-
 
 		<!-- 서비스업 Modal -->
 		<div class="modal" id="myModal">
@@ -504,7 +561,7 @@ li {
        });
 	});//notices function End
 	
-	//---------------------------------------------------------------------notices modal 생성---------------------------------------------------------------------
+	//---------------------------------------------------------------------전체공지 modal 생성---------------------------------------------------------------------
 	$(document).on("click", "#notices_detail",function(e){
 		console.log("게시글번호 클릭");
 		var params = e.target.dataset.number; 
