@@ -109,5 +109,40 @@
 	insert into SOMOIM_BOARD values(SEQ_SOMOIM_BOARD.nextval, #{somoim_number}, #{board_writer}, #{board_type},#{board_title}, #{board_content},  #{board_first_pic},#{board_first_syspic},  #{board_second_pic},#{board_second_syspic},  #{board_third_pic},#{board_third_syspic},#{board_fix}, sysdate,sysdate)
 </insert>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<insert id="somoalbumInsert" parameterType="photoalbum" >
+	INSERT INTO SOMOIM_PHOTOALBUM VALUES(SEQ_SOMOIM_PHOTOALBUM.nextval,#{somo_number},#{somoalbum_oriname},#{somoalbum_sysname},SYSDATE,SYSDATE)
+		<selectKey keyProperty="reservation_number" resultType="integer" order="AFTER">
+				SELECT SEQ_SOMOIM_PHOTOALBUM.CURRVAL FROM DUAL
+			</selectKey>
+	</insert>
+
+
+
 </mapper>
 

@@ -3,12 +3,15 @@ package icia.project.gabom.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import icia.project.gabom.dto.JungmoAttend;
 import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.Somoim;
 import icia.project.gabom.dto.SomoimBoard;
+import icia.project.gabom.dto.Somoim_photoalbum;
 
 public interface ISomoimDao {
 
@@ -49,6 +52,24 @@ public interface ISomoimDao {
 	int deleteMySomoim(@Param("somoimnum")int somoimnum, @Param("name")String name);
 
 	int insertSomoimBoard(SomoimBoard smb);
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//--------------------------------------------------------------------------------------------이예상
+	
+	boolean somoalbumInsert(Map<String, String> fMap);
+
+	@Select("select * from SOMOIM_PHOTOALBUM where SOMOIM_NUMBER=#{somo_number}")
+	List<Somoim_photoalbum> getsomopicList(@Param("somo_number") int somo_number);
 
 	
 }

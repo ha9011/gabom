@@ -55,6 +55,7 @@ public class HouseRegisterService {
 			//String house_sysname=multi.getParameter("house_sysname");
 			
 			House house=new House(); 
+	
 			//Housefile hfile= new Housefile();
 			
 			
