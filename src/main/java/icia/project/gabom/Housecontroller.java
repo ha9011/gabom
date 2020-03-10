@@ -29,8 +29,6 @@ public class Housecontroller { //검색, 메인, 상세보기 컨트롤러
 	@Autowired
 	private Houseservice hs;
 
-	@Autowired
-	private IhouseDao hDao;
 	
 	@RequestMapping(value = "/housechoice", method = RequestMethod.GET) // 숙박타입 선택 jsp
 	public String housechoice() {

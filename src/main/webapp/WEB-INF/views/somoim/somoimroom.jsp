@@ -215,20 +215,7 @@
 					<div id="album" class="container tab-pane fade">
 						<br>
 						<div>
-							<%-- 						<jsp:include page="/WEB-INF/views/somoim/jungmoalbum.jsp" /> --%>
-
-
-							<form id="uploadimg" name="uploadimg" method="post"
-								enctype="multipart/form-data">
-								<div id="btnbox" class="filebox bs3-primary">
-									<input class="upload-name" value="파일선택" disabled="disabled">
-									<label for="ex_filename">사진선택</label> <input type="file"
-										id="ex_filename" class="upload-hidden" multiple>
-									<button type="submit" id="upload_btn">사진 등록</button>
-								</div>
-							</form>
-
-
+							<jsp:include page="/WEB-INF/views/somoim/jungmoalbum.jsp" /> 
 						</div>
 					</div>
 				</div>

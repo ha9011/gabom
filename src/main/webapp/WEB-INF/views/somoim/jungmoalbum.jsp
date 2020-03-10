@@ -82,14 +82,14 @@ float:right;
 }
 </style>
 
-<form  id="uploadimg" name="uploadimg" method="post" enctype="multipart/form-data"> 
+					<form  id="uploadimg" name="uploadimg" method="post" enctype="multipart/form-data"> 
 							<div id="btnbox" class="filebox bs3-primary">
                             <input class="upload-name" value="파일선택" disabled="disabled">
                             <label for="ex_filename">사진선택</label>
-                          <input type="file" id="ex_filename" class="upload-hidden" multiple>
-                          <button type="submit" id="upload_btn">사진 등록</button>
+                          <input name="somoimimg" type="file" id="ex_filename" class="upload-hidden" multiple>
+                          <button id="upload_btn">사진 등록</button>
             				</div>
-						</form>
+					</form>
 	
 <script>
 $(".upload-name").hide();
@@ -100,13 +100,13 @@ $(".upload-name").hide();
 
  	var somoim = ${JsonBasicInfo};
 	console.log("소모임 번호 보여줘",somoim.somoim_number);
-	//submit 버튼 클릭시 발생
-	$("#upload_btn").on('click', function() {
+	// 클릭시 발생
+	$("#upload_btn").on('click', function(e) {
 		e.preventDefault();
 	 	console.log("사진저장하러감.");
 	 	
-	 	$("#somonumber").val(somoim.somoim_number);
-	 	var formDataa = new FormData(document.getElementById("uploadimg"));//폼에 담음.
+	 	var formData = new FormData(document.getElementById("uploadimg"));//폼에 담음.
+	 		formData.append("somo_number",somoim.somoim_number);
 	 	
 	 	 $.ajaxSetup({         
    	      beforeSend : function(xhr){
@@ -114,9 +114,9 @@ $(".upload-name").hide();
    	      });//먼저 보냄
    	      
    	     $.ajax({
-   	    	 url:'somoim/somoimalbum',
+   	    	 url:'somoimalbum',
              type:'post',
-             data:formDataa,
+             data:formData,
              processData:false,
              contentType:false,  //제이슨 아니니깐 까보지마!!
               dataType:"json", //rest 컨트롤 이용   
