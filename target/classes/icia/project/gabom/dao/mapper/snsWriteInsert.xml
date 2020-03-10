@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.SnsWriteInsertDao">
+
+<insert id="snsWriteInsert" parameterType="snspost">
+	INSERT INTO SNS_POSTS VALUES(#{sns_posts_number},#{sns_posts_writer},SYSDATE,SYSDATE,DEFAULT,#{sns_posts_authority},0,#{sns_posts_content})
+	<selectKey keyProperty="sns_posts_number" resultType="snspost" order="BEFORE">
+		SELECT SNS_POSTS_SEQ.NEXTVAL AS sns_posts_number FROM DUAL
+	</selectKey>
+	</insert>
+	</mapper>
