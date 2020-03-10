@@ -115,7 +115,7 @@
 			<div class="jumbotron">
 			<form action="senduserpassword" method="post"
 				onsubmit="return checkBox(2)">
-				<div class="col-md-12" id="idTitle">패스워드 찾기/<a href="searchuserid" style="color:#585858;">아이디 찾기</a></div>
+				<div class="col-md-12" id="idTitle">비밀번호 찾기/<a href="searchuserid" style="color:#585858;">아이디 찾기</a></div>
 				<br /> <br /> <br />
 				<div class="col-md-12" id="idEmail">E-mail</div>
 				<div>

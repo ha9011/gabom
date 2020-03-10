@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -158,7 +160,7 @@ height: 700px;
 		}
 		#postsContentsBox{
 			width: 100%;
-			height: 440px;
+			height: 270px;
 			font-family: 'Jua' ;
 			font-weight: bold;
 			font-size: 17px;
@@ -246,6 +248,9 @@ height: 700px;
 		 border-radius: 20px;
 		 margin-top: 15px;
 		 }
+		 #snsImageContainer{
+		 height: 150px;
+		 }
 </style>
 
 <script type="text/javascript">
@@ -264,16 +269,13 @@ $(function () {
 			url:"sns/timeline",
 			dataType : "json"
 	}).done((timeLineJson)=>{
-		console.log("타임라인 통신 성공")
 		makeTimeLine(timeLineJson);
 	});
-	
 	
 });//onload End
 
 //내글만 보기  ajax
 $(function mytime() {
-	getProflie();
 	
 	$.ajaxSetup({
 		beforeSend : function(xhr){
@@ -285,7 +287,7 @@ $(function mytime() {
 			dataType : "json"
 	}).done((timeLineJson)=>{
 		console.log("타임라인 통신 성공")
-		makeTimeLine(timeLineJson);
+		//makeTimeLine(timeLineJson);
 	});
 	
 	
@@ -293,8 +295,6 @@ $(function mytime() {
 
 //친구글 같이 보기  ajax
 $(function friendtime() {
-	getProflie();
-	
 	$.ajaxSetup({
 		beforeSend : function(xhr){
  		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
@@ -305,7 +305,7 @@ $(function friendtime() {
 			dataType : "json"
 	}).done((timeLineJson)=>{
 		console.log("타임라인 통신 성공")
-		makeTimeLine(timeLineJson);
+		//makeTimeLine(timeLineJson);
 	});
 	
 	
@@ -366,6 +366,10 @@ $(function friendtime() {
 		str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 
 		$("#sns_posts_content").val(str);
+		if(str==""){
+			alert("내용을 입력 해주세요.");
+			return false;
+		}
 		let form=$("#writeBoxForm")[0];	
 		
 		var WriteData= new FormData(form);
@@ -384,7 +388,7 @@ $(function friendtime() {
  			processData: false,
             contentType: false,
 		}).done((json)=>{
-			setProfile(json);
+			makeTimeLine(json);
 		});
 		
 		
@@ -510,29 +514,51 @@ $("#writeBox").on('change','#ex_file',function(){
 </script>
 <!-- 타임라인 생성 스크립트 -->
 <script type="text/javascript">
-
 	//타임 라인 생성 함수
 	function makeTimeLine(timeLineJson) {
+		console.log(timeLineJson);
+		$("#snsTimeLineMain").empty();
+		
+		var idx = 0;
+		 for(let j in timeLineJson.write){
+			 var i=j.substr(9);
+			let postsContents = timeLineJson["write"]["writeList"+idx][0]["sns_posts_content"];
+	 		let RePostsContents=postsContents.replace("<br/>", "\r\n");
 		let $timeLine = "";
 		$timeLine += '<div class="jumbotron" id="posts">';
 		$timeLine += '<div class="row">';
 		$timeLine += '<img src="resources/snsImage/sns7.jpg" class="img-responsive col-xs-4 col-md-2 col-sm-4 myImage" id="timeLineProfile">';
-		$timeLine += '<div id="snsMember_id">kohkss 님의 글</div>';
+		$timeLine += '<div id="snsMember_id">'+timeLineJson["write"]["writeList"+idx][0]["sns_posts_writer"]+' 님의 글</div>';
+		$timeLine += '<input type="hidden" value='+timeLineJson["write"]["writeList"+idx][0]["sns_posts_number"]+' id="posts_number">';
 		$timeLine += '</div>';
 		$timeLine += '<div class="nav-tabs" id="postHead">';
+		if(userId==timeLineJson["write"]["writeList"+idx][0]["sns_posts_writer"]){
 		$timeLine += '<a href="#;">수정</a>&nbsp;/';
 		$timeLine += '<a href="#;">삭제</a>&nbsp;/';
+		}
 		$timeLine += '<a href="#;">신고</a>';
+		if(userId==timeLineJson["write"]["writeList"+idx][0]["sns_posts_writer"]){
 		$timeLine += '<div class="container col-xs-5 col-md-3 col-sm-5 pull-right">';
 		$timeLine += '<select class="form-control" name="">';
+		if(timeLineJson["write"]["writeList"+idx][0]["sns_posts_authority"]==0){
 		$timeLine += '<option>전체 공개</option>';
 		$timeLine += '<option>나만 보기</option>';
 		$timeLine += '<option>친구 공개</option>';
+		}else if(timeLineJson["write"]["writeList"+idx][0]["sns_posts_authority"]==1){
+			$timeLine += '<option>친구 공개</option>';
+			$timeLine += '<option>나만 보기</option>';
+			$timeLine += '<option>전체 공개</option>';
+		}else if(timeLineJson["write"]["writeList"+idx][0]["sns_posts_authority"]==2){
+			$timeLine += '<option>나만 보기</option>';
+			$timeLine += '<option>나만 보기</option>';
+			$timeLine += '<option>전체 공개</option>';
+		}
 		$timeLine += '</select>';
 		$timeLine += '</div>';
+		}
 		$timeLine += '</div>';
 		$timeLine += '<div class="container" id="postsContentsBox">';
-		$timeLine += '<textarea class="container" cols="93" rows="8" readonly></textarea>';
+		$timeLine += '<textarea class="container" cols="93" rows="8" readonly>'+RePostsContents+'</textarea>';
 		$timeLine += '<div class="container" id="postsPhotoBox">';
 		$timeLine += '</div>';
 		$timeLine += '<div id="postsOptionBox" class="navbar-default navbar-right">';
@@ -542,11 +568,23 @@ $("#writeBox").on('change','#ex_file',function(){
 		$timeLine += '<button type="button"><i class="far fa-thumbs-down snsOptionSelector" id="snsHate"></i></button></div>';
 		$timeLine += '</div>';
 		$timeLine += '</div>';
+		$timeLine += '<div class="container" id="snsImageContainer">';
+		
+		$timeLine += '</div>';
 		$timeLine += '<div class="container">';
-		$timeLine += '<div class="navbar-default" id="snsCommentBox"><a href="#;" id="snsComment">댓글 보기(300)</a></div>';
+		$timeLine += '<div class="navbar-default" id="snsCommentBox"><a href="#;" id="snsComment">댓글 보기</a></div>';
 		$timeLine += '</div>';
 		$timeLine += '</div>';
 		$('#snsTimeLineMain').append($timeLine);
+		let $snsPostsImageBox=$("<div class='cover'>");
+		let $postsimageBox=$('<img class="img-thumbnail img-responsive">');
+		
+		
+		
+		//$postsimageBox.attr("src",);
+		idx++;
+		 } 
+		 idx=0;
 	}
 </script>
 <!-- 글작성 취소 스크립트 -->
@@ -581,6 +619,8 @@ $("div").on("click","#cancel",function(){
 function setProfile(json) {
 	$("#snsProfileImg img").attr("src",json.member_profile_picture);
 	$("#snsProfileName").html(json.member_name+"님");
+	userId=json.member_id;
+	console.log(userId);
 	jsonPicture=json.member_profile_picture;	
 }
 
