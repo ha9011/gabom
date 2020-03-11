@@ -4,7 +4,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>숙박예약</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="favicon.ico">
+<title>house-detail</title>
+
+<!-- Bootstrap core CSS -->
+<link href="./resources/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<!-- Custom styles for this template -->
+<link href="./resources/css/jquery.bxslider.css" rel="stylesheet">
+<link href="./resources/css/style.css" rel="stylesheet">
+<!-- 레이아웃 부트스트랩 영역 -->		
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript"src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
@@ -15,8 +31,15 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <!-- 달력 부트스트랩 -->
+
+
 <style>
-body{overflow:scroll;}
+body{
+overflow:scroll;
+}
+.container{
+width:100%;
+}
 .form-control-borderless {
     border:none;
 }
@@ -26,94 +49,35 @@ body{overflow:scroll;}
     box-shadow: none;
     border:1px solid lightgray;
 }
-#title{/*숙소명 */
+h1{/*숙소명 */
 	text-align:center;
-	margin:50px 40%;
-	width:300px; 
-}
-#Imagearea{/*사진영역 */
-	margin:10px 5%;
-	width:90%;
-	height:500px;
-	display:flex;
-}
-#mainimg{
-	margin:10px 0;
-	margin-right:30px;
-	width:50%
-}
-#detail{
-	margin-left:20px;	
-	margin:10px 0;
-	width:50%
-}
-.detail{
-	margin:3px;
-}
-#middle{/*숙소정보, 예약 */
-	display:flex;
-	margin:10px 5%;
-	width:90%;
-}
-#info{/*숙소정보 */
-	width:50%;
-	margin-right:10px;
-	height:200px;
-	border:2px solid black;
-}
-#reser{/*예약 */
-	margin-left:20px;
-	width:50%;
-	height:200px;
-	border:2px solid black;
-}
-#bottom{/*주의사항, 후기, 문의사항 */
-	display:flex;
-	margin:10px 5%;
-	width:90%;
-	height:300px;
-}
-#reple{/*댓글 */
-	margin-left:20px;
-	width:50%;
-	border:2px solid black;
-}
-#prarea{
-	margin-right:10px;
-	width:50%;
-}
-#Precautions{/*주의사항 */
-	width:100%;
-	margin-right:10px;
-	border:2px solid black;
+	margin:2% 35%;
+	width:300px;
+	font-size:50px; 
 }
 
-#review{
-	width:100%;
-	margin:10px 0;
-	margin-right:10px;
-	border:2px solid black;
-	
-}
-#nolist{
-	display:flex;
-}
-#insertbtn{
-margin:-30px 65%;
+input{
+	width:200px;
+	height:40px;
+	margin:5px;
 }
 #reservation{
-margin:0 10%;
+	font-size:20px;
+	margin:10% 0;
 }
-input{
-width:200px;
-height:30px;
-margin:5px;
+#reser{
+height:100px;
+}
+#insertbtn{
+margin:50px 20%;
+}
+aside{
+
 }
 </style>
 
 </head>
 <body>
-		
 <form action="searchhouse" method="get" > <!-- housemain page에서 검색하는 것  -->
 	<div class="container">
 		<div class="row justify-content-center">
@@ -137,77 +101,144 @@ margin:5px;
           </div>
 	</div>
 	</form>
+
+		<div class="container">
+			<div id="title"></div>
+		<!-- 숙소 이름 영역 -->
 		
-		<div id="house_main"><!-- 타이틀, 사진, 정보, 주의사항, 댓글, 후기, 예약이 담긴 div-->
-			<div id="title"></div><!-- house_name -->
-			<div id="Imagearea">
-				<!-- house_mainImage크게  , house_detailImage 작게 4개 이상-->
-				<div id="mainimg"></div>
-				<div id="detail"><!-- display:flex -->
-					<div id="detailimg1"></div>
-					<div id="detailimg2"></div>
+		<section class="main-slider">
+			<ul class="bxslider">
+				<li><div class="slider-item"><img src="./resources/css/images/1140x500-1.JPG" title="Funky roots" /></div></li>
+				<li><div class="slider-item"><img src="./resources/css/images/1140x500-2.JPG" title="Funky roots" /></div></li>
+			</ul>
+		</section>
+		<!--사진영역 -->
+		
+		
+		<section>
+			<div class="row">
+				<div class="col-md-6">
+					<article class="blog-post">
+						<div class="blog-post-image">
+						</div>
+						<div id="info"class="blog-post-body">
+						</div>
+					</article>
 				</div>
+				<!-- 숙소정보 -->
 				
-			</div>
-			<div id="middle"><!-- 숙소정보, 예약 display:flex-->
-				<div id="info">숙소정보</div>
-				<div id="reser">
-				<br>
-					<form id="reservation" name="reservation" method="post">
-						<img alt="예약달력" width="30px" height="30px" src="./resources/houseimg/date1.JPG"> 
+				
+				<div class="col-md-5 sidebar-gutter">
+				<aside>
+					<!-- sidebar-widget -->
+					<div id="reser" class="sidebar-widget">
+						<h3 class="sidebar-title">지금 예약하기</h3>
+						<div class="widget-container widget-about">
+						<form id="reservation" name="reservation" method="post">
 						<input class="date" type="text" name="reservation_checkin" id="datepicker1">
-						~~ 
-						<img alt="예약달력" width="30px" height="30px"src="./resources/houseimg/date2.JPG"> 
-						<input class="date" type="text" name="reservation_checkout" id="datepicker2">
-						<button style="background-color:#064D84" type="button" id="dtcommit" class="btn btn-primary">날짜확정</button><br> 
+						-<input class="date" type="text" name="reservation_checkout" id="datepicker2">
+						<button style="font-size:20px;width:100px;height:50px;background-color:#064D84" type="button" id="dtcommit" class="btn btn-primary">날짜확정</button><br> 
 						
 						총액 : <input name="reservation_totalprice" type="text" id="totalprice" placeholder="">만원<br>
 						인원 : <input name="reservation_person" type="number" id="person" value="">명 
 						<input type="hidden" name="house_hostid" id="hostid" > 
 						<input type="hidden" name="house_number" id="house_number"><br>
 						
-						<button style="width: 300px;background-color:#064D84" type="submit" id="insertbtn" class="btn btn-secondary btn-lg">예약하기</button>
-					</form>
-				</div>
+						<button style="font-size:20px;height:50px;width:300px;background-color:#064D84" type="submit" id="insertbtn" class="btn btn-secondary btn-lg">예약하기</button>
+						</form>
+						</div>
+					</div>
+					</aside>
 			</div>
 			
-			<div id="bottom"><!-- 주의사항, 후기, 문의사항  display:flex -->
-				<div id="prarea"><!-- 주의사항,후기  display:flex -->
-					<div id="Precautions"><!-- 주의사항 -->
-						<h2>주의사항</h2>
-						<h5>체크인:오후 4:00 - 오후 10:00</h5>
-						<h5>체크아웃:오전 11:00</h5>
-					
-						<div id="nolist">
-							<div>
-								 <img width="50px;" height="50px;" src="./resources/houseimg/no.JPG">흡연금지
-							</div>
-						
-							<div>
-								 <img width="50px;" height="50px;" src="./resources/houseimg/nopet.JPG">애완동물
-								출입금지 
-							</div>
-						
-							<div>
-								<img width="50px;" height="50px;" src="./resources/houseimg/party.png">파티금지 
-							</div>
-						</div>
-					<h4>예약 취소</h4>
-					<h6>48시간 동안 취소 수수료 없음</h6>
-					<h6>그 이후로 체크인 5일 전까지 취소하면 서비스 수수료를 제외한 전액이 환불됩니다.</h6>
-						
-					</div>
-					<div id="review"><!-- 후기 -->
-						<h4>후기</h4>
-					</div>
-				</div>
-				<div id="reple"><!-- 댓글 -->
-					<h4>댓글문의사항</h4>
-				</div>
+			<!-- 예약 form -->
+			
 			</div>
-		</div>
+			</section>
+			<!-- middle end -->
+			
+		<section>
+			<div class="row">
+				<div class="col-md-6">
+					<article class="blog-post">
+						<div class="blog-post-image">
+						</div>
+						<div class="blog-post-body">
+						<h2>주의사항</h2>
+						<p>체크인:오후 4:00 - 오후 10:00</p>
+						<p>체크아웃:오전 11:00</p>
+						<p>예약 취소</p>
+						<p>48시간 동안 취소 수수료 없음</p>
+						<p>그 이후로 체크인 5일 전까지 취소하면 서비스 수수료를 제외한 전액이 환불됩니다.</p>
+						<p>애환동물 금지 , 흡연금지, 파티금지</p>
+						<img width="50px;" height="50px;" src="./resources/houseimg/no.JPG">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<img width="50px;" height="50px;" src="./resources/houseimg/nopet.JPG">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<img width="50px;" height="50px;" src="./resources/houseimg/party.png">
+						</div>
+					</article>
+					</div>
+				</div>
+			</section>
+				<!-- 주의사항 -->
+			<section>	
+				<div class="col-md-7">
+					<article class="blog-post">
+						<div class="blog-post-image">
+						</div>
+						<div class="blog-post-body">
+							<h2>후기</h2>
+							<p>ew months ago, we found ridiculously cheap plane tickets for Boston and off we went. It was our first visit to the city and, believe it or not, Stockholm in February was more pleasant than Boston in March. It probably has a lot to do with the fact that we arrived completely unprepared. That I, in my converse and thin jacket, did not end up with pneumonia is honestly not even fair.</p>
+						</div>
+					</article>
+				</div>
+			</section>
+				<!-- 후기영역  -->
+				
+			<section>	
+				<div class="col-md-7">
+					<article class="blog-post">
+						<div class="blog-post-image">
+						</div>
+						<div class="blog-post-body">
+							<h2>댓글</h2>
+							<p>ew months ago, we found ridiculously cheap plane tickets for Boston and off we went. It was our first visit to the city and, believe it or not, Stockholm in February was more pleasant than Boston in March. It probably has a lot to do with the fact that we arrived completely unprepared. That I, in my converse and thin jacket, did not end up with pneumonia is honestly not even fair.</p>
+						</div>
+					</article>
+				</div>
+			</section>
+			<!-- 댓글영역 -->
+			</div>
+			<!-- /.container -->
+			
+			
 		
-</body>
+		
+<!-- 
+		<footer class="footer">
+
+			<div class="footer-socials">
+				<a href="#"><i class="fa fa-facebook"></i></a>
+				<a href="#"><i class="fa fa-twitter"></i></a>
+				<a href="#"><i class="fa fa-instagram"></i></a>
+				<a href="#"><i class="fa fa-google-plus"></i></a>
+				<a href="#"><i class="fa fa-dribbble"></i></a>
+				<a href="#"><i class="fa fa-reddit"></i></a>
+			</div>
+
+			<div class="footer-bottom">
+				<i class="fa fa-copyright"></i> Copyright 2015. All rights reserved.<br>
+				Theme made by <a href="http://www.moozthemes.com">MOOZ Themes</a>
+			</div>
+		</footer>
+ -->
+		<!-- Bootstrap core JavaScript
+			================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		 --><script src="./resources/js/bootstrap.min.js"></script>
+		<script src="./resources/js/jquery.bxslider.js"></script>
+		<script src="./resources/js/mooz.scripts.min.js"></script>
+	</body>
 
 <script>
 var house =${detailhouse};
@@ -223,7 +254,7 @@ $(document).ready(function() {
 var title = $('<h1>'+house[0].house_name+'</h1>'); // 집 이름 
 $("#title").append(title);
 
-var mainimg =$('<img style="width:100%;height:470px" alt='+house[0].house_sysname+' src="'+house[0].house_sysname+'">');
+/* var mainimg =$('<img style="width:100%;height:470px" alt='+house[0].house_sysname+' src="'+house[0].house_sysname+'">');
 $("#mainimg").append(mainimg);
 
 var a=$('<img class="detail" style="width:48%;height:235px" alt='+house[1].house_sysname+' src="'+house[1].house_sysname+'">');
@@ -233,17 +264,44 @@ var d=$('<img class="detail" style="width:48%;height:235px" alt='+house[1].house
 $("#detailimg1").append(a);
 $("#detailimg1").append(b);
 $("#detailimg2").append(c);
-$("#detailimg2").append(d);
+$("#detailimg2").append(d); */
+/* 
+var a=$('<li><div class="slider-item"><img src="'+house[0].house_sysname+'" title="Funky roots" /></div></li>');
+var a=$('<li><div class="slider-item"><img src="'+house[1].house_sysname+'" title="Funky roots" /></div></li>');
+var a=$('<li><div class="slider-item"><img src="'+house[2].house_sysname+'" title="Funky roots" /></div></li>');
+var a=$('<li><div class="slider-item"><img src="'+house[3].house_sysname+'" title="Funky roots" /></div></li>');
+var a=$('<li><div class="slider-item"><img src="'+house[4].house_sysname+'" title="Funky roots" /></div></li>');
+
+$(".bxslider").append(a);
+$(".bxslider").append(b);
+$(".bxslider").append(c);
+$(".bxslider").append(d); */
+
+/* for(let i of house){
+	console.log(i.house_sysname);
+	let img =$('<li><div class="slider-item"><img src="'+[i.house_sysname]+'" title="Funky roots" /></div></li>');
+	
+
+} 
+$(".bxslider").append(img);
+
+ */
+
+
+
+
 //------------------------------------------------------------------------------이미지 영역
 
-var house_info= $('<div class="info"><img alt=집 width="30px" height="25px" src="./resources/houseimg/house.JPG">'+'&nbsp'+'&nbsp'+'주소:'+house[0].house_address+'  '+'<br>'
-        +'<img alt=돈 width="25px" height="20px" src="./resources/houseimg/money.JPG">' +'&nbsp'+'&nbsp'+'1박가격:'+house[0].house_price+'만원'+'<br>'
-        +'<img alt=사람 width="25px" height="30px" src="./resources/houseimg/person.JPG">' +'&nbsp'+'&nbsp'+'수용가능인원:'+house[0].house_person+'<br>'
-        +'<img alt=주차장 width="30px" height="25px" src="./resources/houseimg/parking.JPG">'+'&nbsp'+'&nbsp' +'주차장:'+house[0].house_parkable+'<br>'
-        +'<img alt=방 width="30px" height="25px" src="./resources/houseimg/bed.JPG">'+'&nbsp'+'&nbsp'+'방갯수:'+house[0].house_rooms+'&nbsp'
-        +'& 침대수:'+house[0].house_beds+'<br>'
-        +'<img alt=욕실 width="25px" height="30px" src="./resources/houseimg/bath.JPG">'+'&nbsp'+'&nbsp'+'욕실:'+house[0].house_bathrooms+'<br>'+
-        '</div>')
+var host=$('<h2>'+house[0].house_hostid+'님의 하우스'+'</h2>');
+var house_info= $('<p class="info">'+'주소:'+house[0].house_address+'  '+'<br>'
+        +'1박가격:'+house[0].house_price+'만원'+'<br>'
+        +'수용가능인원:'+house[0].house_person+'&nbsp'+'&nbsp'+'&nbsp'
+        +'주차장:'+house[0].house_parkable+'<br>'
+        +'방갯수:'+house[0].house_rooms+'&nbsp'
+        +'& 침대수:'+house[0].house_beds+'&nbsp'+'&nbsp'+'&nbsp'
+        +'욕실:'+house[0].house_bathrooms+
+        '</p>')
+$("#info").append(host);
 $("#info").append(house_info);
 //-----------------------------------------------------------------------------------------info영역
  
@@ -296,9 +354,6 @@ $("#info").append(house_info);
          })
     });
  
- </script>
- 
- <script>
 	var disabledDays = [];  //"2020-01-15"
 		
 	$(document).ready(function(){
@@ -327,9 +382,9 @@ $("#info").append(house_info);
 		    	console.log(dateText)  // 2020-01-21
 		    	var select = new Date(dateText);
 		    	
-		    	if(a=="Invalid Date"){
+		    	/* if(a=="Invalid Date"){
 		    		
-		    	}else{
+		    	}else{ */
 		    		$("#datepicker1").datepicker('option', 'minDate', new Date(dateText));
 		    		$("#datepicker2").datepicker('option', 'minDate', new Date(dateText));
 	    			
@@ -349,7 +404,7 @@ $("#info").append(house_info);
 		    			
 		    		}
 		    		
-		    	}
+		    	/* } */
 		    	
  		    }
 

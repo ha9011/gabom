@@ -54,14 +54,14 @@ section .overlay {
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: black;
+  S
   opacity: 0.5;
   z-index: 1;
 }
 
 @media (pointer: coarse) and (hover: none) {
   section {
-    background: url('https://source.unsplash.com/XT5OInaElMw/1600x900') black no-repeat center center scroll;
+    background: url('./resources/css/background.mp4') no-repeat center center scroll;
   }
   section video {
     display: none;
@@ -100,11 +100,14 @@ section .overlay {
 <a href="adminmenu">관리자 메뉴</a>
 <a href="somoim/mainsomoim">소모임</a>
 
+<%-- <div>
+	<jsp:include page="/WEB-INF/views/homesearch.jsp" />
+</div> --%>
 
 <section>
 <div class="overlay"></div>
   <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
-    <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4">
+    <source src="./resources/css/background.mp4" type="video/mp4">
   </video>
   <div class="container h-100">
     <div class="d-flex h-100 text-center align-items-center">

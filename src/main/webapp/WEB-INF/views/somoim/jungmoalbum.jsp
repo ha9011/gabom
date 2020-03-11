@@ -90,6 +90,9 @@ float:right;
                           <button id="upload_btn">사진 등록</button>
             				</div>
 					</form>
+					<div id="imgarea">
+						
+					</div>
 	
 <script>
 $(".upload-name").hide();
@@ -124,6 +127,10 @@ $(".upload-name").hide();
                 alert("사진 업로드 완료");
                 console.log(data)
               
+                for(i of data ){
+                	var img = $('<div><img src="'+[i.photo_sysfile]+'"></div>');
+                	$("#imgarea").append(img);
+                }
                 
              },
              error:function(error){
