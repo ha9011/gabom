@@ -21,8 +21,6 @@ public class RestSnsTimeLineController {
 		System.out.println("타임라인 들어옴");
 		System.out.println("탐라 주인 아이디="+principal.getName());
 		String json = snsts.snsTimeLine(principal);
-		System.out.println("전체 게시물 먼저 보여줘="+json);
-		
 		return json;
 	}
 	

@@ -31,4 +31,10 @@ public class Snsposts {
 	private	String sns_photo_origin_name;
 	private	String sns_photo_system_name;
 	
+	private int like;
+	private int hate;
+	private int postsNumber;
+	private String memberId;
+	
+	
 }
