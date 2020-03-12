@@ -281,6 +281,9 @@ public class SomoimManagement {
 		return null;
 	}
 
+	
+
+	// -------------------------------------------------------------------------------------------------이예상
 	public String somopiclist(int somo_number) {
 		String json2= null;
 		System.out.println("사진 출력해줘 ");
@@ -291,8 +294,5 @@ public class SomoimManagement {
 		System.out.println(json2);
 		return json2;
 	}
-
-	// -------------------------------------------------------------------------------------------------이예상
-
 
 }

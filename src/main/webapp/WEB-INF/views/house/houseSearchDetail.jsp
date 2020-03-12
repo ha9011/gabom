@@ -55,7 +55,7 @@ img{
 
  <!-- searchdetail page에서 재검색하는 것  -->
  
-		<div class="container">
+	<div class="container">
 	<div class="row justify-content-center">
                         <div class="col-12 col-md-10 col-lg-8">
                                 <div class="card-body row no-gutters align-items-center">
@@ -173,7 +173,7 @@ for (var i = 0; i < positions.length; i ++) {
 		console.log(changesearch);
 	 	
 		$.ajax({
-		       type:'get',
+		       type:'post',
 		        url:'housechangesearch',
 		        data:{"data":changesearch},
 		        dataType:"json",

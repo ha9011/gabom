@@ -29,7 +29,7 @@ public class HouseRestController {
 	@Autowired
 	private IhouseDao hDao;
 
-	@GetMapping(value = "/housechangesearch" ,produces = "application/json;charset=utf-8")// ajax로 재검색 
+	@PostMapping(value = "/housechangesearch" ,produces = "application/json;charset=utf-8")// ajax로 재검색 
 	public String housechangesearch(@RequestParam("data")String house_address) {
 		System.out.println(house_address);
 		System.out.println("집재검색화면 가줘 ");
