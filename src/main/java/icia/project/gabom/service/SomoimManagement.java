@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 
 import icia.project.gabom.dao.ISomoimDao;
+import icia.project.gabom.dto.Food;
+import icia.project.gabom.dto.House;
 import icia.project.gabom.dto.JungmoAttend;
 import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.Somoim;
@@ -23,6 +25,8 @@ import icia.project.gabom.dto.SomoimBoard;
 import icia.project.gabom.dto.Somoimreple;
 import icia.project.gabom.userClass.Paging;
 import icia.project.gabom.userClass.SomoimBoardFile;
+import icia.project.gabom.dto.Somoim_photoalbum;
+import icia.project.gabom.userClass.SomoimAlbumfileUpload;
 import icia.project.gabom.userClass.SomoimUploadFile;
 
 @Service
@@ -429,8 +433,20 @@ public class SomoimManagement {
 	
 	
 	//=============== 페이징
-	public String getPaging(int pNum, int boardNum) {
 
+	public String somopiclist(int somo_number) {
+		String json2= null;
+		System.out.println("사진 출력해줘 ");
+		
+		List<Somoim_photoalbum> somopiclist = sDao.getsomopicList(somo_number);
+		
+		json2 = new Gson().toJson(somopiclist);
+		System.out.println(json2);
+		return json2;
+	}
+
+	// -------------------------------------------------------------------------------------------------이예상
+	public String getPaging(int pNum, int boardNum) {
 		int maxNum = sDao.getBoardRepleCount(boardNum);
 		int listCount = 5;  // 10개씩 보여주기
 		int pageCount = 2;  // 이게 뭔말이지?
@@ -440,7 +456,5 @@ public class SomoimManagement {
 
 		return paging.makeHtmlPaging();
 	}
-
-	
 
 }

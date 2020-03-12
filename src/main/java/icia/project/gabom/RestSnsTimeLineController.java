@@ -17,14 +17,10 @@ public class RestSnsTimeLineController {
 	private SnsTimeLineService snsts;
 
 	@GetMapping(value = "/sns/timeline", produces = "application/json;charset=UTF-8")
-	public String snsTimeLine(Principal principal, Snsposts snsposts ) {
+	public String snsTimeLine(Principal principal) {
 		System.out.println("타임라인 들어옴");
 		System.out.println("탐라 주인 아이디="+principal.getName());
-		System.out.println("전체 게시물="+snsposts);
-		
-		String json = snsts.snsTimeLine(snsposts,principal);
-		System.out.println("전체 게시물 먼저 보여줘="+json);
-		
+		String json = snsts.snsTimeLine(principal);
 		return json;
 	}
 	

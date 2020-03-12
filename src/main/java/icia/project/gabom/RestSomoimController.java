@@ -22,6 +22,7 @@ import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.SomoimBoard;
 import icia.project.gabom.dto.Somoimreple;
 import icia.project.gabom.service.SomoimManagement;
+import icia.project.gabom.userClass.SomoimAlbumfileUpload;
 
 @RestController
 @RequestMapping(value = "/somoim")
@@ -29,6 +30,11 @@ public class RestSomoimController {
 
 	private ModelAndView mav;
 
+	
+	@Autowired
+	private SomoimAlbumfileUpload album;
+	
+	
 	@Autowired
 	private SomoimManagement simm;
 
@@ -175,6 +181,47 @@ public class RestSomoimController {
 		String json = simm.somoimalbum(somoimnum, multi);
 
 		return json;
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//--------------------------------------------------------------------------------이예상 
+	@PostMapping(value = "/somoimalbum", produces="text/plain;charset=utf-8")
+	public String somoimalbum(MultipartHttpServletRequest multi) {
+		System.out.println("소모임 사진 저장하자");
+		System.out.println(multi.getParameter("somo_number"));
+		
+		int somo_number =Integer.parseInt( multi.getParameter("somo_number"));
+		
+		List<MultipartFile> files=multi.getFiles("somoimimg");
+		System.out.println(files.size());
+		System.out.println("files="+files.get(0).getOriginalFilename());
+		
+		boolean json = album.somoalbum(multi,somo_number);
+		
+		String json2 = simm.somopiclist(somo_number);
+		
+		return json2;
 	}
 
 }

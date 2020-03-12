@@ -215,5 +215,36 @@
 </select>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<insert id="somoalbumInsert" parameterType="photoalbum" >
+	INSERT INTO SOMOIM_PHOTOALBUM VALUES(SEQ_SOMOIM_PHOTOALBUM.nextval,#{somo_number},#{somoalbum_oriname},#{somoalbum_sysname},SYSDATE,SYSDATE)
+		<selectKey keyProperty="reservation_number" resultType="integer" order="AFTER">
+				SELECT SEQ_SOMOIM_PHOTOALBUM.CURRVAL FROM DUAL
+			</selectKey>
+	</insert>
+
+
+
 </mapper>
 

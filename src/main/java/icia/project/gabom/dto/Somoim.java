@@ -26,4 +26,6 @@ public class Somoim {
 	private Date somoim_date;
 
 	private String somoim_sys_mainpicture;  // 파일 경로
+	
+	
 }

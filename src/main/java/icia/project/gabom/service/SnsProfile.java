@@ -23,6 +23,7 @@ public class SnsProfile {
 		member=getProfileDao.getProfile(member);
 		Gson gson= new Gson();
 		JsonObject memberObject = new JsonObject();
+		memberObject.addProperty("member_id", member.getMember_id());
 		memberObject.addProperty("member_name", member.getMember_name());
 		memberObject.addProperty("member_profile_picture", member.getMember_profile_picture());
 		String json=gson.toJson(memberObject);

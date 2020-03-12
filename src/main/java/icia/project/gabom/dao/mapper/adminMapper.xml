@@ -82,7 +82,7 @@
 		SELECT QNA_NUMBER, QNA_TITLE, QNA_BODY, QNA_MEMBER_ID, QNA_DATE  FROM QNA_BOARD ORDER BY QNA_DATE DESC
 	</select>
 	
-	<!-- 전체공지,답글 디테일 모달 띄우기 -->
+	<!-- QNA,답글 디테일 모달 띄우기 -->
 	<select id="getqnamodal" resultType="qnaboard">
 		SELECT QNA_NUMBER, QNA_TITLE, QNA_BODY, QNA_MEMBER_ID, QNA_DATE,QNA_ANSWER_NUMBER, QNA_REPLY 
 		FROM QNA_BOARD JOIN QNA_ANSWER ON QNA_BOARD.QNA_NUMBER = QNA_ANSWER.QNA_ANSWER_NUMBER WHERE QNA_NUMBER = #{num}
@@ -92,10 +92,6 @@
 	<insert id="getqnaanswer" parameterType="String">
 		INSERT INTO QNA_ANSWER VALUES (#{number}, #{qnaanswer})
 	</insert>
-	<!-- 질문 답글 띄우기 -->
-	<!-- <select id="getqnaanswer" resultType="qnaboard">
-		SELECT QNA_ANSWER_NUMBER, QNA_REPLY FROM QNA_ANSWER WHERE QNA_ANSWER_NUMBER = #{num}
-	</select> -->
 	
 	
 	

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import icia.project.gabom.dto.SnsWriteContents;
 import icia.project.gabom.service.SnsWriteInsert;
 
 @RestController
@@ -28,10 +27,10 @@ public class RestSnsWriteInsertController {
 								@RequestParam("security") String security,
 								HttpServletRequest req) {
 					
-		snsWriteInsert.snsWriteInsert(file,principal,snsWriteContents,security,req);
+		String json=snsWriteInsert.snsWriteInsert(file,principal,snsWriteContents,security,req);
 		
 		
-		return null;
+		return json;
 	}
 	
 }
