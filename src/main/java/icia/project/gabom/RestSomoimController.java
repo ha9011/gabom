@@ -169,20 +169,7 @@ public class RestSomoimController {
 	
 	
 	// --------------------------------------------------------------------------------이예상
-	@PostMapping(value = "/somoimalbum", produces = "text/plain;charset=utf-8")
-	public String somoimalbum(@RequestParam("data") int somoimnum, MultipartHttpServletRequest multi) {
-		System.out.println("소모임 사진 저장하자");
-		System.out.println(multi.getParameter("somoimnum"));
-
-		List<MultipartFile> files = multi.getFiles("somoimimg");
-		System.out.println(files.size());
-		System.out.println("files=" + files.get(0).getOriginalFilename());
-
-		String json = simm.somoimalbum(somoimnum, multi);
-
-		return json;
 	
-	}
 	
 	
 	

@@ -40,5 +40,7 @@ public interface IAdminDao {
 	List<Qnaboard> getqnamodal(String num);
 	//질문 답글등록
 	boolean getqnaanswer(@Param("number")String number,@Param("qnaanswer") String qnaanswer);
+	//공지사항 삭제
+	boolean getnoticedelete(String num);
 	
 }

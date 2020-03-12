@@ -132,6 +132,19 @@ public class RestAdminController {
 
 		return json;
 	}
+	//공지사항 삭제
+	@PostMapping(value = "/noticedelete", produces = "text/plain;charset=UTF-8")
+	public String noticedelete(@RequestParam("num") String num) {
+		System.out.println("레스트컨트룰러 delete");
+		System.out.println("삭제="+num);
+		
+		boolean result = aDao.getnoticedelete(num);
+		System.out.println("삭제 성공했니??"+result);
+		List<Adminnotices> nlist = aDao.getadnotices(); // 전체공지 정보 출력
+		String json = new Gson().toJson(nlist);
+		
+		return json;
+	}
 
 	// qna게시판 출력
 	@PostMapping(value = "/qnaboard", produces = "text/plain;charset=UTF-8")
