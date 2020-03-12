@@ -111,6 +111,108 @@
 
 
 
+<select id="selectNotiBoard"  parameterType="int" resultType="somoimboard">
+	select 
+	m.member_profile_picture, sb.board_content,sb.board_first_pic, sb.board_first_syspic, sb.board_fix, sb.board_number, sb.board_second_pic , sb.board_second_syspic, 
+        sb.board_third_pic, sb.board_third_syspic, sb.board_title , sb.board_type, sb.board_write_date, sb.board_write_update, sb.board_writer,
+        sb.somoim_number
+	from 
+	SOMOIM_BOARD sb, MEMBER m 
+	where  sb.board_writer = m.member_id and SOMOIM_NUMBER = #{somoimnum} and BOARD_FIX = '고정' order by BOARD_WRITE_DATE desc
+</select>
+
+
+
+<select id="selectUnNotiBoard"  parameterType="int"  resultType="somoimboard">
+	select 
+	m.member_profile_picture, sb.board_content,sb.board_first_pic, sb.board_first_syspic, sb.board_fix, sb.board_number, sb.board_second_pic , sb.board_second_syspic, 
+        sb.board_third_pic, sb.board_third_syspic, sb.board_title , sb.board_type, sb.board_write_date, sb.board_write_update, sb.board_writer,
+        sb.somoim_number
+	from SOMOIM_BOARD sb, MEMBER m 
+	where  sb.board_writer = m.member_id and SOMOIM_NUMBER = #{somoimnum} and BOARD_FIX = '비고정'order by BOARD_WRITE_DATE desc
+</select>
+
+<select id="selectBoardSomoim"  parameterType="int"  resultType="somoimboard">
+	select 
+	m.member_profile_picture, sb.board_content,sb.board_first_pic, sb.board_first_syspic, sb.board_fix, sb.board_number, sb.board_second_pic , sb.board_second_syspic, 
+        sb.board_third_pic, sb.board_third_syspic, sb.board_title , sb.board_type, sb.board_write_date, sb.board_write_update, sb.board_writer,
+        sb.somoim_number
+	from SOMOIM_BOARD sb, MEMBER m 
+	where  sb.board_writer = m.member_id and BOARD_NUMBER = #{board_number}  
+</select>
+
+
+<select id="checkBoardLike"  resultType="int">
+	select count(*) as board_like  from SOMOIM_BOARD_LIKE where BOARD_NUMBER = #{board_number} and LIKE_NAME = #{name}
+</select>
+
+
+<select id="totalBoardLike"  resultType="int">
+	select count(*) as total_like from SOMOIM_BOARD_LIKE where BOARD_NUMBER = #{board_number} 
+</select>
+
+
+<delete id="deleteBoardLike"  parameterType="somoimboard" >
+	DELETE FROM SOMOIM_BOARD_LIKE WHERE BOARD_NUMBER = #{board_number} and LIKE_NAME = #{board_like_name}
+</delete>
+
+
+<insert id="insertBoardLike"  parameterType="somoimboard">
+	insert into SOMOIM_BOARD_LIKE values(SEQ_SOMOIM_BOARD_LIKE.nextval, #{board_number}, #{somoim_number}, #{board_like_name})
+</insert>
+
+
+<insert id="insertBoardReple"  parameterType="somoimboard">
+	insert into SOMOIM_BOARD_REPLE values(SEQ_SOMOIM_BOARD_REPLE.nextval, #{board_number}, #{somoim_number}, #{board_like_name}, #{somoim_board_reple_content}, sysdate, sysdate)
+</insert>
+
+
+<select id="selectBoardRepleList" parameterType="somoimboard" resultType="somoimreple">
+	<![CDATA[
+	  select * from(
+    select
+    sbr.somoim_board_reple_number,
+    m.member_profile_picture,
+    sbr.board_number, 
+    sbr.somoim_board_reple_content,
+    sbr.somoim_board_reple_date,
+    sbr.somoim_board_reple_name,
+    
+    sbr.somoim_board_reple_update,
+    sbr.somoim_number
+    from Member m, SOMOIM_BOARD_REPLE sbr 
+    where m.member_id = sbr.somoim_board_reple_name 
+    and sbr.board_number =#{board_number} order by somoim_board_reple_number desc) where rownum <=5
+	]]>
+</select>
+
+<select id="getBoardRepleCount" parameterType="int" resultType="int">
+	 select count(*) from SOMOIM_BOARD_REPLE where BOARD_NUMBER = #{board_number} 
+</select>
+
+<select id="selectPagingBoardRepleList" parameterType="somoimreple" resultType="somoimreple">
+	 <![CDATA[
+	  
+	  select * from ( 
+ select ROWNUM rn, gg.* from(
+    select
+    sbr.somoim_board_reple_number,
+    m.member_profile_picture,
+    sbr.board_number, 
+    sbr.somoim_board_reple_content,
+    sbr.somoim_board_reple_date,
+    sbr.somoim_board_reple_name,
+    sbr.somoim_board_reple_update,
+    sbr.somoim_number
+    from Member m, SOMOIM_BOARD_REPLE sbr 
+    where m.member_id = sbr.somoim_board_reple_name 
+    and sbr.board_number =#{board_number}  order by somoim_board_reple_number desc ) gg where ROWNUM <=5*#{paging_number} ) where rn > 5*(#{paging_number}-1)
+	
+	  
+	  
+	]]>
+	
+</select>
 
 
 

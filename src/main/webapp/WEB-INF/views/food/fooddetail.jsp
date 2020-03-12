@@ -164,7 +164,7 @@ section {
 
 		<section>
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-5">
 					<article class="blog-post">
 						<div class="blog-post-image"></div>
 						<div id="info" class="blog-post-body"></div>
@@ -172,7 +172,7 @@ section {
 				</div>
 				<!-- 정보 -->
 
-				<div class="col-md-8 sidebar-gutter">
+				<div class="col-md-7 sidebar-gutter">
 					<aside>
 						<!-- sidebar-widget -->
 						<div id="reser" class="sidebar-widget">

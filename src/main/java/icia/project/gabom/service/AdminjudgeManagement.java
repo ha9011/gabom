@@ -67,7 +67,7 @@ public class AdminjudgeManagement {
 		return json;
 	}//judgeApproved End
 
-	// 심사 거절 서비스
+	// 심사 거절 서비스(Rest)
 	public String judgerefuse(String number, String type) {
 		System.out.println("am거절은 오니?");
 
@@ -90,7 +90,8 @@ public class AdminjudgeManagement {
 
 		return json;
 	}//judgerefuse End
-
+	
+	//전체공지 조회수 업데이트
 	public boolean viewsUpdate(String num) {
 		System.out.println("조회수 am 오니?");
 		System.out.println("뭘 들고있지?"+num);
