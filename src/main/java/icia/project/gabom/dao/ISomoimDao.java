@@ -9,6 +9,7 @@ import icia.project.gabom.dto.JungmoAttend;
 import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.Somoim;
 import icia.project.gabom.dto.SomoimBoard;
+import icia.project.gabom.dto.Somoimreple;
 
 public interface ISomoimDao {
 
@@ -50,5 +51,31 @@ public interface ISomoimDao {
 
 	int insertSomoimBoard(SomoimBoard smb);
 
+	List<SomoimBoard> selectNotiBoard(@Param("somoimnum")int somoim_number);
+
+	List<SomoimBoard> selectUnNotiBoard(@Param("somoimnum")int somoim_number);
+
+	SomoimBoard selectBoardSomoim(@Param("board_number")int board_number);
+
+	int checkBoardLike(@Param("board_number")int board_number, @Param("name")String name);
+
+	int totalBoardLike(@Param("board_number")int board_number);
+
+	int deleteBoardLike(SomoimBoard sb);
+
+	int insertBoardLike(SomoimBoard sb);
+	
+	int insertBoardReple(SomoimBoard sb);
+
+	List<Somoimreple> selectBoardRepleList(@Param("board_number")int board_number);
+
+	int getBoardRepleCount(@Param("board_number")int boardNum);
+
+	List<Somoimreple> selectPagingBoardRepleList(SomoimBoard sb);
+
+
+
+
+	
 	
 }
