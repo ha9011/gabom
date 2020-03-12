@@ -22,6 +22,7 @@ import icia.project.gabom.dto.JungmoAttend;
 import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.Somoim;
 import icia.project.gabom.dto.SomoimBoard;
+import icia.project.gabom.dto.SomoimMyInfo;
 import icia.project.gabom.dto.Somoimreple;
 import icia.project.gabom.userClass.Paging;
 import icia.project.gabom.userClass.SomoimBoardFile;
@@ -34,6 +35,7 @@ public class SomoimManagement {
 
 	private Somoim sm;
 	private SomoimBoard smb;
+	private SomoimMyInfo smi;
 	private ModelAndView mav;
 	@Autowired
 	private ISomoimDao sDao;
@@ -111,9 +113,20 @@ public class SomoimManagement {
 	}
 
 	public ModelAndView somoimRoomData(ModelAndView mav, String roomnum, Principal pr) {
-		System.out.println("내프로젝트의 루트경로는?  " + System.getProperty("user.dir"));
-		// 1-1정보 단계 (제목, 타이틀, 위치 등등...)
 		sm = new Somoim();
+		smi = new SomoimMyInfo();
+		
+		System.out.println("내프로젝트의 루트경로는?  " + System.getProperty("user.dir"));
+		
+		//0 - 이 소모임에 대한 나의 정보 (등급, 가입여부, 아이디) 필요합니다.
+		smi = sDao.selectMySomoimInfo(Integer.parseInt(roomnum), pr.getName());
+		String mysomoiminfo = new Gson().toJson(smi);
+		System.out.println("mysomoiminfo json : " + mysomoiminfo);
+		mav.addObject("JsonMysomoimInfo", mysomoiminfo); // 기본정보 받아옴
+		
+		
+		// 1-1정보 단계 (제목, 타이틀, 위치 등등...)
+		
 		sm = sDao.selectRoomInfo(roomnum);
 		System.out.println(sm.toString());
 		String JsonBasicInfo = new Gson().toJson(sm);

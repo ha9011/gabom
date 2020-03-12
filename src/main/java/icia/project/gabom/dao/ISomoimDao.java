@@ -11,6 +11,7 @@ import icia.project.gabom.dto.JungmoAttend;
 import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.Somoim;
 import icia.project.gabom.dto.SomoimBoard;
+import icia.project.gabom.dto.SomoimMyInfo;
 import icia.project.gabom.dto.Somoimreple;
 import icia.project.gabom.dto.Somoim_photoalbum;
 
@@ -76,7 +77,7 @@ public interface ISomoimDao {
 
 	List<Somoimreple> selectPagingBoardRepleList(SomoimBoard sb);
 
-
+	SomoimMyInfo selectMySomoimInfo(@Param("somoim_number")int parseInt, @Param("id")String string);
 
 
 	
@@ -97,6 +98,8 @@ public interface ISomoimDao {
 
 	@Select("select * from SOMOIM_PHOTOALBUM where SOMOIM_NUMBER=#{somo_number}")
 	List<Somoim_photoalbum> getsomopicList(@Param("somo_number") int somo_number);
+
+	
 
 	
 }

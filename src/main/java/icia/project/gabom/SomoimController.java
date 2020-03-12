@@ -56,6 +56,8 @@ public class SomoimController {
 		return "redirect:"+result;
 	}
 	
+	
+	// 해당 소모임을 클릭시 -> 나의 정보 다 보여줘야함.
 	@RequestMapping(value = "/somoimroom", method = RequestMethod.GET)
 	public ModelAndView somoimroom(@RequestParam("roomnumber")String roomnum, Principal pr ) {
 		mav = new ModelAndView();

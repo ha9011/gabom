@@ -17,7 +17,10 @@ public class SomoimBoard {
 	private int board_number;
 	private int somoim_number;
 	private int board_like;
-	private int total_like;
+	
+	private int total_like = 0; // 좋아요 갯수
+
+	private int total_reple = 0; // 댓글 갯수
 	
 	private String board_like_name;  // 댓글, 좋아요의 행위자... like 이해점...
 	

@@ -26,6 +26,10 @@
 	width: 100%;
 }
 
+#joinsomoim {
+	width: 100%;
+}
+
 .tab-content {
 	height: 93%;
 	overflow: auto;
@@ -166,7 +170,6 @@
 
 .contentFrame {
 	display: flex;
-	
 }
 
 .picSection {
@@ -180,15 +183,26 @@
 	height: 76%;
 	width: 76%;
 }
-#boardlikeframe{
-	display:flex;
+
+#boardlikeframe {
+	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
 	align-items: center;
 	height: 30px;
 }
-.boardlikebtn{
+
+.boardlikebtn {
 	width: 30px;
+}
+
+#boardWriteBtn {
+	width: 100%
+}
+
+#tablist {
+	width: 100%;
+	display: flex;
 }
 </style>
 
@@ -200,14 +214,16 @@
 		<div id="bottom">
 			<div id="out1">
 				<!-- Nav pills -->
-				<ul class="nav nav-pills" role="tablist">
+				<ul class="nav nav-pills" role="tablist" id="tablist">
 					<li class="nav-item"><a class="nav-link active"
 						data-toggle="pill" href="#noti">공지</a></li>
+
 					<li class="nav-item"><a id="boardListSection"
 						onclick="showboardlist()" class="nav-link" data-toggle="pill"
 						href="#board">게시글</a></li>
+
 					<li class="nav-item"><a class="nav-link" data-toggle="pill"
-						href="#album">사진첩</a></li>
+						onclick="showalbumlist()" href="#album">사진첩</a></li>
 				</ul>
 
 
@@ -225,13 +241,7 @@
 
 						<div id="jungmolist">
 
-							<div>
-
-								<img data-somoimnum=${roomnum } data-toggle="modal"
-									data-target="#mySMModal" id="makeSomoim" width="85px"
-									height="85px" src="../resources/somoimimage/makemoim.PNG">&nbsp정모만들기
-
-							</div>
+							<div id="jungmomake"></div>
 
 						</div>
 
@@ -239,6 +249,10 @@
 						<div id="MemberList">회원 회원</div>
 						<hr>
 						<div>
+							<button id="joinsomoim" data-somoimnum=${roomnum
+								}
+								class="btn btn-warning">가입하기</button>
+
 							<button id="dropout" data-somoimnum=${roomnum
 								}
 								class="btn btn-danger">탈퇴하기</button>
@@ -258,9 +272,16 @@
 					<div id="album" class="container tab-pane fade">
 						<br>
 						<div>
-							<jsp:include page="/WEB-INF/views/somoim/jungmoalbum.jsp" /> 
+							<jsp:include page="/WEB-INF/views/somoim/jungmoalbum.jsp" />
 						</div>
 					</div>
+
+					<div id="member" class="container tab-pane fade">
+						<br> 회원관리 창 입니다.
+					</div>
+
+
+
 				</div>
 			</div>
 
@@ -382,7 +403,7 @@
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">글쓰기</h4>
+					<h4 class="modal-title"><div id="showBoardTitle">제목</div></h4>
 					<!-- 					<div id="writerProfile"> -->
 					<!-- 						<div></div> -->
 					<!-- 						<div> -->
@@ -398,41 +419,43 @@
 				<div class="modal-body">
 
 					<div>
-						<div id="showBoardTitle">제목</div>
-						<hr>
-						<br>
-						<div id="showBoardContent">내용</div>
 						
+						<div id="showBoardContent">내용</div>
+
+						<hr>
 						<div id="showfirstPic">사진1</div>
-
+						<hr>
 						<div id="showsecondPic">사진2</div>
-
+						<hr>
 						<div id="showthirdPic">사진3</div>
 					</div>
 					<hr>
-					
+
 					<div id="boardlikeframe">
 						<div class='boardlikebtn' id="boardlikebtnframe"></div>
-						<div class='boardlikebtn'><img  onclick="boardreplebtn(this)" data-reple='0' width='100%' height='100%' src="../resources/somoimboard/reple.PNG"></div>
+						<div class='boardlikebtn'>
+							<img onclick="boardreplebtn(this)" data-reple='0' width='100%'
+								height='100%' src="../resources/somoimboard/reple.PNG">
+						</div>
 					</div>
 					<hr>
 					<div>
-						<div><img width='5%' height='5%' src="../resources/somoimboard/like.PNG"><span id="countlike"></span> 명이 이 글을 좋아합니다</div>
+						<div>
+							<img width='5%' height='5%'
+								src="../resources/somoimboard/like.PNG"><span
+								id="countlike"></span> 명이 이 글을 좋아합니다
+						</div>
 					</div>
 					<hr>
-					
-					<div id="boardreplebtnframe" >
-						<input id="repleinput" style='width:85%;' type="text" >
-					</div>
+
+					<div id="boardreplebtnframe"></div>
 					<hr>
-					<div id="replelist">
-					댓글창 보여주기
-					</div>
-					
+					<div id="replelist">댓글창 보여주기</div>
+
 					<ul id="replepaging" class="pagination">
-  					 
-  					</ul>
-  					
+
+					</ul>
+
 				</div>
 
 				<!-- Modal footer -->
@@ -447,8 +470,14 @@
 
 </body>
 <script type="text/javascript">
+
  $(document).ready(function(){
+	 
 	 console.log("---------시작")
+	 $("#modal-backdrop").on("click", function(){
+		 console.log("????")
+	 })
+	 
 	 $(document).on("click",".pagebtn", function(e){
 		 console.log(e.target.dataset.bnum);
 		 console.log(e.target.dataset.page);
@@ -527,15 +556,57 @@
 			})
 		 
 		 
-		 
-		 
-		 
 	})
- })
+	
+	
+	//방장과 아닌 사람  // 정모 만들기, 
+	var mysomoimInfo = ${JsonMysomoimInfo}
+	if(mysomoimInfo.member_grade == 2){  // 방장일때
+		$("#jungmomake").append($("<img data-somoimnum=${roomnum } data-toggle='modal' data-target='#mySMModal' id='makeSomoim' width='85px' height='85px' src='../resources/somoimimage/makemoim.PNG'> "))
+		$("#jungmomake").append($("<span>&nbsp정모만들기</span>"));
+	
+	
+		$("#tablist").append($("<li class='nav-item'><a class='nav-link' data-toggle='pill' onclick='showalbumlist()' href='#member'>회원관리</a></li>"));
+		$(".nav-item").css("width","25%");
+		
+		
+	}else{ // 방장이 아닐때
+		
+	
+	}
 
+	//회원과 비회원
+	if(mysomoimInfo.member_status == 1){  // 0 - 대기, 1 - 승인, 2 - 탈퇴회면 
+			
+		//1. 가입버튼 사라지기 joinsomoim
+		$("#joinsomoim").hide();
+	
+
+		$(".showBoard").removeAttr("data-fix"); 
+	}else{ // 비회원일때 
+		
+		
+		//1. 탈퇴 버튼 보이고,
+		$("#dropout").hide();
+		//2. 취소, 참석자 버튼 안나오게 하기
+		$(".jungmojoinbtn").hide();
+		$(".showAttendList").hide();
+		$("#boardWriteBtn").hide();
+ 
+ 
+	}
+	
+	
+			
+			
+ })// end ready
+
+console.log("내등급",${JsonMysomoimInfo})
 console.log("회원",${JsonMemberList})
 console.log("정모모임",${JsonJungmoRoom})
 console.log("내참석리스트",${JsonAttendlist})
+
+var mysomoimInfo = ${JsonMysomoimInfo}
 var Attendlist = ${JsonAttendlist};
 var boardlist = ${JsonBoardList};
 for(let add = 0 ; add < ${JsonJungmoRoom}.length-Attendlist.length; add++){
@@ -612,6 +683,8 @@ console.log("기본정보",${JsonBasicInfo})
 		
 		
 		
+		
+		
 		var JsonAttendlistIDX = 0;
 		for(let j of Attendlist){ // 내 참석 돌리기
 			
@@ -630,7 +703,7 @@ console.log("기본정보",${JsonBasicInfo})
 			
 		
 		
-		var showjoinlist = $("<div><button data-toggle='modal' data-title='"+getFormatTime(i.jungmo_date, i.jungmo_time)+"'data-target='#mySMModal' class='showAttendList' data-jungmonum='"+i.jungmo_number +"'>참석자</button></div>");
+		var showjoinlist = $("<div><button data-toggle='modal' data-title='"+getFormatTime(i.jungmo_date, i.jungmo_time)+"'data-target='#mySMModal' class='showAttendList' data-jungmonumattend='"+i.jungmo_number +"'>참석자</button></div>");
 		btns.append(joinbtn);
 		btns.append(showjoinlist);
 		
@@ -739,14 +812,14 @@ console.log("기본정보",${JsonBasicInfo})
 	//참석리스트 보기
 	$(".showAttendList").on("click", function(e){
 		console.log("gg")
-		console.log("정모번호 : ", e.target.dataset.jungmonum);
+		console.log("정모번호 : ", e.target.dataset.jungmonumattend);
 		$(".modal-title").text("");  // 작은 모달 초기화
 		$(".modal-body").empty(); // 작은 모달 초기화
 		
 		$(".modal-title").text(e.target.dataset.title);  // title 제목  ;;
 		
 		//ajax로 리스트 부르기
-		var JungmoNumber = {"JungmoNumber" : e.target.dataset.jungmonum}
+		var JungmoNumber = {"JungmoNumber" : e.target.dataset.jungmonumattend}
 		
 		$.ajaxSetup({         
 		      beforeSend : function(xhr){
@@ -790,9 +863,11 @@ console.log("기본정보",${JsonBasicInfo})
 	
 	//맴버 리스트 모두 호출 class 이름 조심.... 
 	var JsonMemberList = ${JsonMemberList};
+	console.log(JsonMemberList)
 	for( v of JsonMemberList){
+		console.log("맴버 리스트 나옴?")
 		var MemberListFrame = $("<div class='attendListFrame'> </div>");
-		var MemberListPic = $("<div class='attendPicFrame'> <img src='."+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
+		var MemberListPic = $("<div class='attendPicFrame'> <img src='."+v.MEMBER_PROFILE_PICTURE+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
 			var MemberListCont =  $("<div class='attendCont'> </div>");	
 			var MemberListTitle = $("<div class='attendTitle'>"+v.MEMBER_NAME+"</div>");	
 			var MemberListIntroduce = $("<div class='attendIntroduce'>"+v.MEMBER_PROFILE_CONTENTS+"</div>");
@@ -844,7 +919,12 @@ console.log("기본정보",${JsonBasicInfo})
 	})//탈퇴 end
 	
 	
-	
+$("#joinsomoim").on("click",function(e){
+		
+		console.log("가입하기버튼 클릭")
+		
+		
+	})//가입하기
 	
 	
 	
@@ -915,92 +995,11 @@ console.log("기본정보",${JsonBasicInfo})
 				boardlist = boardData;
 				console.log(boardData)
 				console.dir(boardData)
-				var noti = boardData["공지"];
-				var unnoti = boardData["비공지"];
 				
-				for(let  v of noti){
-					var time = new Date(v.board_write_date).getHours();
-					var min = new Date(v.board_write_date).getMinutes();
-					
-					var boardFrame = $("<div data-fix='"+v.board_fix+"' data-Bnum='"+v.board_number+"' data-Snum='"+v.somoim_number+"' data-writer='"+v.board_writer+"' onclick='showBoard(this)' data-toggle='modal' 	data-target='#ShowBoardModal' class='boardFrame showBoard'></div>")
-					
-					var profileFrame = $("<div class='profileFrame'></div>")
-					var photoSection = $("<div class='photoSection'><img class='rounded-circle' width='90%' height='90%' src='."+v.member_profile_picture+"'></div>")
-					var nameSection = $("<div><div >"+v.board_writer+"</div><div>"+getFormatTime(v.board_write_date,time+":"+min)+"</div></div>")
-					profileFrame.append(photoSection);
-					profileFrame.append(nameSection);
-					
-					var contentFrame = $("<div class='contentFrame'></div>")
-					let content;
-					if(v.board_content.length == 25){
-						content=v.board_content.substring(0,25)+"...";
-					}else{
-						content=v.board_content
-					}
-					var titleSection = $("<div class='titleSection'><div>"+v.board_title+"</div><div>"+v.board_content+"</div></div>")
-					
-					contentFrame.append(titleSection);
-					let picSection;
-					if(v.board_first_syspic === '없음'){
-						console.log("2")
-						 picSection = $("<div class='picSection'></div>")
-						contentFrame.append(picSection);
-					}else{
-						console.log("1")
-						 picSection = $("<div class='picSection'><img width='90%' height='90%' src='."+v.board_first_syspic+"'></div>")
-						contentFrame.append(picSection);
-						
-					}
-					
-					
-
-					boardFrame.append(profileFrame);
-					boardFrame.append(contentFrame);
-					
-					$("#somoimBoardCont").append(boardFrame);
-				}
 				
-				for(let  v of unnoti){
-					var time = new Date(v.board_write_date).getHours();
-					var min = new Date(v.board_write_date).getMinutes();
-					
-					var boardFrame = $("<div data-fix='"+v.board_fix+"' data-Bnum='"+v.board_number+"' data-Snum='"+v.somoim_number+"' data-writer='"+v.board_writer+"' onclick='showBoard(this)' data-toggle='modal' 	data-target='#ShowBoardModal' class='boardFrame showBoard'></div>")
-					
-					var profileFrame = $("<div class='profileFrame'></div>")
-					var photoSection = $("<div class='photoSection'><img class='rounded-circle' width='90%' height='90%' src='."+v.member_profile_picture+"'></div>")
-					var nameSection = $("<div><div >"+v.board_writer+"</div><div>"+getFormatTime(v.board_write_date,time+":"+min)+"</div></div>")
-					profileFrame.append(photoSection);
-					profileFrame.append(nameSection);
-					
-					var contentFrame = $("<div class='contentFrame'></div>")
-					let content;
-					if(v.board_content.length == 25){
-						content=v.board_content.substring(0,25)+"...";
-					}else{
-						content=v.board_content
-					}
-					var titleSection = $("<div class='titleSection'><div>"+v.board_title+"</div><div>"+v.board_content+"</div></div>")
-					
-					contentFrame.append(titleSection);
-					let picSection;
-					if(v.board_first_syspic === '없음'){
-						console.log("2")
-						 picSection = $("<div class='picSection'></div>")
-						contentFrame.append(picSection);
-					}else{
-						console.log("1")
-						 picSection = $("<div class='picSection'><img width='90%' height='90%' src='."+v.board_first_syspic+"'></div>")
-						contentFrame.append(picSection);
-						
-					}
-					
-					
-
-					boardFrame.append(profileFrame);
-					boardFrame.append(contentFrame);
-					
-					$("#somoimBoardCont").append(boardFrame);
-				}
+				showAllList(boardData);
+				
+				
 				
 			},
 			error:function(error){
@@ -1013,95 +1012,12 @@ console.log("기본정보",${JsonBasicInfo})
 	
 	
 	const showboardlist = ()=>{
+		console.log("??")
 		$("#somoimBoardCont").empty();
 		console.log(boardlist);
-		var noti = boardlist["공지"];
-		var unnoti = boardlist["비공지"];
+		console.log("???")
 		
-		for(let  v of noti){
-			var time = new Date(v.board_write_date).getHours();
-			var min = new Date(v.board_write_date).getMinutes();
-			
-			var boardFrame = $("<div data-fix='"+v.board_fix+"' data-Bnum='"+v.board_number+"' data-Snum='"+v.somoim_number+"' data-writer='"+v.board_writer+"' onclick='showBoard(this)' data-toggle='modal' 	data-target='#ShowBoardModal' class='boardFrame showBoard'></div>")
-			
-			var profileFrame = $("<div class='profileFrame'></div>")
-			var photoSection = $("<div class='photoSection'><img class='rounded-circle' width='90%' height='90%' src='."+v.member_profile_picture+"'></div>")
-			var nameSection = $("<div><div >"+v.board_writer+"</div><div>"+getFormatTime(v.board_write_date,time+":"+min)+"</div></div>")
-			profileFrame.append(photoSection);
-			profileFrame.append(nameSection);
-			
-			var contentFrame = $("<div class='contentFrame'></div>")
-			let content;
-			if(v.board_content.length == 25){
-				content=v.board_content.substring(0,25)+"...";
-			}else{
-				content=v.board_content
-			}
-			var titleSection = $("<div class='titleSection'><div>"+v.board_title+"</div><div>"+v.board_content+"</div></div>")
-			
-			contentFrame.append(titleSection);
-			let picSection;
-			if(v.board_first_syspic === '없음'){
-				console.log("2")
-				 picSection = $("<div class='picSection'></div>")
-				contentFrame.append(picSection);
-			}else{
-				console.log("1")
-				 picSection = $("<div class='picSection'><img width='90%' height='90%' src='."+v.board_first_syspic+"'></div>")
-				contentFrame.append(picSection);
-				
-			}
-			
-			
-
-			boardFrame.append(profileFrame);
-			boardFrame.append(contentFrame);
-			
-			$("#somoimBoardCont").append(boardFrame);
-		}
-		
-		for(let  v of unnoti){
-			var time = new Date(v.board_write_date).getHours();
-			var min = new Date(v.board_write_date).getMinutes();
-			
-			var boardFrame = $("<div data-fix='"+v.board_fix+"' data-Bnum='"+v.board_number+"' data-Snum='"+v.somoim_number+"' data-writer='"+v.board_writer+"' onclick='showBoard(this)' data-toggle='modal' 	data-target='#ShowBoardModal' class='boardFrame showBoard'></div>")
-			
-			var profileFrame = $("<div class='profileFrame'></div>")
-			var photoSection = $("<div class='photoSection'><img class='rounded-circle' width='90%' height='90%' src='."+v.member_profile_picture+"'></div>")
-			var nameSection = $("<div><div >"+v.board_writer+"</div><div>"+getFormatTime(v.board_write_date,time+":"+min)+"</div></div>")
-			profileFrame.append(photoSection);
-			profileFrame.append(nameSection);
-			
-			var contentFrame = $("<div class='contentFrame'></div>")
-			let content;
-			if(v.board_content.length == 25){
-				content=v.board_content.substring(0,25)+"...";
-			}else{
-				content=v.board_content
-			}
-			var titleSection = $("<div class='titleSection'><div>"+v.board_title+"</div><div>"+v.board_content+"</div></div>")
-			
-			contentFrame.append(titleSection);
-			let picSection;
-			if(v.board_first_syspic === '없음'){
-				console.log("2")
-				 picSection = $("<div class='picSection'></div>")
-				contentFrame.append(picSection);
-			}else{
-				console.log("1")
-				 picSection = $("<div class='picSection'><img width='90%' height='90%' src='."+v.board_first_syspic+"'></div>")
-				contentFrame.append(picSection);
-				
-			}
-			
-			
-
-			boardFrame.append(profileFrame);
-			boardFrame.append(contentFrame);
-			
-			$("#somoimBoardCont").append(boardFrame);
-		}
-		
+		showAllList(boardlist);
 	}
 	
 	
@@ -1148,6 +1064,8 @@ console.log("기본정보",${JsonBasicInfo})
 	  			$("#showfirstPic").empty()
 	  			$("#showsecondPic").empty()
 	  			$("#showthirdPic").empty()
+	  			
+				$("#boardreplebtnframe").empty();
 // 	  			<div id="showBoardTitle">제목</div>
 				
 // 				<div id="showBoardContent">내용</div>
@@ -1195,8 +1113,13 @@ console.log("기본정보",${JsonBasicInfo})
 				$("#boardlikebtnframe").append(likebtn);
 				
 				
+				//<input id="repleinput" style='width:85%;' type="text" >
+				var repleinput = $("<input id='repleinput' style='width:85%;' type='text' >");
 				var replebtn = $("<button id='boardreplebtn' class='btn btn-primary' data-snum='"+snum+"' data-bnum='"+bnum+"' onclick='reple(this)'>전송</button>");
+				$("#boardreplebtnframe").append(repleinput);
 				$("#boardreplebtnframe").append(replebtn);
+				
+				
 				
 				$("#countlike").text(data.total_like);
 			
@@ -1402,6 +1325,125 @@ console.log("기본정보",${JsonBasicInfo})
 		
 		
 		
+	}
+	
+	
+	
+	//게시글 호출하는 메소드
+	const showAllList = (boardlist)=>{
+
+		
+		var noti = boardlist["공지"];
+		var unnoti = boardlist["비공지"];
+		
+		for(let  v of noti){
+			var time = new Date(v.board_write_date).getHours();
+			var min = new Date(v.board_write_date).getMinutes();
+			
+			
+			//회원과 비회원
+			var boardFrame;
+			if(mysomoimInfo.member_status == 1){  // 0 - 대기, 1 - 승인, 2 - 탈퇴회면
+				boardFrame = $("<div data-fix='"+v.board_fix+"' data-Bnum='"+v.board_number+"' data-Snum='"+v.somoim_number+"' data-writer='"+v.board_writer+"' onclick='showBoard(this)' data-toggle='modal' 	data-target='#ShowBoardModal' class='boardFrame showBoard'></div>")
+			}else{
+				boardFrame = $("<div data-fix='"+v.board_fix+"' data-Bnum='"+v.board_number+"' data-Snum='"+v.somoim_number+"' data-writer='"+v.board_writer+"'  class='boardFrame showBoard'></div>")
+			}
+			
+			var profileFrame = $("<div class='profileFrame'></div>")
+			var photoSection = $("<div class='photoSection'><img class='rounded-circle' width='90%' height='90%' src='."+v.member_profile_picture+"'></div>")
+			var nameSection = $("<div style='width : 55%'><div >"+v.board_writer+"</div><div>"+getFormatTime(v.board_write_date,time+":"+min)+"</div></div>")
+			
+			var likeRepleCnt = $("<div style='text-align : right; width : 30%;'><img width='20%' height='40%' src='../resources/somoimboard/like.PNG'>"+v.total_reple+"<span>&nbsp&nbsp&nbsp&nbsp</span><img width='20%' height='40%' src='../resources/somoimboard/reple.PNG'>"+v.total_like+"</div>")
+			
+			
+			profileFrame.append(photoSection);
+			profileFrame.append(nameSection);
+			profileFrame.append(likeRepleCnt);
+			
+			
+			var contentFrame = $("<div class='contentFrame'></div>")
+			let content;
+			if(v.board_content.length == 25){
+				content=v.board_content.substring(0,25)+"...";
+			}else{
+				content=v.board_content
+			}
+			var titleSection = $("<div class='titleSection'><div>"+v.board_title+"</div><div>"+v.board_content+"</div></div>")
+			
+			contentFrame.append(titleSection);
+			let picSection;
+			if(v.board_first_syspic === '없음'){
+				console.log("2")
+				 picSection = $("<div class='picSection'></div>")
+				contentFrame.append(picSection);
+			}else{
+				console.log("1")
+				 picSection = $("<div class='picSection'><img width='90%' height='90%' src='."+v.board_first_syspic+"'></div>")
+				contentFrame.append(picSection);
+				
+			}
+			
+			
+
+			boardFrame.append(profileFrame);
+			boardFrame.append(contentFrame);
+			
+			$("#somoimBoardCont").append(boardFrame);
+		}
+		
+		for(let  v of unnoti){
+			var time = new Date(v.board_write_date).getHours();
+			var min = new Date(v.board_write_date).getMinutes();
+			
+			
+			//회원과 비회원
+			var boardFrame;
+			if(mysomoimInfo.member_status == 1){  // 0 - 대기, 1 - 승인, 2 - 탈퇴회면
+				boardFrame = $("<div data-fix='"+v.board_fix+"' data-Bnum='"+v.board_number+"' data-Snum='"+v.somoim_number+"' data-writer='"+v.board_writer+"' onclick='showBoard(this)' data-toggle='modal' 	data-target='#ShowBoardModal' class='boardFrame showBoard'></div>")
+			}else{
+				boardFrame = $("<div data-fix='"+v.board_fix+"' data-Bnum='"+v.board_number+"' data-Snum='"+v.somoim_number+"' data-writer='"+v.board_writer+"'  class='boardFrame showBoard'></div>")
+			}
+			
+			var profileFrame = $("<div class='profileFrame'></div>")
+			var photoSection = $("<div class='photoSection'><img class='rounded-circle' width='90%' height='90%' src='."+v.member_profile_picture+"'></div>")
+			var nameSection = $("<div style='width : 55%'><div >"+v.board_writer+"</div><div>"+getFormatTime(v.board_write_date,time+":"+min)+"</div></div>")
+			
+			var likeRepleCnt = $("<div style='text-align : right; width : 30%;'><img width='20%' height='40%' src='../resources/somoimboard/like.PNG'>"+v.total_reple+"<span>&nbsp&nbsp&nbsp&nbsp</span><img width='20%' height='40%' src='../resources/somoimboard/reple.PNG'>"+v.total_like+"</div>")
+			
+			
+			profileFrame.append(photoSection);
+			profileFrame.append(nameSection);
+			profileFrame.append(likeRepleCnt);
+			
+			var contentFrame = $("<div class='contentFrame'></div>")
+			let content;
+			if(v.board_content.length == 25){
+				content=v.board_content.substring(0,25)+"...";
+			}else{
+				content=v.board_content
+			}
+			var titleSection = $("<div class='titleSection'><div>"+v.board_title+"</div><div>"+v.board_content+"</div></div>")
+			
+			contentFrame.append(titleSection);
+			let picSection;
+			if(v.board_first_syspic === '없음'){
+				console.log("2")
+				 picSection = $("<div class='picSection'></div>")
+				contentFrame.append(picSection);
+			}else{
+				console.log("1")
+				 picSection = $("<div class='picSection'><img width='90%' height='90%' src='."+v.board_first_syspic+"'></div>")
+				contentFrame.append(picSection);
+				
+			}
+			
+			
+
+			boardFrame.append(profileFrame);
+			boardFrame.append(contentFrame);
+			
+			$("#somoimBoardCont").append(boardFrame);
+		}
 	}
 </script>
 

@@ -155,6 +155,44 @@ $(".upload-name").hide();
 		        $(this).siblings('.upload-name').val(filename);
 		    });
 		}); 
-
+	
+	
+	
+	
+	// 엘범 누르면 사진이 나옴
+const showalbumlist = ()=>{
+	
+	console.log("기본정보",${JsonBasicInfo})
+	
+	var basicInfo =	${JsonBasicInfo};
+	
+	var data = {
+		"somoim_number" : basicInfo.somoim_number
+	}
+	
+	$.ajaxSetup({         
+	      beforeSend : function(xhr){
+	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");} 
+	});
+	
+	$.ajax({
+		url: "showsomoimalbum",
+		type: 'post',
+		data : data,
+		dataType: "json", //rest 컨트롤 이용	
+		success:function(data){
+			alert("success");
+			console.log(data)
+			
+		},
+		error:function(error){
+			alert("fail")
+			console.log(error);
+		}
+		
+	}) //ajax end
+	
+	
+}
 </script>		
 	

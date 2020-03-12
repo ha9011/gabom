@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 
 import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.SomoimBoard;
+import icia.project.gabom.dto.Somoim_photoalbum;
 import icia.project.gabom.dto.Somoimreple;
 import icia.project.gabom.service.SomoimManagement;
 import icia.project.gabom.userClass.SomoimAlbumfileUpload;
@@ -169,43 +170,14 @@ public class RestSomoimController {
 	
 	
 	// --------------------------------------------------------------------------------이예상
-	@PostMapping(value = "/somoimalbum", produces = "text/plain;charset=utf-8")
-	public String somoimalbum(@RequestParam("data") int somoimnum, MultipartHttpServletRequest multi) {
-		System.out.println("소모임 사진 저장하자");
-		System.out.println(multi.getParameter("somoimnum"));
-
-		List<MultipartFile> files = multi.getFiles("somoimimg");
-		System.out.println(files.size());
-		System.out.println("files=" + files.get(0).getOriginalFilename());
-
-		String json = simm.somoimalbum(somoimnum, multi);
-
-		return json;
-	
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
 	
 	
 	//--------------------------------------------------------------------------------이예상 
+	
+	//사진 첨부할때
 	@PostMapping(value = "/somoimalbum", produces="text/plain;charset=utf-8")
 	public String somoimalbum(MultipartHttpServletRequest multi) {
 		System.out.println("소모임 사진 저장하자");
@@ -224,4 +196,15 @@ public class RestSomoimController {
 		return json2;
 	}
 
+	// 사진첩 메뉴 누를 때 
+	@PostMapping(value = "/showsomoimalbum", produces="text/plain;charset=utf-8")
+	public String showsomoimalbum(Somoim_photoalbum spa, Principal pr) {
+		System.out.println("소모임 사진 불러오자");
+		
+		int somo_number =spa.getSomoim_number();
+		
+		String json2 = simm.somopiclist(somo_number);
+		System.out.println("사진 불러 오기  : " + json2);
+		return json2;
+	}
 }

@@ -112,24 +112,53 @@
 
 
 <select id="selectNotiBoard"  parameterType="int" resultType="somoimboard">
-	select 
-	m.member_profile_picture, sb.board_content,sb.board_first_pic, sb.board_first_syspic, sb.board_fix, sb.board_number, sb.board_second_pic , sb.board_second_syspic, 
+
+		select 
+    rc.total_reple, lc.total_like
+	,m.member_profile_picture, sb.board_content,sb.board_first_pic, sb.board_first_syspic, sb.board_fix, sb.board_number, sb.board_second_pic , sb.board_second_syspic, 
         sb.board_third_pic, sb.board_third_syspic, sb.board_title , sb.board_type, sb.board_write_date, sb.board_write_update, sb.board_writer,
         sb.somoim_number
 	from 
-	SOMOIM_BOARD sb, MEMBER m 
-	where  sb.board_writer = m.member_id and SOMOIM_NUMBER = #{somoimnum} and BOARD_FIX = '고정' order by BOARD_WRITE_DATE desc
+	SOMOIM_BOARD sb, MEMBER m, 
+    (select BOARD_NUMBER, count(*) as total_reple from SOMOIM_BOARD_REPLE GROUP by BOARD_NUMBER) rc, 
+    (select BOARD_NUMBER, count(*) as total_like from SOMOIM_BOARD_LIKE GROUP by BOARD_NUMBER) lc 
+	where  sb.board_writer = m.member_id 
+    and sb.board_NUMBER = rc.board_number(+)
+    and sb.board_number = lc.board_number(+)
+    and SOMOIM_NUMBER = #{somoimnum} and BOARD_FIX = '고정' order by BOARD_WRITE_DATE desc
+    
+<!-- 	select  -->
+<!-- 	m.member_profile_picture, sb.board_content,sb.board_first_pic, sb.board_first_syspic, sb.board_fix, sb.board_number, sb.board_second_pic , sb.board_second_syspic,  -->
+<!--         sb.board_third_pic, sb.board_third_syspic, sb.board_title , sb.board_type, sb.board_write_date, sb.board_write_update, sb.board_writer, -->
+<!--         sb.somoim_number -->
+<!-- 	from  -->
+<!-- 	SOMOIM_BOARD sb, MEMBER m  -->
+<!-- 	where  sb.board_writer = m.member_id and SOMOIM_NUMBER = #{somoimnum} and BOARD_FIX = '고정' order by BOARD_WRITE_DATE desc -->
 </select>
 
 
 
 <select id="selectUnNotiBoard"  parameterType="int"  resultType="somoimboard">
 	select 
-	m.member_profile_picture, sb.board_content,sb.board_first_pic, sb.board_first_syspic, sb.board_fix, sb.board_number, sb.board_second_pic , sb.board_second_syspic, 
+    rc.total_reple, lc.total_like
+	,m.member_profile_picture, sb.board_content,sb.board_first_pic, sb.board_first_syspic, sb.board_fix, sb.board_number, sb.board_second_pic , sb.board_second_syspic, 
         sb.board_third_pic, sb.board_third_syspic, sb.board_title , sb.board_type, sb.board_write_date, sb.board_write_update, sb.board_writer,
         sb.somoim_number
-	from SOMOIM_BOARD sb, MEMBER m 
-	where  sb.board_writer = m.member_id and SOMOIM_NUMBER = #{somoimnum} and BOARD_FIX = '비고정'order by BOARD_WRITE_DATE desc
+	from 
+	SOMOIM_BOARD sb, MEMBER m, 
+    (select BOARD_NUMBER, count(*) as total_reple from SOMOIM_BOARD_REPLE GROUP by BOARD_NUMBER) rc, 
+    (select BOARD_NUMBER, count(*) as total_like from SOMOIM_BOARD_LIKE GROUP by BOARD_NUMBER) lc 
+	where  sb.board_writer = m.member_id 
+    and sb.board_NUMBER = rc.board_number(+)
+    and sb.board_number = lc.board_number(+)
+    and SOMOIM_NUMBER = #{somoimnum} and BOARD_FIX = '비고정' order by BOARD_WRITE_DATE desc
+    
+<!-- 	select  -->
+<!-- 	m.member_profile_picture, sb.board_content,sb.board_first_pic, sb.board_first_syspic, sb.board_fix, sb.board_number, sb.board_second_pic , sb.board_second_syspic,  -->
+<!--         sb.board_third_pic, sb.board_third_syspic, sb.board_title , sb.board_type, sb.board_write_date, sb.board_write_update, sb.board_writer, -->
+<!--         sb.somoim_number -->
+<!-- 	from SOMOIM_BOARD sb, MEMBER m  -->
+<!-- 	where  sb.board_writer = m.member_id and SOMOIM_NUMBER = #{somoimnum} and BOARD_FIX = '비고정'order by BOARD_WRITE_DATE desc -->
 </select>
 
 <select id="selectBoardSomoim"  parameterType="int"  resultType="somoimboard">
@@ -189,6 +218,12 @@
 <select id="getBoardRepleCount" parameterType="int" resultType="int">
 	 select count(*) from SOMOIM_BOARD_REPLE where BOARD_NUMBER = #{board_number} 
 </select>
+
+<select id="selectMySomoimInfo"  resultType="somoimmyinfo">
+	 select * from SOMOIM_MEMBER where somoim_number = #{somoim_number} and member_name = #{id}
+</select>
+
+
 
 <select id="selectPagingBoardRepleList" parameterType="somoimreple" resultType="somoimreple">
 	 <![CDATA[
