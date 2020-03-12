@@ -47,6 +47,8 @@ height: 700px;
 	background-color: white;
 	margin-top: 40px;
 	border-top-left-radius: 20px;
+	position: absolute;
+	top: 224px;
 }
 
 #snsProfileName {
@@ -76,7 +78,6 @@ height: 700px;
 	margin-top: 40px;
 	border-radius: 0;
 	border-top-right-radius: 20px;
-	flex-direction: column-reverse;
 }
 
 #writeContents textarea {
@@ -294,6 +295,19 @@ flex-direction: column-reverse;
 </style>
 
 <script type="text/javascript">
+$(window).scroll(function(){
+	var scrollTop = $(document).scrollTop();
+	if (scrollTop < 224) {
+	 scrollTop = 224;
+	}
+	$("#snsAside").stop();
+	$("#snsAside").animate( { "top" : scrollTop });
+	});
+
+
+
+
+
 
 //페이지 불러올때 ajax
 $(function () {
@@ -363,7 +377,7 @@ $(function () {
 	<div class="container-fluid" id="snsMain">
 		<div class="container-fluid">
 			<div class="row">
-				<aside class="container col-xs-4 col-md-2 col-sm-4" id="snsAside">
+				<aside class="container col-xs-3 col-md-2 col-sm-3" id="snsAside">
 					<div id="snsProfileImg">
 						<img src="" class="img-responsive img-thumbnail">
 					</div>
@@ -374,13 +388,13 @@ $(function () {
 							<li role="presentation" id="snsProfileNotice"><a href="#;">알람</a></li>
 							<li role="presentation" id="snsProfileInfo"><a href="#">정보수정</a></li>
 							<li role="presentation" id="snsFriendList"><a href="#">내친구</a></li>
-							<li role="presentation" id="snsProfileMyPosts"><a href="#">내글</a></li>
+							<!-- <li role="presentation" id="snsProfileMyPosts"><a href="#">내글</a></li> -->
 						</ul>
 						<ul class="nav nav-pills nav-stacked">
 							<li role="presentation" class="active" id="snsWirte"><a
 								href="#;">글작성</a></li>
 							<li role="presentation" class="active" id="timeLine"><a
-								href="#">타임라인</a></li>
+								href="#;">타임라인</a></li>
 							<li role="presentation" class="active" id="socialClub"><a
 								href="#">소모임</a></li>
 							<li role="presentation" class="active" id="travelPlan"><a
@@ -388,7 +402,7 @@ $(function () {
 						</ul>
 					</div>
 				</aside>
-				<div class="jumbotron col-xs-8 col-md-10 col-sm-8" id="snsTimeLine">
+				<div class="jumbotron col-xs-9 col-md-10 col-sm-9 pull-right" id="snsTimeLine">
 					<div class="navbar-default navbar-right" id="snsTimeLinefilter">
 						<a href="sns/timeline">전체</a>&nbsp;/ <a href="sns/friendtimeline"
 							onclick="friendtime();">친구</a>&nbsp;/ <a href="sns/mytimeline"
@@ -605,8 +619,8 @@ $("#writeBox").on('change','#ex_file',function(){
 		$timeLine += '<div id="postsOptionBox" class="navbar-default navbar-right">';
 		$timeLine += '<div id="snsOption">';
 		$timeLine += '<button type="button"><i class="fas fa-share snsOptionSelector"></i> </button>';
-		$timeLine += '<button type="button"><i class="far fa-thumbs-up snsOptionSelector" id="snsLike">'+timeLineJson[j]["like"]+'</i></button>';
-		$timeLine += '<button type="button"><i class="far fa-thumbs-down snsOptionSelector" id="snsHate">'+timeLineJson[j]["hate"]+'</i></button></div>';
+		$timeLine += '<button type="button"><i class="far fa-thumbs-up snsOptionSelector like" id="snsLike" onclick="likeSend(\''+timeLineJson[j]["posts_number"]+'\',\''+timeLineJson[j]["posts_writer"]+'\')">'+timeLineJson[j]["like"]+'</i></button>';
+		$timeLine += '<button type="button"><i class="far fa-thumbs-down snsOptionSelector hate" id="snsHate" onclick="hateSend(\''+timeLineJson[j]["posts_number"]+'\',\''+timeLineJson[j]["posts_writer"]+'\')">'+timeLineJson[j]["hate"]+'</i></button></div>';
 		$timeLine += '</div>';
 		$timeLine += '</div>';
 		$timeLine += '<div class="container snsImageContainer" id="'+j+'" >';
@@ -673,7 +687,43 @@ function setProfile(json) {
 
 
 </script>
+	<!-- 좋아요 기능 -->
 	<script type="text/javascript">
+	function likeSend(postNumber,writer) {
+		 $.ajaxSetup({
+		beforeSend : function(xhr){
+ 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	});//먼저 보냄
+	$.ajax({
+			method:'post',
+			url:"sns/timeline/like",
+			data:{"postNumber":postNumber},
+			dataType : "json"
+	}).done((likeJson)=>{
+		makeTimeLine(likeJson);
+	});
+	}
+	
+	
+
+</script>
+<!-- 싫어요 기능 -->
+<script type="text/javascript">
+function hateSend(postNumber,writer) {
+	 $.ajaxSetup({
+	beforeSend : function(xhr){
+	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+});//먼저 보냄
+$.ajax({
+		method:'post',
+		url:"sns/timeline/hate",
+		data:{"postNumber":postNumber},
+		dataType : "json"
+}).done((HateJson)=>{
+	makeTimeLine(HateJson);
+});
+}
+
 
 
 </script>
