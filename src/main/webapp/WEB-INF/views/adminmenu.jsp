@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib prefix="sec"
+<%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
@@ -16,6 +16,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
 
 <!-- <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> 
@@ -33,7 +35,7 @@
 	background-color: white;
 }
 
-img {
+#header_img {
 	float: none;
 	margin: 0 auto;
 	display: flex;
@@ -43,25 +45,21 @@ img {
 	margin-bottom: 40px;
 }
 
-li {
-	font-size: 16px;
-	font-weight: 700;
-	font-family: 'Jua' ;
-}
-#logout{
-border: 0;
-outline: 0;
-background-color: white;
-color: #337ab7;
-font-family: 'Jua' ;
-width: 85px;
-height: 50px;
-}
-#logout:hover{
-background-color: #E6E6E6
+#logout {
+	border: 0;
+	outline: 0;
+	background-color: white;
+	color: #337ab7;
+	font-family: 'Jua';
+	width: 85px;
+	height: 50px;
 }
 
-/* -------------------------------------------------------------- */
+#logout:hover {
+	background-color: #E6E6E6
+}
+
+/* -------------------header------------------------------------------- */
 #housemain_judge {
 	width: 70%;
 	margin-left: 5%;
@@ -124,25 +122,10 @@ li {
 </head>
 <body>
 	<div class="container" id="headerContainer">
-		<%-- <div class="col-md-12 col-sm-12 col-xs-12">
-			<ul class="nav navbar-nav navbar-right">
-				<sec:authorize access="isAnonymous()">
-					<li><a href="login" >로그인</a></li>
-					<li><a href="joinselecttype">회원가입</a></li>
-				</sec:authorize>
-				<sec:authorize access="isAuthenticated()">
-					<li><a href="myinfo">나의 정보</a></li>
-					<li>
-						<form method="post" action="/gabom/logout">	
-							<input type="submit" value="로그아웃" id="logout"> <input type="hidden"
-								name="${_csrf.parameterName}" value="${_csrf.token}" />
-						</form>
-					</li>
-				</sec:authorize>
-			</ul>
-		</div> --%>
-		<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 40px;"><a href="/gabom/">
-			<img src="resources/headerImage/logo3.png">
+
+		<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 40px;">
+			<a href="/gabom/"> <img id="header_img"
+				src="resources/headerImage/logo3.png">
 			</a>
 		</div>
 	</div>
@@ -150,15 +133,16 @@ li {
 		<!-- <h2>Toggleable Tabs</h2> -->
 		<br>
 		<!-- Nav tabs -->
-		<ul class="nav nav-tabs" role="tablist" style="background-color: infobackground;">
+		<ul class="nav nav-tabs" role="tablist"
+			style="background-color: infobackground;">
 			<li class="nav-item"><a class="nav-link active"
-				data-toggle="tab" href="#jodge">서비스업체 등록심사</a></li>
+				data-toggle="tab" href="#judge">서비스업체 등록심사</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab"
-				href="#menu1">서비스업체 신고관리</a></li>
+				href="#service_declaration">서비스업체 신고관리</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab"
-				href="#menu2">여행객계획 등록심사</a></li>
+				href="#tourist_judge">여행객계획 등록심사</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab"
-				href="#menu3">여행객 신고관리</a></li>
+				href="#tourist_declaration">여행객 신고관리</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab"
 				href="#all_notices" id="all_notices_click">전체회원 공지사항</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab"
@@ -167,7 +151,7 @@ li {
 		</ul>
 		<!-- Tab 내용 -->
 		<div class="tab-content">
-			<div id="jodge" class="container tab-pane active">
+			<div id="judge" class="container tab-pane active">
 				<br>
 				<div>
 					<div id="service_main">
@@ -180,21 +164,22 @@ li {
 					</div>
 				</div>
 			</div>
-			<div id="menu1" class="container tab-pane fade">
+			<div id="service_declaration" class="container tab-pane fade">
 				<br>
 				<h3>서비스업체 신고관리</h3>
 				<p>메 뉴 1</p>
 			</div>
-			<div id="menu2" class="container tab-pane fade">
+			<div id="tourist_judge" class="container tab-pane fade">
 				<br>
 				<h3>여행객계획 등록심사</h3>
 				<p>메뉴2</p>
 			</div>
-			<div id="menu3" class="container tab-pane fade">
+			<div id="tourist_declaration" class="container tab-pane fade">
 				<br>
 				<h3>여행객 신고관리</h3>
 				<p>메뉴3</p>
 			</div>
+			<!----------------------------------------------전체공지 출력---------------------------------------------->
 			<div id="all_notices" class="container tab-pane fade">
 				<br>
 				<h3>전체회원 공지사항</h3>
@@ -219,15 +204,26 @@ li {
 						</tbody>
 					</table>
 				</div>
+					<nav aria-label="Page navigation example" style="text-align: center;">
+						<ul class="pagination">
+							<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+							<li class="page-item active"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#">4</a></li>
+							<li class="page-item"><a class="page-link" href="#">5</a></li>
+							<li class="page-item"><a class="page-link" href="#">Next</a></li>
+						</ul>
+					</nav>
 				<!-- pagination 영역 -->
-				<div style="text-align: center;">
+				<!-- <div style="text-align: center;">
 					<ul id="pagination" class="pagination"></ul>
-				</div>
+				</div> -->
 
 				<!-- 글쓰기 번튼 영역 -->
 				<div style="text-align: center;" id="write_button_area"></div>
 			</div>
-			<!-- 질문게시판 출력 -->
+			<!----------------------------------------------질문게시판 출력---------------------------------------------->
 			<div id="qna_board" class="container tab-pane fade">
 				<br>
 				<h3>질문 게시판</h3>
@@ -255,9 +251,9 @@ li {
 			</div>
 		</div>
 
-		<!-- 서비스업 Modal -->
+		<!----------------------------------------------서비스업 Modal---------------------------------------------->
 		<div class="modal" id="myModal">
-			<div class="modal-dialog ">
+			<div class="modal-dialog-lg modal-center">
 				<!-- modal-dialog-scrollable -->
 				<div class="modal-content">
 
@@ -285,7 +281,7 @@ li {
 		</div>
 		<!-- Modal End -->
 
-		<!-- 공지사항디테일 Modal -->
+		<!----------------------------------------------공지사항디테일 Modal---------------------------------------------->
 		<div class="modal" id="noticesModal">
 			<div class="modal-dialog ">
 				<!-- modal-dialog-scrollable -->
@@ -298,37 +294,41 @@ li {
 					<div class="modal-body" id="notices_modal_body"></div>
 					<!-- Modal footer -->
 					<div class="modal-footer">
+						<!-- <input type="button" value="삭제" class="btn btn-warning delete" data-dismiss="modal"> -->
+						<button type="button" class="btn btn-warning delete"
+							data-dismiss="modal">삭제</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!-- noticesModal End -->
-		
-		<!-- qna디테일 Modal -->
+
+		<!----------------------------------------------qna디테일 Modal---------------------------------------------->
 		<div class="modal" id="qnaModal">
 			<div class="modal-dialog ">
 				<!-- modal-dialog-scrollable -->
 				<div class="modal-content">
 					<!-- Modal Header -->
 					<form id="afrm">
-					<div class="modal-header" id="qna_modal_header">
-						<h1 class="modal-title"></h1>
-						<button type="button" class="close" data-dismiss="modal">×</button>
-					</div>
-					<div class="modal-body" id="qna_modal_body"></div>
-					<!-- Modal footer -->
-					<div class="modal-footer">
-					<button type="button" id="qna_answer_button" class="btn btn-info answer">답글작성</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-					</div>
+						<div class="modal-header" id="qna_modal_header">
+							<h1 class="modal-title"></h1>
+							<button type="button" class="close" data-dismiss="modal">×</button>
+						</div>
+						<div class="modal-body" id="qna_modal_body"></div>
+						<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="button" id="qna_answer_button"
+								class="btn btn-info answer">답글작성</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 		<!-- noticesModal End -->
 
-		<!-- 글쓰기 Modal -->
+		<!----------------------------------------------글쓰기 Modal---------------------------------------------->
 		<div class="modal" id="write_modal">
 			<div class="modal-dialog ">
 				<!-- modal-dialog-scrollable -->
@@ -366,7 +366,9 @@ li {
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
 	</div>
 
-<script>
+	<script>
+
+	
 	
 	function getToday() {
 		const today = new Date();
@@ -379,6 +381,8 @@ li {
 			mm='0'+mm; //1자리 숫자 앞에 0 붙이기
 		return yyyy+"-"+mm+"-"+dd;
 	}
+	
+	
 	
 	//---------------------------------------------------------------------qna 전체 출력---------------------------------------------------------------------
 	 $("#qna_board_click").on("click",function(){
@@ -394,12 +398,15 @@ li {
              dataType : 'json',
              success : function(response) {
 				console.log('qna불러오기 성공');
+				
+				console.log("size",response.length);
+				
 				$("#qna_body").empty();
 				let strq = " ";
 				for(i=0;i<response.length;i++){
 					strq += '<tr>';
 					strq += '<td>'+response[i].qna_number+'</td>'; //질문번호
-					strq += '<td><a id="qna_detail" class="qna_detail" href="#;" data-toggle="modal" data-target="#qnaModal" data-number="'+response[i].qna_number+'">'+response[i].qna_title+'</a></button>';
+					strq += '<td><a id="qna_detail" class="qna_detail" href="#;" data-toggle="modal" data-target="#qnaModal" data-number="'+response[i].qna_number+'">'+response[i].qna_title+'</a>';
 					strq += '</td>'; //제목
 					strq += '<td>'+response[i].qna_member_id+'</td>';
 					const writeDate=response[i].qna_date.split(" ");  //split(쪼개다)
@@ -516,7 +523,8 @@ li {
       		});
 		
 	}); //qna 답글작성 End
-
+	
+	
 	//----------------------------------------------전체공지 출력---------------------------------------------------------------------
 	$("#all_notices_click").on("click",function(){
 		console.log("notices 클릭");
@@ -531,7 +539,9 @@ li {
            success : function(response) {
 				console.log('notices불러오기 성공');
 				console.log(response);
-				
+				console.log("전체공지 사이즈",response.length);
+				var pagesize = response.length;
+				console.log("페이지사이즈",pagesize);
 				$("#notices_body").empty();
 				let strb = " ";
 				for(var i = 0;i<response.length;i++){
@@ -561,7 +571,7 @@ li {
        });
 	});//notices function End
 	
-	//---------------------------------------------------------------------전체공지 modal 생성---------------------------------------------------------------------
+	//---------------------------------------------------------------------전체공지 상세 modal 생성---------------------------------------------------------------------
 	$(document).on("click", "#notices_detail",function(e){
 		console.log("게시글번호 클릭");
 		var params = e.target.dataset.number; 
@@ -582,8 +592,10 @@ li {
 					$("#notices_modal_body").empty();
 					response = JSON.parse(response);
 					console.log("notices",response);
+					console.log("숫자",response[0].all_notices_number);
 					let strn = " ";
 					strn += '<div>'+response[0].all_notices_title+'</div>';
+					strn += '<input type="hidden" name="notices_delete" id="notices_delete" data-target="#notices_delete" value="'+response[0].all_notices_number+'">';
 					$("#notices_modal_header").append(strn);
 					strn = " ";
 					strn += '<div>작성일 : '+response[0].all_notices_date  +'<span> 조 회 수 : '+  response[0].all_notices_views+'</div>';
@@ -597,6 +609,53 @@ li {
               }
           });	  
 	}); //notices모달 click End
+	
+	//----------------------------------------------공지사항 삭제---------------------------------------------------------------------
+	$(".delete").on("click",function(){
+		console.log("삭제버튼 클릭");
+		var params = $("#notices_delete").val();
+		console.log("params",params);
+		
+		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+        	console.log("notices delete시작");
+        	 $.ajax({
+                 url : "noticedelete",
+                 type : "Post",
+                 data : {"num":params}, 
+                 dataType : 'json',
+                 success : function(response) {
+                	 console.log("공지사항 삭제성공");
+                	 $("#notices_body").empty();
+     				let strb = " ";
+     				for(var i = 0;i<response.length;i++){
+     					strb += '<tr>';
+     					strb += '<td>'+response[i].all_notices_number+'</td>'; //글번호
+     					strb += '<td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a>';
+     					strb += '</td>'; //제목
+     					const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
+     					//console.log(writeDate[0]); //년 월 일
+     					//console.log(writeDate[1]); //시 분 초
+     					
+     					const today = getToday(); //오늘 날짜를 직접 정의
+     					
+     					if(today==writeDate[0]){ //날 짜
+     					strb += '<td>'+writeDate[1]+'</td>';
+     					}else{
+     						strb += '<td>'+writeDate[0]+'</td>';
+     					}
+     					strb += '<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'; //조 회 수
+     					strb += '</tr>';
+     				}//for문 종료
+     				$("#notices_body").append(strb);
+     				
+                }, error : function(jqXHR, status, e) {
+                     console.error("공지사항 삭제 에러");
+                 }
+             });	  
+   	}); //notices delete End
 	
 	//---------------------------------------------------------------------글쓰기 버튼 생성---------------------------------------------------------------------
 	$("<button>").addClass("btn btn-info custom").attr("id","write").attr("data-toggle","modal").attr("data-target","#write_modal").text("글쓰기").appendTo($("#write_button_area"));

@@ -76,6 +76,10 @@
 	<insert id="getnoticeswrite" parameterType="String">
 		INSERT INTO ALL_NOTICES_BOARD VALUES (SEQ_ALL_NOTICES_NUMBER.nextval, #{title}, #{content}, SYSDATE, 0)
 	</insert>
+	<!-- 공지사항 삭제 -->
+	<delete id="getnoticedelete" >
+	DELETE FROM ALL_NOTICES_BOARD WHERE ALL_NOTICES_NUMBER = #{num}
+	</delete>
 	
 	<!-- qna전체리스트 출력 -->
 	<select id="getqnaboard" resultType="qnaboard">
