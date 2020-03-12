@@ -23,6 +23,7 @@ import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.Somoim;
 import icia.project.gabom.dto.SomoimBoard;
 import icia.project.gabom.dto.SomoimMyInfo;
+import icia.project.gabom.dto.Somoim_photo_reple;
 import icia.project.gabom.dto.Somoimreple;
 import icia.project.gabom.userClass.Paging;
 import icia.project.gabom.userClass.SomoimBoardFile;
@@ -425,6 +426,75 @@ public class SomoimManagement {
 	}
 	
 	
+	//=============== 페이징
+	public String getPaging(int pNum, int boardNum) {
+		int maxNum = sDao.getBoardRepleCount(boardNum);
+		int listCount = 5;  // 10개씩 보여주기
+		int pageCount = 2;  // 이게 뭔말이지?
+		String boardName = "replelist"; //?
+		//왜 임포트가 안되징?
+		Paging paging = new Paging(maxNum, pNum, listCount, pageCount,boardNum, boardName);
+
+		return paging.makeHtmlPaging();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -437,15 +507,8 @@ public class SomoimManagement {
 	
 	// -------------------------------------------------------------------------------------------------이예상
 
-	public String somoimalbum(int somoimnum, MultipartHttpServletRequest multi) {
-		String json = null;
-
-		return json;
-	}
-
 	
 	
-	//=============== 페이징
 
 	public String somopiclist(int somo_number) {
 		String json2= null;
@@ -458,16 +521,24 @@ public class SomoimManagement {
 		return json2;
 	}
 
-	// -------------------------------------------------------------------------------------------------이예상
-	public String getPaging(int pNum, int boardNum) {
-		int maxNum = sDao.getBoardRepleCount(boardNum);
-		int listCount = 5;  // 10개씩 보여주기
-		int pageCount = 2;  // 이게 뭔말이지?
-		String boardName = "replelist"; //?
-		//왜 임포트가 안되징?
-		Paging paging = new Paging(maxNum, pNum, listCount, pageCount,boardNum, boardName);
 
-		return paging.makeHtmlPaging();
+	public String showimginfo(String num) {
+		String json= null;
+		
+		Somoim_photoalbum somodetailpic = sDao.showimginfo(num);//사진가져오는것 
+		
+		
+		List<Somoim_photo_reple> spreple = sDao.getimgreple(num);
+		somodetailpic.setSpreple(spreple);
+		
+		int splike = sDao.getimglike(num);
+		somodetailpic.setSplike(splike);
+		
+		
+		json = new Gson().toJson(somodetailpic);
+		System.out.println("사진 정보"+json);
+		
+		return json;
 	}
 
 }

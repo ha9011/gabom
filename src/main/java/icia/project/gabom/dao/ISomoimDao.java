@@ -12,6 +12,7 @@ import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.Somoim;
 import icia.project.gabom.dto.SomoimBoard;
 import icia.project.gabom.dto.SomoimMyInfo;
+import icia.project.gabom.dto.Somoim_photo_reple;
 import icia.project.gabom.dto.Somoimreple;
 import icia.project.gabom.dto.Somoim_photoalbum;
 
@@ -98,6 +99,15 @@ public interface ISomoimDao {
 
 	@Select("select * from SOMOIM_PHOTOALBUM where SOMOIM_NUMBER=#{somo_number}")
 	List<Somoim_photoalbum> getsomopicList(@Param("somo_number") int somo_number);
+
+	@Select("select * from SOMOIM_PHOTOALBUM WHERE PHOTO_NUMBER =#{num}")
+	Somoim_photoalbum showimginfo(String num);
+	
+	@Select("select * from SOMOIM_PHOTO_REPLE WHERE PHOTO_NUMBER =#{num}")
+	List<Somoim_photo_reple> getimgreple(String num);
+	
+	@Select("select count(*) from SOMOIM_PHOTO_LIKE WHERE PHOTO_NUMBER =#{num}")
+	int getimglike(String num);
 
 	
 

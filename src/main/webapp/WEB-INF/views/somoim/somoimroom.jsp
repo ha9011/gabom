@@ -1096,7 +1096,7 @@ $("#joinsomoim").on("click",function(e){
 	  			}
 	  			
 				if(data.board_third_syspic==="없음"){
-		
+				
 				}else{
 					var img = $("<img width='100%' height='100%' src='."+data.board_third_syspic+"'>")
 					$("#showthirdPic").append(img);

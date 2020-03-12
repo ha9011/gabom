@@ -7,9 +7,7 @@
 <title>숙박예약</title>
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 <!-- 날짜 시간 -->
- 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="resources/css/timepicker-addon.css" />
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -21,160 +19,228 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"> 
 
+<!-- Bootstrap core CSS -->
+<link href="./resources/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<!-- Custom styles for this template -->
+<link href="./resources/css/jquery.bxslider.css" rel="stylesheet">
+<link href="./resources/css/style.css" rel="stylesheet">
+<!-- 레이아웃 부트스트랩 영역 -->
 
 <style>
-body{overflow:scroll;}
+body {
+	overflow: scroll;
+}
+
+.container {
+	width: 100%;
+}
+
 .form-control-borderless {
-    border:none;
+	border: none;
 }
 
-.form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
-    border: none;
-    outline: none;
-    box-shadow: none;
-}
-#title{/*숙소명 */
-	margin:50px 40%;
-	width:600px; 
-}
-#Imagearea{/*사진영역 */
-	margin:10px 5%;
-	width:90%;
-	height:500px;
-	display:flex;
-}
-#mainimg{
-	margin:10px 0;
-	margin-right:30px;
-	width:50%
-}
-#detail{
-	margin-left:20px;	
-	margin:10px 0;
-	width:50%
-}
-.detail{
-	margin:5px;
-}
-#middle{/*숙소정보, 예약 */
-	display:flex;
-	margin:10px 5%;
-	width:90%;
-}
-#info{/*숙소정보 */
-	width:50%;
-	margin-right:10px;
-	height:200px;
-	border:2px solid black;
-}
-#reser{/*예약 */
-	margin-left:20px;
-	width:50%;
-	height:200px;
-	border:2px solid black;
-}
-#bottom{/*주의사항, 후기, 문의사항 */
-	display:flex;
-	margin:10px 5%;
-	width:90%;
-	height:300px;
-}
-#reple{/*댓글 */
-	margin-left:20px;
-	width:50%;
-	border:2px solid black;
-}
-#prarea{
-	margin-right:10px;
-	width:50%;
-}
-#Precautions{/*주의사항 */
-	width:100%;
-	margin-right:10px;
-	border:2px solid black;
+.form-control-borderless:hover, .form-control-borderless:active,
+	.form-control-borderless:focus {
+	outline: none;
+	box-shadow: none;
+	border: 1px solid lightgray;
 }
 
-#review{
-	width:100%;
-	margin:10px 0;
-	margin-right:10px;
-	border:2px solid black;
-	
+h1 { /*숙소명 */
+	text-align: center;
+	margin-bottom:200px;
+	margin: 0 25%;
+	width: 500px;
+	font-size: 50px;
 }
+
+input {
+	width: 200px;
+	height: 40px;
+	margin: 5px;
+}
+
+#reservation {
+	font-size: 20px;
+	margin: 10% 0;
+}
+
+#reser {
+	height: 100px;
+}
+
+#insertbtn {
+	margin: 50px 20%;
+}
+
+section {
+	margin: -100px 0;
+}
+
+.carousel-inner {
+	margin-top:150px;
+	width: 100%;
+	height: 550px;
+}
+
+.d-block{
+	width: 100%;
+	height: 500px;
+}
+
+
 </style>
 
 </head>
 <body>
 		
-<div class="container">
-	<div class="row justify-content-center">
-                        <div class="col-12 col-md-10 col-lg-8">
-                                <div class="card-body row no-gutters align-items-center">
-                                    <div class="col-auto"> <!-- 돋보기 -->
-                                        <i class="fas fa-search h4 text-body"></i>
-                                    </div>
-                                    <!--end of col-->
-                                    <div class="col"><!-- 검색창 -->
-                                        <input id="changesearch" name="food_address" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
-                                    </div>
-                                    <!--end of col-->
-                                    <div class="col-auto"><!-- 검색버튼 -->
-                                        <button id="searchbtn" class="btn btn-lg btn-success" type="submit">Search</button>
-                                    </div>
-                                    <!--end of col-->
-                                </div>
-                        </div>
-                        <!--end of col-->
-                    </div>
-</div>
-		
-		<div id="food_main"><!-- 타이틀, 사진, 정보, 주의사항, 댓글, 후기, 예약이 담긴 div-->
-			<div id="title"></div><!-- food_name -->
-			<div id="Imagearea">
-				<!-- food_mainImage크게  , food_detailImage 작게 4개 이상-->
-				<div id="mainimg"></div>
-				<div id="detail"><!-- display:flex -->
-					<div id="detailimg1"></div>
-					<div id="detailimg2"></div>
-				</div>
-				
-			</div>
-			<div id="middle"><!-- 음식점정보, 예약 display:flex-->
-				<div id="info">정보</div>
-				<div id="reser">
-				예약선택
-					<form id="reservation" name="reservation"  method="post">
-						날짜:<input type="text" id="datepicker" class="datepicker" name="foodreservation_date" />
-                                                          시간:<input type="text" id="timepicker" class="timepicker" name="foodreservation_time" />
-						인원 : <input name="foodreservation_person" type="number" id="person">명 
-						<input type="hidden" name="food_hostid" id="hostid" > 
-						<input type="hidden" name="food_number" id="food_number"><br>
-						<button style="width: 200px" type="submit" id="insertbtn">예약하기</button>
-					</form>	
-					 
-				</div>
-			</div>
-			
-			<div id="bottom"><!-- 주의사항, 후기, 문의사항  display:flex -->
-				<div id="prarea"><!-- 주의사항,후기  display:flex -->
-					<div id="Precautions"><!-- 주의사항 -->
-						<h2>주의사항</h2>
-						<h4>예약 취소</h4>
-						<h5>48시간 동안 취소 수수료 없음</h5>
-						<h5>그 이후로 체크인 5일 전까지 취소하면 서비스 수수료를 제외한 전액이 환불됩니다.</h5>
-					</div>
-					<div id="review"><!-- 후기 -->
-						<h4>후기</h4>
+<div>
+	<form action="searchfood" method="get">
+		<!-- foodmain page에서 검색하는 것  -->
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-12 col-md-10 col-lg-8">
+					<div class="card-body row no-gutters align-items-center">
+						<div class="col-auto">
+							<!-- 돋보기 -->
+							<i class="fas fa-search h4 text-body"></i>
+						</div>
+						<!--end of col-->
+						<div class="col">
+							<!-- 검색창 -->
+							<input id="searchfood" name="food_address"
+								class="form-control form-control-lg form-control-borderless"
+								type="search" placeholder="Search topics or keywords">
+						</div>
+						<!--end of col-->
+						<div class="col-auto">
+							<!-- 검색버튼 -->
+							<button style="background-color: #064D84" id="searchbtn"
+								class="btn btn-lg btn-success" type="submit">Search</button>
+						</div>
+						<!--end of col-->
 					</div>
 				</div>
-				<div id="reple"><!-- 댓글 -->
-					<h4>댓글문의사항</h4>
-				</div>
+				<!--end of col-->
 			</div>
 		</div>
-		
-		
+	</form>
+</div>
+		<div class="container">
+		<div id="title"></div>
+		<!-- 숙소 이름 영역 -->
+
+		<section class="main-slider">
+			<div id="carouselExampleControls" class="carousel slide"data-ride="carousel">
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<img id="img" class="d-block" src="">
+					</div>
+					<div class="carousel-item">
+						<img id="img1" class="d-block" src="" >
+					</div>
+					<div class="carousel-item">
+						<img id="img2" class="d-block" src="" >
+					</div>
+					<div class="carousel-item">
+						<img id="img3" class="d-block" src="" >
+					</div>
+					<div class="carousel-item">
+						<img id="img4" class="d-block" src="" >
+					</div>
+				</div>
+				<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"> <span
+					class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+					class="sr-only">Previous</span>
+				</a> <a class="carousel-control-next" href="#carouselExampleControls"
+					role="button" data-slide="next"> <span
+					class="carousel-control-next-icon" aria-hidden="true"></span> <span
+					class="sr-only">Next</span>
+				</a>
+			</div>
+		</section>
+		<!--사진영역 -->
+
+		<section>
+			<div class="row">
+				<div class="col-md-5">
+					<article class="blog-post">
+						<div class="blog-post-image"></div>
+						<div id="info" class="blog-post-body"></div>
+					</article>
+				</div>
+				<!-- 정보 -->
+
+				<div class="col-md-7 sidebar-gutter">
+					<aside>
+						<!-- sidebar-widget -->
+						<div id="reser" class="sidebar-widget">
+							<h3 class="sidebar-title">지금 예약하기</h3>
+							<div class="widget-container widget-about">
+								<form id="reservation" name="reservation"  method="post">
+								날짜:<input type="text" id="datepicker" class="datepicker" name="foodreservation_date" />
+                                                                             시간:<input type="text" id="timepicker" class="timepicker" name="foodreservation_time" /><br>
+								인원 : <input name="foodreservation_person" type="number" id="person">명 
+								<input type="hidden" name="food_hostid" id="hostid" > 
+								<input type="hidden" name="food_number" id="food_number"><br>
+								<button style="font-size: 20px; height: 50px; width: 300px; background-color: #064D84"
+								 type="submit" class="btn btn-secondary btn-lg{" id="insertbtn">예약하기</button>
+								</form>	
+					 
+							</div>
+						</div>
+					</aside>
+				</div>
+				<!-- 예약 form -->
+				</div>
+		</section>
+			<section>
+			<div class="col-md-12">
+				<article class="blog-post">
+					<div class="blog-post-image"></div>
+					<div class="blog-post-body">
+						<h2>후기</h2>
+						<p>ew months ago, we found ridiculously cheap plane tickets
+							for Boston and off we went. It was our first visit to the city
+							and, believe it or not, Stockholm in February was more pleasant
+							than Boston in March. It probably has a lot to do with the fact
+							that we arrived completely unprepared. That I, in my converse and
+							thin jacket, did not end up with pneumonia is honestly not even
+							fair.</p>
+					</div>
+				</article>
+			</div>
+		</section>
+		<!-- 후기영역  -->
+
+		<section>
+			<div class="col-md-12">
+				<article class="blog-post">
+					<div class="blog-post-image"></div>
+					<div class="blog-post-body">
+						<h2>댓글</h2>
+						<p>ew months ago, we found ridiculously cheap plane tickets
+							for Boston and off we went. It was our first visit to the city
+							and, believe it or not, Stockholm in February was more pleasant
+							than Boston in March. It probably has a lot to do with the fact
+							that we arrived completely unprepared. That I, in my converse and
+							thin jacket, did not end up with pneumonia is honestly not even
+							fair.</p>
+					</div>
+				</article>
+			</div>
+		</section>
+		<!-- 댓글영역 -->
+	</div>
+	<!-- /.container -->
+
+
+	<script src="./resources/js/bootstrap.min.js"></script>
+	<script src="./resources/js/jquery.bxslider.js"></script>
+	<script src="./resources/js/mooz.scripts.min.js"></script>
 </body>
+
 <script>
 var food =${detailfood};
 console.log(food[0]);
@@ -187,26 +253,26 @@ $(document).ready(function() {
 var title = $('<h1>'+food[0].food_name+'</h1>'); // 집 이름 
 $("#title").append(title);
 
-var mainimg =$('<img style="width:100%;height:470px" alt='+food[0].food_sysname+' src="'+food[0].food_sysname+'">');
-$("#mainimg").append(mainimg);
+$("#img").attr('src', food[0].food_sysname);
+$("#img1").attr('src', food[1].food_sysname);
+$("#img2").attr('src', food[2].food_sysname);
+$("#img3").attr('src', food[3].food_sysname);
+$("#img4").attr('src', food[4].food_sysname);
 
-var a=$('<img class="detail" style="width:48%;height:235px" alt='+food[1].food_sysname+' src="'+food[1].food_sysname+'">');
-var b=$('<img class="detail" style="width:48%;height:235px" alt='+food[1].food_sysname+' src="'+food[2].food_sysname+'">');
-var c=$('<img class="detail" style="width:48%;height:235px" alt='+food[1].food_sysname+' src="'+food[3].food_sysname+'">');
-var d=$('<img class="detail" style="width:48%;height:235px" alt='+food[1].food_sysname+' src="'+food[4].food_sysname+'">');
-$("#detailimg1").append(a);
-$("#detailimg1").append(b);
-$("#detailimg2").append(c);
-$("#detailimg2").append(d);
+
+
 //------------------------------------------------------------------------------이미지 영역
 
-var food_info= $('<div class="info"><img alt=가게 width="30px" height="25px" src="./resources/foodimg/food.JPG">'+'&nbsp'+'&nbsp'+'주소:'+food[0].food_address+'  '+'<br>'
-        +'<img alt=사람 width="25px" height="30px" src="./resources/foodimg/person.JPG">' +'&nbsp'+'&nbsp'+'수용가능인원:'+food[0].food_person+'명'+'<br>'
-        +'<img alt=주차장 width="30px" height="25px" src="./resources/foodimg/parking.JPG">'+'&nbsp'+'&nbsp' +'주차장:'+food[0].food_parkable+'<br>'
-        +'<img alt=영업시간 width="30px" height="25px" src="./resources/foodimg/open.JPG">'+'&nbsp'+'&nbsp' +'오픈시간:'+food[0].food_mintime+'<br>'
-        +'<img alt=영업시간 width="30px" height="25px" src="./resources/foodimg/open.JPG">'+'&nbsp'+'&nbsp' +'마감시간:'+food[0].food_maxtime+
-        '</div>')
+var host=$('<h2>'+food[0].food_hostid+'님의 맛집'+'</h2>');
+var food_info= $('<p class="info">'+'주소:'+food[0].food_address+'  '+'<br>'
+		+'수용가능인원:'+food[0].food_person+'명'+'<br>'
+		+'주차장:'+food[0].food_parkable+'<br>'
+		+'오픈시간:'+food[0].food_mintime+'<br>'
+		+'마감시간:'+food[0].food_maxtime+
+        '</p>')
+$("#info").append(host);
 $("#info").append(food_info);
+
 //-----------------------------------------------------------------------------------------info영역
 $("#insertbtn").on("click", function (e) {
 	  	e.preventDefault();
@@ -252,9 +318,8 @@ $(function() {
        ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
        ,changeYear: true //콤보박스에서 년 선택 가능
        ,changeMonth: true //콤보박스에서 월 선택 가능                
-       ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-       ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
-       ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+      /*  ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시   */
+       
        ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
        ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
        ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트

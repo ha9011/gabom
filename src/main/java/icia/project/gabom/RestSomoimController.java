@@ -31,10 +31,8 @@ public class RestSomoimController {
 
 	private ModelAndView mav;
 
-	
 	@Autowired
 	private SomoimAlbumfileUpload album;
-	
 	
 	@Autowired
 	private SomoimManagement simm;
@@ -54,6 +52,7 @@ public class RestSomoimController {
 		return checkInsert;
 	}
 
+	
 	@RequestMapping(value = "/attendjungmo", produces = "text/plain;charset=utf-8")
 	public String attendjungmo(Principal pr, @RequestParam HashMap<String, String> map, Jungmoroom jungmoroom) {
 		mav = new ModelAndView();
@@ -169,7 +168,19 @@ public class RestSomoimController {
 	
 	
 	
-	// --------------------------------------------------------------------------------이예상
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -178,6 +189,41 @@ public class RestSomoimController {
 	//--------------------------------------------------------------------------------이예상 
 	
 	//사진 첨부할때
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+//--------------------------------------------------------------------------------이예상 
+	
+	// 사진 업로드 
+
 	@PostMapping(value = "/somoimalbum", produces="text/plain;charset=utf-8")
 	public String somoimalbum(MultipartHttpServletRequest multi) {
 		System.out.println("소모임 사진 저장하자");
@@ -195,16 +241,30 @@ public class RestSomoimController {
 		
 		return json2;
 	}
-
+	
 	// 사진첩 메뉴 누를 때 
-	@PostMapping(value = "/showsomoimalbum", produces="text/plain;charset=utf-8")
-	public String showsomoimalbum(Somoim_photoalbum spa, Principal pr) {
-		System.out.println("소모임 사진 불러오자");
-		
-		int somo_number =spa.getSomoim_number();
-		
-		String json2 = simm.somopiclist(somo_number);
-		System.out.println("사진 불러 오기  : " + json2);
-		return json2;
-	}
+	   @PostMapping(value = "/showsomoimalbum", produces="text/plain;charset=utf-8")
+	   public String showsomoimalbum(Somoim_photoalbum spa, Principal pr) {
+	      System.out.println("소모임 사진 불러오자");
+	      
+	      int somo_number =spa.getSomoim_number();
+	      
+	      String json2 = simm.somopiclist(somo_number);
+	      System.out.println("사진 불러 오기  : " + json2);
+	      return json2;
+	   }
+	   
+	   
+	   @PostMapping(value = "/showimginfo", produces="text/plain;charset=utf-8")
+	   public String showimginfo(@RequestParam("num")String num, Principal pr) {
+	      System.out.println("사진 관련 보여줘 ");
+	      System.out.println(num);
+	      
+	      String json= simm.showimginfo(num);
+
+	      return json;
+	   }
+	   
+
+	
 }
