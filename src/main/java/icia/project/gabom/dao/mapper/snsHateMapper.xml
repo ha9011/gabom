@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.SnsHateDao">
+	<select id="likeCheck" parameterType="snsLikeHate"
+		resultType="snsLikeHate">
+		SELECT SNS_LIKE SNSLIKE,
+		SNS_POSTS_NUMBER
+		POSTNUMBER,SNS_HATE SNSHATE
+		FROM SNS_LIKE_HATE_COUNTER
+		WHERE
+		SNS_POSTS_NUMBER=#{postNumber} AND SNS_LIKE_HATE_MEMBER_ID=#{memberId}
+	</select>
+	<update id="likeCancel">
+		UPDATE SNS_LIKE_HATE_COUNTER SET
+		SNS_LIKE=null,SNS_HATE=1
+		WHERE SNS_POSTS_NUMBER=#{postNumber} AND
+		SNS_LIKE_HATE_MEMBER_ID=#{memberId}
+	</update>
+	<insert id="hateInsert" parameterType="snsLikeHate">
+		INSERT INTO
+		SNS_LIKE_HATE_COUNTER VALUES(null,#{postNumber},#{memberId},1)
+	</insert>
+	<update id="delete">
+		UPDATE SNS_LIKE_HATE_COUNTER SET SNS_HATE=null
+		WHERE
+		SNS_POSTS_NUMBER=#{postNumber} AND
+		SNS_LIKE_HATE_MEMBER_ID=#{memberId}
+	</update>
+	<update id="upDate">
+		UPDATE SNS_LIKE_HATE_COUNTER SET SNS_HATE=1
+		WHERE
+		SNS_POSTS_NUMBER=#{postNumber} AND
+		SNS_LIKE_HATE_MEMBER_ID=#{memberId}
+	</update>
+</mapper>
