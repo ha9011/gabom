@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 
 import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.SomoimBoard;
+import icia.project.gabom.dto.Somoim_photo_reple;
 import icia.project.gabom.dto.Somoim_photoalbum;
 import icia.project.gabom.dto.Somoimreple;
 import icia.project.gabom.service.SomoimManagement;
@@ -254,7 +255,7 @@ public class RestSomoimController {
 	      return json2;
 	   }
 	   
-	   
+	   //사진관련 정보 가져오기 댓글, 좋아요
 	   @PostMapping(value = "/showimginfo", produces="text/plain;charset=utf-8")
 	   public String showimginfo(@RequestParam("num")String num, Principal pr) {
 	      System.out.println("사진 관련 보여줘 ");
@@ -264,6 +265,18 @@ public class RestSomoimController {
 
 	      return json;
 	   }
+	   
+	   //사진에 댓글 입력 
+	   @PostMapping(value = "/deletereple", produces="text/plain;charset=utf-8")
+	   public String deletereple(Somoim_photo_reple spreple, Principal pr) {
+	      System.out.println("댓글 번호  ");
+	      System.out.println(spreple);
+	    
+		  String json= simm.deletereple(spreple);
+
+	      return json;
+	   }
+	   
 	   
 
 	

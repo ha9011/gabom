@@ -89,10 +89,29 @@ margin-bottom:100px;
 #imgarea{
 display:inline-flex;
 } 
+#repleinsrt{
+display:flex;
+margin:10px; 
+}
+#reple_content{
+margin:0 10px;
+width:70%;
+}
+#likearea{
+display:flex;
+height:20%;
+}
+#reple{
+margin: 30px 0;
+ 
+}
+#btnDelete{
+float: right;
+}
 </style>
 			<div id="title">
 			 	<div>
-				 <h1 class="font-weight-light text-lg ">소모임 이름 Gallery</h1>			
+				 <h1 class="font-weight-light text-lg " id="name">소모임 이름 Gallery</h1>			
 				</div>
                <form  id="uploadimg" name="uploadimg" method="post" enctype="multipart/form-data"> 
                      <div id="btnbox" class="filebox bs3-primary">
@@ -110,25 +129,37 @@ display:inline-flex;
 
 
 <!-- Modal -->
+
 <div class="modal fade" id="imgmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+				<div class="modal-title" id="exampleModalLongTitle"></div>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body2">
 				
 				<div id="modalimg"></div>
-				
+				<div id="likearea">
+					<div id="likeimg"></div>
+					<div id="likecnt"></div>
+				</div>
+				<form id="repleinsrt">
+					<input id="reple_id" type="hidden"><input type="hidden" id="photo_num">
+					<div id="user_id"></div><input id="reple_content" name="reple_content" type="text">
+					<button id="reple_btn" class="btn btn-primary" >등록</button>
+				</form>
+				<div id="pic_replelist">
+					<div id="reple">
+					</div>
+				</div>
 				
 				
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
 			</div>
 		</div>
 	</div>
@@ -188,52 +219,6 @@ $(".upload-name").hide();
 //사진
    $(document).ready(function(){
         var fileTarget = $('.filebox .upload-hidden');
-
-<<<<<<< HEAD
-		        $(this).siblings('.upload-name').val(filename);
-		    });
-		}); 
-	
-	
-	
-	
-	// 엘범 누르면 사진이 나옴
-const showalbumlist = ()=>{
-	
-	console.log("기본정보",${JsonBasicInfo})
-	
-	var basicInfo =	${JsonBasicInfo};
-	
-	var data = {
-		"somoim_number" : basicInfo.somoim_number
-	}
-	
-	$.ajaxSetup({         
-	      beforeSend : function(xhr){
-	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");} 
-	});
-	
-	$.ajax({
-		url: "showsomoimalbum",
-		type: 'post',
-		data : data,
-		dataType: "json", //rest 컨트롤 이용	
-		success:function(data){
-			alert("success");
-			console.log(data)
-			
-		},
-		error:function(error){
-			alert("fail")
-			console.log(error);
-		}
-		
-	}) //ajax end
-	
-	
-}
-</script>		
-=======
           fileTarget.on('change', function(){
               if(window.FileReader){
                   var filename = $(this)[0].files[0].name;
@@ -253,6 +238,9 @@ const showalbumlist = ()=>{
    
    console.log("기본정보",${JsonBasicInfo})
    
+   var myinfo=${JsonMemberList};
+   console.log("회원",myinfo)
+   
    var basicInfo =   ${JsonBasicInfo};
    
    var data = {
@@ -270,7 +258,7 @@ const showalbumlist = ()=>{
       data : data,
       dataType: "json", //rest 컨트롤 이용   
       success:function(data){
-         
+    	  $("#imgarea").empty();
          console.log(data);
          
          let index =0;
@@ -282,11 +270,11 @@ const showalbumlist = ()=>{
      		} 
         	 
         	 var out=$('<div class=" col-md-4"></div>');
-        	 //var name=$('<a href="#imgmodal" name='+[i.photo_number]+'  data-toggle="modal" class="d-block mb-4 "></a>'); // 클리릭하면 해당 이미지 확대되서 모달창으로 뜸.
-        	 var img=$('<img name='+[i.photo_number]+' id="pic" class="img-fluid img-thumbnail" src=".'+[i.photo_sysfile]+'">');
+        	 var name=$('<a href="#imgmodal" name='+[i.photo_number]+' id="pic" data-toggle="modal" class="d-block mb-4 "></a>'); // 클리릭하면 해당 이미지 확대되서 모달창으로 뜸.
+        	 var img=$('<img name='+[i.photo_number]+'  class="img-fluid img-thumbnail" src=".'+[i.photo_sysfile]+'">');
         	 
-        	 //name.append(img);
-        	 out.append(img);
+        	 name.append(img);
+        	 out.append(name);
         	 $("#imgarea").append(out);
         	 
         	 index++;
@@ -301,16 +289,14 @@ const showalbumlist = ()=>{
       
    }) //ajax end
    
+ //사진 클릭시 모달 생성  
 $(document).on('click',"#pic", function() {
-	
+	 
 	console.log("클릭한 사진번호"+$(this).attr("name"));
-	
-	//$("#modalimg").empty();
 	
 	var imgnum= $(this).attr("name");
 		console.log(imgnum);
-	//$("#modalimg").append(imgname);
->>>>>>> b6bc1338dbe1219be4ff3dd6c94c6a2cad16ad28
+	
 	
 	$.ajax({
 		  url: "showimginfo",
@@ -318,10 +304,52 @@ $(document).on('click',"#pic", function() {
 	      data : {"num":imgnum},
 	      dataType: "json", //rest 컨트롤 이용   
 	      success:function(data){
-	      
 	    	 console.dir(data);
 	    	 
+	    	 $("#exampleModalLongTitle").empty();
+	    	 $("#modalimg").empty();//이미지 지움
+	    	 $("#likecnt").empty();//좋아요 수 지움
+	    	 $("#repleinsert").empty();//댓글 입력란 지움
+	    	 $("#reple").empty();//댓글 지움
+	    	 $("#user_id").empty();//댓글 지움
 	    	 
+	    	//console.log(data.photo_sysfile);
+	    	var pic_name= $('<h1>'+data.photo_orifile+'</h1>'); 
+	    	$("#exampleModalLongTitle").append(pic_name);//사진 이름
+	    	 
+	    	var img = $("<img width='100%' height='100%' src='."+data.photo_sysfile+"'>")
+	    	$("#modalimg").append(img);//사진 먼저 넣고
+	    	
+	    	var likecnt = $('<h4>'+data.splike+'</h4>');
+	    	$("#likecnt").append(likecnt);//좋아요 수 넣고
+	    	
+	    	/* var likeimg =$();
+	    	$("#likeimg").append();//이미지 추가  */
+	    	
+	    	
+	    	
+	    	var user_id =$('<h5>'+myinfo[0].MEMBER_NAME+'</h5>');
+	    	
+	    	$("#user_id").append(user_id);//댓글 입력 이름
+	    	
+	    	//댓글 리스트 출력
+	    	for( i of data.spreple){
+	    		
+	    		var reple_id = $('<div><a href="#">'+[i.reply_id]+'</a>'+'님  :  '+[i.reply_content]+'<div>');
+	    		var reple_date =$('<div>'+[i.reply_date]+'</div>');
+	    		
+	    		$("#reple").append(reple_id);//아이디 , 컨텐츠 
+	    		
+	    		
+	    		console.log("사진번호",i.photo_number);
+	    		
+	    		if(data.reply_id == myinfo.MEMBER_NAME){
+		     		 $("<button data-replenum ='"+ i.reply_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
+		    		                      .text("삭제").appendTo($("#reple"));
+		     		 $("<button data-photonum ='"+i.photo_number+"'></button>").attr("type","none").appendTo($("#reple"));
+		    	 } 
+	    		$("#reple").append(reple_date);//입력날짜
+	    	}
 	    	 
 	      },
 	      error:function(error){
@@ -330,10 +358,60 @@ $(document).on('click',"#pic", function() {
 	      }
 		
 	})//ajax end
-});
+	
+	
+	$(document).on('click',"#btnDelete", function(e) {
+		var reply_number = e.target.dataset.replenum
+		var photo_number = e.target.dataset.photonum
+		
+		console.log(reply_number,photo_number);
+		var data = {
+			      "reply_number" : reply_number,
+			      "photo_number" : photo_number
+			   } 
+		console.log(data);
+		console.log(e.target.dataset.replenum);
+		
+		$.ajax({
+			
+			  url: "deletereple",
+		      type: 'post',
+		      data :data,
+		      dataType: "json", //rest 컨트롤 이용   
+		      success:function(data){
+		    	  alert("댓글이 삭제되었습니다.");
+		    	  
+		    	  $("#reple").empty();//댓글 지움
+		    	  console.log(data);
+		    	  //댓글 리스트 출력
+			    	for( i of data){
+			    		
+			    		console.log(i);
+			    		
+			    		var reple_id = $('<div><a href="#">'+[i.reply_id]+'</a>'+'님  :  '+[i.reply_content]+'<div>');
+			    		var reple_date =$('<div>'+[i.reply_date]+'</div>');
+			    		
+			    		$("#reple").append(reple_id);//아이디 , 컨텐츠 
+			    		
+			    		
+			    		if(data.reply_id == myinfo.MEMBER_NAME){
+				     		 $("<button data-replenum ='"+ i.reply_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
+				    		                      .text("삭제").appendTo($("#reple")).attr("name",i.photo_number);
+				    	 } 
+			    		$("#reple").append(reple_date);//입력날짜
+			    	}
+		      },
+		      
+		      error:function(error){
+		    	  alert("댓글이 삭제를 실패했습니다.");
+			         console.log(error);
+			      }
+			
+			
+		});//ajax 끝
+	})//삭제 끝
 
-}
-
-
-</script>      
+}); // 모달 클릭이벤트 
    
+} // 처음 사진
+  </script>

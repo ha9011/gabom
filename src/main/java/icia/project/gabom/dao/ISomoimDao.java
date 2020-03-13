@@ -3,6 +3,7 @@ package icia.project.gabom.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -108,6 +109,15 @@ public interface ISomoimDao {
 	
 	@Select("select count(*) from SOMOIM_PHOTO_LIKE WHERE PHOTO_NUMBER =#{num}")
 	int getimglike(String num);
+
+	@Delete("DELETE FROM SOMOIM_PHOTO_REPLE WHERE REPLY_NUMBER=#{reply_number}")
+	int deletereple(@Param("reply_number")int reply_number);
+	
+	@Select("select * from SOMOIM_PHOTO_REPLE WHERE PHOTO_NUMBER =#{photo_number}")
+	List<Somoim_photo_reple> recallreple(int photo_number);
+
+	
+	
 
 	
 
