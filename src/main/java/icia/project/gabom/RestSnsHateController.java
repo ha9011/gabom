@@ -19,9 +19,7 @@ public class RestSnsHateController {
 	
 		@PostMapping(value = "sns/timeline/hate", produces = "application/json;charset=UTF-8")
 		public String snsHate(Principal principal,@RequestParam("postNumber") int postNumber) {
-			System.out.println("싫어요 아이디"+principal.getName());
-			System.out.println("누른 게시글 번호"+postNumber);
-			String json=snsHate.Hate(principal,postNumber);
+			String json=snsHate.hate(principal,postNumber);
 			return json;
 		}
 	

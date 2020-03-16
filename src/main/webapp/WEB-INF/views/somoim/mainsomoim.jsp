@@ -100,7 +100,8 @@
 	margin : 10px;
 }
 </style>
-<body>
+<body>	
+		
 		<div id="menunav">
 			<button id='somoimMenu' type="button" class="btn btn-primary btn-lg menu">소모임</button>
 			<button id='mySomoimMenu' type="button" class="btn btn-primary btn-lg menu">내	모임</button>

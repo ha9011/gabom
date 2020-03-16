@@ -32,7 +32,7 @@ public class SnsWriteInsert {
 	// 글 내용이 없으면 없는채로 작성되게 작업해야됌
 	@Transactional
 	public String snsWriteInsert(List<MultipartFile> file, Principal principal, String snsWriteContents,
-			String security, HttpServletRequest req) {
+			String security, HttpServletRequest req, int low) {
 		String json = null; // 리턴할 json
 		String root_path = req.getSession().getServletContext().getRealPath("/"); // 상대경로
 		String sysRoot_path=root_path.substring(0, root_path.indexOf("g")+1);
@@ -86,7 +86,7 @@ public class SnsWriteInsert {
 			}
 		}
 		if (writeResult != 0 || photoResult != 0) { // 사진이 없는 파일일 경우 글등록이 성공하면
-			json=snsTimeLineService.snsTimeLine(principal);	
+			json=snsTimeLineService.snsTimeLine(principal,low);	
 			
 		}
 		return json;

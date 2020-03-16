@@ -4,9 +4,11 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import icia.project.gabom.dto.JungmoAttend;
 import icia.project.gabom.dto.Jungmoroom;
@@ -111,14 +113,28 @@ public interface ISomoimDao {
 	@Select("select * from SOMOIM_PHOTOALBUM where SOMOIM_NUMBER=#{somo_number}")
 	List<Somoim_photoalbum> getsomopicList(@Param("somo_number") int somo_number);
 
-	@Select("select * from SOMOIM_PHOTOALBUM WHERE PHOTO_NUMBER =#{num}")
+	@Select("select * from SOMOIM_PHOTOALBUM WHERE PHOTO_NUMBER =#{num} ORDER BY PHOTO_UPLOAD_DATE DESC")
 	Somoim_photoalbum showimginfo(String num);
 	
-	@Select("select * from SOMOIM_PHOTO_REPLE WHERE PHOTO_NUMBER =#{num}")
+	@Select("select * from SOMOIM_PHOTO_REPLE WHERE PHOTO_NUMBER =#{num} ORDER BY REPLY_DATE DESC")
 	List<Somoim_photo_reple> getimgreple(String num);
 	
 	@Select("select count(*) from SOMOIM_PHOTO_LIKE WHERE PHOTO_NUMBER =#{num}")
 	int getimglike(String num);
+
+	@Delete("DELETE FROM SOMOIM_PHOTO_REPLE WHERE REPLY_NUMBER=#{reply_number}")
+	int deletereple(@Param("reply_number")int reply_number);
+	
+	@Select("select * from SOMOIM_PHOTO_REPLE WHERE PHOTO_NUMBER =#{photo_number} ORDER BY REPLY_DATE DESC")
+	List<Somoim_photo_reple> recallreple(int photo_number);
+
+	int insertpicreple(Somoim_photo_reple picreple);
+	
+	@Update("UPDATE SOMOIM_PHOTO_REPLE SET REPLY_CONTENT=#{reply_content} WHERE REPLY_NUMBER=#{reply_number} ")
+	int modifypicreple(Somoim_photo_reple spreple);
+
+	
+	
 
 	
 

@@ -307,7 +307,14 @@ select jr.*, nvl2(jm.member_number,1,0) as my_attend_check from JUNGMO_ROOM jr, 
 				SELECT SEQ_SOMOIM_PHOTOALBUM.CURRVAL FROM DUAL
 			</selectKey>
 	</insert>
-
+	
+	
+	<insert id="insertpicreple" parameterType="spreple" >
+	INSERT INTO SOMOIM_PHOTO_REPLE VALUES(SEQ_SOMOIM_PHOTO_REPLE.nextval,#{photo_number},#{somoim_number},#{reply_id},#{reply_content},SYSDATE,SYSDATE)
+		<selectKey keyProperty="reply_number" resultType="integer" order="AFTER">
+				SELECT SEQ_SOMOIM_PHOTO_REPLE.CURRVAL FROM DUAL
+			</selectKey>
+	</insert>
 
 
 </mapper>

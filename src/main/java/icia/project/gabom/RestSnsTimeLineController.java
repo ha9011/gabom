@@ -5,6 +5,7 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import icia.project.gabom.dto.Snsposts;
@@ -17,10 +18,8 @@ public class RestSnsTimeLineController {
 	private SnsTimeLineService snsts;
 
 	@GetMapping(value = "/sns/timeline", produces = "application/json;charset=UTF-8")
-	public String snsTimeLine(Principal principal) {
-		System.out.println("타임라인 들어옴");
-		System.out.println("탐라 주인 아이디="+principal.getName());
-		String json = snsts.snsTimeLine(principal);
+	public String snsTimeLine(Principal principal,@RequestParam("low") int low) {
+		String json = snsts.snsTimeLine(principal,low);
 		return json;
 	}
 	

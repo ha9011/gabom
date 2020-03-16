@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.SnsCommentDao">
+<select id="snsComment" resultType="snsCommentDto">
+<![CDATA[
+	SELECT SNS_COMMENT_NUMBER COMMENTNUMBER,SNS_COMMENT_CONTENT CONTENT,SNS_COMMENT_MEMBER_ID ID,SNS_COMMENT_DATE COMMENTDATE
+    ,SNS_COMMENT_EDIT_DATE EDITDATE,SNS_POSTS_NUMBER POSTNUMBER,SNS_COMMENT_REPORT REPORT FROM (SELECT * FROM SNS_COMMENT 
+						                ORDER BY SNS_COMMENT_DATE desc)
+						WHERE ROWNUM<=10 AND SNS_POSTS_NUMBER=#{postNumber}
+						]]>
+</select>
+</mapper>
