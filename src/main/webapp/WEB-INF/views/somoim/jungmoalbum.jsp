@@ -89,11 +89,23 @@ margin-bottom:100px;
 #imgarea{
 display:inline-flex;
 } 
+#repleinsrt{
+display:flex;
+margin:10px; 
+}
+#reple_content{
+margin:0 10px;
+width:70%;
+}
+#likearea{
+display:flex;
+height:20%;
+}
 </style>
-			<div id="title">
-			 	<div>
-				 <h1 class="font-weight-light text-lg ">소모임 이름 Gallery</h1>			
-				</div>
+         <div id="title">
+             <div>
+             <h1 class="font-weight-light text-lg " id="name">소모임 이름 Gallery</h1>         
+            </div>
                <form  id="uploadimg" name="uploadimg" method="post" enctype="multipart/form-data"> 
                      <div id="btnbox" class="filebox bs3-primary">
                             <input class="upload-name" value="파일선택" disabled="disabled">
@@ -102,42 +114,54 @@ display:inline-flex;
                           <button id="upload_btn">사진 등록</button>
                         </div>
                </form>
-			</div>
-			<!-- title, button end -->
-			
+         </div>
+         <!-- title, button end -->
+         
                <div id="imgarea"></div>
-   			<!-- 이미지 들어감. -->
+            <!-- 이미지 들어감. -->
 
 
 <!-- Modal -->
+
 <div class="modal fade" id="imgmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				
-				<div id="modalimg"></div>
-				
-				
-				
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
-		</div>
-	</div>
+   <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body2">
+            
+            <div id="modalimg"></div>
+            <div id="likearea">
+               <div id="likeimg"></div>
+               <div id="likecnt"></div>
+            </div>
+            <div id="repleinsrt">
+               <input id="reple_id" type="hidden">
+               <h5 id="user_id">user_id</h5><input id="reple_content" name="reple_content" type="text">
+               <button id="reple_btn" class="btn btn-primary" >등록</button>
+            </div>
+            <div id="pic_replelist">
+               <div id="reple"></div>
+            </div>
+            
+            
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+         </div>
+      </div>
+   </div>
 </div>
 
 
 <!-- modal end -->
-   			
-   			
+            
+            
 <script>
 $(".upload-name").hide();
    $("#ex_filename").on('click', function() {
@@ -188,52 +212,6 @@ $(".upload-name").hide();
 //사진
    $(document).ready(function(){
         var fileTarget = $('.filebox .upload-hidden');
-
-<<<<<<< HEAD
-		        $(this).siblings('.upload-name').val(filename);
-		    });
-		}); 
-	
-	
-	
-	
-	// 엘범 누르면 사진이 나옴
-const showalbumlist = ()=>{
-	
-	console.log("기본정보",${JsonBasicInfo})
-	
-	var basicInfo =	${JsonBasicInfo};
-	
-	var data = {
-		"somoim_number" : basicInfo.somoim_number
-	}
-	
-	$.ajaxSetup({         
-	      beforeSend : function(xhr){
-	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");} 
-	});
-	
-	$.ajax({
-		url: "showsomoimalbum",
-		type: 'post',
-		data : data,
-		dataType: "json", //rest 컨트롤 이용	
-		success:function(data){
-			alert("success");
-			console.log(data)
-			
-		},
-		error:function(error){
-			alert("fail")
-			console.log(error);
-		}
-		
-	}) //ajax end
-	
-	
-}
-</script>		
-=======
           fileTarget.on('change', function(){
               if(window.FileReader){
                   var filename = $(this)[0].files[0].name;
@@ -275,21 +253,21 @@ const showalbumlist = ()=>{
          
          let index =0;
          for(let i of data){
-        	 if(index%3==0){
-     			
-     			var br = $('<br><br>');
-     			$("#imgarea").append(br);
-     		} 
-        	 
-        	 var out=$('<div class=" col-md-4"></div>');
-        	 //var name=$('<a href="#imgmodal" name='+[i.photo_number]+'  data-toggle="modal" class="d-block mb-4 "></a>'); // 클리릭하면 해당 이미지 확대되서 모달창으로 뜸.
-        	 var img=$('<img name='+[i.photo_number]+' id="pic" class="img-fluid img-thumbnail" src=".'+[i.photo_sysfile]+'">');
-        	 
-        	 //name.append(img);
-        	 out.append(img);
-        	 $("#imgarea").append(out);
-        	 
-        	 index++;
+            if(index%3==0){
+              
+              var br = $('<br><br>');
+              $("#imgarea").append(br);
+           } 
+            
+            var out=$('<div class=" col-md-4"></div>');
+            var name=$('<a href="#imgmodal" name='+[i.photo_number]+' id="pic" data-toggle="modal" class="d-block mb-4 "></a>'); // 클리릭하면 해당 이미지 확대되서 모달창으로 뜸.
+            var img=$('<img name='+[i.photo_number]+'  class="img-fluid img-thumbnail" src=".'+[i.photo_sysfile]+'">');
+            
+            name.append(img);
+            out.append(name);
+            $("#imgarea").append(out);
+            
+            index++;
          }
     
          
@@ -301,39 +279,66 @@ const showalbumlist = ()=>{
       
    }) //ajax end
    
+ //사진 클릭시 모달 생성  
 $(document).on('click',"#pic", function() {
-	
-	console.log("클릭한 사진번호"+$(this).attr("name"));
-	
-	//$("#modalimg").empty();
-	
-	var imgnum= $(this).attr("name");
-		console.log(imgnum);
-	//$("#modalimg").append(imgname);
->>>>>>> b6bc1338dbe1219be4ff3dd6c94c6a2cad16ad28
-	
-	$.ajax({
-		  url: "showimginfo",
-	      type: 'post',
-	      data : {"num":imgnum},
-	      dataType: "json", //rest 컨트롤 이용   
-	      success:function(data){
-	      
-	    	 console.dir(data);
-	    	 
-	    	 
-	    	 
-	      },
-	      error:function(error){
-	         alert("fail")
-	         console.log(error);
-	      }
-		
-	})//ajax end
+    
+   console.log("클릭한 사진번호"+$(this).attr("name"));
+   
+   var imgnum= $(this).attr("name");
+      console.log(imgnum);
+   
+   
+   $.ajax({
+        url: "showimginfo",
+         type: 'post',
+         data : {"num":imgnum},
+         dataType: "json", //rest 컨트롤 이용   
+         success:function(data){
+           console.dir(data);
+           $("#modalimg").empty();//이미지 지움
+           $("#likecnt").empty();//좋아요 수 지움
+           $("#repleinsert").empty();//댓글 입력란 지움
+           $("#reple").empty();//댓글 지움
+           
+          //console.log(data.photo_sysfile);
+          var img = $("<img width='100%' height='100%' src='."+data.photo_sysfile+"'>")
+          $("#modalimg").append(img);//사진 먼저 넣고
+          
+          var likecnt = $('<h4>'+data.splike+'</h4>');
+          $("#likecnt").append(likecnt);//좋아요 수 넣고
+          
+          var likeimg =$();
+          $("#likeimg").append(likecnt);//이미지 추가  */
+          
+          for( i of data.spreple){
+             
+             var reple_id = $('<div><a href="#">'+[i.reply_id]+'</a>'+'님  :  '+[i.reply_content]+'<div>');
+             var reple_date =$('<div>'+[i.reply_date]+'</div>');
+             
+             $("#reple").append(reple_id);//아이디 , 컨텐츠 
+             $("#reple").append(reple_date);//입력날짜 
+          }
+          /* 
+           if(reply_id == ){
+               $("<button></button").attr("id","btnDelete").attr("class","btn btn-info")
+                                   .text("삭제").appendTo($("#reple"));
+           }  */
+         },
+         error:function(error){
+            alert("fail")
+            console.log(error);
+         }
+      
+   })//ajax end
 });
 
+   
+// 등록 선택시 댓글 입력하러감
+
+
+
+   
+
 }
-
-
 </script>      
    

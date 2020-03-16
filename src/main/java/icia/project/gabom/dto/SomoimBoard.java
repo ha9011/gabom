@@ -31,14 +31,14 @@ public class SomoimBoard {
 	private String board_title;
 	private String board_content;   
 	
-	private String board_first_pic="없음";
-	private String board_first_syspic="없음";
+	private String board_first_pic="";
+	private String board_first_syspic="";
 	
-	private String board_second_pic="없음";
-	private String board_second_syspic="없음";
+	private String board_second_pic="";
+	private String board_second_syspic="";
 	
-	private String board_third_pic="없음";
-	private String board_third_syspic="없음";
+	private String board_third_pic="";
+	private String board_third_syspic="";
 	
 	
 	private String board_fix="비고정";

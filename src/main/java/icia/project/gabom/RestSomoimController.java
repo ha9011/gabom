@@ -40,9 +40,9 @@ public class RestSomoimController {
 	@RequestMapping(value = "/jungmomoim", produces = "text/plain;charset=utf-8")
 	public String jungmomoim(Principal pr, Jungmoroom jungmoroom) {
 		mav = new ModelAndView();
-		System.out.println("정모 만들기");
-
-		String checkInsert = simm.insertSelecttMakeJunmoRoom(jungmoroom); // 일단 인서트 성공
+		System.out.println("정모 만들기"); //
+		System.out.println("정모에 담긴 데이터 확인 : " + jungmoroom.toString());
+		String checkInsert = simm.insertSelecttMakeJunmoRoom(jungmoroom, pr.getName()); // 일단 인서트 성공
 		// 일단 인서트 성공
 		// 1. 공지 닮을내용부터 다 뽑기, (1)타이틀, 사진, 소개내용 (2)정모게시판 (3)회원맴버
 		// (1),(3)은 지금 바로 가능
@@ -166,15 +166,78 @@ public class RestSomoimController {
 
 	
 	
+	 //정모 클릭시 정보 보기
+	   @PostMapping(value = "/jungmoinfo", produces="text/plain;charset=utf-8")
+	   public String jungmoinfo(Jungmoroom jr, Principal pr) {
+	      System.out.println("정모 정보 보여줘");
+	      System.out.println(jr.toString());
+	      
+	      String json= simm.jungmoinfo(jr, pr);
+
+	      return json;
+	   }
+
+
+	   //정모 삭제 
+	   @PostMapping(value = "/deletejunmo", produces="text/plain;charset=utf-8")
+	   public String deletejunmo(Jungmoroom jr, Principal pr) {
+	      System.out.println("정모 삭제버튼 누를때");
+	      System.out.println(jr.toString());
+	      String json= simm.deletejunmo(jr, pr);
+
+	      return json;
+	   }
+	   
+	   //정모 수정
+	   @PostMapping(value = "/modifyjungmomoim", produces="text/plain;charset=utf-8")
+	   public String modifyjungmomoim(Jungmoroom jr, Principal pr) {
+	      System.out.println("정모 업데이트 버튼 누를때");
+	      System.out.println(jr.toString());
+	      String json= simm.modifyjunmo(jr, pr);
+
+	      return json;
+	   }
+	   
+	   //게시글 삭제 
+	   @PostMapping(value = "/deleteboard", produces="text/plain;charset=utf-8")
+	   public String deleteboard(SomoimBoard sb, Principal pr) {
+	      System.out.println("게시글 삭제버튼 누를때");
+	      System.out.println(sb.toString());
+	      String json= simm.deleteboard(sb, pr);
+
+	      return json;
+	   }
 	
 	
+	   @RequestMapping(value = "/modifyboard", produces = "text/plain;charset=utf-8")
+		public String modifyboard(MultipartHttpServletRequest multi, Principal pr) {
+			mav = new ModelAndView();
+			System.out.println("글수정 // 아이디 : " + pr.getName()); // 참석자를 확인할 정모의 고유번호
+			System.out.println("글수정 // 글번호 : " + multi.getParameter("board_number")); // 참석자를 확인할 정모의 고유번호
+			
+			//insertSomoimBoard
+			String result = simm.updateSomoimBoard(multi, pr.getName());
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("result", result);
+			return new Gson().toJson(map);
+		}
+	   
+	   //게시글 댓글 삭제 
+	   @RequestMapping(value = "/deleteboardreple", produces = "text/plain;charset=utf-8")
+		public String deleteboardreple(Somoimreple sr, Principal pr) {
+			mav = new ModelAndView();
+			System.out.println("댓글삭제 // 아이디 : " + pr.getName()); // 참석자를 확인할 정모의 고유번호
+			System.out.println("댓글삭제 // 글번호 : " + sr.toString()); 
+			
+			//insertSomoimBoard
+			String result = simm.deleteSomoimBoardReple(sr, pr.getName());
+			
+			
+			return result;
+		}
 	
 	
-	
-	
-	
-	
-	
+	   
 	
 	
 	
@@ -265,6 +328,9 @@ public class RestSomoimController {
 	      return json;
 	   }
 	   
-
-	
+	  
+	   
+	   
+	   
+	   
 }

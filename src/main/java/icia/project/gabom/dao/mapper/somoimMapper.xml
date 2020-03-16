@@ -56,13 +56,13 @@
 
 
 <insert id="insertMakeJunmoRoom" parameterType="jungmoroom" >
-	INSERT INTO JUNGMO_ROOM VALUES(SEQ_JUNGMO_ROOM.nextval,  #{somoim_number}, #{jungmo_name}, #{jungmo_date}, #{jungmo_time}, #{jungmo_location}, #{jungmo_money}, sysdate )
+	INSERT INTO JUNGMO_ROOM VALUES(SEQ_JUNGMO_ROOM.nextval,  #{somoim_number}, #{jungmo_name}, #{jungmo_date}, #{jungmo_time}, #{jungmo_location}, #{jungmo_money}, sysdate, #{jungmo_xpoint}, #{jungmo_ypoint} )
 </insert>
 
-<select id="selecttMakeJunmoRoom" parameterType="int" resultType="jungmoroom">
+<select id="selecttMakeJunmoRoom"  resultType="jungmoroom">
 	<![CDATA[
-	select * from JUNGMO_ROOM where SOMOIM_NUMBER = #{somoim_number} and jungmo_date > sysdate order by jungmo_date
-	]]>
+	
+select jr.*, nvl2(jm.member_number,1,0) as my_attend_check from JUNGMO_ROOM jr, (select * from JUNGMO_MEMBER where member_id = #{id}) jm  where jr.jungmo_number = jm.jungmo_number(+) and jr.somoim_number=#{somoim_number} and jr.jungmo_date > sysdate order by jungmo_date]]>
 	
 </select>
 
@@ -246,19 +246,48 @@
 	  
 	  
 	]]>
-	
 </select>
 
 
 
+<select id="selectjungmoinfo"  resultType="jungmoroom">
+	 select * from JUNGMO_ROOM where jungmo_number = #{jungmo_number}
+</select>
 
 
+<delete id="deleteJungmo" parameterType="int">
+	delete from jungmo_room where Jungmo_number = #{jungmo_number}
+</delete>
+
+<update id="modifyjunmo" parameterType="jungmoroom">
+	update JUNGMO_ROOM set JUNGMO_NAME = #{jungmo_name}, JUNGMO_DATE = #{jungmo_date}, JUNGMO_TIME = #{jungmo_time}, JUNGMO_LOCATION = #{jungmo_location}, JUNGMO_MONEY=#{jungmo_money}  where JUNGMO_NUMBER=#{jungmo_number} 
+</update>
 
 
+<delete id="deleteboard" parameterType="int">
+	delete from SOMOIM_BOARD where BOARD_NUMBER = #{board_number}
+</delete>
+
+<update id="updateSomoimBoard"  parameterType="somoimboard">
+	update  SOMOIM_BOARD set
+	board_type= #{board_type},
+	board_title=#{board_title},
+ 	board_content= #{board_content}, 
+  	board_first_pic= #{board_first_pic},
+  	board_first_syspic= #{board_first_syspic},
+    board_second_pic =#{board_second_pic},
+    board_second_syspic =#{board_second_syspic},  
+    board_third_pic =#{board_third_pic},
+    board_third_syspic= #{board_third_syspic},
+    board_fix = #{board_fix}, 
+    BOARD_WRITE_UPDATE =BOARD_WRITE_UPDATE
+    where board_number= #{board_number} 
+</update>
 
 
-
-
+<delete id="deleteSomoimBoardReple" parameterType="int">
+	delete from SOMOIM_BOARD_REPLE where SOMOIM_BOARD_REPLE_NUMBER = #{somoim_board_reple_number}
+</delete>
 
 
 

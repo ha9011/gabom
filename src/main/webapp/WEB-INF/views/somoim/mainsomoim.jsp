@@ -19,6 +19,10 @@
 <title>Insert title here</title>
 </head>
 <style>
+
+#somoim{
+	display : none;
+}
 #main {
 	width: 90%;
 	border: 1px solid gray;
@@ -98,8 +102,8 @@
 </style>
 <body>
 		<div id="menunav">
-			<button type="button" class="btn btn-primary btn-lg menu">소모임</button>
-			<button type="button" class="btn btn-primary btn-lg menu">내	모임</button>
+			<button id='somoimMenu' type="button" class="btn btn-primary btn-lg menu">소모임</button>
+			<button id='mySomoimMenu' type="button" class="btn btn-primary btn-lg menu">내	모임</button>
 		</div>
 		<br>
 		<br>
@@ -110,8 +114,6 @@
 		<hr>
 	<!-- 	mymoim	 -->
 	<div id="mainMymoim">
-		
-
 		<div id="content">
 			<div id="myJoin" class="section">
 				<div class="title">my join</div>
@@ -137,11 +139,45 @@
 	
 	<!-- 	somoim	 -->
 	
+	<div id="somoim">
+		<div id="content">
+			<div id="myJoin" class="section">
+				<div class="title">추천 소모임</div>
+					
+				<div class="showlist">
+					<div id="showlistContent">
+					</div>
+					
+				</div>
+				
+			</div>
+
+			<div id="myNoti" class="section">
+				<div class="title">검색하기</div>
+
+				<div class="showlist"></div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
 </body>
 <script type="text/javascript">
 	
+	$("#somoimMenu").on('click',function(){
+		$("#somoim").show();
+		$("#mainMymoim").hide();
+	})
+	
+	$("#mySomoimMenu").on('click',function(){
+		$("#somoim").hide();
+		$("#mainMymoim").show();
+	})
+	
 	var joinmoim = ${joinMoim}
 	console.log(joinmoim)
+	
 	//showlistContent
 	for( v of joinmoim ){
 		console.log(v);

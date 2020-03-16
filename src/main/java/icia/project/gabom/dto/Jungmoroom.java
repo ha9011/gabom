@@ -18,6 +18,11 @@ public class Jungmoroom {
 	private int somoim_number;
 	private String jungmo_name;
 	
+	private int my_attend_check;
+	
+	private String jungmo_xpoint; //JUNGMO_XPOINT 
+	private String jungmo_ypoint; // JUNGMO_YPOINT
+	
 	@DateTimeFormat(pattern="yyyy-mm-dd")
 	private String jungmo_date;
 	private String jungmo_time;
