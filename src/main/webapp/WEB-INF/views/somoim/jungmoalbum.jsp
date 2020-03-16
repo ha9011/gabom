@@ -264,7 +264,7 @@ const showalbumlist = ()=>{
          for(let i of data){
         	 if(index%3==0){
      			
-     			var br = $('<br><br>');
+     			var br = $('\r\n');
      			$("#imgarea").append(br);
      		} 
         	 
