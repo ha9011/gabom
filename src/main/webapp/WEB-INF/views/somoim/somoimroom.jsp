@@ -614,7 +614,7 @@ for(let add = 0 ; add < ${JsonJungmoRoom}.length-Attendlist.length; add++){
 }
 console.log("기본정보",${JsonBasicInfo})
 
-	$("#makeSomoim").on("click", function(){
+	$(document).on("click","#makeSomoim" ,function(){
 		$(".modal-title").text("");
 		$(".modal-body").empty();
 		

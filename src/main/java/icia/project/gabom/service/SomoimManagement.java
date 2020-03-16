@@ -540,5 +540,78 @@ public class SomoimManagement {
 		
 		return json;
 	}
+	//사진 댓글 지우고 다시 불러오기
+	public String deletereple(Somoim_photo_reple spreple) {
+		String json= null;
+		
+		int reply_number =  spreple.getReply_number();
+		int photo_number =  spreple.getPhoto_number();
+		
+		System.out.println("댓글번호"+reply_number);
+		System.out.println("사진번호"+photo_number);
+		
+		int deletereple = sDao.deletereple(reply_number);//삭제
+		List<Somoim_photo_reple> selectreple = sDao.recallreple(photo_number);//긁어온거
+		
+		
+		json = new Gson().toJson(selectreple);
+		return json;
+	}
+	
+	// 사진 댓글 입력
+	public String insertpicreple(Somoim_photo_reple spreple) {
+		String json = null;
+		
+		int somoim_number = spreple.getSomoim_number();
+		int photo_number=spreple.getPhoto_number();
+		String reply_content = spreple.getReply_content();
+		String reply_id = spreple.getReply_id();
+		
+		
+		Somoim_photo_reple picreple=new Somoim_photo_reple();
+		
+		picreple.setPhoto_number(photo_number).setReply_content(reply_content).setReply_id(reply_id).setSomoim_number(somoim_number);
+		
+		int reply_number = sDao.insertpicreple(picreple);
+		List<Somoim_photo_reple> selectreple = sDao.recallreple(photo_number);//긁어온거
+		
+		json = new Gson().toJson(selectreple);
+		return json;
+	}
+
+	public String modifypicreple(Somoim_photo_reple spreple) {
+		String json= null;
+		
+		int reply_number =  spreple.getReply_number();
+		int photo_number =  spreple.getPhoto_number();
+		String reply_content =  spreple.getReply_content();
+		
+		System.out.println("댓글번호"+reply_number);
+		System.out.println("댓글내용"+reply_content);
+		
+		int modifypicreple = sDao.modifypicreple(spreple);//삭제
+		List<Somoim_photo_reple> selectreple = sDao.recallreple(photo_number);//긁어온거
+		
+		
+		json = new Gson().toJson(selectreple);
+		return json;
+	}
+
+//	public String modifyreple(Somoim_photo_reple spreple) {
+//		String json= null;
+//		
+//		int reply_number =  spreple.getReply_number();
+//		int photo_number =  spreple.getPhoto_number();
+//		
+//		System.out.println("댓글번호"+reply_number);
+//		System.out.println("사진번호"+photo_number);
+//		
+//		int modifyreple = sDao.modifyreple(reply_number);//삭제
+//		List<Somoim_photo_reple> selectreple = sDao.recallreple(photo_number);//긁어온거
+//		
+//		
+//		json = new Gson().toJson(selectreple);
+//		return json;
+//	}
 
 }

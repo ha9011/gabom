@@ -95,6 +95,24 @@ section {
 	width: 100%;
 	height: 500px;
 }
+#replyinsert{
+display:flex; 
+border:2px solid lightgray;
+}
+#user_id{
+margin:13px;
+}
+#repleinsert_btn{
+width:70px;
+font-size:20px;
+height:40px;
+margin:5px;
+}
+#replylist{
+font-size:20px;
+float:left;
+text-align:left;
+}
 </style>
 
 </head>
@@ -265,13 +283,14 @@ section {
 					<div class="blog-post-image"></div>
 					<div class="blog-post-body">
 						<h2>댓글</h2>
-						<p>ew months ago, we found ridiculously cheap plane tickets
-							for Boston and off we went. It was our first visit to the city
-							and, believe it or not, Stockholm in February was more pleasant
-							than Boston in March. It probably has a lot to do with the fact
-							that we arrived completely unprepared. That I, in my converse and
-							thin jacket, did not end up with pneumonia is honestly not even
-							fair.</p>
+						<div id="replyinsert">
+							<div id="user_id"><h3>유저아이디</h3></div>
+							<input style="width:500px;" id="reple_content" name="reple_content" type="text">
+							<button id="repleinsert_btn"  class="btn btn-primary">등록</button>
+						</div>
+						<div id="replylist">
+						
+						</div>
 					</div>
 				</article>
 			</div>
@@ -370,8 +389,60 @@ $("#info").append(house_info);
             }
             
          })
-    });
+    });//---------------------------------------------------------예약영역------------------------------------------------------------------------
  
+    var reple_list=${reple_list};
+    console.log(reple_list);
+    var login_id = ${memberinfo}
+    console.log("로인아이디",login_id);
+    console.log(login_id[0].member_id)
+    
+    for( i of reple_list){
+		var rpline =$()
+		var reple_id = $('<div>'+i.member_guestid+'님의 댓글:      '+i.house_reple_content+'&nbsp'+'&nbsp'+'&nbsp'+i.house_reple_time+'<div>');
+		$("#replylist").append(reple_id);//아이디 
+		
+		
+		 if(i.member_guestid == login_id[0].member_id){
+			
+     		$("<button data-replenum='"+i.house_reple_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
+    		                      .text("삭제").appendTo($("#replylist"));
+    	 }
+		
+	}
+    
+    
+    $("#btnDelete").on('click',function(e){
+    	var replenum = e.target.dataset.replenum
+    	console.log("댓글 번호 ",replenum);
+    })
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	var disabledDays = [];  //"2020-01-15"
 		
 	$(document).ready(function(){

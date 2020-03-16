@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 
 import icia.project.gabom.dto.Jungmoroom;
 import icia.project.gabom.dto.SomoimBoard;
+import icia.project.gabom.dto.Somoim_photo_reple;
 import icia.project.gabom.dto.Somoim_photoalbum;
 import icia.project.gabom.dto.Somoimreple;
 import icia.project.gabom.service.SomoimManagement;
@@ -186,12 +187,7 @@ public class RestSomoimController {
 	
 	
 	
-	//--------------------------------------------------------------------------------이예상 
-	
-	//사진 첨부할때
-	
-	
-	
+
 	
 	
 	
@@ -254,7 +250,7 @@ public class RestSomoimController {
 	      return json2;
 	   }
 	   
-	   
+	   //사진관련 정보 가져오기 댓글, 좋아요
 	   @PostMapping(value = "/showimginfo", produces="text/plain;charset=utf-8")
 	   public String showimginfo(@RequestParam("num")String num, Principal pr) {
 	      System.out.println("사진 관련 보여줘 ");
@@ -265,6 +261,55 @@ public class RestSomoimController {
 	      return json;
 	   }
 	   
+	   //사진에 댓글 삭제
+	   @PostMapping(value = "/deletereple", produces="text/plain;charset=utf-8")
+	   public String deletereple(Somoim_photo_reple spreple, Principal pr) {
+	      System.out.println("댓글 번호  ");
+	      System.out.println(spreple);
+	    
+		  String json= simm.deletereple(spreple);
+
+	      return json;
+	   }
+	   
+	   
+	 //사진에 댓글 입력
+	   @PostMapping(value = "/insertpicreple", produces="text/plain;charset=utf-8")
+	   public String insertpicreple(Somoim_photo_reple spreple, Principal pr) {
+	      System.out.println("댓글입력하러 가자 ");
+	      System.out.println("사진번호"+spreple.getPhoto_number());
+	      System.out.println("댓글 내용"+spreple.getReply_content());
+	      System.out.println("작성자"+spreple.getReply_id());
+	      System.out.println("소모임번호"+spreple.getSomoim_number());
+	      
+		  String json= simm.insertpicreple(spreple);
+
+	      return json;
+	   }
+	   
+	   
+	 //사진에 댓글 입력
+	   @PostMapping(value = "/modifypicreple", produces="text/plain;charset=utf-8")
+	   public String modifypicreple(Somoim_photo_reple spreple, Principal pr) {
+	      System.out.println("댓글수정하러 가자 ");
+	      System.out.println("댓글 내용"+spreple.getReply_content());
+	      System.out.println("댓글 내용"+spreple.getReply_number());
+	      
+		  String json= simm.modifypicreple(spreple);
+
+	      return json;
+	   }
+	   
+	 //사진에 댓글 수정
+//	   @PostMapping(value = "/modifyreple", produces="text/plain;charset=utf-8")
+//	   public String modifyreple(Somoim_photo_reple spreple, Principal pr) {
+//	      System.out.println("댓글 번호  ");
+//	      System.out.println(spreple);
+//	    
+//		  String json= simm.modifyreple(spreple);
+//
+//	      return json;
+//	   }
 
 	
 }

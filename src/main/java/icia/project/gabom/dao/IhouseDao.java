@@ -1,6 +1,7 @@
 package icia.project.gabom.dao;
 
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +10,9 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import icia.project.gabom.dto.House;
+import icia.project.gabom.dto.House_reple;
 import icia.project.gabom.dto.Housereservation;
+import icia.project.gabom.dto.Member;
 
 
 public interface IhouseDao {
@@ -38,7 +41,13 @@ public interface IhouseDao {
 	int housereservation(Housereservation hreservation);
 	
 	@Select("select * from HOUSERESERVATION WHERE HOUSE_NUMBER=#{house_number} order by RESERVATION_CHECKIN")
-	List<Housereservation> detailreser(@Param("house_number") String house_number); 
+	List<Housereservation> detailreser(@Param("house_number") String house_number);
+	
+	@Select("SELECT * FROM HOUSEREPLE WHERE HOUSE_NUMBER=#{house_number} ORDER BY HOUSE_REPLE_TIME DESC" )
+	List<House_reple> replelist(String house_number);
+	
+	@Select("SELECT * FROM MEMBER WHERE MEMBER_ID=#{member_id}")
+	List<Member> memberinfo(String member_id); 
 	
 	
 	

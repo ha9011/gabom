@@ -29,7 +29,7 @@
 }
 .house{
 
-	width:15%;
+	width:20%;
 	display:inline-block;
 	margin:20px;
 	box-shadow:5px 5px 3px lightgray;

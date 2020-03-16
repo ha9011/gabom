@@ -6,9 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-//@Getter@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
 
 @Alias("house")
 @Data
