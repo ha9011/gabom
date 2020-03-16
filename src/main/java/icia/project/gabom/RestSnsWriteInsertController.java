@@ -25,9 +25,9 @@ public class RestSnsWriteInsertController {
 	public String snsWriteInsert(@RequestParam("snsWriteImage") List<MultipartFile> file,Principal principal,
 								@RequestParam("sns_posts_content") String snsWriteContents,
 								@RequestParam("security") String security,
-								HttpServletRequest req) {
+								HttpServletRequest req,@RequestParam("low") int low) {
 					
-		String json=snsWriteInsert.snsWriteInsert(file,principal,snsWriteContents,security,req);
+		String json=snsWriteInsert.snsWriteInsert(file,principal,snsWriteContents,security,req,low);
 		
 		
 		return json;
