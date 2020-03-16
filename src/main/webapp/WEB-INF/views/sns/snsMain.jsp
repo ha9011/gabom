@@ -390,9 +390,6 @@ $(function () {
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
 	<div id="showImageBox" class="container-fluid"></div>
-	<div style="position: fixed; bottom: 20px; right: 30px;" id="top">
-		<a href="#snsMain">TOP</a>
-	</div>
 	<div class="container-fluid" id="snsMain">
 		<div class="container-fluid">
 			<div class="row">
@@ -438,6 +435,90 @@ $(function () {
 			</div>
 		</div>
 	</div>
+<!-- 글 수정 스크립트 -->
+	<script type="text/javascript">
+	function editPost(e) {
+		var editPostNumber=e.id.substr(12);
+		var editPostBoxId="#editBox"+editPostNumber;
+		const preContents="#postContents"+editPostNumber;
+		//첫값
+		console.log($(preContents)[0].defaultValue);
+		$editTotalBox=$("<div>").addClass("container");
+		$editBox=$("<div>").addClass("collapse navbar-collapse")
+		.append("<ul>").addClass("nav navbar-nav navbar-right");
+		$editButton=$("<li>").append($("<button>").addClass("editButton").text("수정"));
+		$cancelButton=$("<li>").append($("<button>").addClass("editCancelButton").text("취소"));
+		$editBox.append($editButton);
+		$editBox.append($cancelButton);
+		$editBox.appendTo($editTotalBox);
+		$(editPostBoxId).html($editTotalBox);
+		//바뀐값
+		var editContents=e.value;
+
+		editContents = editContents.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+		
+		
+	$("li").on("click",".editCancelButton",function(){
+		if(confirm("수정을 취소 하시겠습니까?")){
+			$(preContents)[0].value=$(preContents)[0].defaultValue;
+			$(editPostBoxId).empty();
+		}
+	});
+	$("li").on("click",".editButton",function(){
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		});//먼저 보냄
+		var editData={
+				"editContents":editContents,
+				"postNumber": editPostNumber
+		}
+		$.ajax({
+				method:'post',
+				url:"sns/post/edit",
+				data:editData,
+				dataType : "json"
+		}).done((editTimeLineJson)=>{
+			$(editPostBoxId).empty();
+			makeTimeLine(editTimeLineJson);
+		}).fail((s)=>{
+			console.log("실패");
+		});
+	});
+	
+	}
+	</script>
+<!-- 댓글 입력 -->
+<script type="text/javascript">
+
+
+function commentInsert(number) {
+	var commentWriteContents="#commentWriteBox"+number+" input";
+	console.log(commentWriteContents);
+	console.log($(commentWriteContents).val());
+	var commentData={
+			postNumber:number,
+			commentContent:$(commentWriteContents).val()
+	}
+	$.ajaxSetup({
+		beforeSend : function(xhr){
+ 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	});//먼저 보냄
+	$.ajax({
+			method:'post',
+			url:"sns/comment/insert",
+			data:commentData,
+			dataType : "json"
+	}).done((commentJson)=>{
+		printComment(commentJson,number);
+	});
+	
+	
+}
+
+
+</script>
+	<!-- 소모임 이동 -->
 	<script type="text/javascript">
 	
 	function somoim() {
@@ -606,12 +687,12 @@ $("#writeBox").on('change','#ex_file',function(){
 	<!-- 타임라인 생성 스크립트 -->
 	<script type="text/javascript">
 	//타임 라인 생성 함수
-	function makeTimeLine(timeLineJson) {
+	function makeTimeLine(timeLineJson){
 			 console.log(timeLineJson);
 		$("#snsTimeLineMain").empty();
 		 for(let j in timeLineJson){
 			let postsContents = timeLineJson[j]["content"];
-	 		let RePostsContents=postsContents.replace("<br/>", "\r\n");
+	 		let RePostsContents=postsContents.replace("<br/>","\r\n\gi");
 		let $timeLine = "";
 		$timeLine += '<div class="jumbotron" id="posts">';
 		$timeLine += '<div class="row">';
@@ -621,7 +702,6 @@ $("#writeBox").on('change','#ex_file',function(){
 		$timeLine += '</div>';
 		$timeLine += '<div class="nav-tabs" id="postHead">';
 		if(userId==timeLineJson[j]["posts_writer"]){
-		$timeLine += '<a href="#;">수정</a>&nbsp;/';
 		$timeLine += '<a href="#;">삭제</a>&nbsp;/';
 		}
 		$timeLine += '<a href="#;">신고</a>';
@@ -646,7 +726,12 @@ $("#writeBox").on('change','#ex_file',function(){
 		}
 		$timeLine += '</div>';
 		$timeLine += '<div class="container" id="postsContentsBox">';
-		$timeLine += '<textarea class="container" cols="93" rows="8" readonly>'+RePostsContents+'</textarea>';
+		if(timeLineJson[j]["posts_writer"]==userId){
+		$timeLine += '<textarea class="container" cols="93" rows="8" id="postContents'+timeLineJson[j]["posts_number"]+'" onkeyup="editPost(this)">'+RePostsContents+'</textarea>';	
+		}else{
+		$timeLine += '<textarea class="container" cols="93" rows="8" readonly id=postContents"'+timeLineJson[j]["posts_number"]+'" onkeyup="editPost(this)" >'+RePostsContents+'</textarea>';
+		}
+		$timeLine += '<div class="container" id="editBox'+timeLineJson[j]["posts_number"]+'"></div>';
 		$timeLine += '<div class="container" id="postsPhotoBox">';
 		$timeLine += '</div>';
 		$timeLine += '<div id="postsOptionBox" class="navbar-default navbar-right">';
@@ -670,19 +755,13 @@ $("#writeBox").on('change','#ex_file',function(){
 		$postsimageBox.attr("src","resources/snsPostsImage/"+timeLineJson[j]["photoList"][k]["sns_photo_origin_name"]);
 		$postsimageBox.appendTo($snsPostsImageBox);
 		$snsPostsImageBox.appendTo($("#"+j));
-			 
 		}
 		
 		 }
 		 
 	}
 </script>
-
-<script type="text/javascript">
-
-
-</script>
-
+	
 	<!-- 글작성 취소 스크립트 -->
 	<script type="text/javascript">
 $("div").on("click","#cancel",function(){
@@ -823,14 +902,14 @@ function comment(number) {
 			dataType : "json"
 	}).done((commentJson)=>{
 		printComment(commentJson,number);
-		console.log(commentJson);
-		console.log(number);
 	});
 }
 </script>
 	<!-- 댓글 출력 서비스 -->
 	<script type="text/javascript">
 function printComment(commentJson,number) {
+	$("."+number).empty();
+	console.log(commentJson);
 		let commentBox="";
 		commentBox+='<div class="container-fluid" id=dds>';
 		commentBox+='<table class="table table-hover table-responsive">';
@@ -844,8 +923,10 @@ function printComment(commentJson,number) {
 			commentBox+='<tr>';
 			commentBox+='<td style="width: 70px"><img src="'+commentJson[k]["profilePic"]+'" class="img-thumbnail img-responsive img-circle" id="commentImg">'+commentJson[k]["id"]+'</td>';
 			commentBox+='<td style="width: 500px">'+commentJson[k]["content"]+'</td>';
-			commentBox+='<td style="background-color: white"><button type="button" class="btn-default commentLike"><i class="far fa-thumbs-up commentLike">1232131</i></button>';
-			commentBox+='<button type="button" class="btn-default commentHate"><i class="far fa-thumbs-down commentHate">21312</i></button>';
+			commentBox+='<td style="background-color: white">';
+			commentBox+='<button type="button" class="btn-default commentLike" onclick="commentLike(\''+commentJson[k]["number"]+'\')">';
+			commentBox+='<i class="far fa-thumbs-up commentLike" id="commentLike'+commentJson[k]["number"]+'">'+commentJson[k]["like"]+'</i></button>';
+			commentBox+='<button type="button" class="btn-default commentHate" onclick="commentHate(\''+commentJson[k]["number"]+'\')"><i class="far fa-thumbs-down commentHate" id="commentHate'+commentJson[k]["number"]+'">'+commentJson[k]["hate"]+'</i></button>';
 			commentBox+='</td>';
 			commentBox+='<td style="background-color: white">'+commentJson[k]["date"]+'</td>';
 			commentBox+='<td style="background-color: white; width: 150px"><a>수정</a>/<a>삭제</a>/<a>신고</a></td>';
@@ -863,21 +944,51 @@ function printComment(commentJson,number) {
 		commentBox+='</div>';	
 		$("."+number).html(commentBox);
 }//서비스 End
-
 </script>
+<!-- 댓글 좋아요 -->
 <script type="text/javascript">
-
-
-function commentInsert(number) {
-	console.log(number);
-	var commentWriteContents="#commentWriteBox"+number+" input";
-	console.log(commentWriteContents);
-	console.log($(commentWriteContents).val());
-}
-
-
+	function commentLike(commentNumber) {
+		
+		var $likeCommentval="#commentLike"+commentNumber;
+		var $hateCommentval="#commentHate"+commentNumber;
+		
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+				method:'post',
+				url:"sns/comment/like",
+				data:{"commentNumber":commentNumber},
+				dataType : "json"
+		}).done((commentLikeTotalJson)=>{
+			console.log(commentLikeTotalJson);
+			$($likeCommentval).text(commentLikeTotalJson.commentLikeTotal);
+			$($hateCommentval).text(commentLikeTotalJson.commentHateTotal);
+		});
+	}
 </script>
-
-
+<!-- 댓글 싫어요 -->
+<script type="text/javascript">
+ function commentHate(commentNumber) {
+	
+	var $likeCommentval="#commentLike"+commentNumber;
+	var $hateCommentval="#commentHate"+commentNumber;
+	$.ajaxSetup({
+		beforeSend : function(xhr){
+ 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	});//먼저 보냄
+	$.ajax({
+			method:'post',
+			url:"sns/comment/hate",
+			data:{"commentNumber":commentNumber},
+			dataType : "json"
+	}).done((commentHateTotalJson)=>{
+		console.log(commentHateTotalJson);
+		$($likeCommentval).text(commentHateTotalJson.likeTotal);
+		$($hateCommentval).text(commentHateTotalJson.hateTotal);
+	});
+}
+</script>
 </body>
 </html>

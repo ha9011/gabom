@@ -28,39 +28,15 @@ public class SnsHate {
 		SnsLikeHateCounter snsHateInsert = new SnsLikeHateCounter();
 		snsHateInsert = snsHateDao.likeCheck(snsHate);
 		if (snsHateInsert == null) {
-			//boolean insertResult=
 					snsHateDao.hateInsert(snsHate);
-			//if(insertResult) {
-			//	return json=snsTimeLine.snsTimeLine(principal);
-			//}
 		}else if (snsHateInsert.getSnsLike()==1&&snsHateInsert.getSnsHate()==0) {
-			//boolean cancelResult =
 			snsHateDao.likeCancel(snsHate);
-			//if(cancelResult) {
-				//return json=snsTimeLine.snsTimeLine(principal);
-		//	}
 		} 
 		else if(snsHateInsert.getSnsHate()==0) {
 			snsHateDao.upDate(snsHate);
-			//return json=snsTimeLine.snsTimeLine(principal);
 		} else if(snsHateInsert.getSnsHate()==1){
 			snsHateDao.delete(snsHate);
-			//return json=snsTimeLine.snsTimeLine(principal);
 		}
-//		else if(snsHateInsert.getSnsLike()==0) {
-//			
-//		}
-//		if (likeCheck == false) {
-//			boolean insert = snsHateDao.hate(snsHate);
-//			if (insert) {
-//				return json = snsTimeLine.snsTimeLine(principal);
-//			}
-//		} else if (check == true) {
-//			boolean delResult=snsHateDao.likeDelete(snsHate);
-//			if(delResult==true) {
-//				return json = snsTimeLine.snsTimeLine(principal);
-//			}
-//		}
 		int hateTotal=snsHateDao.total(postNumber);
 		int likeTotal = snsLikeDao.total(postNumber);
 		JsonObject	totalObject= new JsonObject();

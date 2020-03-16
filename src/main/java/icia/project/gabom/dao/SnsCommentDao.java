@@ -7,14 +7,15 @@ import org.apache.ibatis.annotations.Select;
 
 import icia.project.gabom.dto.Member;
 import icia.project.gabom.dto.SnsCommentDto;
+import icia.project.gabom.dto.SnsLikeHateCounter;
 
 public interface SnsCommentDao {
 
-	
-	
-	
-	List<SnsCommentDto> snsComment(@Param("postNumber")int postNumber);
-	@Select( "SELECT MEMBER_PROFILE_PICTURE FROM MEMBER WHERE MEMBER_ID=#{id}")
+	List<SnsCommentDto> snsComment(@Param("postNumber") int postNumber);
+
+	@Select("SELECT MEMBER_PROFILE_PICTURE FROM MEMBER WHERE MEMBER_ID=#{id}")
 	Member snsCommentProfilePic(@Param("id") String id);
+
+	SnsLikeHateCounter commentLikeHateGet(@Param("commentNumber") int commentNumber);
 
 }
