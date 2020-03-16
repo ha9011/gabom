@@ -29,12 +29,16 @@ public class SnsTimeLineService {
 	private GetProfileDao getProfile;
 
 	@Transactional
-	public String snsTimeLine(Principal principal) {
+	public String snsTimeLine(Principal principal, int low) {
 		String json = null;
 		String id = principal.getName();
+		if(low==0) {
+			low=1;
+		}
+		int lowNum=5*low;
 		SnsTimeLineResult result = null;
 		HashMap<Integer, SnsTimeLineResult> snsTimeLineResultMap = new HashMap<Integer, SnsTimeLineResult>();
-		List<Snsposts> snsWriteTimeLine = snsTimeLineDao.getsnsTimeLine(id);// 글 15개를 가져와서
+		List<Snsposts> snsWriteTimeLine = snsTimeLineDao.getsnsTimeLine(id,lowNum);// 글 15개를 가져와서
 		System.out.println("사이즈"+snsWriteTimeLine.size());
 		for (int i = 0; i < snsWriteTimeLine.size(); i++) {
 			for (Snsposts post : snsWriteTimeLine) {
@@ -43,9 +47,10 @@ public class SnsTimeLineService {
 				SnsLikeHateCounter likeHateCounter = snsTimeLineDao.snsLikeHateCounter(number);
 				List<SnsPhoto> photoList = snsTimeLineDao.snsPhotoTimeLine(number);
 				Member member = new Member();
+				int commentCount=snsTimeLineDao.commentCount(number);
 				member.setMember_id(post.getSns_posts_writer());
 				member = getProfile.getProfile(member);
-				result = setPost(result, post, photoList, likeHateCounter, member);
+				result = setPost(result, post, photoList, likeHateCounter, member,commentCount);
 				snsTimeLineResultMap.put(number,result);
 			}
 			
@@ -54,28 +59,15 @@ public class SnsTimeLineService {
 		System.out.println("json=" + json);
 		return json;
 	}
-	
-	
-	
-	
-
 	private SnsTimeLineResult setPost(SnsTimeLineResult result, Snsposts post, List<SnsPhoto> photoList,
-			SnsLikeHateCounter likeHateCounter, Member member) {
-
-//		if (likeHateCounter == null) {
-//			SnsLikeHateCounter defaultLikeHate = new SnsLikeHateCounter();
-//			defaultLikeHate.setLike(0).setMemberId(" ").setHate(0);
-//			result.setLike(defaultLikeHate.getLike()).setHate(defaultLikeHate.getHate())
-//			.setMemberId(defaultLikeHate.getMemberId());
-//		} else {
+			SnsLikeHateCounter likeHateCounter, Member member, int commentCount) {
 			result.setLike(likeHateCounter.getSnsLike())
 			.setHate(likeHateCounter.getSnsHate());
-	//	}
 		result.setPosts_number(post.getSns_posts_number()).setPosts_writer(post.getSns_posts_writer())
 				.setContent(post.getSns_posts_content()).setPosts_hashtag(post.getSns_posts_hashtag())
 				.setPosts_authority(post.getSns_posts_authority()).setPosts_report(post.getSns_posts_report())
 				.setSns_posts_date(post.getSns_posts_date()).setSns_posts_edit_date(post.getSns_posts_edit_date())
-				.setProfilePicture(member.getMember_profile_picture());
+				.setProfilePicture(member.getMember_profile_picture()).setCommentCount(commentCount);
 		result.setPhotoList(photoList);
 		return result;
 	}

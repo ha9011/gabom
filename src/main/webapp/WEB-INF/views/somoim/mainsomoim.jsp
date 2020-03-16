@@ -96,7 +96,8 @@
 	margin : 10px;
 }
 </style>
-<body>
+<body>	
+		
 		<div id="menunav">
 			<button type="button" class="btn btn-primary btn-lg menu">소모임</button>
 			<button type="button" class="btn btn-primary btn-lg menu">내	모임</button>

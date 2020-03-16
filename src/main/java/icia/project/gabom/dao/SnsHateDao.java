@@ -1,5 +1,7 @@
 package icia.project.gabom.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import icia.project.gabom.dto.SnsLikeHateCounter;
 
 public interface SnsHateDao {
@@ -14,5 +16,7 @@ public interface SnsHateDao {
 	void delete(SnsLikeHateCounter snsHate);
 
 	void upDate(SnsLikeHateCounter snsHate);
+
+	int total(@Param("postNumber")int postNumber);
 
 }

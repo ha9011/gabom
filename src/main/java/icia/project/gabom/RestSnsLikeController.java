@@ -19,8 +19,6 @@ public class RestSnsLikeController {
 	public String snsLike(Principal principal,@RequestParam("postNumber") int postNumber) {
 		
 		
-		System.out.println("좋아요 아이디"+principal.getName());
-		System.out.println("누른 게시글 번호"+postNumber);
 		String json=snsLike.like(principal,postNumber);
 		
 		return json;
