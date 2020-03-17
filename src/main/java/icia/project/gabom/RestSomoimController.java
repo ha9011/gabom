@@ -362,18 +362,6 @@ public class RestSomoimController {
 		  String json= simm.modifypicreple(spreple);
 
 	      return json;
-	   }
-	   
-	 //사진에 댓글 수정
-//	   @PostMapping(value = "/modifyreple", produces="text/plain;charset=utf-8")
-//	   public String modifyreple(Somoim_photo_reple spreple, Principal pr) {
-//	      System.out.println("댓글 번호  ");
-//	      System.out.println(spreple);
-//	    
-//		  String json= simm.modifyreple(spreple);
-//
-//	      return json;
-//	   }
-
+	   }	   
 	
 }
