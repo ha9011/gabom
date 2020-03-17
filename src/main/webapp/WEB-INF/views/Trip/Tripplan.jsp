@@ -78,7 +78,7 @@ color: black;
 							<a class="page-scroll" href="snsmain">SNS</a>
 						</li>
 						<li>
-							<a class="page-scroll" href="#">내여행</a>
+							<a class="page-scroll" href="myplan">내여행</a>
 						</li>
 						<li>
 							<a class="page-scroll" href="housechoice">숙박</a>

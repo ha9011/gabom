@@ -47,7 +47,7 @@ h6 {
 	font-weight: 300;
 	letter-spacing: 0.4px;
 	font-family: "Raleway", Sans-serif;
-	color: #232323;
+	
 }
 
 p {
@@ -149,7 +149,7 @@ section ul li:before {
 	color: #fec503
 }
 .navbar-default .navbar-collapse {
-	border-color: rgba(255,255,255,.02)
+	
 }
 .navbar-default .navbar-toggle {
 	background-color: #fed136;
@@ -187,7 +187,7 @@ section ul li:before {
 @media (min-width:768px) {
 	.navbar-default
 	{
-		background-color: rgba(255, 255, 255, 0.65);
+	
 		padding: 5px 0;
 		-webkit-transition:padding .3s;
 		-moz-transition:padding .3s;
@@ -391,7 +391,7 @@ header {
 }
 .button-cta:hover {
 	color: #000;
-	background-color: #fff;	
+	
 	text-decoration: none;
 }
 
@@ -431,7 +431,7 @@ header {
 	color: #848484;
 }
 .mz-module-button {
-	background-color: #B6B6C3;
+	
 	padding: 15px;
 	text-transform: uppercase;
 	font-weight: 700;
@@ -919,13 +919,11 @@ font-size: 11px;
 
 .btn-xl:hover, .btn-xl:focus, .btn-xl:active, .btn-xl.active, .open .dropdown-toggle.btn-xl {
 	color: #fff;
-	background-color: #dfdfdf;
 	border-color: #dfdfdf;
 }
 
 .btn:hover, .btn:focus, .btn:active, .btn.active, .open .dropdown-toggle.btn {
 	color: #fff;
-	background-color: #dfdfdf;
 	border-color: #dfdfdf;
 }
 
