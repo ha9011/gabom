@@ -18,4 +18,10 @@
 		WHERE SNS_POSTS_NUMBER=#{postNumber} AND
 		SNS_LIKE_HATE_MEMBER_ID=#{memberId}
 	</update>
+	<select id="total" resultType="int">
+		SELECT COUNT(SNS_LIKE)
+		FROM SNS_LIKE_HATE_COUNTER
+		WHERE
+		SNS_POSTS_NUMBER=#{postNumber}
+	</select>
 </mapper>

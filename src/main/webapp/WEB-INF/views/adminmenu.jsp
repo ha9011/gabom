@@ -61,21 +61,20 @@
 
 /* -------------------header------------------------------------------- */
 #housemain_judge {
-	width: 70%;
+	width: 90%;
 	margin-left: 5%;
 }
 
 #house_judge {
 	height: auto;
 	width: 100%;
-	display: block;
+	/* display: block; */
 	border: 1px solid black;
-	width: 100%;
 	overflow: auto;
 }
 
 #foodmain_judge {
-	width: 70%;
+	width: 90%;
 	margin-left: 5%;
 }
 
@@ -140,7 +139,7 @@ li {
 			<li class="nav-item"><a class="nav-link" data-toggle="tab"
 				href="#service_declaration">서비스업체 신고관리</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab"
-				href="#tourist_judge">여행객계획 등록심사</a></li>
+				href="#tourist_judge">여행객계획 등록심사</a></li>  
 			<li class="nav-item"><a class="nav-link" data-toggle="tab"
 				href="#tourist_declaration">여행객 신고관리</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="tab"
@@ -148,6 +147,7 @@ li {
 			<li class="nav-item"><a class="nav-link" data-toggle="tab"
 				href="#qna_board" id="qna_board_click">QnA</a></li>
 			<li class="nav-item"><a class="nav-link" href="home">Home</a></li>
+			<li class="nav-item"><a class="nav-link" href="Apidate">Api</a></li>
 		</ul>
 		<!-- Tab 내용 -->
 		<div class="tab-content">
@@ -204,7 +204,7 @@ li {
 						</tbody>
 					</table>
 				</div>
-					<nav aria-label="Page navigation example" style="text-align: center;">
+				<!-- 	<nav aria-label="Page navigation example" style="text-align: center;">
 						<ul class="pagination">
 							<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
 							<li class="page-item active"><a class="page-link" href="#">1</a></li>
@@ -214,7 +214,7 @@ li {
 							<li class="page-item"><a class="page-link" href="#">5</a></li>
 							<li class="page-item"><a class="page-link" href="#">Next</a></li>
 						</ul>
-					</nav>
+					</nav> -->
 				<!-- pagination 영역 -->
 				<!-- <div style="text-align: center;">
 					<ul id="pagination" class="pagination"></ul>
@@ -253,7 +253,7 @@ li {
 
 		<!----------------------------------------------서비스업 Modal---------------------------------------------->
 		<div class="modal" id="myModal">
-			<div class="modal-dialog-lg modal-center">
+			<div class="modal-dialog-lg ">
 				<!-- modal-dialog-scrollable -->
 				<div class="modal-content">
 

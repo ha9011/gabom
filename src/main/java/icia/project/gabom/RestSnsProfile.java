@@ -16,8 +16,6 @@ public class RestSnsProfile {
 
 	@GetMapping(value = "/sns/profile", produces = "application/json;charset=UTF-8")
 	public String snsProfile(Principal principal) {
-		System.out.println(principal.getName());
-		System.out.println("프로필 들어옴");
 		String json = snsProfile.getProfile(principal);
 		return json;
 	}

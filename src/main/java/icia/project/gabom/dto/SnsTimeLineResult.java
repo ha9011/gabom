@@ -24,4 +24,5 @@ public class SnsTimeLineResult {
 	private int like;
 	private int hate;
 	private String profilePicture;
+	private int commentCount;
 }

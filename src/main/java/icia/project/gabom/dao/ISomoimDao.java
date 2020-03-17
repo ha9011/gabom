@@ -1,5 +1,6 @@
 package icia.project.gabom.dao;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +35,7 @@ public interface ISomoimDao {
 	int insertMakeJunmoRoom(Jungmoroom jungmoroom);
 
 	//개설된 정모룸 가져오는거 
-	List<Jungmoroom> selecttMakeJunmoRoom(@Param("somoim_number")int somoim_number);
+	List<Jungmoroom> selecttMakeJunmoRoom(@Param("somoim_number")int somoim_number,@Param("id")String string);
 
 	List<Jungmoroom> selectAttendJunmoRoom(@Param("somoim_number")int parseInt,@Param("id")String string);
 
@@ -82,8 +83,18 @@ public interface ISomoimDao {
 
 	SomoimMyInfo selectMySomoimInfo(@Param("somoim_number")int parseInt, @Param("id")String string);
 
+	Jungmoroom selectjungmoinfo(@Param("jungmo_number")int jungmo_number, @Param("id")String string);
 
+
+	int deleteJungmo(int jungmo_number);
 	
+	int modifyjunmo(Jungmoroom jr);
+
+	int deleteboard(int board_number);
+
+	int updateSomoimBoard(SomoimBoard smb);
+
+	int deleteSomoimBoardReple(int somoim_board_reple_number);
 	
 	
 	
@@ -124,6 +135,9 @@ public interface ISomoimDao {
 
 	
 	
+
+	
+
 
 	
 

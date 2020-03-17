@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
+    pageEncoding="UTF-8"%>
 <meta charset="UTF-8">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -98,11 +95,11 @@
 
 					<button id="house_address_btn" type="button">지도확인</button>
 					<input type="hidden" id="sample4_extraAddress" placeholder="참고항목">
-					<div id="map" style="width: 100%; height: 200px; margin-top: 10px;"></div>
+					<div id="mapp" style="width: 100%; height: 200px; margin-top: 10px;"></div>
 
 					<!-- 주소 좌표 hide로 숨김. -->
-					<input type="hidden" name="house_ypoint" id="y" /> <input
-						type="hidden" name="house_xpoint" id="x" />
+					<input type="hidden" name="jungmo_ypoint" id="y" /> <input
+						type="hidden" name="jungmo_xpoint" id="x" />
 				</div>
 
 				<!--회비 -->
@@ -116,10 +113,13 @@
 				</div>
 				
 				
-					<input type="button"
+					<input id="makeJunmobtn" type="button"
 					class="btn btn-primary" onclick="formData()" value="만들기"
 					data-dismiss="modal">
-
+					
+					<input id="modiJunmobtn" type="button" 
+					class="btn btn-primary" onclick="modiData()" value="수정하기"
+					data-dismiss="modal">
 
 			</form>
 		</div>
@@ -133,7 +133,6 @@
 				{
 					oncomplete : function(data) {
 						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
 						// 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
 						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
 						var roadAddr = data.roadAddress; // 도로명 주소 변수
@@ -144,6 +143,7 @@
 						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
 							extraRoadAddr += data.bname;
 						}
+
 						// 건물명이 있고, 공동주택일 경우 추가한다.
 						if (data.buildingName !== '' && data.apartment === 'Y') {
 							extraRoadAddr += (extraRoadAddr !== '' ? ', '
@@ -155,8 +155,8 @@
 						}
 
 						// 우편번호와 주소 정보를 해당 필드에 넣는다.
-						document.getElementById("JMLocation").value = data.roadAddr;
-						document.getElementById("JMLocation").value = data.jibunAddress;
+						document.getElementById("jungmo_location").value = data.roadAddr;
+						document.getElementById("jungmo_location").value = data.jibunAddress;
 
 						var guideTextBox = document.getElementById("guide");
 						// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
@@ -176,7 +176,7 @@
 </script>
 
 <script>
-	$("#map").hide();
+	$("#mapp").hide();
 	$("#x").hide();
 	$("#y").hide();
 
@@ -184,12 +184,14 @@
 			.on(
 					"click",
 					function() {
-						$("#map").show();
-						var $searchAddr = $("#JMLocation").val();
+						
+						
+						$("#mapp").show();
+						var $searchAddr = $("#jungmo_location").val();
 
 						console.log("검색 주소 : " + $searchAddr)
 
-						var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+						var mapContainer = document.getElementById('mapp'), // 지도를 표시할 div 
 						mapOption = {
 							center : new kakao.maps.LatLng(33.450701,
 									126.570667), // 지도의 중심좌표
@@ -238,7 +240,7 @@
 												// 인포윈도우로 장소에 대한 설명을 표시합니다
 												var infowindow = new kakao.maps.InfoWindow(
 														{
-															content : '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+															content : '<div style="width:150px;text-align:center;padding:6px 0;">'+$searchAddr+'</div>'
 														});
 												infowindow.open(map, marker);
 

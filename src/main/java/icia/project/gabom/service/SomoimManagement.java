@@ -116,18 +116,17 @@ public class SomoimManagement {
 	public ModelAndView somoimRoomData(ModelAndView mav, String roomnum, Principal pr) {
 		sm = new Somoim();
 		smi = new SomoimMyInfo();
-		
+
 		System.out.println("내프로젝트의 루트경로는?  " + System.getProperty("user.dir"));
-		
-		//0 - 이 소모임에 대한 나의 정보 (등급, 가입여부, 아이디) 필요합니다.
+
+		// 0 - 이 소모임에 대한 나의 정보 (등급, 가입여부, 아이디) 필요합니다.
 		smi = sDao.selectMySomoimInfo(Integer.parseInt(roomnum), pr.getName());
 		String mysomoiminfo = new Gson().toJson(smi);
 		System.out.println("mysomoiminfo json : " + mysomoiminfo);
 		mav.addObject("JsonMysomoimInfo", mysomoiminfo); // 기본정보 받아옴
-		
-		
+
 		// 1-1정보 단계 (제목, 타이틀, 위치 등등...)
-		
+
 		sm = sDao.selectRoomInfo(roomnum);
 		System.out.println(sm.toString());
 		String JsonBasicInfo = new Gson().toJson(sm);
@@ -143,7 +142,9 @@ public class SomoimManagement {
 
 		// 1-3 정모방 // 그리고 참석인원
 		// (1)정모방
-		List<Jungmoroom> Jlist = sDao.selecttMakeJunmoRoom(Integer.parseInt(roomnum)); // 방만 뽑기
+
+		// 정모와 내가 가입됬는지 확인
+		List<Jungmoroom> Jlist = sDao.selecttMakeJunmoRoom(Integer.parseInt(roomnum), pr.getName()); // 방만 뽑기
 		String JsonJungmoRoom = new Gson().toJson(Jlist);
 		System.out.println("sm JsonJungmoRoom : " + JsonJungmoRoom);
 
@@ -172,11 +173,11 @@ public class SomoimManagement {
 		return mav;
 	}
 
-	public String insertSelecttMakeJunmoRoom(Jungmoroom jungmoroom) {
+	public String insertSelecttMakeJunmoRoom(Jungmoroom jungmoroom, String id) {
 		// 아이디, 내용
 		int result = sDao.insertMakeJunmoRoom(jungmoroom); // 인서트
 		System.out.println("insert 확인 : " + result);
-		List<Jungmoroom> Jlist = sDao.selecttMakeJunmoRoom(jungmoroom.getJungmo_number()); // 셀렉트
+		List<Jungmoroom> Jlist = sDao.selecttMakeJunmoRoom(jungmoroom.getSomoim_number(), id); // 셀렉트
 		String jsonJungmoRooms = new Gson().toJson(Jlist);
 		return jsonJungmoRooms;
 	}
@@ -322,6 +323,7 @@ public class SomoimManagement {
 
 		// 파일 없음이면 그냥 바로 넘기기. 없음이 아니면 파일 업로드 하기
 
+		
 		// 게시글 다 가져오기, 상단일 경우와 아닌거 2개 같이 하기,
 		List<SomoimBoard> notiBoardList = sDao.selectNotiBoard(somoim_number);
 
@@ -353,14 +355,13 @@ public class SomoimManagement {
 		boardSomoim.setTotal_like(totalLike);
 
 		// 댓글 퍼오기
-		//댓글 넣었으니 다시 다 불러오기, 
+		// 댓글 넣었으니 다시 다 불러오기,
 		List<Somoimreple> repleList = sDao.selectBoardRepleList(board_number);
 		boardSomoim.setSomoimreple(repleList);
-		
+
 		boardSomoim.setSomoimreple(repleList);
 		boardSomoim.setHtmlPaging(getPaging(1, boardSomoim.getBoard_number())); // 처음은 무조건 1페이지
-		
-		
+
 		return new Gson().toJson(boardSomoim);
 	}
 
@@ -391,84 +392,208 @@ public class SomoimManagement {
 		return new Gson().toJson(sb);
 	}
 
-	//댓글 달기
+	// 댓글 달기
 	public String inputBoardReple(SomoimBoard sb, String name) {
-		sb.setBoard_like_name(name); //이름 담기
+		sb.setBoard_like_name(name); // 이름 담기
 		System.out.println("댓글 넣기전 dto date : " + sb.toString());
 		// 댓글 insert
 		int insertresult = sDao.insertBoardReple(sb);
 		System.out.println("삽입 결과 : " + insertresult);
-		
-		//댓글 넣었으니 다시 다 불러오기, -> 페이징이니 다는 부르지 않고...
+
+		// 댓글 넣었으니 다시 다 불러오기, -> 페이징이니 다는 부르지 않고...
 		List<Somoimreple> repleList = sDao.selectBoardRepleList(sb.getBoard_number());
 		sb.setSomoimreple(repleList);
 		sb.setHtmlPaging(getPaging(1, sb.getBoard_number())); // 처음은 무조건 1페이지
-		
+
 		System.out.println("모든 리플 결과 : " + sb.toString());
-		
-		
-		
-		
+
 		return new Gson().toJson(sb);
 	}
-	
-	
+
 	public String pagereplelist(SomoimBoard sb) {
-		//페이징 
+		// 페이징
 		List<Somoimreple> repleList = sDao.selectPagingBoardRepleList(sb);
-		
+
 		sb.setSomoimreple(repleList);
 		sb.setHtmlPaging(getPaging(sb.getPaging_number(), sb.getBoard_number())); // 처음은 무조건 1페이지
-		
-		
+
 		return new Gson().toJson(sb);
-	
+
 	}
-	
-	
-	//=============== 페이징
+
+	// =============== 페이징
 	public String getPaging(int pNum, int boardNum) {
 		int maxNum = sDao.getBoardRepleCount(boardNum);
-		int listCount = 5;  // 10개씩 보여주기
-		int pageCount = 2;  // 이게 뭔말이지?
-		String boardName = "replelist"; //?
-		//왜 임포트가 안되징?
-		Paging paging = new Paging(maxNum, pNum, listCount, pageCount,boardNum, boardName);
+		int listCount = 5; // 10개씩 보여주기
+		int pageCount = 2; // 이게 뭔말이지?
+		String boardName = "replelist"; // ?
+		// 왜 임포트가 안되징?
+		Paging paging = new Paging(maxNum, pNum, listCount, pageCount, boardNum, boardName);
 
 		return paging.makeHtmlPaging();
 	}
+
+	public String jungmoinfo(Jungmoroom jr, Principal pr) {
+
+		Jungmoroom jrinfo = sDao.selectjungmoinfo(jr.getJungmo_number(), pr.getName());
+
+		return new Gson().toJson(jrinfo);
+	}
+
+	public String deletejunmo(Jungmoroom jr, Principal pr) {
+		System.out.println("정모삭제 도입");
+
+		int deleteResult = sDao.deleteJungmo(jr.getJungmo_number());
+		System.out.println("삭제 되었니 : " + deleteResult);
+		List<Jungmoroom> jmlist = sDao.selecttMakeJunmoRoom(jr.getSomoim_number(), pr.getName());
+
+		return new Gson().toJson(jmlist);
+	}
+
+	public String modifyjunmo(Jungmoroom jr, Principal pr) {
+
+		int updateResult = sDao.modifyjunmo(jr);
+
+		List<Jungmoroom> jmlist = sDao.selecttMakeJunmoRoom(jr.getSomoim_number(), pr.getName());
+
+		return new Gson().toJson(jmlist);
+	}
+
+	public String deleteboard(SomoimBoard sb, Principal pr) {
+		System.out.println("게시글삭제 서비스 도입");
+
+		int deleteResult = sDao.deleteboard(sb.getBoard_number());
+		System.out.println("삭제 되었니 : " + deleteResult);
+		
+		// 게시글 다 가져오기, 상단일 경우와 아닌거 2개 같이 하기,
+		List<SomoimBoard> notiBoardList = sDao.selectNotiBoard(sb.getSomoim_number());
+
+		List<SomoimBoard> unNotiBoardList = sDao.selectUnNotiBoard(sb.getSomoim_number());
+
+		Map<String, List<SomoimBoard>> resultMap = new HashMap<String, List<SomoimBoard>>();
+		resultMap.put("공지", notiBoardList);
+		resultMap.put("비공지", unNotiBoardList);
+
+		String jsonresultMap = new Gson().toJson(resultMap);
+		System.out.println("jsonresultMap : " + jsonresultMap);
+
+		return jsonresultMap;
+	}
+
+	
+	//게시글 수정, 파일 저장하고, update해주기
+	public String updateSomoimBoard(MultipartHttpServletRequest multi, String name) {
+		smb = new SomoimBoard();
+
+		
+		int somoim_number = Integer.parseInt(multi.getParameter("somoim_number"));
+		int board_number = Integer.parseInt(multi.getParameter("board_number"));
+		
+		String board_writer = name;
+		String board_type = multi.getParameter("boardtype");
+		String board_title = multi.getParameter("boardtitle");
+		String board_content = multi.getParameter("boardCont");
+		String board_fix = null;
+		if ("고정".equals(multi.getParameter("mainboard"))) {
+			board_fix = "고정";
+		} else {
+			board_fix = "비고정";
+		}
+		smb.setSomoim_number(somoim_number).setBoard_writer(board_writer).setBoard_type(board_type);
+		smb.setBoard_title(board_title).setBoard_content(board_content).setBoard_fix(board_fix);
+		smb.setBoard_number(board_number);
+//	member_profile_picture = "./resources/userprofileimage/upload/"+member_id+System.currentTimeMillis()+"."
+//	+member_profile_original.substring(member_profile_original.lastIndexOf(".")+1);
+//	
+
+		System.out.println("firstPic : " + multi.getFile("firstPic").getOriginalFilename());
+		System.out.println("secondPic : " + multi.getFile("secondPic").getOriginalFilename());
+		System.out.println("thirdPic : " + multi.getFile("thirdPic").getOriginalFilename());
+		System.out.println("firstPic t : " + multi.getFile("firstPic").isEmpty());
+		System.out.println("secondPic t  : " + multi.getFile("secondPic").isEmpty());
+		System.out.println("thirdPic t : " + multi.getFile("thirdPic").isEmpty());
+		
+		
+		System.out.println("test pch1 : " + multi.getParameter("picChange1") );
+		String board_first_pic = "";
+		String board_first_syspic = "";
+		if (!multi.getFile("firstPic").isEmpty()) {
+			board_first_pic = multi.getFile("firstPic").getOriginalFilename();
+			String sysfile = System.currentTimeMillis() + "."
+					+ board_first_pic.substring(board_first_pic.lastIndexOf(".") + 1);
+			board_first_syspic = "./resources/somoimboard/upload/" + sysfile;
+
+			sbf.fileUpProfilePic(multi, "firstPic", sysfile);
+
+			smb.setBoard_first_pic(board_first_pic).setBoard_first_syspic(board_first_syspic);
+		}
+		
+		
+		System.out.println("test pch2 : " + multi.getParameter("picChange2") );
+		String board_second_pic = "";
+		String board_second_syspic = "";
+		if (!multi.getFile("secondPic").isEmpty()) {
+
+			board_second_pic = multi.getFile("secondPic").getOriginalFilename();
+			String sysfile = System.currentTimeMillis() + "."
+					+ board_second_pic.substring(board_second_pic.lastIndexOf(".") + 1);
+			board_second_syspic = "./resources/somoimboard/upload/" + sysfile;
+
+			sbf.fileUpProfilePic(multi, "secondPic", sysfile);
+
+			smb.setBoard_second_pic(board_second_pic).setBoard_second_syspic(board_second_syspic);
+		}
+
+		String board_third_pic = "";
+		String board_third_syspic = "";
+		if (!multi.getFile("thirdPic").isEmpty()) {
+
+			board_third_pic = multi.getFile("thirdPic").getOriginalFilename();
+			String sysfile = System.currentTimeMillis() + "."
+					+ board_third_pic.substring(board_third_pic.lastIndexOf(".") + 1);
+			board_third_syspic = "./resources/somoimboard/upload/" + sysfile;
+
+			sbf.fileUpProfilePic(multi, "thirdPic", sysfile);
+
+			smb.setBoard_third_pic(board_third_pic).setBoard_third_syspic(board_third_syspic);
+		}
+
+		System.out.println("smb : " + smb.toString());
+
+		
+		//파일 업로드하기
+		int result = sDao.updateSomoimBoard(smb); // 성공
+
+		// 파일 없음이면 그냥 바로 넘기기. 없음이 아니면 파일 업로드 하기
+
+		
+		// 게시글 다 가져오기, 상단일 경우와 아닌거 2개 같이 하기,
+		List<SomoimBoard> notiBoardList = sDao.selectNotiBoard(somoim_number);
+
+		List<SomoimBoard> unNotiBoardList = sDao.selectUnNotiBoard(somoim_number);
+
+		Map<String, List<SomoimBoard>> resultMap = new HashMap<String, List<SomoimBoard>>();
+		resultMap.put("공지", notiBoardList);
+		resultMap.put("비공지", unNotiBoardList);
+
+		String jsonresultMap = new Gson().toJson(resultMap);
+		System.out.println("jsonresultMap : " + jsonresultMap);
+
+		return jsonresultMap;
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public String deleteSomoimBoardReple(Somoimreple sr, String name) {
+		SomoimBoard sb = new SomoimBoard();
+		int result = sDao.deleteSomoimBoardReple(sr.getSomoim_board_reple_number());
+		
+		// 댓글 넣었으니 다시 다 불러오기, -> 페이징이니 다는 부르지 않고...
+		List<Somoimreple> repleList = sDao.selectBoardRepleList(sr.getBoard_number());
+		sb.setSomoimreple(repleList);
+		
+		return new Gson().toJson(sb);
+	}
+
 	
 	
 	
@@ -507,37 +632,31 @@ public class SomoimManagement {
 	
 	// -------------------------------------------------------------------------------------------------이예상
 
-	
-	
-
 	public String somopiclist(int somo_number) {
-		String json2= null;
+		String json2 = null;
 		System.out.println("사진 출력해줘 ");
-		
+
 		List<Somoim_photoalbum> somopiclist = sDao.getsomopicList(somo_number);
-		
+
 		json2 = new Gson().toJson(somopiclist);
 		System.out.println(json2);
 		return json2;
 	}
 
-
 	public String showimginfo(String num) {
-		String json= null;
-		
-		Somoim_photoalbum somodetailpic = sDao.showimginfo(num);//사진가져오는것 
-		
-		
+		String json = null;
+
+		Somoim_photoalbum somodetailpic = sDao.showimginfo(num);// 사진가져오는것
+
 		List<Somoim_photo_reple> spreple = sDao.getimgreple(num);
 		somodetailpic.setSpreple(spreple);
-		
+
 		int splike = sDao.getimglike(num);
 		somodetailpic.setSplike(splike);
-		
-		
+
 		json = new Gson().toJson(somodetailpic);
-		System.out.println("사진 정보"+json);
-		
+		System.out.println("사진 정보" + json);
+
 		return json;
 	}
 	//사진 댓글 지우고 다시 불러오기
@@ -596,5 +715,25 @@ public class SomoimManagement {
 		json = new Gson().toJson(selectreple);
 		return json;
 	}
+
+
+//	public String modifyreple(Somoim_photo_reple spreple) {
+//		String json= null;
+//		
+//		int reply_number =  spreple.getReply_number();
+//		int photo_number =  spreple.getPhoto_number();
+//		
+//		System.out.println("댓글번호"+reply_number);
+//		System.out.println("사진번호"+photo_number);
+//		
+//		int modifyreple = sDao.modifyreple(reply_number);//삭제
+//		List<Somoim_photo_reple> selectreple = sDao.recallreple(photo_number);//긁어온거
+//		
+//		
+//		json = new Gson().toJson(selectreple);
+//		return json;
+//	}
+
+
 
 }

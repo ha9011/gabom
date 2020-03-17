@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.SnsCommentInsertDao">
+	<insert id="insert" parameterType="snsCommentDto">
+		INSERT INTO SNS_COMMENT
+		VALUES(SNS_COMMENT_SEQ.NEXTVAL,#{content},#{id}
+		,SYSDATE,SYSDATE,#{postNumber},0)
+	</insert>
+</mapper>
