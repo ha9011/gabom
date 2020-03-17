@@ -14,6 +14,7 @@ import icia.project.gabom.dao.SnsCommentDao;
 import icia.project.gabom.dto.Member;
 import icia.project.gabom.dto.SnsCommentDto;
 import icia.project.gabom.dto.SnsCommentResult;
+import icia.project.gabom.dto.SnsLikeHateCounter;
 
 @Service
 public class SnsComment {
@@ -26,8 +27,6 @@ public class SnsComment {
 		String json=null;
 		List<SnsCommentResult> snsCommentResultList=new ArrayList<SnsCommentResult>();
 		SnsCommentResult snsCommentResult= new SnsCommentResult();
-		System.out.println("===========");
-		System.out.println(postNumber);
 		List<SnsCommentDto> commentList=snsCommentDao.snsComment(postNumber);
 		JsonObject jsonobject=null;
 		if(commentList.size()==0) {
@@ -37,8 +36,10 @@ public class SnsComment {
 		}else{
 			for(SnsCommentDto comment : commentList) {
 					Member profilePic= new Member();
+					SnsLikeHateCounter snsLikeHateCounter= new SnsLikeHateCounter();
+					snsLikeHateCounter=snsCommentDao.commentLikeHateGet(comment.getCommentNumber());
 					profilePic=snsCommentDao.snsCommentProfilePic(comment.getId());
-					snsCommentResult=setResult(profilePic,comment);
+					snsCommentResult=setResult(profilePic,comment,snsLikeHateCounter);
 					snsCommentResultList.add(snsCommentResult);
 			}
 		}
@@ -47,7 +48,7 @@ public class SnsComment {
 	}
 
 	private SnsCommentResult setResult(
-			Member profilePic, SnsCommentDto comment) {
+			Member profilePic, SnsCommentDto comment, SnsLikeHateCounter snsLikeHateCounter) {
 			SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd");
 			String commentDate=format1.format(comment.getCommentDate());
 			String editDate=format1.format(comment.getEditDate());
@@ -59,8 +60,9 @@ public class SnsComment {
 			.setEditDate(editDate)
 			.setPostNumber(comment.getPostNumber())
 			.setReport(comment.getReport())
-			.setProfilePic(profilePic.getMember_profile_picture());
-	
+			.setProfilePic(profilePic.getMember_profile_picture())
+			.setLike(snsLikeHateCounter.getSnsLike())
+			.setHate(snsLikeHateCounter.getSnsHate());
 		return snsCommentResult;
 	}
 	

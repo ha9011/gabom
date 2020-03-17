@@ -1,10 +1,7 @@
 package icia.project.gabom.dto;
 
-import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -20,4 +17,6 @@ public class SnsCommentResult {
 	private	int postNumber;
 	private	int report;
 	private String profilePic;
+	private int like;
+	private int hate;
 }

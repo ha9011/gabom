@@ -13,4 +13,5 @@ public class SnsLikeHateCounter {
 		private int snsHate;
 		private String memberId;
 		private int postNumber;
+		private int commentNumber;
 }
