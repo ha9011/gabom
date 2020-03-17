@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.CommentLikeDao">
+
+	<select id="check" resultType="snsLikeHate">
+		SELECT SNS_COMMENT_LIKE SNSLIKE
+		,SNS_COMMENT_HATE SNSHATE,SNS_COMMENT_NUMBER COMMENTNUMBER
+		FROM SNS_COMMENT_LIKE_HATE_COUNTER
+		WHERE SNS_COMMENT_NUMBER=#{commentNumber} AND
+		COMMENT_LIKE_HATE_MEMBER_ID=#{memberId}
+	</select>
+	<insert id="like">
+		INSERT INTO SNS_COMMENT_LIKE_HATE_COUNTER VALUES
+		(1,#{commentNumber},#{memberId},null)
+	</insert>
+	<update id="hateCancel">
+		UPDATE SNS_COMMENT_LIKE_HATE_COUNTER SET
+		SNS_COMMENT_LIKE=1,SNS_COMMENT_HATE=null
+		WHERE
+		SNS_COMMENT_NUMBER=#{commentNumber}AND
+		COMMENT_LIKE_HATE_MEMBER_ID=#{memberId}
+	</update>
+	<update id="likeUpdate">
+		UPDATE SNS_COMMENT_LIKE_HATE_COUNTER
+		SET SNS_COMMENT_LIKE=1 WHERE
+		SNS_COMMENT_NUMBER=#{commentNumber}
+		AND COMMENT_LIKE_HATE_MEMBER_ID=#{memberId}
+	</update>
+	<update id="likeCancel">
+		UPDATE SNS_COMMENT_LIKE_HATE_COUNTER
+		SET SNS_COMMENT_LIKE=null WHERE
+		SNS_COMMENT_NUMBER=#{commentNumber}
+		AND COMMENT_LIKE_HATE_MEMBER_ID=#{memberId}
+	</update>
+	<select id="total" resultType="int">
+		SELECT COUNT(SNS_COMMENT_LIKE) SNSLIKE
+		FROM SNS_COMMENT_LIKE_HATE_COUNTER
+		WHERE SNS_COMMENT_NUMBER=#{commentNumber}
+	</select>
+</mapper>

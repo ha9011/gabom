@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.SnsPostEditDao">
+	<update id="editPost" parameterType="snspost">
+	UPDATE SNS_POSTS
+			SET SNS_POSTS_CONTENT=#{sns_posts_content}
+			WHERE SNS_POSTS_NUMBER=#{sns_posts_number}
+	</update>
+
+
+
+</mapper>

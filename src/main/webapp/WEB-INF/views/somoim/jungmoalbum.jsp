@@ -293,27 +293,10 @@ const showalbumlist = ()=>{
 				}
             
 				index++;                
+
          }
          
          
-//          let index =0;
-//          for(let i of data){
-//             if(index%3==0){
-              
-//               var br = $('\r\n');
-//               $("#imgarea").append(br);
-//            } 
-            
-//             var out=$('<div class=" col-md-4"></div>');
-//             var name=$('<a href="#imgmodal" name='+i.photo_number+' id="pic" data-toggle="modal"></a>'); // 클리릭하면 해당 이미지 확대되서 모달창으로 뜸.
-//             var img=$('<img  name='+i.photo_number+'  class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'">');
-            
-//             name.append(img);
-//             out.append(name);
-//             $("#imgarea").append(out);
-            
-//             index++;
-//          }
     
          
       },

@@ -39,7 +39,6 @@ public class SnsTimeLineService {
 		SnsTimeLineResult result = null;
 		HashMap<Integer, SnsTimeLineResult> snsTimeLineResultMap = new HashMap<Integer, SnsTimeLineResult>();
 		List<Snsposts> snsWriteTimeLine = snsTimeLineDao.getsnsTimeLine(id,lowNum);// 글 15개를 가져와서
-		System.out.println("사이즈"+snsWriteTimeLine.size());
 		for (int i = 0; i < snsWriteTimeLine.size(); i++) {
 			for (Snsposts post : snsWriteTimeLine) {
 				int number = post.getSns_posts_number();
@@ -56,7 +55,6 @@ public class SnsTimeLineService {
 			
 		}
 		json = new Gson().toJson(snsTimeLineResultMap);
-		System.out.println("json=" + json);
 		return json;
 	}
 	private SnsTimeLineResult setPost(SnsTimeLineResult result, Snsposts post, List<SnsPhoto> photoList,

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.ITripplanDao">
+   
+   <insert id="savetripplan" parameterType="trip">
+      INSERT INTO TRIP_PLAN VALUES(SEQ_TRIP_PLAN.nextval,#{trip_id},#{trip_title},#{trip_area},#{trip_start_date},#{trip_end_date})
+      <selectKey keyProperty="trip_number" resultType="integer" order="AFTER">
+            SELECT SEQ_TRIP_PLAN.CURRVAL FROM DUAL
+      </selectKey>
+   </insert>
+   
+   <insert id="savetripdate" parameterType="tripdate">
+      INSERT INTO TRIP_PLAN_DATE VALUES(#{date},#{trip_number2},#{index})
+   </insert>
+
+</mapper>

@@ -23,5 +23,11 @@ public class AdminjudgeController {
 		
 		return mav;
 	}
-	
+	@RequestMapping(value = "/Apidate", method = RequestMethod.GET)
+	public ModelAndView Apidate() {
+		System.out.println("Apidate");
+		mav = new ModelAndView();
+		mav.setViewName("Apidate");
+		return mav;
+	}
 }

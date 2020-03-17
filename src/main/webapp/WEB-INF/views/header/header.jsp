@@ -102,7 +102,7 @@ background-color: #E6E6E6
       </div>
       <div class="container-fluid" id="navContainer">
          <ul class="nav nav-tabs nav-justified">
-            <li><a href="#" id="travel">여행</a></li>
+            <li><a href="trip" id="travel">여행</a></li>
             <li><a href="snsmain" id="sns" >SNS</a></li>
             <li><a href="housechoice" id="room" >숙박</a></li>
             <li><a href="foodmain" id="popularRestaurant">맛집</a></li>

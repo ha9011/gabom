@@ -792,7 +792,6 @@ public class SomoimManagement {
 	
 
 
-	
 
 //	public String modifyreple(Somoim_photo_reple spreple) {
 //		String json= null;
@@ -810,7 +809,6 @@ public class SomoimManagement {
 //		json = new Gson().toJson(selectreple);
 //		return json;
 //	}
-
 
 
 
