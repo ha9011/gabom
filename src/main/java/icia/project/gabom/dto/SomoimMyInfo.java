@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain=true)
 public class SomoimMyInfo {
-	
+	private String member_profile_picture;
 	private String somoim_number;
 	private String member_name;
 	private int member_status = 0 ;

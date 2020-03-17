@@ -87,7 +87,7 @@ margin:30px 0;
 margin-bottom:100px;
 }
 #imgarea{
-display:inline-flex;
+
 } 
 #repleinsrt{
 display:flex;
@@ -126,7 +126,7 @@ margin: 0 5px;
          </div>
          <!-- title, button end -->
          
-               <div id="imgarea"></div>
+               <table id="imgarea"></table>
             <!-- 이미지 들어감. -->
 
 
@@ -200,10 +200,28 @@ $(".upload-name").hide();
                 alert("사진 업로드 완료");
                 console.log(data)
               
-                for(i of data ){
-                   var img = $('<div><img src="../'+[i.photo_sysfile]+'"></div>');
-                   $("#imgarea").append(img);
+                $("#imgarea").empty();
+                
+                
+                let index = 1;
+                let tr = $("<tr></tr>")
+                for(let i of data ){
+                   
+                	var img=$('<td><img  name='+i.photo_number+'  class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'"></td>');
+                    
+                	tr.append(img);
+                	console.log("index : "+index);
+                   $("#imgarea").append(tr);
+                   
+					if(index%3===0){
+						tr = $("<tr></tr>")
+					}
+                   
+					index++;                
                 }
+                
+                
+                
                 
              },
              error:function(error){
@@ -260,24 +278,42 @@ const showalbumlist = ()=>{
          $("#imgarea").empty();
          console.log(data);
          
-         let index =0;
-         for(let i of data){
-            if(index%3==0){
-              
-              var br = $('\r\n');
-              $("#imgarea").append(br);
-           } 
+         
+         let index = 1;
+         let tr = $("<tr></tr>")
+         for(let i of data ){
             
-            var out=$('<div class=" col-md-4"></div>');
-            var name=$('<a href="#imgmodal" name='+i.photo_number+' id="pic" data-toggle="modal"></a>'); // 클리릭하면 해당 이미지 확대되서 모달창으로 뜸.
-            var img=$('<img  name='+i.photo_number+'  class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'">');
+        	 var img=$('<td><img  name='+i.photo_number+'  class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'"></td>');
+             tr.append(img);
+         	console.log("index : "+index);
+            $("#imgarea").append(tr);
             
-            name.append(img);
-            out.append(name);
-            $("#imgarea").append(out);
+				if(index % 3===0){
+					tr = $("<tr></tr>")
+				}
             
-            index++;
+				index++;                
          }
+         
+         
+//          let index =0;
+//          for(let i of data){
+//             if(index%3==0){
+              
+//               var br = $('\r\n');
+//               $("#imgarea").append(br);
+//            } 
+            
+//             var out=$('<div class=" col-md-4"></div>');
+//             var name=$('<a href="#imgmodal" name='+i.photo_number+' id="pic" data-toggle="modal"></a>'); // 클리릭하면 해당 이미지 확대되서 모달창으로 뜸.
+//             var img=$('<img  name='+i.photo_number+'  class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'">');
+            
+//             name.append(img);
+//             out.append(name);
+//             $("#imgarea").append(out);
+            
+//             index++;
+//          }
     
          
       },
@@ -335,6 +371,10 @@ $(document).on('click',"#pic", function() {
           
           
           //댓글 리스트 출력
+          
+         
+          
+          
           for( i of data.spreple){
              
              var reple_id = $('<div><a href="#">'+i.reply_id+'</a>'+'님의 댓글'+'<div>');

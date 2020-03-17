@@ -17,7 +17,7 @@
 <!--  WHERE HOUSE_GRANTTYPE = 0 -->
 <!-- 등록대기 타입이 0인 애들 출력 -->
 <insert id="insertJoinMember" parameterType="member">
-	INSERT INTO MEMBER VALUES(#{member_id},#{member_password},#{member_name},#{member_phone},#{member_email},#{member_birth},#{member_type},1,#{member_profile_picture},#{member_profile_contents},1,0,#{member_profile_original})
+	INSERT INTO MEMBER VALUES(#{member_id},#{member_password},#{member_name},#{member_phone},#{member_email},#{member_birth},#{member_type},1,#{member_profile_picture},#{member_profile_contents},1,0,#{member_profile_original},#{member_hobby},#{member_address})
 </insert>
 
 <insert id="JoinMemberSecurityGrade" >

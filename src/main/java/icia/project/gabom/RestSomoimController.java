@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 
 import icia.project.gabom.dto.Jungmoroom;
+import icia.project.gabom.dto.Somoim;
 import icia.project.gabom.dto.SomoimBoard;
 import icia.project.gabom.dto.Somoim_photo_reple;
 import icia.project.gabom.dto.Somoim_photoalbum;
@@ -238,12 +239,76 @@ public class RestSomoimController {
 		}
 	
 	
+	 //메인에서 소모임 검색!
+	   @RequestMapping(value = "/searchSomoim", produces = "text/plain;charset=utf-8")
+		public String searchSomoim(@RequestParam("address")String address,@RequestParam("hobby")String hobby, Principal pr) {
+			mav = new ModelAndView();
+			System.out.println("검색 // 아이디 : " + pr.getName()); // 참석자를 확인할 정모의 고유번호
+			System.out.println("검색 키워드 // 글번호 : " + address +" : " + hobby); 
+			System.out.println("검색키워드 주소 길이: " +address.length()); // 아무것도 검색 안할때는 길이가 0이다
+			
+			String result = simm.searchSomoim(pr,address, hobby);		
+			System.out.println("소모임 검색 결과 : " + result);
+			return result;
+		}
 	   
+	 //소모임 가입 신청!
+	   @RequestMapping(value = "/joinsomoim", produces = "text/plain;charset=utf-8")
+		public String joinsomoim(@RequestParam("somoim_number")int somoim_number, Principal pr) {
+			System.out.println("검색 // 아이디 : " + pr.getName()); // 참석자를 확인할 정모의 고유번호
+			System.out.println("검색 키워드 // 글번호 : " + somoim_number ); 
+			
+			String result = simm.joinsomoim(pr,somoim_number);		
+			
+			return null;
+		}
+	   
+	 //소모임 관리하기 (승인/거절 강퇴 
+	   @RequestMapping(value = "/managementSomoim", produces = "text/plain;charset=utf-8")
+		public String managementSomoim(@RequestParam("somoim_number")int somoim_number, Principal pr) {
+			System.out.println(" // 아이디 : " + pr.getName()); // 참석자를 확인할 정모의 고유번호
+			System.out.println("소모임관리 키워드 // 글번호 : " + somoim_number ); 
+			String result = simm.managementSomoim(pr,somoim_number);		
+			
+			return result;
+		}
 	
-	
-	
-	
-	
+	 //채팅 db insert
+	   @RequestMapping(value = "/insertchatting", produces = "text/plain;charset=utf-8")
+		public String insertchatting(
+				@RequestParam("id")String id,
+				@RequestParam("msg")String msg,
+				@RequestParam("somoimNumber")int somoimNumber,
+				Principal pr
+			) {
+		   
+		    System.out.println("채팅 db 컨트롤러 접근");
+		    System.out.println(" // id : " + id); 
+		    System.out.println(" // msg : " + msg);
+		    System.out.println(" // somoimNumber : " + somoimNumber);
+		    
+			String result = simm.insertchatting(id,msg,somoimNumber);		
+			
+			return null;
+		}
+	   
+	   
+	   //채팅 infinity db select
+	   @RequestMapping(value = "/selectDateChatting", produces = "text/plain;charset=utf-8")
+		public String selectDateChatting(
+				@RequestParam("date")String date,
+				@RequestParam("somoimNumber")int somoimNumber,
+				Principal pr
+			) {
+		   
+		    System.out.println("채팅 db 컨트롤러 접근");
+		    System.out.println(" // date : " + date);
+		    System.out.println(" // somoimNumber : " + somoimNumber);
+		    
+			String result = simm.selectDateChatting(date,somoimNumber);		
+			
+			return result;
+		}
 	
 	
 	

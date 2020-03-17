@@ -396,6 +396,8 @@ $(function () {
 	<div class="container-fluid" id="snsMain">
 		<div class="container-fluid">
 			<div class="row">
+			
+			
 				<aside class="container col-xs-3 col-md-2 col-sm-3" id="snsAside">
 					<a href="#snsMain">TOP</a>
 					<div id="snsProfileImg">
@@ -422,6 +424,7 @@ $(function () {
 						</ul>
 					</div>
 				</aside>
+				
 				<div class="jumbotron col-xs-9 col-md-10 col-sm-9 pull-right"
 					id="snsTimeLine">
 					<div class="navbar-default navbar-right" id="snsTimeLinefilter">

@@ -10,8 +10,10 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import icia.project.gabom.dto.ChattingSomoim;
 import icia.project.gabom.dto.JungmoAttend;
 import icia.project.gabom.dto.Jungmoroom;
+import icia.project.gabom.dto.Member;
 import icia.project.gabom.dto.Somoim;
 import icia.project.gabom.dto.SomoimBoard;
 import icia.project.gabom.dto.SomoimMyInfo;
@@ -96,15 +98,32 @@ public interface ISomoimDao {
 
 	int deleteSomoimBoardReple(int somoim_board_reple_number);
 	
+	Member selectMyAddressHobby(@Param("member_id")String name);
 	
+	List<Somoim> selectMyRecommandSomoim(Member mb);
 	
+	List<Somoim> selectSearchSomoim(@Param("address")String address,@Param("hobby")String hobby);
+
+	List<Somoim> selectHobbySearchSomoim(@Param("hobby")String hobby);
+
+	List<Somoim> selectAddressSearchSomoim(@Param("address")String address);
 	
+	int insertJoinSomoim(@Param("somoim_number")int somoim_number,@Param("name")String name);
+
+
+	List<Member> registSomoimMember(@Param("somoim_number")int somoim_number);
+
+	List<Member> orginSomoimMember(@Param("somoim_number")int somoim_number);
+
+	int insertchatting(@Param("id")String id,@Param("msg")String msg, @Param("somoimNumber")int somoimNumber);
 	
-	
-	
-	
-	
-	
+
+	List<ChattingSomoim> selectTodayChattingData(@Param("somoim_number")int somoimNumber);
+
+	List<ChattingSomoim> selectYesterdayChattingData(@Param("somoim_number")int somoimNumber);
+
+	List<ChattingSomoim> selectInfinityChattingData(@Param("somoim_number")int somoimNumber, @Param("date")String date);
+
 	
 	//--------------------------------------------------------------------------------------------이예상
 	
@@ -132,6 +151,15 @@ public interface ISomoimDao {
 	
 	@Update("UPDATE SOMOIM_PHOTO_REPLE SET REPLY_CONTENT=#{reply_content} WHERE REPLY_NUMBER=#{reply_number} ")
 	int modifypicreple(Somoim_photo_reple spreple);
+
+
+
+	
+
+
+	
+
+	
 
 	
 	

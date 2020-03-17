@@ -101,7 +101,7 @@ select jr.*, nvl2(jm.member_number,1,0) as my_attend_check from JUNGMO_ROOM jr, 
 	DELETE FROM somoim WHERE SOMOIM_NUMBER = #{somoimnum}  
 </delete>
 
-<delete id="deleteMySomoim"  parameterType="int">
+<delete id="deleteMySomoim" >
 	DELETE FROM somoim_member WHERE SOMOIM_NUMBER = #{somoimnum} and  MEMBER_NAME =#{name}
 </delete>
 
@@ -220,7 +220,7 @@ select jr.*, nvl2(jm.member_number,1,0) as my_attend_check from JUNGMO_ROOM jr, 
 </select>
 
 <select id="selectMySomoimInfo"  resultType="somoimmyinfo">
-	 select * from SOMOIM_MEMBER where somoim_number = #{somoim_number} and member_name = #{id}
+	select sm.*, m.member_profile_picture from SOMOIM_MEMBER sm , Member m where sm.member_name = m.MEMBER_ID and somoim_number = #{somoim_number} and sm.member_name = #{id}
 </select>
 
 
@@ -289,12 +289,151 @@ select jr.*, nvl2(jm.member_number,1,0) as my_attend_check from JUNGMO_ROOM jr, 
 	delete from SOMOIM_BOARD_REPLE where SOMOIM_BOARD_REPLE_NUMBER = #{somoim_board_reple_number}
 </delete>
 
+<select id="selectMyAddressHobby" parameterType="String" resultType="member">
+	 select MEMBER_ID,MEMBER_HOBBY,MEMBER_ADDRESS from MEMBER where member_id = #{member_id}
+</select>
+
+<select id="selectMyRecommandSomoim" parameterType="member" resultType="somoim">
+	SELECT 
+	somoim_number,
+	somoim_location,
+	somoim_name,
+	somoim_sys_mainpicture
+	FROM 
+	 somoim
+	where 
+	  SOMOIM_LOCATION like   '%'||#{member_address}||'%'
+	or
+	  SOMOIM_INTEREST like   '%'||#{member_hobby}||'%'
+	or 
+	  (SOMOIM_INTRODUCE like   '%'||#{member_address}||'%'
+	and
+	  SOMOIM_INTRODUCE like   '%'||#{member_hobby}||'%')
+</select>
+
+<select id="selectSearchSomoim"  resultType="somoim">
+	SELECT 
+	somoim_number,
+	somoim_location,
+	somoim_name,
+	somoim_sys_mainpicture
+	FROM 
+	 somoim
+	where 
+	 SOMOIM_INTRODUCE like   '%'||#{hobby}||'%'
+	or
+	  SOMOIM_NAME like   '%'||#{hobby}||'%'
+	or
+	 SOMOIM_INTRODUCE like   '%'||#{address}||'%'
+	or
+	  SOMOIM_NAME like   '%'||#{address}||'%'
+	or
+	  SOMOIM_LOCATION like   '%'||#{address}||'%'
+	or
+	  SOMOIM_INTEREST like   '%'||#{hobby}||'%'
+	or 
+	  (SOMOIM_INTRODUCE like   '%'||#{address}||'%'
+	and
+	  SOMOIM_INTRODUCE like   '%'||#{hobby}||'%')
+</select>
+
+<select id="selectHobbySearchSomoim" parameterType="String" resultType="somoim">
+	SELECT 
+	somoim_number,
+	somoim_location,
+	somoim_name,
+	somoim_sys_mainpicture
+	FROM 
+	 somoim
+	where 
+	  SOMOIM_INTRODUCE like   '%'||#{hobby}||'%'
+	or
+	  SOMOIM_NAME like   '%'||#{hobby}||'%'
+	or
+	  SOMOIM_INTEREST like   '%'||#{hobby}||'%'
+	or 
+	  SOMOIM_INTRODUCE like   '%'||#{hobby}||'%'
+</select>
+
+<select id="selectAddressSearchSomoim" parameterType="String" resultType="somoim">
+	SELECT 
+	somoim_number,
+	somoim_location,
+	somoim_name,
+	somoim_sys_mainpicture
+	FROM 
+	 somoim
+	where 
+	 SOMOIM_INTRODUCE like   '%'||#{address}||'%'
+	or
+	  SOMOIM_NAME like   '%'||#{address}||'%'
+	or
+	  SOMOIM_LOCATION like   '%'||#{address}||'%'
+	or
+	  SOMOIM_INTRODUCE like   '%'||#{address}||'%'
+</select>
+
+
+<insert id="insertJoinSomoim"  >
+	insert into SOMOIM_MEMBER values(#{somoim_number}, #{name}, 0, 0, sysdate)
+</insert>
 
 
 
+<select id="registSomoimMember" parameterType="int" resultType="member">
+	select 
+		m.member_id,
+	 	m.member_name,
+	 	m.member_profile_picture,
+	 	m.member_profile_contents,
+	 	sm.member_status,
+	 	sm.member_grade
+	 from 
+		member m ,
+		somoim_member sm
+	where 
+			m.member_ID = sm.MEMBER_NAME 
+		and MEMBER_STATUS = 0 
+		and SOMOIM_NUMBER = #{somoim_number}
+</select>
+
+
+<select id="orginSomoimMember" parameterType="int" resultType="member">
+	 	select 
+	 	m.member_id,
+	 	m.member_name,
+	 	m.member_profile_picture,
+	 	m.member_profile_contents,
+	 	sm.member_status,
+	 	sm.member_grade
+	 	from 
+			member m ,
+			somoim_member sm
+		where 
+			m.member_ID = sm.MEMBER_NAME 
+			and MEMBER_STATUS = 1 
+			and SOMOIM_NUMBER = #{somoim_number}
+</select>
 
 
 
+<insert id="insertchatting"  >
+	insert into somoim_chatting values(#{somoimNumber}, #{id},  sysdate, #{msg})
+</insert>
+
+
+
+<select id="selectTodayChattingData" parameterType="int" resultType="chattingsomoim">
+	 select sc.*, m.member_profile_picture chatting_profile from somoim_chatting sc, member m  where sc.chatting_name = m.Member_id and SOMOIM_NUMBER = #{somoim_number} and chatting_date between to_CHAR(sysdate, 'YYYY/MM/DD') and to_CHAR(sysdate+1, 'YYYY/MM/DD') order by chatting_date asc
+</select>
+
+<select id="selectYesterdayChattingData" parameterType="int" resultType="chattingsomoim">
+	 select sc.*, m.member_profile_picture chatting_profile from somoim_chatting sc, member m  where sc.chatting_name = m.Member_id and SOMOIM_NUMBER = #{somoim_number} and chatting_date between to_CHAR(sysdate-1, 'YYYY/MM/DD') and to_CHAR(sysdate, 'YYYY/MM/DD') order by chatting_date asc
+</select>
+
+<select id="selectInfinityChattingData"  resultType="chattingsomoim">
+	 select sc.*, m.member_profile_picture chatting_profile from somoim_chatting sc, member m  where sc.chatting_name = m.Member_id and SOMOIM_NUMBER = #{somoim_number} and chatting_date between #{date} and TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')+1, 'YYYY/MM/DD') order by chatting_date asc
+</select>
 
 
 

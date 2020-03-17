@@ -33,10 +33,10 @@ public class HomeController {
 	private ModelAndView mav;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, HttpSession sess) {
+	public String home(Locale locale, Model model, HttpSession sess, Principal pr) {
 		
 		System.out.println("첫페이지 ");
-		sess.setAttribute("testuserlogin", sess.getId());
+		sess.setAttribute("userID", pr.getName());
 		return "home";
 	}
 	

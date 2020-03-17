@@ -16,10 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 
 import icia.project.gabom.dao.ISomoimDao;
+import icia.project.gabom.dto.ChattingSomoim;
 import icia.project.gabom.dto.Food;
 import icia.project.gabom.dto.House;
 import icia.project.gabom.dto.JungmoAttend;
 import icia.project.gabom.dto.Jungmoroom;
+import icia.project.gabom.dto.Member;
 import icia.project.gabom.dto.Somoim;
 import icia.project.gabom.dto.SomoimBoard;
 import icia.project.gabom.dto.SomoimMyInfo;
@@ -104,11 +106,24 @@ public class SomoimManagement {
 	public ModelAndView selectMainSomoim(Principal pr, ModelAndView mav) {
 		// TODO Auto-generated method stub
 
+		//내가 만든 소모임
 		List<Map<String, Object>> sList = sDao.selectMainSomoim(pr.getName());
-
 		String json = new Gson().toJson(sList);
 		System.out.println("json : " + json);
 		mav.addObject("joinMoim", json);
+		
+		//추천 소모임 1. 지역과 취미로 나옴
+		//1.내 정보를 뽑아야함(지역, 취미)
+		Member mb = new Member();
+		mb = sDao.selectMyAddressHobby(pr.getName());
+		System.out.println("취미, 지역 : " + mb.toString());
+		//1-2 취미 지역으로 추천 소모임 긁어오기
+		Somoim sm = new Somoim();
+		List<Somoim> smList = sDao.selectMyRecommandSomoim(mb);
+		String jsonRecommandSmList = new Gson().toJson(smList);
+		System.out.println("jsonSmList : " + jsonRecommandSmList);
+		mav.addObject("jsonRecommandSmList", jsonRecommandSmList);
+		
 		mav.setViewName("somoim/mainsomoim");
 		return mav;
 	}
@@ -169,6 +184,20 @@ public class SomoimManagement {
 		System.out.println("jsonresultMap : " + jsonresultMap);
 		mav.addObject("JsonBoardList", jsonresultMap);
 
+		// 채팅글 가져오기, 오늘 기준으로 전날꺼부터,  나머진 인피니트 스크롤
+		
+		Map<String,List<ChattingSomoim>> mapChatData = new HashMap<String, List<ChattingSomoim>>();
+		//today
+		List<ChattingSomoim> selectTodayChattingData = sDao.selectTodayChattingData(Integer.parseInt(roomnum));
+		List<ChattingSomoim> selectYesterdayChattingData = sDao.selectYesterdayChattingData(Integer.parseInt(roomnum));
+		
+		mapChatData.put("today", selectTodayChattingData);
+		mapChatData.put("yesterday", selectYesterdayChattingData);
+		
+		String chatData = new Gson().toJson(mapChatData);
+		System.out.println("jsonchatData : " + chatData);
+		mav.addObject("JsonchatData", chatData);
+		
 		mav.setViewName("somoim/somoimroom");
 		return mav;
 	}
@@ -223,7 +252,7 @@ public class SomoimManagement {
 		return result;
 	}
 
-	public String deleteSomoim(int somoimnum, String name, String somoimmaker) {
+	public String deleteSomoim(int somoimnum, String somoimmaker,String name) {
 
 		// 방장인지 아닌지에 따라 분기
 		int result = 0;
@@ -594,17 +623,39 @@ public class SomoimManagement {
 		return new Gson().toJson(sb);
 	}
 
+	public String joinsomoim(Principal pr, int somoim_number) {
+		int insertJoinSomoim = sDao.insertJoinSomoim(somoim_number, pr.getName());// TODO Auto-generated method stub
+		return null;
+	}
+	
+
+	public String managementSomoim(Principal pr, int somoim_number) {
+		Map<String,List<Member>> map = new HashMap<String, List<Member>>();
+		List<Member> rsList = sDao.registSomoimMember(somoim_number);
+		List<Member> osList = sDao.orginSomoimMember(somoim_number);
+		map.put("대기",rsList);
+		map.put("기존",osList);
+		
+		return new Gson().toJson(map);
+	}
 	
 	
+
+	public String insertchatting(String id, String msg, int somoimNumber) {
+		
+		int result = sDao.insertchatting(id,msg,somoimNumber);
+		System.out.println("채팅 db : " + result);
+		return null;
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
+	public String selectDateChatting(String date, int somoimNumber) {
+		List<ChattingSomoim> selectInfinityChattingData = sDao.selectInfinityChattingData(somoimNumber,date);
+		String result = new Gson().toJson(selectInfinityChattingData);
+		System.out.println("긁혀짐?:" +result);
+		return result;
+	}
+
 	
 	
 	
@@ -715,6 +766,33 @@ public class SomoimManagement {
 		json = new Gson().toJson(selectreple);
 		return json;
 	}
+
+	public String searchSomoim(Principal pr, String address, String hobby) {
+		
+		if(address.length() == 0 && hobby.length() != 0) { // hobby만 검색
+			List<Somoim> smList = sDao.selectHobbySearchSomoim(hobby); 
+			System.out.println("hobby만 검색");
+			return new Gson().toJson(smList);
+		}else if(hobby.length() == 0 && address.length() != 0) { // address만 검색
+			List<Somoim> smList = sDao.selectAddressSearchSomoim(address); 
+			System.out.println("address만 검색");
+			return new Gson().toJson(smList);
+		}else if(hobby.length() != 0 && address.length() != 0){ // 둘다 검색
+			List<Somoim> smList = sDao.selectSearchSomoim(address,hobby); 
+			System.out.println("둘다 검색");
+			return new Gson().toJson(smList);
+		}else {
+			System.out.println("뭔상황?");
+			return null;
+		}
+		
+		
+	}
+
+	
+
+
+	
 
 //	public String modifyreple(Somoim_photo_reple spreple) {
 //		String json= null;

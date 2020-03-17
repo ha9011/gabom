@@ -35,6 +35,9 @@ public class JoinMemberManageMent {
 		String member_phone = multi.getParameter("member_phone");//전화번호 가져오고
 		String member_email = multi.getParameter("member_email"); // 이메일가져오고
 		String member_birth = multi.getParameter("member_birth"); // 생일 가져오고
+		String member_address = multi.getParameter("member_address"); // 주소 가져오고
+		String member_hobby = multi.getParameter("member_hobby"); // 취미 가져오고
+		
 		int member_type = Integer.parseInt(multi.getParameter("member_type")); // 타입 가져오고
 		
 		//파일 존재 유무 파악 // 없으면 -값도 다르게 해야하고 파일upload도 갈 필요없음.  //name "profillCheck"  0이면 파일 없고, 1이면 파일있고, 이 분기로 file 사용
@@ -73,7 +76,7 @@ public class JoinMemberManageMent {
 		mb.setMember_phone(member_phone).setMember_email(member_email).setMember_birth(member_birth);
 		mb.setMember_type(member_type).setMember_profile_original(member_profile_original).setMember_profile_contents(member_profile_contents);
 		mb.setMember_profile_picture(member_profile_picture);
-		
+		mb.setMember_hobby(member_hobby).setMember_address(member_address);
 		System.out.println("mb 내용확인 : " +mb.toString());
 		
 		

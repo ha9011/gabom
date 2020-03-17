@@ -57,8 +57,9 @@
 
 
 
-<!-- websocket -->
+<!-- websocket  에코용-->
 <!-- session을 이용하기 위해 websocket:handshake-interceptors를 쓴다. -->
+
 <beans:bean id="EchoHandler" class="icia.project.gabom.websocket.EchoHandler" />
 
 <websocket:handlers>
@@ -69,6 +70,18 @@
  </websocket:handshake-interceptors>
 </websocket:handlers>
 
-    
+<!-- websocket  채팅용-->
+<!-- session을 이용하기 위해 websocket:handshake-interceptors를 쓴다. -->
+
+<beans:bean id="ChattingHandler" class="icia.project.gabom.websocket.ChattingHandler" />  
+
+<websocket:handlers>
+ <websocket:mapping handler="ChattingHandler" path="/somoim/Chat" />
+ <websocket:handshake-interceptors>  
+      <beans:bean
+          class="icia.project.gabom.websocket.HandshakeInterceptor"/>
+ </websocket:handshake-interceptors>
+</websocket:handlers>
+
     
 </beans:beans>

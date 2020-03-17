@@ -153,19 +153,19 @@
                  <div id="insertID" class="form-label-group">
                   ID
                   <input name="member_id" id="member_id"  type="text" class="form-control"><br>
-                  <div id="checkID"></div><br>
+                  <div id="checkID"></div>
                 </div>
                 
                 <div id="insertEmail" class="form-label-group">
                   Email
                   <input name="member_email" id="member_email" type="text" class="form-control"><br>
-                 <div id="checkEmail"></div><br>
+                 <div id="checkEmail"></div>
                 </div>
                 
                 <div id="insertPWD" class="form-label-group">
-                 Password
+                 Password<br> (숫자와 영문자 조합으로 6~15자리를 사용해야 합니다)
                   <input type="password" name="member_password"
-					id="member_password" class="form-control" placeholder="Password" ><br>
+					id="member_password" class="form-control"  ><br>
 				 Check Password
 				  <input type="password" name="member_password"
 					type="password" name="member_password_check"
@@ -179,6 +179,17 @@
                 </div>
                 <div id="checkName"></div><br>
                 
+                <div id="insertAddress" class="form-label-group">
+                  Address (ex : 인천)
+                  <input name="member_address" id="member_address"  type="text" class="form-control" placeholder="ex) 인천" required><br>
+                </div>
+                
+                <div id="insertHobby" class="form-label-group">
+                  Hobby
+                  <input name="member_hobby" id="member_hobby"  type="text" class="form-control"  required><br>
+                </div>
+                
+                
                 <div id="insertPhone" class="form-label-group">
                   Phone Number
                   <input name="member_phone" id="member_phone"  type="text" class="form-control"><br>
@@ -186,7 +197,7 @@
                 <div id="checkPhone"></div><br>
                 
                 <div id="insertBirth" class="form-label-group">
-                  Name
+                  Birth
                   <input type="date" name="member_birth" id="member_birth" class="form-control"><br>
                 </div>
                 
@@ -295,9 +306,11 @@
 			}
 			
 			
+
+				
 			var userPWD = $("#member_password");
 			var checkPWD = $("#checkPWD");
-			var regExp = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/;
+			var regExp = /^[a-zA-Z0-9]{6,15}$/;
 			if (userPWD.val() == '') {
 				console.log("member_password - test")
 				checkPWD.css("color","red").text("비밀번호를 입력하세요");
@@ -305,7 +318,8 @@
 				return false; // 아이디 입력이 안되어 있다면 submint 이벤트를 중지
 			}else if(!regExp.test(userPWD.val())){
 				console.log("member_password - test")
-				checkPWD.css("color","red").text("숫자, 특문 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력");
+				checkPWD.css("color","red").text("숫자와 영문자 조합으로 6~15자리를 사용해야 합니다")
+
 				checkPWD.focus();
 				return false;
 			}else{
@@ -465,7 +479,7 @@
 					var userPWD = $("#member_password");
 					
 					// 비밀번호 입력, 정규식 등등 유무
-					var regExp = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/;
+					var regExp = /^[a-zA-Z0-9]{6,15}$/;
 					if (PWD == '') {
 						console.log("e1")
 						checkPWD.empty()
@@ -473,7 +487,7 @@
 					}else if (!regExp.test(PWD)) {   
 						console.log("e2")
 						checkPWD.empty()
-						checkPWD.css("color","red").text("비밀번호는 특수문자 1개이상, 대문자 1개이상, 소문자, 숫자 조합입니다.")
+						checkPWD.css("color","red").text("숫자와 영문자 조합으로 6~15자리를 사용해야 합니다.")
 					}
 		})
 		
@@ -489,7 +503,7 @@
 					console.log("userCheckPWD : " +userCheckPWD);
 					console.log("userPWD : " +userPWD);
 					// 비밀번호 입력, 정규식 등등 유무
-					var regExp = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/;
+					var regExp = /^[a-zA-Z0-9]{6,15}$/;
 					
 					if (PWD == '') {
 						console.log("e1")
@@ -498,7 +512,7 @@
 					}else if (!regExp.test(PWD)) {   
 						console.log("e2")
 						checkPWD.empty()
-						checkPWD.css("color","red").text("비밀번호는 특수문자 1개이상, 대문자 1개이상, 소문자, 숫자 조합입니다.")
+						checkPWD.css("color","red").text("숫자와 영문자 조합으로 6~15자리를 사용해야 합니다.")
 					}else if (userCheckPWD === userPWD) {   
 						console.log("e2")
 						checkPWD.empty()
