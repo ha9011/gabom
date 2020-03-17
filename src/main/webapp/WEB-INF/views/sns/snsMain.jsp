@@ -143,6 +143,7 @@ height: 700px;
 	background-color: #337ab7;
 	font-family: 'Jua';
 	width: 100px;
+	border: 0;
 }
 
 img.myImage {
@@ -279,8 +280,10 @@ img.myImage {
 #writeBox {
 	background-color: #F2F2F2;
 	border-radius: 20px;
-	margin-top: 15px;
+	margin-top: 15px;	
 }
+
+
 
 .snsImageContainer {
 	float: none;
@@ -326,8 +329,65 @@ td a {
 	margin-bottom: 70px;
 	font-family: 'Jua';
 }
-</style>
 
+.info {
+	width: 250px;
+	height: 20px;
+	height: auto;
+	position: fixed;
+	left: 50%;
+	margin-left: -125px;
+	bottom: 100px;
+	z-index: 9999;
+	background-color: #337ab7;
+	color: #F0F0F0;
+	font-family: 'Jua';
+	font-size: 15px;
+	padding: 10px;
+	text-align: center;
+	border-radius: 10px;
+}
+
+#more {
+	text-align: center;
+	background-color: #337ab7;
+	color: white;
+	width: 100%;
+	height: 32px;
+	border-radius: 8px;
+}
+
+#more a {
+	color: white;
+	font-family: 'Jua';
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.commentCancelBtn {
+	font-family: 'Jua';
+	font-weight: bold;
+	font-size: 15px;
+	text-align: center;
+	cursor: pointer;
+	background-color: #F2F2F2;
+	border-radius: 20px;
+	border: 2px solid #BDBDBD;
+}
+
+.editButton, .editCancelButton {
+	border: 0;
+	background-color: #337ab7;
+	color: white;
+	border-radius: 10px;
+	margin: 7px;
+	width: 70px;
+	height: auto;
+}
+.searchBar{
+display: flex;
+}
+</style>
 <script type="text/javascript">
 $(window).scroll(function(){
 	var scrollTop = $(document).scrollTop();
@@ -337,13 +397,11 @@ $(window).scroll(function(){
 	$("#snsAside").stop();
 	$("#snsAside").animate( { "top" : scrollTop });
 	});
-
 //페이지 불러올때 ajax
 $(function () {
 	$('body').fadeIn();
 	getProflie();
 	setTimeLine();
-	
 });//onload End
 
 //내글만 보기  ajax
@@ -402,7 +460,8 @@ $(function () {
 					<div class="snsProfile">
 						<ul class="nav nav-pills nav-stacked">
 							<li><div id="snsProfileName"></div></li>
-							<li role="presentation" id="snsProfileNotice"><a href="#;">알람</a></li>
+							<li role="presentation" id="snsProfileNotice" onclick="notice()"><a
+								href="#;">알람</a></li>
 							<li role="presentation" id="snsProfileInfo"><a href="#">정보수정</a></li>
 							<li role="presentation" id="snsFriendList"><a href="#">내친구</a></li>
 							<!-- <li role="presentation" id="snsProfileMyPosts"><a href="#">내글</a></li> -->
@@ -412,8 +471,6 @@ $(function () {
 								href="#;">글작성</a></li>
 							<li role="presentation" class="active" id="timeLine"><a
 								href="#;">타임라인</a></li>
-							<li role="presentation" class="active" id="socialClub"><a
-								href="#;" onclick="somoim()">소모임</a></li>
 							<li role="presentation" class="active" id="travelPlan"><a
 								href="#">여행계획</a></li>
 						</ul>
@@ -421,21 +478,64 @@ $(function () {
 				</aside>
 				<div class="jumbotron col-xs-9 col-md-10 col-sm-9 pull-right"
 					id="snsTimeLine">
-					<div class="navbar-default navbar-right" id="snsTimeLinefilter">
-						<a href="sns/timeline">전체</a>&nbsp;/ <a href="sns/friendtimeline"
-							onclick="friendtime();">친구</a>&nbsp;/ <a href="sns/mytimeline"
-							onclick="mytime();">내글</a>
+					<div class="navbar-default" id="snsTimeLinefilter">
+						<div class="form-group searchBar">
+							<input type="text" class="form-control serachText" id="searchText" placeholder="검색"
+							style="font-size: 23px;text-align: center;height: 50px;">
+						<button type="button" class="btn btn-default" id="searchBtn" style="width: 70px;background-color:#337ab7;"><i class="fas fa-search fa-2x" style="color: white;"></i></button>
+						</div>
 					</div>
 					<br /> <br />
 					<hr />
+					<div id="friendBox" class="container"></div>
 					<div id="writeBox" class="container"></div>
-					<div class="container" id="snsTimeLineMain">
+					<div class="container" id="snsTimeLineMain"></div>
+					<div id="more">
+						<a href="#;">더보기</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-<!-- 글 수정 스크립트 -->
+	<div class='info' style='display: none'>설정이 변경되었습니다.</div>
+	<!-- 글삭제 -->
+	<script type="text/javascript">
+	function postDelete(e) {
+		var postNumber=e.id.substr(7);
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+ 			method:'post',
+ 			url:"sns/post/delete",
+ 			data:{"postNumber":postNumber},
+ 			dataType : "json"
+		}).done((delJson)=>{
+			makeTimeLine(delJson);
+		});
+	}
+		
+	</script>
+	<!-- 타임라인 버튼 -->
+	<script type="text/javascript">
+	$("#timeLine").click(function () {
+	setTimeLine();		
+	$("#more").css("display","block");
+	}
+	);
+	
+	
+	</script>
+	<!-- 알람 -->
+	<script type="text/javascript">
+		function notice() {
+			$("#more").css("display","none");
+			$("#snsTimeLineMain").empty();
+			$("#snsTimeLineMain").text("asdasdasdasdas");
+		}
+	</script>
+	<!-- 글 수정 스크립트 -->
 	<script type="text/javascript">
 	function editPost(e) {
 		var editPostNumber=e.id.substr(12);
@@ -443,7 +543,7 @@ $(function () {
 		const preContents="#postContents"+editPostNumber;
 		//첫값
 		console.log($(preContents)[0].defaultValue);
-		$editTotalBox=$("<div>").addClass("container");
+		$editTotalBox=$("<div>").addClass("container editBtnBox");
 		$editBox=$("<div>").addClass("collapse navbar-collapse")
 		.append("<ul>").addClass("nav navbar-nav navbar-right");
 		$editButton=$("<li>").append($("<button>").addClass("editButton").text("수정"));
@@ -488,14 +588,12 @@ $(function () {
 	
 	}
 	</script>
-<!-- 댓글 입력 -->
-<script type="text/javascript">
+	<!-- 댓글 입력 -->
+	<script type="text/javascript">
 
 
 function commentInsert(number) {
 	var commentWriteContents="#commentWriteBox"+number+" input";
-	console.log(commentWriteContents);
-	console.log($(commentWriteContents).val());
 	var commentData={
 			postNumber:number,
 			commentContent:$(commentWriteContents).val()
@@ -518,18 +616,6 @@ function commentInsert(number) {
 
 
 </script>
-	<!-- 소모임 이동 -->
-	<script type="text/javascript">
-	
-	function somoim() {
-		/* $("#snsTimeLineMain").empty();
-		$("#snsTimeLineMain").load("somoim/mainsomoim"); */
-		location.href="somoim/mainsomoim";
-	}
-	
-	
-	
-	</script>
 	<!-- 글쓰기 서비스 -->
 	<script type="text/javascript">
 	$("#writeBox").on("click","#writeButton",function(){
@@ -560,13 +646,12 @@ function commentInsert(number) {
             contentType: false,
 		}).done((json)=>{
 			makeTimeLine(json);
+			$("#writeBox").css("border","0 solid white");
 			$("#writeBox").empty();
 		});
 		
 		
 	});
-	
-	
 	</script>
 	<!-- 호버시 아이콘 변환 스크립트 -->
 	<script type="text/javascript">
@@ -580,11 +665,6 @@ function commentInsert(number) {
 		$("#snsProfileInfo a").html('<i class="fas fa-tools"></i>');
 	},function(){
 		$("#snsProfileInfo a").html('정보수정');
-	});
-	$("#snsProfileMyPosts a").hover(function () {
-		$("#snsProfileMyPosts a").html('<i class="fas fa-user-edit"></i>');
-	},function(){
-		$("#snsProfileMyPosts a").html('내글');
 	});
 	$("#snsFriendList a").hover(function () {
 		$("#snsFriendList a").html('<i class="fas fa-user-friends"></i>');
@@ -604,11 +684,11 @@ function commentInsert(number) {
 		$("#timeLine a").html('타임라인');
 	});
 	
-	$("#socialClub a").hover(function () {
+	/* $("#socialClub a").hover(function () {
 		$("#socialClub a").html('<i class="fas fa-users"></i>');
 	},function(){
 		$("#socialClub a").html('소모임');
-	});
+	}); */
 	$("#travelPlan a").hover(function () {
 		$("#travelPlan a").html('<i class="fas fa-map-marked-alt"></i>');
 	},function(){
@@ -628,9 +708,10 @@ function commentInsert(number) {
 	});
 	//글쓰기칸 만드는 함수
 	function makewriteBox() {
+		$("#writeBox").css("border","2px solid #BDBDBD");
 		let photo="";
 		photo+='<form name="writeBoxForm" method="post" enctype="multipart/form-data" id="writeBoxForm">';
-		photo+='<div class="row">';
+		photo+='<div class="row" id="wirteBoxR">';
 		photo+='<img src='+jsonPicture+' class="img-responsive col-xs-4 col-md-2 col-sm-4 myImage" id="writeProfileImage">';
 		photo+='<div class="container col-xs-4 col-md-2 col-sm-4 pull-right security">';
 		photo+='<select class="form-control" id="security" name="security">';
@@ -684,6 +765,50 @@ $("#writeBox").on('change','#ex_file',function(){
 
 
 </script>
+	<!-- 정보공개 변환 -->
+	<script type="text/javascript">
+function infoSecurity(e) {
+	/* console.log(e.value);
+	console.log(e);
+	console.log(e.id.substr(12)); */
+	let postNumber=e.id.substr(12);
+	let securityVal;
+	if(e.value=="전체 공개"){
+		securityVal=0;
+	}else if(e.value=="나만 보기"){
+		securityVal=2;
+	}else if(e.value=="친구 공개"){
+		securityVal=1;
+	}
+	let securityData={
+			"postNumber":postNumber,
+			"securityVal":securityVal
+	}
+	$.ajaxSetup({
+		beforeSend : function(xhr){
+ 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	});//먼저 보냄
+	$.ajax({
+			method:'post',
+			url:"sns/post/security",
+			data:securityData,
+			dataType : "json"
+	}).done((securityJson)=>{
+		console.log(securityJson);
+		/*  toastr.options = {
+                 closeButton: true,
+                 progressBar: true,
+                 showMethod: 'slideDown',
+                 timeOut: 3000
+             }; */
+		// toastr.info(securityJson.message);
+             $('.info').text(securityJson.message).fadeIn(400).delay(1000).fadeOut(400);
+
+	});
+}
+
+
+</script>
 	<!-- 타임라인 생성 스크립트 -->
 	<script type="text/javascript">
 	//타임 라인 생성 함수
@@ -692,22 +817,27 @@ $("#writeBox").on('change','#ex_file',function(){
 		$("#snsTimeLineMain").empty();
 		 for(let j in timeLineJson){
 			let postsContents = timeLineJson[j]["content"];
-	 		let RePostsContents=postsContents.replace("<br/>","\r\n\gi");
+	 		let RePostsContents=postsContents.split("<br/>").join("\r\n");
 		let $timeLine = "";
+		if(userId==timeLineJson[j]["posts_writer"]){
+		$timeLine += '<div class="jumbotron" id="posts" style="border: 5px solid #337ab7">';
+		}else{
 		$timeLine += '<div class="jumbotron" id="posts">';
+		}
 		$timeLine += '<div class="row">';
-		$timeLine += '<img src='+timeLineJson[j]["profilePicture"]+' class="img-responsive col-xs-4 col-md-2 col-sm-4 myImage" id="timeLineProfile">';
-		$timeLine += '<div id="snsMember_id">'+timeLineJson[j]["posts_writer"]+' 님의 글</div>';
+		$timeLine += '<a href="#;"><img src='+timeLineJson[j]["profilePicture"]+' class="img-responsive col-xs-4 col-md-2 col-sm-4 myImage" id="timeLineProfile"></a>';
+		$timeLine += '<div id="snsMember_id"><a href="#;">'+timeLineJson[j]["posts_writer"]+'</a> 님의 글</div>';
 		$timeLine += '<input type="hidden" value='+timeLineJson[j]["posts_number"]+' id="posts_number">';
 		$timeLine += '</div>';
 		$timeLine += '<div class="nav-tabs" id="postHead">';
 		if(userId==timeLineJson[j]["posts_writer"]){
-		$timeLine += '<a href="#;">삭제</a>&nbsp;/';
-		}
+		$timeLine += '<a href="#;" id="postdel'+timeLineJson[j]["posts_number"]+'" onclick="postDelete(this)">삭제</a>';
+		}else{
 		$timeLine += '<a href="#;">신고</a>';
+		}
 		if(userId==timeLineJson[j]["posts_writer"]){
 		$timeLine += '<div class="container col-xs-5 col-md-3 col-sm-5 pull-right">';
-		$timeLine += '<select class="form-control" name="">';
+		$timeLine += '<select class="form-control" onchange="infoSecurity(this)" id="infoSecurity'+timeLineJson[j]["posts_number"]+'">';
 		if(timeLineJson[j]["posts_authority"]==0){
 		$timeLine += '<option>전체 공개</option>';
 		$timeLine += '<option>나만 보기</option>';
@@ -718,7 +848,7 @@ $("#writeBox").on('change','#ex_file',function(){
 			$timeLine += '<option>전체 공개</option>';
 		}else if(timeLineJson[j]["posts_authority"]==2){
 			$timeLine += '<option>나만 보기</option>';
-			$timeLine += '<option>나만 보기</option>';
+			$timeLine += '<option>친구 공개</option>';
 			$timeLine += '<option>전체 공개</option>';
 		}
 		$timeLine += '</select>';
@@ -761,11 +891,11 @@ $("#writeBox").on('change','#ex_file',function(){
 		 
 	}
 </script>
-	
 	<!-- 글작성 취소 스크립트 -->
 	<script type="text/javascript">
 $("div").on("click","#cancel",function(){
 	if(confirm("입력하신 내용을 잃습니다. 취소 하시겠습니까?")){
+		$("#writeBox").css("border","0 solid white");
 		$("#writeBox").empty();
 	}else{
 		return false;
@@ -850,10 +980,21 @@ $.ajax({
 
 
 </script>
-	<!-- 인피니티 스크롤 -->
+	<!-- 더보기 기능 -->
 	<script type="text/javascript">
-var low = 0;
-//스크롤 바닥 감지
+ var low = 1;
+ 
+ $("#more").click(function() {
+	 $("#more").html('<i class="fas fa-spinner fa-pulse fa-2x"></i>');
+	  low++;
+	  setTimeLine();
+	  $("#more").html('<a href="#;">더보기</a>');
+ });
+ 
+ 
+ 
+ 
+/* //스크롤 바닥 감지
     $(window).scroll(function(){
         let $window = $(this);
         let scrollTop = $window.scrollTop();
@@ -864,7 +1005,7 @@ var low = 0;
         	  setTimeLine();
         	  low++;
         }
-    });
+    });  */
 </script>
 	<!-- 타임라인 Ajax -->
 	<script type="text/javascript">
@@ -911,7 +1052,7 @@ function printComment(commentJson,number) {
 	$("."+number).empty();
 	console.log(commentJson);
 		let commentBox="";
-		commentBox+='<div class="container-fluid" id=dds>';
+		commentBox+='<div class="container-fluid" id=commentReal>';
 		commentBox+='<table class="table table-hover table-responsive">';
 		commentBox+='<tbody>';
 	if(commentJson.comment=="댓글이 없습니다."){
@@ -929,7 +1070,14 @@ function printComment(commentJson,number) {
 			commentBox+='<button type="button" class="btn-default commentHate" onclick="commentHate(\''+commentJson[k]["number"]+'\')"><i class="far fa-thumbs-down commentHate" id="commentHate'+commentJson[k]["number"]+'">'+commentJson[k]["hate"]+'</i></button>';
 			commentBox+='</td>';
 			commentBox+='<td style="background-color: white">'+commentJson[k]["date"]+'</td>';
-			commentBox+='<td style="background-color: white; width: 150px"><a>수정</a>/<a>삭제</a>/<a>신고</a></td>';
+			commentBox+='<td style="background-color: white; width: 150px">';
+			
+			if(userId==commentJson[k]["id"]){
+				commentBox+='<a>수정</a>/<a>삭제</a>';	
+			}else{
+				commentBox+='<a>신고</a>';
+			}
+			commentBox+='</td>';
 			commentBox+='</tr>';
 				}
 	}
@@ -941,12 +1089,21 @@ function printComment(commentJson,number) {
 		commentBox+='<button type="button" class="btn btn-primary commentWrite" onclick="commentInsert('+number+')">확인</button>';
 		commentBox+='</span>';
 		commentBox+='</div>';
+		commentBox+='<div class="commentCancelBtn" id="commentCancelBtn'+number+'">닫기</div>';
 		commentBox+='</div>';	
 		$("."+number).html(commentBox);
+		
+		var commentCancel="#commentCancelBtn"+number;
+		$(commentCancel).on("click",function(){
+			$("."+number).empty();
+		});
+		
+		
 }//서비스 End
+
 </script>
-<!-- 댓글 좋아요 -->
-<script type="text/javascript">
+	<!-- 댓글 좋아요 -->
+	<script type="text/javascript">
 	function commentLike(commentNumber) {
 		
 		var $likeCommentval="#commentLike"+commentNumber;
@@ -968,8 +1125,8 @@ function printComment(commentJson,number) {
 		});
 	}
 </script>
-<!-- 댓글 싫어요 -->
-<script type="text/javascript">
+	<!-- 댓글 싫어요 -->
+	<script type="text/javascript">
  function commentHate(commentNumber) {
 	
 	var $likeCommentval="#commentLike"+commentNumber;

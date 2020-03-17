@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.SnsPostDeleteDao">
+
+<delete id="commentServiceDel">
+DELETE FROM 
+SNS_COMMENT_LIKE_HATE_COUNTER
+WHERE SNS_COMMENT_NUMBER 
+IN(SELECT SC.SNS_COMMENT_NUMBER
+FROM SNS_COMMENT_LIKE_HATE_COUNTER SCL 
+INNER JOIN SNS_COMMENT SC
+ON SCL.SNS_COMMENT_NUMBER=SC.SNS_COMMENT_NUMBER 
+WHERE SC.SNS_POSTS_NUMBER=#{postNumber})
+</delete>
+<delete id="commentDel">
+DELETE FROM SNS_COMMENT WHERE SNS_POSTS_NUMBER=#{postNumber}
+</delete>
+<delete id="postServiceDel">
+DELETE FROM SNS_LIKE_HATE_COUNTER WHERE SNS_POSTS_NUMBER=#{postNumber}
+</delete>
+<delete id="postPhotoDel">
+DELETE FROM SNS_PHOTO WHERE SNS_POSTS_NUMBER=#{postNumber}
+</delete>
+<delete id="postDel">
+DELETE FROM SNS_POSTS WHERE SNS_POSTS_NUMBER=#{postNumber}
+</delete>
+</mapper>
