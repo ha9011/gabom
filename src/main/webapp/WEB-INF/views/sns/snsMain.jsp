@@ -30,7 +30,7 @@ width: 100%;
 height: 700px;
 } */
 #snsMain {
-	background-image: url(resources/snsImage/bg2.jpg);
+	background-image: url(resources/snsImage/cl3.jpg);
 	background-size: cover;
 }
 
@@ -217,8 +217,12 @@ img.myImage {
 	font-size: 19px;
 	font-weight: bold;
 	background-color: white;
+	
 }
-
+#snsTimeLineFilterBox{
+background-image: url(resources/snsImage/cl4.jpg);
+	background-size: cover;
+}
 #postsPhotoBox {
 	float: none;
 	display: flex;
@@ -402,6 +406,12 @@ $(function () {
 	$('body').fadeIn();
 	getProflie();
 	setTimeLine();
+	$(window).keydown(function(key) {
+        if (key.keyCode == 13) {
+        	 var searchData=$("#searchText").val();
+        	 search(searchData);
+        }
+        });
 });//onload End
 
 //내글만 보기  ajax
@@ -478,6 +488,7 @@ $(function () {
 				</aside>
 				<div class="jumbotron col-xs-9 col-md-10 col-sm-9 pull-right"
 					id="snsTimeLine">
+					<div class="jumbotron" id="snsTimeLineFilterBox">
 					<div class="navbar-default" id="snsTimeLinefilter">
 						<div class="form-group searchBar">
 							<input type="text" class="form-control serachText" id="searchText" placeholder="검색"
@@ -486,6 +497,7 @@ $(function () {
 						</div>
 					</div>
 					<br /> <br />
+					</div>
 					<hr />
 					<div id="friendBox" class="container"></div>
 					<div id="writeBox" class="container"></div>
@@ -498,9 +510,48 @@ $(function () {
 		</div>
 	</div>
 	<div class='info' style='display: none'>설정이 변경되었습니다.</div>
+	<!-- 검색 서비스 -->
+	<script type="text/javascript">
+function search(searchData) {
+	console.log(searchData);
+	$.ajaxSetup({
+		beforeSend : function(xhr){
+ 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+	});//먼저 보냄
+	$.ajax({
+			method:'post',
+			url:"sns/search",
+			data:{"searchData":searchData},
+			dataType : "json"
+	}).done((searchJson)=>{
+		makeSearchList(searchJson,searchData);
+	});
+}
+	</script>
+	<!-- 검색 결과 출력 -->
+	<script type="text/javascript">
+	
+	function makeSearchList(json,data) {
+		console.log("들어옴",json);
+		console.log(data);
+	}
+	
+	
+	
+	
+	</script>
+	<!-- 검색 클릭 이벤트 -->
+	<script type="text/javascript">
+	 $("#searchBtn").click(function() {
+		 var searchData=$("#searchText").val();
+		 search(searchData);
+	});
+	
+	</script>
 	<!-- 글삭제 -->
 	<script type="text/javascript">
 	function postDelete(e) {
+		if(confirm("삭제 하시겠습니까?")){
 		var postNumber=e.id.substr(7);
 		$.ajaxSetup({
 			beforeSend : function(xhr){
@@ -514,8 +565,9 @@ $(function () {
 		}).done((delJson)=>{
 			makeTimeLine(delJson);
 		});
-	}
-		
+	}else{
+	return false;}
+	}//end
 	</script>
 	<!-- 타임라인 버튼 -->
 	<script type="text/javascript">
@@ -924,7 +976,7 @@ $("div").on("click","#cancel",function(){
 //페이지 프로필파일과 이름을 출력 해주는 함수
 function setProfile(json) {
 	$("#snsProfileImg img").attr("src",json.member_profile_picture);
-	$("#snsProfileName").html(json.member_name+"님");
+	$("#snsProfileName").html("<a href='#;'>"+json.member_name+"</a>님");
 	userId=json.member_id;
 	console.log(userId);
 	jsonPicture=json.member_profile_picture;	
