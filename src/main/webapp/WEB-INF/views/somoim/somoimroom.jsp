@@ -210,27 +210,30 @@
 /* 채팅 */
 #chattingRoom {
 	overflow: auto;
-	height: 95%;
+	height: 85%;
 	display: flex;
 	flex-direction: column;
+	background-color: #99BFE4;
 }
 
 .yourCommnet {
-	margin: 15px 0 15px 0;
-	font-size: 30px;
+	margin: 15px 0 15px 10px;
+	font-size: 15px;
 	align-self: flex-start;
 	text-align: left;
-	background: aqua;
-	font-size: 30px;
+	background: white;
+	border-radius: 10px;
 }
 
 .myCommnet {
-	margin: 15px 0 15px 0;
-	font-size: 30px;
+	margin: 15px 10px 15px 0;
+	font-size: 15px;
 	align-self: flex-end;
 	text-align: right;
-	background: green;
+	background: yellow ;
+	border-radius: 10px;
 }
+
 
 #chattingInput {
 	width: 91%;
@@ -239,6 +242,11 @@
 .chatFrame{
 	display: flex;
 	flex-direction: column;
+}
+#day1{
+background-color: #93b7d9;
+text-align:center;
+height:10%;
 }
 </style>
 
@@ -325,8 +333,8 @@
 			</div>
 
 			<div id="out2">
+			<div id="day1">소모임 이름 </div>
 				<div id="chattingRoom"></div>
-
 				<div id="cont2">
 					<input type="text" id="chattingInput">
 					<button id="chattingBtn">전송</button>
