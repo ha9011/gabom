@@ -869,11 +869,16 @@ const showAllList = (boardlist)=>{
     							 		media.append(mediabody);
     							 		iDateChatFrame.append(media)
     						 		}
-    							$("#chattingRoom").append(iDateChatFrame)
+    							$("#chattingRoom").prepend(iDateChatFrame)
     							
     						}
     						
-    						//$("#chattingRoom").scrollTop($("#chattingRoom")[0].scrollHeight);
+    						//새로 생성된 div
+    						console.log("----새로 생성된 ----")
+    						console.log(iDateChatFrame[0].clientHeight);
+    						console.dir(iDateChatFrame[0].clientHeight);
+    						
+    						//$("#chattingRoom").scrollTop(iDateChatFrame[0].clientHeight);
     						
     						
     						
@@ -906,7 +911,7 @@ const showAllList = (boardlist)=>{
 	 //채팅
 	 var socket = null;
 	 function connect(){
-		 var weAddress="ws://localhost:80/gabom/somoim/Chat?somoim_number=" + ${JsonBasicInfo}.somoim_number;
+		 var weAddress="ws://192.168.0.119/gabom/somoim/Chat?somoim_number=" + ${JsonBasicInfo}.somoim_number;
 		 var ws = new WebSocket(weAddress);
 		 socket = ws;
 		    ws.onopen = function () {   //커넥션이 연결됬을때
@@ -962,36 +967,36 @@ const showAllList = (boardlist)=>{
 		    		console.dir($("#chattingRoom"));
 		    		$("#chattingRoom").scrollTop($("#chattingRoom")[0].scrollHeight);
 		        
-		    	//-------------채팅내용 저장
-		    	//아이디, 내용, 소모임 번호
-		    	var chatData = {
-		    			"id":data.id,
-		    			"msg":data.msg,
-		    			"somoimNumber": ${JsonBasicInfo}.somoim_number,
-		    			"date" : date
-		    	}
+// 		    	//-------------채팅내용 저장
+// 		    	//아이디, 내용, 소모임 번호
+// 		    	var chatData = {
+// 		    			"id":data.id,
+// 		    			"msg":data.msg,
+// 		    			"somoimNumber": ${JsonBasicInfo}.somoim_number,
+// 		    			"date" : date
+// 		    	}
 		    	
-		    	console.log(chatData);
-		    	$.ajaxSetup({         
-			    	  beforeSend : function(xhr){
-			      	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-				});//먼저 보냄
+// 		    	console.log(chatData);
+// 		    	$.ajaxSetup({         
+// 			    	  beforeSend : function(xhr){
+// 			      	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+// 				});//먼저 보냄
 				
-				$.ajax({
-					url:'insertchatting',
-					type:'post',
-					data:chatData,
-					success:function(data){
-						alert("success");
-						console.log(data)
+// 				$.ajax({
+// 					url:'insertchatting',
+// 					type:'post',
+// 					data:chatData,
+// 					success:function(data){
+// 						alert("success");
+// 						console.log(data)
 						
 						
-					},
-					error:function(error){
-						alert("fail")
-						console.log(error);
-					}
-				})
+// 					},
+// 					error:function(error){
+// 						alert("fail")
+// 						console.log(error);
+// 					}
+// 				})
 		    		
 		    		
 		    		
@@ -1017,7 +1022,7 @@ const showAllList = (boardlist)=>{
       console.log("실행되는건가?");
 	  evt.preventDefault();
 	  if (socket.readyState !== 1) return;
-	  
+	  		
     	  let data = {
   	  			"id" : ${JsonMysomoimInfo}.member_name,
     			"msg" :  $('#chattingInput').val(),
@@ -1026,10 +1031,41 @@ const showAllList = (boardlist)=>{
     	  }
   	  	  let resultChatData = JSON.stringify(data);
     	  console.log("resultChatData : " +resultChatData)
-    	  $('#chattingInput').val("");
-    	  $('#chattingInput').focus();
+    	  var date = new Date();
     	  
     	  socket.send(resultChatData);
+    	  
+    	 	//-------------채팅내용 저장
+	    	//아이디, 내용, 소모임 번호
+	    	var chatData = {
+	    			"id":${JsonMysomoimInfo}.member_name,
+	    			"msg":$('#chattingInput').val(),
+	    			"somoimNumber": ${JsonBasicInfo}.somoim_number,
+	    			"date" : date
+	    	}
+	    	
+	    	console.log(chatData);
+	    	$.ajaxSetup({         
+		    	  beforeSend : function(xhr){
+		      	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+			});//먼저 보냄
+			
+			$.ajax({
+				url:'insertchatting',
+				type:'post',
+				data:chatData,
+				success:function(data){
+					alert("success");
+					console.log(data)
+					 $('#chattingInput').val("");
+			    	  $('#chattingInput').focus();
+					
+				},
+				error:function(error){
+					alert("fail")
+					console.log(error);
+				}
+			})
     	  
     });
 
