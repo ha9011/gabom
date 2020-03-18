@@ -3,6 +3,7 @@ package icia.project.gabom;
 import java.security.Principal;
 import java.text.ParseException;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.project.gabom.dao.ITripplanDao;
+import icia.project.gabom.dto.Sns_friend;
+import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.dto.Trip_plan;
 import icia.project.gabom.service.TripService;
 
@@ -35,6 +38,24 @@ public class TripRestController {
 //      System.out.println("여행제목 "+tp.getTrip_title());
       
       String json = trs.savetripplan(tp,ppl);
+      
+      System.out.println(json);
+      
+      return json;
+   }
+   
+   
+   
+ //여행1단계 저장
+   @PostMapping(value = "/togetherplan" ,produces = "application/json;charset=utf-8")
+   public String togetherplan(Trip_member tm, Principal ppl) {
+      System.out.println("친구초대 ");
+      
+      System.out.println("친구 아이디:" +tm.getShare_id());
+      System.out.println("내 아이디:"+ppl.getName());
+      System.out.println("여행번호:"+tm.getTrip_number());
+      
+      String json = trs.togetherplan(tm,ppl);
       
       System.out.println(json);
       

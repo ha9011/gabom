@@ -21,5 +21,6 @@ public class Trip_plan {
 	
 	@DateTimeFormat(pattern="yyyy-mm-dd")
 	private String trip_end_date;
-
+	
+	
 }

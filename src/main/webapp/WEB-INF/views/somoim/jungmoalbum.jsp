@@ -177,6 +177,7 @@ $(".upload-name").hide();
     var somoim = ${JsonBasicInfo};
    console.log("소모임 번호 보여줘",somoim.somoim_number);
    // 클릭시 발생
+   
    $("#upload_btn").on('click', function(e) {
       e.preventDefault();
        console.log("사진저장하러감.");
@@ -197,6 +198,7 @@ $(".upload-name").hide();
              contentType:false,  //제이슨 아니니깐 까보지마!!
               dataType:"json", //rest 컨트롤 이용   
              success:function(data){
+                
                 alert("사진 업로드 완료");
                 console.log(data)
               
@@ -207,17 +209,17 @@ $(".upload-name").hide();
                 let tr = $("<tr></tr>")
                 for(let i of data ){
                    
-                	var img=$('<td><img  name='+i.photo_number+'  class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'"></td>');
+                   var img=$('<td><a class="pic" name="'+i.photo_number+'" href="#imgmodal" data-toggle="modal" > <img   class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'"></a></td>');
                     
-                	tr.append(img);
-                	console.log("index : "+index);
+                   tr.append(img);
+                   console.log("index : "+index);
                    $("#imgarea").append(tr);
                    
-					if(index%3===0){
-						tr = $("<tr></tr>")
-					}
+               if(index%3===0){
+                  tr = $("<tr></tr>")
+               }
                    
-					index++;                
+               index++;                
                 }
                 
                 
@@ -283,16 +285,16 @@ const showalbumlist = ()=>{
          let tr = $("<tr></tr>")
          for(let i of data ){
             
-        	 var img=$('<td><img  name='+i.photo_number+'  class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'"></td>');
+            var img=$('<td><a class="pic" name="'+i.photo_number+'" href="#imgmodal" data-toggle="modal" > <img   class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'"></a></td>');
              tr.append(img);
-         	console.log("index : "+index);
+            console.log("index : "+index);
             $("#imgarea").append(tr);
             
-				if(index % 3===0){
-					tr = $("<tr></tr>")
-				}
+            if(index % 3===0){
+               tr = $("<tr></tr>")
+            }
             
-				index++;                
+            index++;                
 
          }
          
@@ -308,12 +310,14 @@ const showalbumlist = ()=>{
    }) //ajax end
 //---------------------------------------------------------------------------------------------------------------------------------------사진첩에서 처음 불러올때    
  //사진 클릭시 모달 생성  
-$(document).on('click',"#pic", function() {
+ 
+ 
+$(document).on('click',".pic", function() {
     
    console.log("클릭한 사진번호"+$(this).attr("name"));
    
    var imgnum= $(this).attr("name");
-      console.log(imgnum);
+     console.log(imgnum);
    
    
    $.ajax({
@@ -322,7 +326,7 @@ $(document).on('click',"#pic", function() {
          data : {"num":imgnum},
          dataType: "json", //rest 컨트롤 이용   
          success:function(data){
-           console.dir(data);
+         console.dir(data);
            
            $("#exampleModalLongTitle").empty();
            $("#modalimg").empty();//이미지 지움

@@ -14,4 +14,9 @@
       INSERT INTO TRIP_PLAN_DATE VALUES(#{date},#{trip_number2},#{index})
    </insert>
 
+	 <insert id="togetherplan" parameterType="trfriend">
+      INSERT INTO TRIP_MEMBER VALUES(#{trip_number},#{share_id},0)
+   </insert>
+   
+   
 </mapper>

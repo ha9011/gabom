@@ -108,7 +108,7 @@ color: black;
 					<div id="outbox" class="intro-text">
 						<div id="inbox">
 								<br>
-								<form class="content">
+								<form class="content" id="content">
 								<div class="content" id ="searchbox">
     								<input name="trip_area" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
     								<!-- <button style="margin:0 5px; " class="btn btn-success">Search</button> -->
@@ -153,8 +153,11 @@ $("#resetbtn").on('click', function() {
 });
 
 
-$("#savebtn").on('click', function() {//1차 여행플랜 생성 
+$("#savebtn").on('click', function(e) {//1차 여행플랜 생성 
+	e.preventDefault();
+	console.log(document.getElementById("content"));
 	var formData = new FormData(document.getElementById("content")); 
+	console.log(formData);
 	
 	$.ajaxSetup({         
 	      beforeSend : function(xhr){
@@ -162,7 +165,7 @@ $("#savebtn").on('click', function() {//1차 여행플랜 생성
 	      });//먼저 보냄
   
   $.ajax({
-      url:'savetripplan',
+      url:'tprest/savetripplan',
       type:'post',
       data:formData,
       processData:false,
@@ -171,7 +174,7 @@ $("#savebtn").on('click', function() {//1차 여행플랜 생성
       success:function(data){
          alert("여행플랜이 저장되었습니다.");
          console.log(data)
-         $("#reservation")[0].reset();
+         $("#content")[0].reset();
          
       },
       error:function(error){

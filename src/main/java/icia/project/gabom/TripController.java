@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.project.gabom.dao.ITripplanDao;
+import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.service.TripService;
 
 @Controller
@@ -31,13 +32,10 @@ public class TripController {
    }
    
    @RequestMapping(value = "/myplan", method = RequestMethod.GET)
-   public ModelAndView myplan(Principal ppl) {
+   public ModelAndView myplan(Principal ppl,Trip_member tm) {
       System.out.println("내여행 목록");
       
-      System.out.println("로그인 아이디"+ppl.getName());
-      
-      mav=trs.myplan(ppl);
-      //System.out.println(mav);
+      mav=trs.myplan(ppl,tm);
       return mav;
    }
    
