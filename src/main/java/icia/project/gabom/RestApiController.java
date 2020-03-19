@@ -3,7 +3,6 @@ package icia.project.gabom;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -11,31 +10,35 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
+import icia.project.gabom.dto.Apisearch;
 import icia.project.gabom.service.AdminjudgeManagement;
 
 @RestController
-public class ApiupTest {
+public class RestApiController {
 
 	@Autowired
 	private AdminjudgeManagement am; //관리자
 
 	
-	@RequestMapping(value = "/apiuptest", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
-	public String apiuptest() {
-		System.out.println("apiuptest 들어왔나?");
-		
+	@RequestMapping(value = "/apisearch", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
+	public String apiuptest(@RequestParam("areaCode") String areaCode) {
+		//String areaCode = areaCode;
+		//String areaCode = null;
+		//System.out.println("apiuptest 들어왔나?" + apisearch.toString());
+		System.out.println("areaCode는 잘 들고왓니??"+areaCode);
 			
 		String addr = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=";
 		String serviceKey = "%2B%2BXC1MAaQv2wQPBU5ZLVxzXuxpix4TpZqHJvYRBf4hHytxBnkk%2B227wTPvDoN8BrUyVEKMtvsdeHKmbRKmZz%2BQ%3D%3D"; //인증키
 		String parameter = "";
-
-		parameter = parameter + "&" + "areaCode=39"; // + areaCode; //지역코드(변경되는 부분)
-		parameter = parameter + "&" + "pageNo=1&numOfRows=10"; //페이지번호,한페이지 검색 결과 수
+		parameter = parameter + "&" + "contentTypeId=12";
+		parameter = parameter + "&" + "areaCode="+areaCode;  //지역코드(변경되는 부분)
+		parameter = parameter + "&" + "sigunguCode=3"; //시군구 코드 
+		parameter = parameter + "&" + "pageNo=1&numOfRows=9"; //페이지번호,한페이지 검색 결과 수
 		parameter = parameter + "&" + "MobileOS=ETC"; 			//필수 os구분
 		parameter = parameter + "&" + "MobileApp=gabom"; 		//필수 서비스명
 		parameter = parameter + "&" + "_type=json";				//제이슨 타입으로 받음
@@ -88,4 +91,6 @@ public class ApiupTest {
 		System.out.println("resultJson : " + resultJson);
 		return resultJson;
 	}
+	
+
 }
