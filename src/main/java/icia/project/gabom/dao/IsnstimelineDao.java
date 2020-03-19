@@ -11,10 +11,13 @@ import icia.project.gabom.dto.Snsposts;
 
 public interface IsnstimelineDao {
 
-	@Select("SELECT * FROM (SELECT * FROM SNS_POSTS \r\n" + 
-			"			                ORDER BY SNS_POSTS_DATE desc)\r\n" + 
-			"			WHERE ROWNUM<=#{lowNum} AND (SNS_POSTS_AUTHORITY=0 OR SNS_POSTS_WRITER=#{snspostsid})")
-	List<Snsposts> getsnsTimeLine(@Param("snspostsid")String id,@Param("lowNum") int lowNum);
+	/*
+	 * @Select("SELECT * FROM (SELECT * FROM SNS_POSTS \r\n" +
+	 * "			                ORDER BY SNS_POSTS_DATE desc)\r\n" +
+	 * "			WHERE ROWNUM<=#{lowNum} AND (SNS_POSTS_AUTHORITY=0 OR SNS_POSTS_WRITER=#{snspostsid})"
+	 * )
+	 */
+	List<Snsposts> getsnsTimeLine(@Param("id")String id,@Param("rowNum") int lowNum);
 
 	@Select("SELECT * FROM SNS_POSTS WHERE SNS_POSTS_WRITER= #{sns_posts_writer} ORDER BY SNS_POSTS_DATE DESC")
 	List<Snsposts> getmytimeline(Snsposts snsposts, @Param("sns_posts_writer") String sns_posts_writer);

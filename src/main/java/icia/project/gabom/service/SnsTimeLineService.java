@@ -72,15 +72,12 @@ public class SnsTimeLineService {
 
 	public String mytimeline(Snsposts snsposts, Principal principal) {
 		String json = null;
-		System.out.println("내 타임라인 글");
 
 		String sns_posts_writer = principal.getName();
-		System.out.println("내아이디" + sns_posts_writer);
 
 		List<Snsposts> mytimeline = snsTimeLineDao.getmytimeline(snsposts, sns_posts_writer);
 
 		json = new Gson().toJson(mytimeline);
-		System.out.println("json=" + json);
 
 		return json;
 

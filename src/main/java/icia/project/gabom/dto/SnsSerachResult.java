@@ -2,6 +2,8 @@ package icia.project.gabom.dto;
 
 
 
+
+
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,4 +17,6 @@ public class SnsSerachResult {
 	private int report;
 	private String contents;
 	private String id;
+	private String pic;
+	private int status;
 }
