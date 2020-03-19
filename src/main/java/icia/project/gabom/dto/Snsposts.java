@@ -1,7 +1,11 @@
 package icia.project.gabom.dto;
 
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -18,11 +22,11 @@ public class Snsposts {
 	private int sns_posts_report;
 	
 
-	@DateTimeFormat(pattern="yyyy-mm-dd")
-	private String sns_posts_date;
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private Date sns_posts_date;
 	
-	@DateTimeFormat(pattern="yyyy-mm-dd")
-	private String sns_posts_edit_date;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date sns_posts_edit_date;
 	
 	private String friend_id;
 	private String friend_my_id;
