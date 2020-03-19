@@ -29,6 +29,6 @@ public class Member {
 	private String member_profile_contents;
 	private int enabled;
 	private int member_money;
-	
+	private int friendstatus;
 	private String g_name; 
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.SnsCommentEditDao">
+	<update id="edit" parameterType="snsCommentDto">
+		UPDATE SNS_COMMENT SET SNS_COMMENT_CONTENT=#{content}
+		WHERE SNS_COMMENT_NUMBER=#{commentNumber}
+		<selectKey order="AFTER" resultType="String" keyProperty="content">
+			SELECT SNS_COMMENT_CONTENT CONTENT
+			FROM SNS_COMMENT WHERE SNS_COMMENT_NUMBER=#{commentNumber}
+		</selectKey>
+	</update>
+</mapper>
