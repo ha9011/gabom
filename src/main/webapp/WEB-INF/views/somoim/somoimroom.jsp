@@ -17,10 +17,45 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a7e29fa39462f45fc2138a8307dbe830&libraries=services"></script>
+
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
 <style>
+.managebtn{
+	border-radius: 10px;
+}
+
+.slow  .toggle-group { transition: left 0.7s; -webkit-transition: left 0.7s; }
+/* 채팅날짜 */
+#chatDate {
+	position: absolute;
+	left: 65%;
+	top: 76%;
+	width: 200px;
+	height: 35px;
+	border-radius: 10px;
+	background: rgba(0, 0, 0, 0.3);
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.item1 {
+	flex-grow: 1;
+}
+
+.item2 {
+	flex-grow: 17;
+}
+
+.item3 {
+	flex-grow: 2;
+	align-self: center;
+}
+/*------------------------------ */
 #dropout {
 	width: 100%;
 }
@@ -45,7 +80,7 @@
 
 #top {
 	margin: 50px auto;
-	width: 80%;
+	width: 40%;
 	height: 200px;
 	border: 1px solid black;
 }
@@ -230,23 +265,27 @@
 	font-size: 15px;
 	align-self: flex-end;
 	text-align: right;
-	background: yellow ;
+	background: yellow;
 	border-radius: 10px;
 }
-
 
 #chattingInput {
 	width: 91%;
 }
 
-.chatFrame{
+.chatFrame {
 	display: flex;
 	flex-direction: column;
 }
-#day1{
-background-color: #93b7d9;
-text-align:center;
-height:10%;
+
+#day1 {
+	background-color: #93b7d9;
+	text-align: center;
+	height: 10%;
+}
+
+.panel {
+	margin: 5px 0;
 }
 </style>
 
@@ -260,7 +299,9 @@ height:10%;
 
 
 	<div id="main">
-		<div id="top"></div>
+		<div id="top">
+			
+		</div>
 		<br>
 		<div id="bottom">
 			<div id="out1">
@@ -324,7 +365,27 @@ height:10%;
 					</div>
 
 					<div id="member" class="container tab-pane fade">
-						<br> 회원관리 창 입니다.
+
+						<div class="container">
+
+
+							<div>
+							<div  class="container p-3 my-3 bg-dark text-white  managebtn" >승인 신청 MEMBER LIST &nbsp&nbsp&nbsp<button class="btn btn-light" id="applicantToggle" >ON</button></div>
+							<div  style="display:none;" id="applicantMember"> </div>
+							</div>
+							
+							
+							<div>
+							<div  class="container p-3 my-3 bg-dark text-white  managebtn" >기존 MEMBER LIST &nbsp&nbsp&nbsp<button class="btn btn-light" id="originMemberToggle">ON</button></div>
+							<div style="display:none;" id="originMember" > </div>
+							</div>
+
+
+						</div>
+
+
+
+
 					</div>
 
 
@@ -333,7 +394,7 @@ height:10%;
 			</div>
 
 			<div id="out2">
-			<div id="day1">소모임 이름 </div>
+				<div id="day1">소모임 이름</div>
 				<div id="chattingRoom"></div>
 				<div id="cont2">
 					<input type="text" id="chattingInput">
@@ -567,7 +628,7 @@ height:10%;
 	<button style='display: none' id='boardTrigger' data-toggle="modal"
 		data-target='#myBoardModal'></button>
 
-
+	<div id="chatDate">-</div>
 
 
 
@@ -618,6 +679,8 @@ const showManagelist = ()=>{
 	var somoim_number = ${JsonBasicInfo}.somoim_number
 	
 	var data = {"somoim_number" : somoim_number}
+	
+	
 	$.ajaxSetup({         
 		beforeSend : function(xhr){
 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
@@ -629,12 +692,13 @@ const showManagelist = ()=>{
 		data:data,
 		dataType:"json", //rest 컨트롤 이용	
 		success:function(data){
-			alert("success");
+			$("#originMember").empty();
+			$("#applicantMember").empty();
 			console.log(data)
-					
-					// 정모방 부르는 메소드 
-					
-					
+			console.log(data['기존'])
+			console.log(data['대기'])
+			showOriginMember(data);  //기존 맴버 부르는 메소드
+			showIngMember(data);  // 등록 대기중인 맴버 부르는 메소드
 		},
 		error:function(error){
 			alert("fail")
@@ -771,13 +835,143 @@ const showAllList = (boardlist)=>{
 
 
 
+//강퇴
+$(document).on("click","#kickOut",function(e){
+	console.log("강퇴 할 아이디 : " + e.target.dataset.id)  // 소모임번호랑 아이디만 알면됨요 
+	var id = e.target.dataset.id;
+	var sNumber = ${JsonBasicInfo}.somoim_number
+	var data = {
+			"id":id,
+			"sNumber" : sNumber		
+	}
+	
+	$.ajaxSetup({         
+  	  beforeSend : function(xhr){
+    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	});//먼저 보냄
+	
+	$.ajax({
+		url:'deletemember',
+		type:'post',
+		data:data,
+		dataType:'json',
+		success:function(data){
+			alert("삭제 성공");
+			showOriginMember(data);
+			//showIngMember(data);
+		},
+		error:function(error){
+			alert("fail")
+			console.log(error);
+		}
+	})
+	
+})
 
+//승인
+$(document).on("click","#agreeSomoim",function(e){
+	console.log("승인 할 아이디 : " + e.target.dataset.id)  // 소모임번호랑 아이디만 알면됨요 
+	var id = e.target.dataset.id;
+	var sNumber = ${JsonBasicInfo}.somoim_number
+	var data = {
+			"id":id,
+			"sNumber" : sNumber		
+	}
+	
+	$.ajaxSetup({         
+  	  beforeSend : function(xhr){
+    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	});//먼저 보냄
+	
+	$.ajax({
+		url:'permitmember',
+		type:'post',
+		data:data,
+		dataType:'json',
+		success:function(data){
+			alert("승인 성공");
+			showOriginMember(data);
+			showIngMember(data);
+		},
+		error:function(error){
+			alert("fail")
+			console.log(error);
+		}
+	})
+	
+})
 
+//거절
+$(document).on("click","#rejectSomoim",function(e){
+	console.log("거절 할 아이디 : " + e.target.dataset.id)  // 소모임번호랑 아이디만 알면됨요 
+	var id = e.target.dataset.id;
+	var sNumber = ${JsonBasicInfo}.somoim_number
+	var data = {
+			"id":id,
+			"sNumber" : sNumber		
+	}
+	
+	$.ajaxSetup({         
+  	  beforeSend : function(xhr){
+    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	});//먼저 보냄
+	
+	$.ajax({
+		url:'deletemember',
+		type:'post',
+		data:data,
+		dataType:'json',
+		success:function(data){
+			alert("삭제 성공");
+			showIngMember(data);
+		},
+		error:function(error){
+			alert("fail")
+			console.log(error);
+		}
+	})
+	
+})
 
  $(document).ready(function(){
 	 
+ 	 //applicantToggle applicantMember
+// 	 originMemberToggle originMember
 	 
-	 
+	$(document).on("click","#applicantToggle", function(e){
+		console.log("신청 맴버 화면 보여주기")
+		var text = e.target.innerText;
+		console.log("text : "+ text)
+		if(text == "ON"){
+			console.log("on에서 눌렀으니 보이게 하고 OFF로 바꾸기")
+			$("#applicantMember").show();
+			$("#applicantToggle").text("OFF")
+		}else if(text == "OFF"){
+			console.log("off에서 눌렀으니 가리고 on으로로 바꾸기")
+			$("#applicantMember").hide();
+			$("#applicantToggle").text("ON")
+			
+		}
+	
+	});	
+	
+	$(document).on("click","#originMemberToggle", function(e){
+		console.log("신청 맴버 화면 보여주기")
+		var text = e.target.innerText;
+		console.log("text : "+ text)
+		if(text == "ON"){
+			console.log("on에서 눌렀으니 보이게 하고 OFF로 바꾸기")
+			$("#originMember").show();
+			$("#originMemberToggle").text("OFF")
+		}else if(text == "OFF"){
+			console.log("off에서 눌렀으니 가리고 on으로로 바꾸기")
+			$("#originMember").hide();
+			$("#originMemberToggle").text("ON")
+			
+		}
+	
+	});	
+		
 	 console.log("---------시작")
 	 //게시글 사진 변경
 		
@@ -802,6 +996,30 @@ const showAllList = (boardlist)=>{
         var scrollHeight = e.target.scrollHeight;
         var clientHeight = e.target.clientHeight;
 		
+        
+        //chatDate.
+        
+        let index = 0 ;
+        for(let v of e.target.children){
+        	console.log("----");
+        	console.log("v.offsetTop :  " + v.offsetTop)
+        	console.log("v.offsetHeight :  " + v.offsetHeight)
+        	let total = Number(v.offsetTop)+Number(v.offsetHeight) 
+        	console.log("total : " + total)
+        	console.log("내 스크롤 위치 : " +  scrollTop)
+        	console.log("박스상단 위치 : " +  v.offsetTop)
+        	console.log("박스하단 위치 : " +  v.offsetTop+v.offsetHeight)
+        	if(v.offsetTop < scrollTop && (total) > scrollTop ){
+        		console.log("채팅날짜 이벤트 실행")
+        		$("#chatDate").text(v.dataset.date);
+        		break;
+        	}
+        	
+        	index++;
+        	console.log(index)
+        }
+        
+        
         if (scrollTop <= (clientHeight/3) && scrollHeight >= clientHeight) {
         	console.log("이벤트발생")
         		console.log("검색날짜 : " + getFormatDate(selectDay) )
@@ -847,9 +1065,11 @@ const showAllList = (boardlist)=>{
     							let cTime = getFormatOnlyTime(v.chatting_date)
     							let cProfile ="."+v.chatting_profile;
     							
-    								if(cId===${JsonMysomoimInfo}.member_name){ //내가 보낸 데이터일 경우
+									if(${JsonMysomoimInfo} == null){
+										
+    								}else if(cId===${JsonMysomoimInfo}.member_name){ //내가 보낸 데이터일 경우
     									
-    									let media = $("<div class='media border p-3 myCommnet'></div>");
+    									let media = $("<div class='media border p-3 myCommnet' data-date='"+getFormatDate(new Date())+"' ></div>");
     									let mediabody = $("<div class='media-body'></div>");
     											
     									let bodyName = $("<h4><small><i> "+cTime+" </i></small></h4>");
@@ -918,13 +1138,13 @@ const showAllList = (boardlist)=>{
 	 
 	 //채팅
 	 var socket = null;
-	 function connect(){
-		 var weAddress="ws://192.168.0.119/gabom/somoim/Chat?somoim_number=" + ${JsonBasicInfo}.somoim_number;
+	 function connect(){  //localhost
+		 var weAddress="ws://localhost:80/gabom/somoim/Chat?somoim_number=" + ${JsonBasicInfo}.somoim_number;
 		 var ws = new WebSocket(weAddress);
 		 socket = ws;
 		    ws.onopen = function () {   //커넥션이 연결됬을때
 		        console.log('Info: connection opened.');
-		       
+		        
 		        ws.onmessage = function (event) {
 		            console.log("receiveMessage : " + event.data+'\n');
 		            
@@ -939,7 +1159,7 @@ const showAllList = (boardlist)=>{
 		    		if(data.id === ${JsonMysomoimInfo}.member_name ){ //내가 보낸 데이터 일경우
 		    			//chattingRoom	
 		    			
-		    			var media = $("<div class='media border p-3 myCommnet'></div>");
+		    			var media = $("<div class='media border p-3 myCommnet' data-date='"+getFormatDate(new Date())+"' ></div>");
 						var mediabody = $("<div class='media-body'></div>");
 						
 						var bodyName = $("<h4><small><i> "+chatTime+" </i></small></h4>");
@@ -1096,7 +1316,7 @@ const showAllList = (boardlist)=>{
 	 }
 	 
 	 //댓글 삭제 버튼
-	 $(document).on("click","#deleteReple",function(e){
+	 $(document).on("click",".deleteReple",function(e){
 		console.log("댓글삭제")
 		console.log(e.target.dataset.num)
 		
@@ -1133,9 +1353,94 @@ const showAllList = (boardlist)=>{
 				})
 	})
 	
+	//댓글 수정
+	 $(document).on("click",".modiReple",function(e){
+		console.log("댓글수정")
+		console.log("타겟 넘버")
+		console.log(e.target.dataset.num)
+		var targetNum = e.target.dataset.num;
+		
+		$(e.target.parentNode.children[0]).hide();  // 수정은 hide로
+		$(e.target.parentNode.children[1]).show();  // 취소버튼 생기고,
+		$(e.target.parentNode.children[2]).show();  // 확정버튼 생기고
+		
+		var newvar = $("#reple"+targetNum).text();
+		$("#modireple"+targetNum).val(newvar);
+		
+		$("#modireple"+targetNum).show();
+		$("#reple"+targetNum).hide();
+		
+		
+		
+		
+		
+		
+		$(e.target.parentNode.children[1]).on("click",function(e){
+			
+			console.log("수정취소")
+			
+			
+			
+			$(e.target.parentNode.children[0]).show();  //수정버튼 생기고
+			$(e.target.parentNode.children[1]).hide();  // 취소버튼 사라지고,
+			$(e.target.parentNode.children[2]).hide();  // 확정버튼 사라지고
+			$("#modireple"+targetNum).hide();
+			$("#reple"+targetNum).show();
+			
+		})
+		
+		$(e.target.parentNode.children[2]).on("click",function(e){  //확정 누르면 db 가기
+			var newvar = $("#modireple"+targetNum).val();
+			$("#reple"+targetNum).text(newvar);
+			
+			
+			var data = {
+					 "reple_number": targetNum,
+					 "reple_content": newvar
+			}
+		 	 
+			$.ajaxSetup({         
+				      beforeSend : function(xhr){
+				      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+			});//먼저 보냄
+					$.ajax({
+						url:'repleModify',
+						type:'post',
+						data:data,
+						success:function(data){
+							alert("success");
+							console.log(data)
+							
+						},
+						error:function(error){
+							alert("fail")
+							console.log(error);
+						}
+					})
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			//성공시 사라지게 하기
+			$(e.target.parentNode.children[0]).show();  //수정버튼 생기고
+ 			$(e.target.parentNode.children[1]).hide();  // 취소버튼 사라지고,
+ 			$(e.target.parentNode.children[2]).hide();  // 확정버튼 사라지고
+ 			$("#modireple"+targetNum).hide();
+			$("#reple"+targetNum).show();
+ 			
+		})
+		
+		
+		
+	})
 	
-	
-	  // 수정
+	  // 게시글 수정 버튼 누를 때 트리거 후 실행되는 이벤트
 	 $(document).on("click","#boardTrigger",function(e){
 		 $("#makeBoardBtn").hide();
 		 $("#modiBoardBtn").show();
@@ -1143,7 +1448,7 @@ const showAllList = (boardlist)=>{
 						
 		 console.log("게시글 : " )
 		 console.log(boardinfo);
-		 
+		 $(".modal-title").text("게시글 수정하기");
 		 $("#boardtype").val(boardinfo.board_type);
 		 $("#boardtitle").val(boardinfo.board_title);
 		 $("#boardCont").val(boardinfo.board_content);
@@ -1180,7 +1485,7 @@ const showAllList = (boardlist)=>{
 	 
 	 
 	 
-	 
+	 //수정 버튼 누를때 (게시판) 트리거 실행
 	 $(document).on("click","#boardModify",function(e){
 		 console.log("board 수정 ");
 	
@@ -1227,6 +1532,7 @@ const showAllList = (boardlist)=>{
 						console.log(error);
 					}
 				})
+				
 	 })
 	 
 	 
@@ -1591,6 +1897,8 @@ console.log("채팅 : " , ${JsonchatData})
 var chatData = 	${JsonchatData}
 //채팅에 넣기
 
+
+
 let yesterdayChat= chatData.yesterday;
 let todayChat = chatData.today;
 console.log("today",todayChat);
@@ -1608,9 +1916,11 @@ for(let v of yesterdayChat ){
 	let cTime = getFormatOnlyTime(v.chatting_date)
 	let cProfile ="."+v.chatting_profile;
 	
-		if(cId===${JsonMysomoimInfo}.member_name){ //내가 보낸 데이터일 경우
+		if(${JsonMysomoimInfo}==null || ${JsonMysomoimInfo}.member_status==0){
 			
-			let media = $("<div class='media border p-3 myCommnet'></div>");
+		}else if(cId===${JsonMysomoimInfo}.member_name){ //내가 보낸 데이터일 경우
+			
+			let media = $("<div class='media border p-3 myCommnet' data-date='"+getFormatDate(new Date())+"'></div>");
 			let mediabody = $("<div class='media-body'></div>");
 					
 			let bodyName = $("<h4><small><i> "+cTime+" </i></small></h4>");
@@ -1644,7 +1954,9 @@ for(let v of yesterdayChat ){
 $("#chattingRoom").scrollTop($("#chattingRoom")[0].scrollHeight);
 //todayChat
 
-let tDate = getFormatDate(todayChat[0].chatting_date)
+
+
+let tDate = getFormatDate(new Date())  // 오늘 날짜의 첫번째 챗팅을 가져오는건데 없는 경우에 에러뜬다..
 let tDateChatFrame = $("<div id='yesterday' class='chatFrame' data-date='"+tDate+"'> </div>");
 for(let v of todayChat ){
 	
@@ -1655,10 +1967,12 @@ for(let v of todayChat ){
 	let cDate = getFormatDate(v.chatting_date);
 	let cTime = getFormatOnlyTime(v.chatting_date)
 	let cProfile ="."+v.chatting_profile;
-	
-		if(cId===${JsonMysomoimInfo}.member_name){ //내가 보낸 데이터일 경우
+		if(${JsonMysomoimInfo}==null || ${JsonMysomoimInfo}.member_status==0){
 			
-			let media = $("<div class='media border p-3 myCommnet'></div>");
+		
+		}else if(cId===${JsonMysomoimInfo}.member_name){ //내가 보낸 데이터일 경우
+			
+			let media = $("<div class='media border p-3 myCommnet' data-date='"+getFormatDate(new Date())+"'></div>");
 			let mediabody = $("<div class='media-body'></div>");
 					
 			let bodyName = $("<h4><small><i> "+cTime+" </i></small></h4>");
@@ -1826,14 +2140,23 @@ $("#chattingRoom").scrollTop($("#chattingRoom")[0].scrollHeight);
 			profileFrame.append(nameSection);
 			
 			if(v.somoim_board_reple_name === mysomoimInfo.member_name){
-				var modiDeleBtn = $("<div> <button id='deleteReple' data-num='"+v.somoim_board_reple_number+"' >삭제</button></div>")
+				var modiDeleBtn = $("<div> <button class='modiReple' data-num='"+v.somoim_board_reple_number+"' >수정</button>"+
+									"<button style='display:none;' class='cancelModiReple' data-num='"+v.somoim_board_reple_number+"' >취소</button><button style='display:none;' class='okModiReple' data-num='"+v.somoim_board_reple_number+"' >확정</button><button class='deleteReple' data-num='"+v.somoim_board_reple_number+"' >삭제</button></div>")
 				profileFrame.append(modiDeleBtn);
 			}
 			
 			var contentFrame = $("<div class='contentFrame'></div>")
 			let content=v.board_content
 			
-			var contentSection = $("<div class='titleSection'><div>"+v.somoim_board_reple_content+"</div></div>")
+			var contentSection = $("<div id='repleframe"+v.somoim_board_reple_number+"' class='titleSection'></div>")
+			
+			var repleContent = $("<div id='reple"+v.somoim_board_reple_number+"'>"+v.somoim_board_reple_content+"</div>");
+			var repleModiInput  = $("<input style='display:none;' id='modireple"+v.somoim_board_reple_number+"'>");
+			
+			contentSection.append(repleContent);
+			contentSection.append(repleModiInput);
+			
+			
 			contentFrame.append(contentSection);
 			
 
@@ -2055,6 +2378,14 @@ $("#chattingRoom").scrollTop($("#chattingRoom")[0].scrollHeight);
 	 $("#boardWriteBtn").on("click", function(){
 		 $("#makeBoardBtn").show();
 		 $("#modiBoardBtn").hide();
+		 
+		 $(".modal-title").text("게시글 작성하기")
+		 
+		 $("#boardtitle").val("");
+		 $("#boardCont").val("");
+		 $(".boardCamera").attr('src','../resources/somoimimage/camera.PNG');
+		 $("#mainboard").prop('checked',false);
+		 
 	 })
 
 	 
@@ -2195,6 +2526,11 @@ $("#joinsomoim").on("click",function(e){
 				alert("success");
 				console.log("조인신청")
 				console.log(data)
+				
+				$("#dropout").text("가입 취소하기");
+				$("#dropout").show();
+				$("#joinsomoim").hide();
+				
 			},
 			error:function(error){
 				alert("fail")
@@ -2676,7 +3012,56 @@ $("#joinsomoim").on("click",function(e){
 		
 	}
 	
+	const showOriginMember= (data)=>{
+		$("#originMember").empty();
+		for( v of data['기존']){
+			var attendListFrame = $("<div class='attendListFrame '> </div>");  // 여기에 채워넣어야함
+			
+			var attendPic = $("<div class='attendPicFrame fitem item1'> <img src='."+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
+  			
+			var attendCont =  $("<div class='attendCont fitem item2'> </div>");	
+  			var attendTitle = $("<div class='attendTitle'>"+v.member_id+"</div>");	
+  			var attendIntroduce = $("<div class='attendIntroduce '>"+v.member_profile_contents+"</div>");
+  			
+  			
+  			
+  			attendCont.append(attendTitle);
+  			attendCont.append(attendIntroduce);
+  			
+  			attendListFrame.append(attendPic);
+  			attendListFrame.append(attendCont);
+  			
+  			if(v.member_id !==  ${JsonBasicInfo}.somoim_maker){  //방장아닌 사람만 강퇴 버튼 추가
+  				var kickOutBtn = $("<div class='attendBtn fitem item3'><button id='kickOut' data-id='"+v.member_id+"'>강퇴</button></div>")
+  				attendListFrame.append(kickOutBtn);
+  			}
+  			
+  			$("#originMember").append(attendListFrame);
+		}
+	}
 	
+	const showIngMember= (data)=>{
+		$("#applicantMember").empty();
+		
+		for( v of data['대기']){
+		var attendListFrame = $("<div class='attendListFrame'> </div>");
+		var attendPic = $("<div class='attendPicFrame fitem item1'> <img src='."+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
+			var attendCont =  $("<div class='attendCont fitem item2'> </div>");	
+			var attendTitle = $("<div class='attendTitle '>"+v.member_id+"</div>");	
+			var attendIntroduce = $("<div class='attendIntroduce '>"+v.member_profile_contents+"</div>");
+			
+			var permitCancelBtn = $("<div class='attendBtn fitem item3'><button id='agreeSomoim' data-id='"+v.member_id+"'>승인</button><button id='rejectSomoim' data-id='"+v.member_id+"'>거절</button></div>")
+			
+			attendCont.append(attendTitle);
+			attendCont.append(attendIntroduce);
+			
+			attendListFrame.append(attendPic);
+			attendListFrame.append(attendCont);
+			attendListFrame.append(permitCancelBtn);
+			$("#applicantMember").append(attendListFrame);
+	}
+	}
+	//아코디언 메뉴
 	
 	
 	
