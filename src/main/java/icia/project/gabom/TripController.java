@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import icia.project.gabom.dao.ITripplanDao;
 import icia.project.gabom.dto.Trip_member;
+import icia.project.gabom.dto.Trip_plan;
 import icia.project.gabom.service.TripService;
 
 @Controller
@@ -39,5 +40,17 @@ public class TripController {
       return mav;
    }
    
+   
+   @RequestMapping(value = "/detailplan", method = RequestMethod.GET)
+   public ModelAndView detailplan(Principal ppl,int trip_number) {
+      System.out.println("상세 여행 플랜");
+      
+      //System.out.println("여행번호:"+trip_number);
+      
+      
+      mav=trs.detailplan(trip_number,ppl );
+      //System.out.println(mav);
+      return mav;
+   }
 
 }

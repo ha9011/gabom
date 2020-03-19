@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import icia.project.gabom.dto.Member;
 import icia.project.gabom.dto.Sns_friend;
@@ -19,7 +20,6 @@ public interface ITripplanDao {
    
    boolean savetripdate(@Param("trip_number2")int trip_number2,@Param("date")String date, @Param("index")int index);
 
-   @Select("SELECT * FROM TRIP_PLAN WHERE TRIP_ID=#{trip_id}")
    List<Trip_plan> getmyplan(String trip_id);
    
    @Select("SELECT * FROM MEMBER WHERE MEMBER_ID=#{trip_id}")
@@ -31,10 +31,16 @@ public interface ITripplanDao {
    
    boolean togetherplan(Trip_member tm);
 
-   @Select("select TP.TRIP_TITLE, TP.TRIP_ID, TM.SHARE_ID, TM.TRIP_TYPE from TRIP_PLAN TP, TRIP_MEMBER TM where TP.TRIP_NUMBER=TM.TRIP_NUMBER AND TRIP_ID=#{trip_id} AND TM.TRIP_TYPE=0")
-   List<Trip_member> requestmember(String trip_id);
+   List<Trip_member> requestmember(@Param("trip_id")String trip_id);
 
-   @Select("select TP.TRIP_TITLE, TP.TRIP_ID, TM.SHARE_ID, TM.TRIP_TYPE,TP.TRIP_NUMBER from TRIP_PLAN TP, TRIP_MEMBER TM where TP.TRIP_NUMBER=TM.TRIP_NUMBER AND SHARE_ID=#{trip_id} AND TM.TRIP_TYPE=0")
-   List<Trip_member> requestme(String trip_id);
+   List<Trip_member> requestme(@Param("trip_id")String trip_id);
+   
+   @Update("UPDATE TRIP_MEMBER SET TRIP_TYPE= 1 WHERE TRIP_NUMBER=#{trip_number} AND SHARE_ID=#{share_id}")
+   boolean accepttrip(@Param("share_id")String share_id,@Param("trip_number")int trip_number);
+   
+   @Update("UPDATE TRIP_MEMBER SET TRIP_TYPE= 2 WHERE TRIP_NUMBER=#{trip_number} AND SHARE_ID=#{share_id}")
+   boolean rejecttrip(@Param("share_id")String share_id,@Param("trip_number")int trip_number);
+
+   List<Trip_plan> detailplan(@Param("trip_number")int trip_number);
 
 }

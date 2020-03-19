@@ -74,8 +74,17 @@ color:white;
 #reauest{
 background-color:white;
 height:680px;
-}   
-      
+}
+#mql{
+width:100%;
+display:none;
+
+}  
+#fql{
+width:100%;
+display:none;
+
+}      
 
 /* 버튼 */
 #jbtn{
@@ -86,6 +95,14 @@ font-size:15px;
 #t_title{
 cursor: pointer;
 text-decoration:none;
+}
+#rqmbtn{
+ width:100%;
+ color:black;
+}
+#rqbtn{
+width:100%;
+color:black;
 }
 
 
@@ -173,7 +190,14 @@ border-radius: 10px;
             	<div id="propic"></div>
             	<div id="title"></div>
             	<div id="reauest">
-            	
+            		<div id="rqm">
+            			<button id="rqmbtn" class=" btn-lg btn-primary" onclick="myreq()">여행 요청리스트</button>
+            			<div id="mql"></div>
+            		</div>
+            		<div id="rql">
+            			<button id="rqbtn" class=" btn-lg btn-primary" onclick="freq()">요청 상황</button>
+            			<div id="fql"></div>
+            		</div>
             	</div>
             </div>
          </div>
@@ -243,6 +267,15 @@ border-radius: 10px;
 <script>
  var mylist =${myplanlist};
  console.log("내 여행 목록",mylist);
+ console.log(mylist.trip_area);
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  var myinfo =${memberinfo};
  console.log(myinfo);
  var friend =${friendlist};
@@ -252,11 +285,9 @@ border-radius: 10px;
  
  var reql =${reqlist};
  console.log(reql);
- var reqme =${myreqlist};
- console.log(reqme);
+ var reqmel =${myreqlist};
+ console.log(reqmel);
 
- 
- 
  
  var sd = getFormatDate(mylist[0].trip_start_date);
  var ed = getFormatDate(mylist[0].trip_start_date);
@@ -269,25 +300,118 @@ border-radius: 10px;
  
  var n =$('<h1>'+myinfo[0].member_name+'님'+'</h1><h3>반갑습니다<br><br>어디로 떠나실 계획인가요?</h3>')
  $("#title").append(n);
-
+ 
+  for(i of reqmel){//내가 받은 리스트 
+	 var tr_id =$('<p>'+i.trip_id+'님이 '+i.trip_title+'에 '+i.share_id+'초대하셨습니다'+'</p>');
+	 var sbtn=$('<button class="sbtn btn-success" data-trnum="'+i.trip_number+'">승인 </button>');
+	 var cbtn=$('<button class="cbtn btn-danger" data-trnum="'+i.trip_number+'">거절  </button>');
+	 $("#mql").append(tr_id);
+	 $("#mql").append(sbtn);
+	 $("#mql").append(cbtn);
+ }
+ 
+ for (i of reql){//내가 보낸 리스트
+	 var sh_id = $('<p>'+i.share_id+'님을 '+i.trip_title+'에 초대하셨습니다'+'</p>');
+	 
+	 $("#fql").append(sh_id);
+ } 
+ 
+ 
+ 
+ 
+/*   $("#mql").hide();
+ $("#fql").hide(); */ 
+  function myreq() {//내가 받은 요청사항
+	  var x = document.getElementById("mql");
+	  if (x.style.display === "none") {
+	    x.style.display = "block";
+	  } else {
+	    x.style.display = "none";
+	  }
+	}
+ 
+ 
+ function freq() {//내가 보낸 요청사항 
+	  var y = document.getElementById("fql");
+	  if (y.style.display === "none") {
+		 y.style.display = "block";
+	} else {
+         y.style.display = "none";
+	 }
+	}
+ 
  //-------------------------------------------------------------------유저 정보 영역
  
-  for(i of mylist) { //게시글 
+  for(i of mylist) { //게시글
+	  console.log(i.trip_area);
+ 	  if(i.trip_area == 1){
+		i.trip_area = "서울"		  
+ 	  }else if(i.trip_area == 2){
+		i.trip_area = "인천"		  
+ 	  }else if(i.trip_area == 3){
+		i.trip_area = "대전"		  
+ 	  }else if(i.trip_area == 4){
+		i.trip_area = "대구"		  
+ 	  }else if(i.trip_area == 5){
+		i.trip_area = "광주"		  
+ 	  }else if(i.trip_area == 6){
+		i.trip_area = "부산"		  
+ 	  }else if(i.trip_area == 7){
+		i.trip_area = "울산"		  
+ 	  }else if(i.trip_area == 8){
+		i.trip_area = "세종특별자치시"		  
+ 	  }else if(i.trip_area == 31){
+		i.trip_area = "경기도"		  
+ 	  }else if(i.trip_area == 32){
+		i.trip_area = "강원도"		  
+ 	  }else if(i.trip_area == 33){
+		i.trip_area = "충청북도"		  
+ 	  }else if(i.trip_area == 34){
+		i.trip_area = "충청남도"		  
+ 	  }else if(i.trip_area == 35){
+		i.trip_area = "경상북도"		  
+ 	  }else if(i.trip_area == 36){
+		i.trip_area = "경상남도"		  
+ 	  }else if(i.trip_area == 37){
+		i.trip_area = "전라북도"		  
+ 	  }else if(i.trip_area == 38){
+		i.trip_area = "전라남도"		  
+ 	  }else if(i.trip_area == 39){
+		i.trip_area = "제주도"		  
+ 	  }
+	  
+	  
+	  
     var tr = $('<tr></tr>'); 
     
-    var title = $('<td id="t_title" name="'+i.trip_number+'"><a>'+i.trip_title+'</a></td>');
+    var title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a></td>');
+   
     var area =$('<td>'+i.trip_area+'</td>');
     var date =$('<td>'+sd+' - '+ed+'</td>');
     var btn =$('<td><button id="jbtn" class="joinbtn btn" data-toggle="modal" data-target="#exampleModal"  data-tripnum ="'+i.trip_number+'">친구 초대</button></td>');
+    
     
     $("#mylist").append(tr);
     $(tr).append(title);
     $(tr).append(area);
     $(tr).append(date);
     $(tr).append(btn);
-     
+    
+
+    
  }
  
+ 
+ 
+ 
+ 
+ 
+ 
+  $(".movePlan").on('click', function(e) {
+  	console.log(e.target.dataset.name);
+  	var number = e.target.dataset.name;
+  location.href="detailplan?trip_number="+number;
+  });
 //------------------------------------------------------------------------------------------게시글 영역
 $(".joinbtn").on('click', function(e) { // 친구 추가시 여행번호 
 	var trip_number = e.target.dataset.tripnum
@@ -339,11 +463,23 @@ $(document).on('click',".fbtn", function(e) {
          success:function(data){
             alert("친구 초대완료.");
             console.log("요청리스트",data);
+           
+            $("#fql").empty();
             
-        /*     for(i of data){
-            	var req =$('<div></div>');
-            	
-            } */
+             for(i of data.myreqlist){//내가 받은 리스트 
+           	 var tr_id =$('<p>'+i.trip_id+'님이 '+i.trip_title+'에 '+i.share_id+'초대하셨습니다'+'</p>');
+           	 var sbtn=$('<button class="sbtn btn-success" data-trnum="'+i.trip_number+'">승인 </button>');
+           	 var cbtn=$('<button class="cbtn btn-danger" data-trnum="'+i.trip_number+'">거절  </button>');
+           	 $("#mql").append(tr_id);
+           	 $("#mql").append(sbtn);
+           	 $("#mql").append(cbtn);
+            }
+            
+            for (i of data.reqlist){//내가 보낸 리스트
+           	 var sh_id = $('<p>'+i.share_id+'님을 '+i.trip_title+'에 초대하셨습니다'+'</p>');
+           	 
+           	 $("#fql").append(sh_id);
+            }  
            
          },
          
@@ -359,34 +495,123 @@ $(document).on('click',".fbtn", function(e) {
 
 
 
-//--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------초대 이벤트 영역
+
+
+$(".sbtn").on('click', function(e) {//승인 버튼 
+	var trip_number = e.target.dataset.trnum
+	console.log(trip_number);
+	var data = {
+            "trip_number" : trip_number,
+         } 
+   console.log(data);
+   
+	$.ajaxSetup({         
+	      beforeSend : function(xhr){
+	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	      });//먼저 보냄
+   
+   
+   $.ajax({
+      
+        url: "tprest/accepttrip",
+         type: 'post',
+         data :data,
+         dataType: "json", //rest 컨트롤 이용   
+         success:function(data){
+            alert("여행 참여 완료.");
+           
+            $("#mql").empty();
+            $("#fql").empty();
+            
+            for(i of reqmel){//내가 받은 리스트 
+           	 var tr_id =$('<p>'+i.trip_id+'님이 '+i.trip_title+'에 '+i.share_id+'초대하셨습니다'+'</p>');
+           	 var sbtn=$('<button class="sbtn btn-success" data-trnum="'+i.trip_number+'">승인 </button>');
+           	 var cbtn=$('<button class="cbtn btn-danger" data-trnum="'+i.trip_number+'">거절  </button>');
+           	 $("#mql").append(tr_id);
+           	 $("#mql").append(sbtn);
+           	 $("#mql").append(cbtn);
+            }
+            
+            for (i of reql){//내가 보낸 리스트
+           	 var sh_id = $('<p>'+i.share_id+'님을 '+i.trip_title+'에 초대하셨습니다'+'</p>');
+           	 
+           	 $("#fql").append(sh_id);
+            } 
+            
+             
+         },
+         
+         error:function(error){
+            alert("여행 참여 실패.");
+               console.log(error);
+            }
+      
+      
+   });//ajax 끝
+
+})// 클릭이벤트 종료 
 
 
 
-$("#t_title").on('click', function() {
-	console.log($(this).attr("name"));
-    location.href="detailplan?trip_number="+$(this).attr("name");
-	});
+ $(".cbtn").on('click', function(e) {//거절 버튼 
+	var trip_number = e.target.dataset.trnum
+	console.log(trip_number);
+	var data = {
+            "trip_number" : trip_number,
+         } 
+   console.log(data);
+   
+	$.ajaxSetup({         
+	      beforeSend : function(xhr){
+	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	      });//먼저 보냄
+   
+   
+   $.ajax({
+      
+        url: "tprest/rejecttrip",
+         type: 'post',
+         data :data,
+         dataType: "json", //rest 컨트롤 이용   
+         success:function(data){
+            alert("여행 거절 완료.");
+           
+            $("#mql").empty();
+            $("#fql").empty();
+            
+            for(i of reqmel){//내가 받은 리스트 
+           	 var tr_id =$('<p>'+i.trip_id+'님이 '+i.trip_title+'에 '+i.share_id+'초대하셨습니다'+'</p>');
+           	 var sbtn=$('<button class="sbtn btn-success" data-trnum="'+i.trip_number+'">승인 </button>');
+           	 var cbtn=$('<button class="cbtn btn-danger" data-trnum="'+i.trip_number+'">거절  </button>');
+           	 $("#mql").append(tr_id);
+           	 $("#mql").append(sbtn);
+           	 $("#mql").append(cbtn);
+            }
+            
+            for (i of reql){//내가 보낸 리스트
+           	 var sh_id = $('<p>'+i.share_id+'님을 '+i.trip_title+'에 초대하셨습니다'+'</p>');
+           	 
+           	 $("#fql").append(sh_id);
+            } 
+            
+             
+         },
+         
+         error:function(error){
+            alert("여행 거절 실패.");
+               console.log(error);
+            }
+      
+      
+   });//ajax 끝
+
+})// 클릭이벤트 종료 
+ 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//--------------------------------------------------------------------------------------------- 승인 거절이벤트 
 
 //날짜 포맷 변환기  str -> date ->str
    function getFormatDate(strdate){

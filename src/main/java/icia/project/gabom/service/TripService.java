@@ -32,7 +32,7 @@ public class TripService {
    private ITripplanDao tpDao;
    
    
-
+   //여행 플랜 1단계
    public String savetripplan(Trip_plan tp, Principal ppl) throws ParseException {
       String json =null;
       System.out.println("저장하러 오니?");
@@ -103,6 +103,7 @@ public class TripService {
       
       
       List<Trip_plan> myplanlist = tpDao.getmyplan(trip_id);//내 여행목록
+      
       List<Member> memberinfo = tpDao.getmemberinfo(trip_id);//회원정보
       List<Sns_friend> friendlist = tpDao.getfriendlist(trip_id);//회원의 친구목록
       
@@ -123,8 +124,15 @@ public class TripService {
       mav.addObject("reqlist", json4); // key,value
       mav.addObject("myreqlist", json5); // key,value
       
-      System.out.println("reqlist"+json4);
-      System.out.println("myreqlist"+json5);
+      
+      
+      
+      
+      
+      
+      
+      //System.out.println("reqlist"+json4);
+      //System.out.println("myreqlist"+json5);
       
       
       mav.setViewName(view); //view에 url로 이동
@@ -132,15 +140,15 @@ public class TripService {
    
    }
 
-
-public String togetherplan(Trip_member tm, Principal ppl) {
+   //친구 초대 
+   public String togetherplan(Trip_member tm, Principal ppl) {
 	String json = null;
 	String json2 = null;
 	
 	String share_id=tm.getShare_id();
 	int trip_number =tm.getTrip_number();
 	String trip_id = ppl.getName();
-	System.out.println(trip_id);
+	//System.out.println(trip_id);
 	
 	tm.setShare_id(share_id).setTrip_number(trip_number);
 	
@@ -149,10 +157,10 @@ public String togetherplan(Trip_member tm, Principal ppl) {
 	Map<String,List<Trip_member>> list = new HashMap<String, List<Trip_member>>();
 	
 	List<Trip_member> reqlist =tpDao.requestmember(trip_id);//친구한테 요청한 것
-	System.out.println(reqlist);
+	//System.out.println(reqlist);
 	
 	List<Trip_member> myreqlist =tpDao.requestme(trip_id);//나한테 온 것.
-	System.out.println(myreqlist);
+	//System.out.println(myreqlist);
 	
 	list.put("reqlist", reqlist);
 	list.put("myreqlist", myreqlist);
@@ -162,6 +170,59 @@ public String togetherplan(Trip_member tm, Principal ppl) {
 	
 	return json;
 }
+   //초대 승인
+	public String accepttrip(Trip_member tm, Principal ppl) {
+		String json = null;
+		
+		String share_id=ppl.getName();
+		int trip_number =tm.getTrip_number();
+		System.out.println(share_id + trip_number);
+		
+		
+		boolean acc= tpDao.accepttrip(share_id,trip_number);
+		
+		json = new Gson().toJson(acc);
+		
+		return json;
+}
+
+	//초대 거절
+	public String rejecttrip(Trip_member tm, Principal ppl) {
+		String json = null;
+		
+		String share_id=ppl.getName();
+		int trip_number =tm.getTrip_number();
+		System.out.println(share_id + trip_number);
+		
+		
+		boolean acc= tpDao.rejecttrip(share_id,trip_number);
+		
+		json = new Gson().toJson(acc);
+		
+		return json;
+
+	}
+
+	//상세 플랜 페이지 
+	public ModelAndView detailplan(int trip_number,Principal ppl) {
+		//System.out.println("상세 여행페이지로");
+		
+		mav = new ModelAndView();
+		String json = null;
+	    String view = null;
+	    
+	    
+	    List<Trip_plan> detrip = tpDao.detailplan(trip_number);
+	    
+	    view="Trip/detailplan";
+		
+	    json = new Gson().toJson(detrip);
+	    mav.addObject("detrip", json);
+	    System.out.println(json);
+	    
+	    mav.setViewName(view);
+		return mav;
+	}
    
    
 
