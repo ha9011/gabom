@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <link rel="icon" href="favicon.ico">
-<title>Nantes - Onepage Business Template</title>
+<title>여행 만들기 </title>
 <!-- Bootstrap core CSS -->
 <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -31,6 +31,14 @@ margin: 40px;
 #searchbox{
 margin-top:20px;
 display:flex;
+color: white;
+text-align:left;
+margin-left:10px; 
+}
+#sa{
+height:50px;
+margin-left:60px;
+width:480px; 
 }
 .cont{
 margin:20px 10px;
@@ -60,7 +68,7 @@ color: black;
 					<span class="icon-bar"></span>
 					</button>
 					<!--로고 자리 -->
-					<a href=""><img style="width:200px;" src="./resources/headerImage/logo3.png" alt="logo"></a>
+					<img style="width:200px;" src="./resources/headerImage/logo3.png" alt="logo">
 				</div>
 				
 				
@@ -108,10 +116,28 @@ color: black;
 					<div id="outbox" class="intro-text">
 						<div id="inbox">
 								<br>
-								<form class="content">
-								<div class="content" id ="searchbox">
-    								<input name="trip_area" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    								<!-- <button style="margin:0 5px; " class="btn btn-success">Search</button> -->
+								<form class="content" id="content">
+								<div class="content" id ="searchbox">Trip Area
+    								<!-- <intput id="area" type="hidden" name="trip_area"> -->
+    								<select id="sa" name="trip_area" class="form-control mr-sm-2"  aria-label="Search" >
+    									<option value="1">서울</option>
+            							<option value="2">인천</option>
+            							<option value="3">대전</option>
+            							<option value="4">대구</option>
+            							<option value="5">광주</option>
+            							<option value="6">부산</option>
+            							<option value="7">울산</option>
+            							<option value="8">세종특별자치시</option>
+							            <option value="31">경기도</option>
+							            <option value="32">강원도</option>
+							            <option value="33">충청북도</option>
+							            <option value="34">충청남도</option>
+							            <option value="35">경상북도</option>
+							            <option value="36">경상남도</option>
+							            <option value="37">전라북도</option>
+							            <option value="38">전라남도</option>
+							            <option value="39">제주도</option>
+    								</select>
     							</div>	
     							
     								<div class="cont">Trip Title
@@ -153,8 +179,15 @@ $("#resetbtn").on('click', function() {
 });
 
 
-$("#savebtn").on('click', function() {//1차 여행플랜 생성 
+$("#savebtn").on('click', function(e) {//1차 여행플랜 생성 
+	e.preventDefault();
+	
+	//console.log(document.getElementById("content"));
+	//var area =$("#area").val("#sarea");
+	//console.dir(area);
+	
 	var formData = new FormData(document.getElementById("content")); 
+	console.log(formData);
 	
 	$.ajaxSetup({         
 	      beforeSend : function(xhr){
@@ -162,7 +195,7 @@ $("#savebtn").on('click', function() {//1차 여행플랜 생성
 	      });//먼저 보냄
   
   $.ajax({
-      url:'savetripplan',
+      url:'tprest/savetripplan',
       type:'post',
       data:formData,
       processData:false,
@@ -171,7 +204,7 @@ $("#savebtn").on('click', function() {//1차 여행플랜 생성
       success:function(data){
          alert("여행플랜이 저장되었습니다.");
          console.log(data)
-         $("#reservation")[0].reset();
+         $("#content")[0].reset();
          
       },
       error:function(error){

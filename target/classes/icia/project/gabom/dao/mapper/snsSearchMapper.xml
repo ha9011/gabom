@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.SnsSearchDao">
+	<select id="searchPost" resultType="snspost">
+		SELECT * FROM SNS_POSTS
+		WHERE SYS.DBMS_LOB.INSTR(SNS_POSTS_CONTENT,#{searchData})>0 AND
+		SNS_POSTS_AUTHORITY=0
+	</select>
+	<select id="searchFriendPost" resultType="snspost">
+		SELECT *
+		FROM SNS_POSTS SP
+		LEFT JOIN SNS_FRIEND SF
+		ON SP.SNS_POSTS_WRITER=SF.FRIEND_ID
+		WHERE (SF.FRIEND_MY_ID=#{id} AND SF.FRIEND_STATUS=2 and
+		SP.SNS_POSTS_AUTHORITY=1)
+		and SYS.DBMS_LOB.INSTR(SNS_POSTS_CONTENT,#{searchData})>0
+	</select>
+	<select id="searchFriendList" resultType="member">
+	SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_ID LIKE '%'||#{searchData}||'%'
+	</select>
+	
+	
+	
+</mapper>

@@ -198,7 +198,6 @@ $(".upload-name").hide();
              contentType:false,  //제이슨 아니니깐 까보지마!!
               dataType:"json", //rest 컨트롤 이용   
              success:function(data){
-            	 
                 alert("사진 업로드 완료");
                 console.log(data)
               
@@ -210,6 +209,7 @@ $(".upload-name").hide();
                 for(let i of data ){
                    
                     
+                	
                 	
                 	var img
             		if(mysomoimInfo==null){
@@ -228,11 +228,11 @@ $(".upload-name").hide();
                 	console.log("index : "+index);
                    $("#imgarea").append(tr);
                    
-					if(index%3===0){
-						tr = $("<tr></tr>")
-					}
+               if(index%3===0){
+                  tr = $("<tr></tr>")
+               }
                    
-					index++;                
+               index++;                
                 }
                 
                 
@@ -312,11 +312,11 @@ const showalbumlist = ()=>{
          	console.log("index : "+index);
             $("#imgarea").append(tr);
             
-				if(index % 3===0){
-					tr = $("<tr></tr>")
-				}
+            if(index % 3===0){
+               tr = $("<tr></tr>")
+            }
             
-				index++;                
+            index++;                
 
          }
          

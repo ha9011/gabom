@@ -14,4 +14,34 @@
       INSERT INTO TRIP_PLAN_DATE VALUES(#{date},#{trip_number2},#{index})
    </insert>
 
+	 <insert id="togetherplan" parameterType="trfriend">
+      INSERT INTO TRIP_MEMBER VALUES(#{trip_number},#{share_id},0)
+     </insert>
+   	
+   	<select id="requestmember" resultType="trfriend">
+   		select TP.TRIP_TITLE, TP.TRIP_ID, TM.SHARE_ID, TM.TRIP_TYPE 
+   		from TRIP_PLAN TP, TRIP_MEMBER TM 
+   		where TP.TRIP_NUMBER=TM.TRIP_NUMBER AND TRIP_ID=#{trip_id} AND TM.TRIP_TYPE=0
+   	</select>
+   	
+   	<select id="requestme" resultType="trfriend">
+   		select TP.TRIP_TITLE, TP.TRIP_ID, TM.SHARE_ID, TM.TRIP_TYPE,TP.TRIP_NUMBER 
+   		from TRIP_PLAN TP, TRIP_MEMBER TM 
+   		where TP.TRIP_NUMBER=TM.TRIP_NUMBER AND SHARE_ID=#{trip_id} AND TM.TRIP_TYPE=0
+   	</select>
+   	
+   	<select id="getmyplan" resultType="trfriend" >
+   		SELECT  TP.TRIP_NUMBER,TP.TRIP_ID,TP.TRIP_TITLE, TP.TRIP_AREA, TP.TRIP_START_DATE, tp.trip_end_date
+		FROM TRIP_PLAN TP, TRIP_MEMBER TM
+		WHERE TP.TRIP_NUMBER=TM.TRIP_NUMBER  AND share_id=#{trip_id} and trip_type=1
+		UNION
+		select * from TRIP_PLAN where trip_id=#{trip_id}
+   	</select>
+   	
+   	<select id="detailplan" resultType="trip">
+   		SELECT *
+		FROM TRIP_PLAN TP, TRIP_PLAN_DATE TPD
+		WHERE TP.TRIP_NUMBER=TPD.TRIP_NUMBER AND TP.TRIP_NUMBER=#{trip_number}
+   	</select>
+   
 </mapper>
