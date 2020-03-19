@@ -24,8 +24,4 @@ public class SnsCommentDto {
 		private Date editDate;
 		private	int postNumber;
 		private	int report;
-		
-		
-		
-		
 }

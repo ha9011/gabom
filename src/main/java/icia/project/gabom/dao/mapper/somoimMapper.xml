@@ -435,8 +435,28 @@ select jr.*, nvl2(jm.member_number,1,0) as my_attend_check from JUNGMO_ROOM jr, 
 	 select sc.*, m.member_profile_picture chatting_profile from somoim_chatting sc, member m  where sc.chatting_name = m.Member_id and SOMOIM_NUMBER = #{somoim_number} and chatting_date between #{date} and TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')+1, 'YYYY/MM/DD') order by chatting_date asc
 </select>
 
+<update id="repleModify" >
+	update SOMOIM_BOARD_REPLE set SOMOIM_BOARD_REPLE_CONTENT = #{content} where SOMOIM_BOARD_REPLE_NUMBER = #{replenumber} 
+</update>
 
+<delete id="deleteMember" >
+	delete from SOMOIM_MEMBER where MEMBER_NAME = #{id} and SOMOIM_NUMBER = #{sNumber}
+</delete>
 
+<update id="permitmember" >
+	update  SOMOIM_MEMBER set MEMBER_GRADE = 1, MEMBER_STATUS = 1 where SOMOIM_NUMBER = #{sNumber} and MEMBER_NAME = #{id}
+</update>
+
+<select id="selectNotiSomoim" parameterType="String" resultType="somoimboard">
+
+	 select s.somoim_number, s.somoim_sys_mainpicture, sb.board_type, s.somoim_name, sb.board_title 
+	from somoim_member sm, somoim_board sb, somoim s 
+	where sm.SOMOIM_NUMBER = sb.SOMOIM_NUMBER 
+	and  sb.SOMOIM_NUMBER = s.somoim_number 
+	and sm.MEMBER_NAME =#{id} and sm.MEMBER_STATUS = 1 and sb.board_write_date > sysdate-30
+	and sb.board_type in ('noti', 'jungmo')
+ 
+</select>
 
 
 

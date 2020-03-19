@@ -124,6 +124,14 @@ public interface ISomoimDao {
 
 	List<ChattingSomoim> selectInfinityChattingData(@Param("somoim_number")int somoimNumber, @Param("date")String date);
 
+
+	int repleModify(@Param("content")String content, @Param("replenumber")int replenumber);
+	
+	int deleteMember(@Param("id")String id, @Param("sNumber")int sNumber);
+	
+	int permitmember(@Param("id")String id, @Param("sNumber")int sNumber);
+	
+	List<SomoimBoard> selectNotiSomoim(@Param("id")String name);
 	
 	//--------------------------------------------------------------------------------------------이예상
 	
@@ -151,6 +159,12 @@ public interface ISomoimDao {
 	
 	@Update("UPDATE SOMOIM_PHOTO_REPLE SET REPLY_CONTENT=#{reply_content} WHERE REPLY_NUMBER=#{reply_number} ")
 	int modifypicreple(Somoim_photo_reple spreple);
+
+	
+
+
+	
+
 
 
 

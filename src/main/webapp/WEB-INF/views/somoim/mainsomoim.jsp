@@ -271,6 +271,9 @@
 		$("#mainMymoim").show();
 	})
 	
+	
+
+	
 	var joinmoim = ${joinMoim}
 	console.log(joinmoim)
 	
@@ -333,8 +336,8 @@
 	}
 	
 	
-	
-	$(".mymoimFrame").on("click",function(e){
+	//검색했을때
+	$(document).on("click",".mymoimFrame",function(e){
 		
 		console.log($(this))
 		console.log($(this)[0].dataset.roomnumber)
@@ -343,5 +346,8 @@
         //window.open(url, "new_window",'location=yes, directories=yes, width=#, height=#'); 
         location.href = url;
 	})
+	
+
+	
 </script>
 </html>
