@@ -106,7 +106,7 @@ ul li {
     color: #000000;
 }
 
-section ul li:before {
+/* section ul li:before {
 	font-family: FontAwesome;
 	font-weight: normal;
 	font-style: normal;
@@ -116,7 +116,7 @@ section ul li:before {
 	padding-right: 7px;
 	color: #23AD21;
 }
-
+ */
 /*--------------------
 1.1 Reset bootstrap
 --------------------*/

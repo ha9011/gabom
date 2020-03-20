@@ -8,7 +8,6 @@
 <!-- 지도 api -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a7e29fa39462f45fc2138a8307dbe830"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <link rel="icon" href="favicon.ico">
@@ -68,8 +67,9 @@ border:2px solid white;
 }
 #day{
 display:flex;
-margin: 0 50%;
-width:300px;
+margin: 0 5%;
+width:100%;
+font-size:50px;
 }
 #hc{
 text-align: center;
@@ -79,6 +79,21 @@ width:300px;
 .addbtn{
 float:right;
 margin:10px;
+}
+.icon{
+margin:0 20%;
+}
+#date{
+width:200px;
+font-size:30px;
+display:inline-flex;
+list-style:none;
+}
+.number:nth-child(n+2){
+display: none;
+}
+.number:nth-child(1){
+font-size: 50px;
 }
 
 /* 채팅영역 */
@@ -159,17 +174,17 @@ height:700px;
 			<div id="planarea">
 				<div id="map" style="width: 100%; height: 600px; "></div>
 				
-				
-				<div id="day">
-					<i class="fas fa-caret-left"></i>
-					<div>여행 날(일단위)</div>
-					<i class="fas fa-caret-right"></i>
-				</div>
-				
 				<div id="hc">
 					<a>+숙소 선택하기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<a>+체크리스트 </a>
 				</div>
+				
+				<div id="day">
+					<div class="icon" id="left">◀</div>
+					<ul id="date"></ul>
+					<div class="icon" id="right">▶</div>
+				</div>
+				
 				<div id="t_destination">
 					<button class="addbtn btn-lg btn-primary" onclick="modal">장소추가</button>
 					<button class="addbtn btn-lg btn-primary" onclick="memo()">메모추가</button>
@@ -193,7 +208,7 @@ console.log(trip_data);
 
 //날짜 변환
 var sd = getFormatDate(trip_data[0].trip_start_date);
-var ed = getFormatDate(trip_data[0].trip_start_date);
+var ed = getFormatDate(trip_data[0].trip_end_date);
 
 //header
 var titel =$('<h1>'+trip_data[0].trip_title+'</h1>')
@@ -202,8 +217,47 @@ var totaldate =$('<h1>'+sd+' - '+ed+'</h1>')
 $("#titel").append(titel);
 $("#totaldate").append(totaldate);
 //-------------------------------------------------------------------------------------
+//date 날짜 들어가는 div
 
-//날짜 
+ for(i of trip_data){
+	var li =$('<li data-trnum="'+i.trip_number+'" class="number">'+i.trip_day+'</li>');
+	$("#date").append(li);
+} 
+
+
+ $("#left").on("click",function(e){
+	 ///var trnum =e.target.dataset.trnum
+	 //console.log(trnum);
+		console.log("왼쪽버튼")
+		console.log($(".number"))
+		//console.log($(".number").length)
+		var $lastNumber = $(".number").length-1
+		console.log($lastNumber)
+		var $li = $(".number")[$lastNumber];
+		$("#date").prepend($li);
+		
+		console.log($(".number")[0]);
+		console.log($(".number")[0].dataset.trnum);
+		
+	})
+
+
+
+ $("#right").on("click",function(e){
+	 var trnum =e.target.dataset.trnum
+	 console.log(trnum);
+		console.log("오른쪽버튼")
+		console.log($(".number"))
+		console.log($(".number").length)
+		var $li = $(".number")[0];
+		$("#date").append($li);
+	})
+
+
+
+
+
+
 
 
 //------------------------------------------------------------------------------------날짜 변환 클릭
