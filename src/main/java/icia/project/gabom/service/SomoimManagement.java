@@ -751,10 +751,11 @@ public class SomoimManagement {
 		
 		picreple.setPhoto_number(photo_number).setReply_content(reply_content).setReply_id(reply_id).setSomoim_number(somoim_number);
 		
-		int reply_number = sDao.insertpicreple(picreple);
+		int reply_number = sDao.insertpicreple(picreple);   // 댓글 넣기
 		List<Somoim_photo_reple> selectreple = sDao.recallreple(photo_number);//긁어온거
 		
 		json = new Gson().toJson(selectreple);
+		
 		return json;
 	}
 

@@ -1904,103 +1904,112 @@ let todayChat = chatData.today;
 console.log("today",todayChat);
 console.log("yester",yesterdayChat);
 
-let yDate = getFormatDate(yesterdayChat[0].chatting_date)
-let yDateChatFrame = $("<div id='yesterday' class='chatFrame' data-date='"+yDate+"'> </div>");
-for(let v of yesterdayChat ){
+if(yesterdayChat[0]==undefined){
 	
-	//c chatting
-	let cSomoimNumber = v.somoim_number;
-	let cId = v.chatting_name;
-	let cCont = v.chatting_content;
-	let cDate = getFormatDate(v.chatting_date);
-	let cTime = getFormatOnlyTime(v.chatting_date)
-	let cProfile ="."+v.chatting_profile;
-	
-		if(${JsonMysomoimInfo}==null || ${JsonMysomoimInfo}.member_status==0){
-			
-		}else if(cId===${JsonMysomoimInfo}.member_name){ //내가 보낸 데이터일 경우
-			
-			let media = $("<div class='media border p-3 myCommnet' data-date='"+getFormatDate(new Date())+"'></div>");
-			let mediabody = $("<div class='media-body'></div>");
-					
-			let bodyName = $("<h4><small><i> "+cTime+" </i></small></h4>");
-			let bodyCont = $("<p>"+cCont+"</p>");
-			
-			mediabody.append(bodyName);
-			mediabody.append(bodyCont);
-					
-			media.append(mediabody);
-			yDateChatFrame.append(media)
-			
- 		}else{ //타인이 보낸 데이터 일경우
- 			let media = $("<div class='media border p-3 yourCommnet'></div>");
-	 			
- 			let img = $("<img src='"+cProfile+"' alt='John Doe' class='mr-3 mt-3 rounded-circle' style='width:60px;'>")
-	 		media.append(img);
-	 		
- 			let mediabody = $("<div class='media-body'></div>");
-	 		
- 			let bodyName = $("<h4>"+cId+"<small><i>"+cTime+"</i></small></h4>");
- 			let bodyCont = $("<p>"+cCont+"</p>");
-	 		mediabody.append(bodyName);
-	 		mediabody.append(bodyCont);
-	 		
-	 		media.append(mediabody);
-	 		yDateChatFrame.append(media)
- 		}
-	$("#chattingRoom").append(yDateChatFrame)
-	
+}else{
+	let yDate = getFormatDate(yesterdayChat[0].chatting_date)
+	let yDateChatFrame = $("<div id='yesterday' class='chatFrame' data-date='"+yDate+"'> </div>");
+	for(let v of yesterdayChat ){
+		
+		//c chatting
+		let cSomoimNumber = v.somoim_number;
+		let cId = v.chatting_name;
+		let cCont = v.chatting_content;
+		let cDate = getFormatDate(v.chatting_date);
+		let cTime = getFormatOnlyTime(v.chatting_date)
+		let cProfile ="."+v.chatting_profile;
+		
+			if(${JsonMysomoimInfo}==null || ${JsonMysomoimInfo}.member_status==0){
+				
+			}else if(cId===${JsonMysomoimInfo}.member_name){ //내가 보낸 데이터일 경우
+				
+				let media = $("<div class='media border p-3 myCommnet' data-date='"+getFormatDate(new Date())+"'></div>");
+				let mediabody = $("<div class='media-body'></div>");
+						
+				let bodyName = $("<h4><small><i> "+cTime+" </i></small></h4>");
+				let bodyCont = $("<p>"+cCont+"</p>");
+				
+				mediabody.append(bodyName);
+				mediabody.append(bodyCont);
+						
+				media.append(mediabody);
+				yDateChatFrame.append(media)
+				
+	 		}else{ //타인이 보낸 데이터 일경우
+	 			let media = $("<div class='media border p-3 yourCommnet'></div>");
+		 			
+	 			let img = $("<img src='"+cProfile+"' alt='John Doe' class='mr-3 mt-3 rounded-circle' style='width:60px;'>")
+		 		media.append(img);
+		 		
+	 			let mediabody = $("<div class='media-body'></div>");
+		 		
+	 			let bodyName = $("<h4>"+cId+"<small><i>"+cTime+"</i></small></h4>");
+	 			let bodyCont = $("<p>"+cCont+"</p>");
+		 		mediabody.append(bodyName);
+		 		mediabody.append(bodyCont);
+		 		
+		 		media.append(mediabody);
+		 		yDateChatFrame.append(media)
+	 		}
+		$("#chattingRoom").append(yDateChatFrame)
+		
+	}
+	$("#chattingRoom").scrollTop($("#chattingRoom")[0].scrollHeight);
 }
-$("#chattingRoom").scrollTop($("#chattingRoom")[0].scrollHeight);
+
 //todayChat
 
 
-
-let tDate = getFormatDate(new Date())  // 오늘 날짜의 첫번째 챗팅을 가져오는건데 없는 경우에 에러뜬다..
-let tDateChatFrame = $("<div id='yesterday' class='chatFrame' data-date='"+tDate+"'> </div>");
-for(let v of todayChat ){
+if(todayChat[0]==undefined){
 	
-	//c chatting
-	let cSomoimNumber = v.somoim_number;
-	let cId = v.chatting_name;
-	let cCont = v.chatting_content;
-	let cDate = getFormatDate(v.chatting_date);
-	let cTime = getFormatOnlyTime(v.chatting_date)
-	let cProfile ="."+v.chatting_profile;
-		if(${JsonMysomoimInfo}==null || ${JsonMysomoimInfo}.member_status==0){
-			
+}else{
+
+	let tDate = getFormatDate(new Date())  // 오늘 날짜의 첫번째 챗팅을 가져오는건데 없는 경우에 에러뜬다..
+	let tDateChatFrame = $("<div id='yesterday' class='chatFrame' data-date='"+tDate+"'> </div>");
+	for(let v of todayChat ){
 		
-		}else if(cId===${JsonMysomoimInfo}.member_name){ //내가 보낸 데이터일 경우
+		//c chatting
+		let cSomoimNumber = v.somoim_number;
+		let cId = v.chatting_name;
+		let cCont = v.chatting_content;
+		let cDate = getFormatDate(v.chatting_date);
+		let cTime = getFormatOnlyTime(v.chatting_date)
+		let cProfile ="."+v.chatting_profile;
+			if(${JsonMysomoimInfo}==null || ${JsonMysomoimInfo}.member_status==0){
+				
 			
-			let media = $("<div class='media border p-3 myCommnet' data-date='"+getFormatDate(new Date())+"'></div>");
-			let mediabody = $("<div class='media-body'></div>");
-					
-			let bodyName = $("<h4><small><i> "+cTime+" </i></small></h4>");
-			let bodyCont = $("<p>"+cCont+"</p>");
-			
-			mediabody.append(bodyName);
-			mediabody.append(bodyCont);
-					
-			media.append(mediabody);
-			tDateChatFrame.append(media)
-			
- 		}else{ //타인이 보낸 데이터 일경우
- 			let media = $("<div class='media border p-3 yourCommnet'></div>");
-	 			
- 			let img = $("<img src='"+cProfile+"' alt='John Doe' class='mr-3 mt-3 rounded-circle' style='width:60px;'>")
-	 		media.append(img);
-	 		
- 			let mediabody = $("<div class='media-body'></div>");
-	 		
- 			let bodyName = $("<h4>"+cId+"<small><i>"+cTime+"</i></small></h4>");
- 			let bodyCont = $("<p>"+cCont+"</p>");
-	 		mediabody.append(bodyName);
-	 		mediabody.append(bodyCont);
-	 		
-	 		media.append(mediabody);
-	 		tDateChatFrame.append(media)
- 		}
-	$("#chattingRoom").append(tDateChatFrame)
+			}else if(cId===${JsonMysomoimInfo}.member_name){ //내가 보낸 데이터일 경우
+				
+				let media = $("<div class='media border p-3 myCommnet' data-date='"+getFormatDate(new Date())+"'></div>");
+				let mediabody = $("<div class='media-body'></div>");
+						
+				let bodyName = $("<h4><small><i> "+cTime+" </i></small></h4>");
+				let bodyCont = $("<p>"+cCont+"</p>");
+				
+				mediabody.append(bodyName);
+				mediabody.append(bodyCont);
+						
+				media.append(mediabody);
+				tDateChatFrame.append(media)
+				
+	 		}else{ //타인이 보낸 데이터 일경우
+	 			let media = $("<div class='media border p-3 yourCommnet'></div>");
+		 			
+	 			let img = $("<img src='"+cProfile+"' alt='John Doe' class='mr-3 mt-3 rounded-circle' style='width:60px;'>")
+		 		media.append(img);
+		 		
+	 			let mediabody = $("<div class='media-body'></div>");
+		 		
+	 			let bodyName = $("<h4>"+cId+"<small><i>"+cTime+"</i></small></h4>");
+	 			let bodyCont = $("<p>"+cCont+"</p>");
+		 		mediabody.append(bodyName);
+		 		mediabody.append(bodyCont);
+		 		
+		 		media.append(mediabody);
+		 		tDateChatFrame.append(media)
+	 		}
+		$("#chattingRoom").append(tDateChatFrame)
+	}
 }
 $("#chattingRoom").scrollTop($("#chattingRoom")[0].scrollHeight);
 // for(v of chatData){
