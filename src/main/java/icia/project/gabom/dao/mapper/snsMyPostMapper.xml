@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.SnsMyPostDao">
+
+	<select id="myPost" resultType="snspost">
+	<![CDATA[
+	SELECT * FROM SNS_POSTS SP
+  INNER JOIN 
+  (SELECT ROW_NUMBER() OVER(ORDER BY 
+  SNS_POSTS_DATE desc) AS rn,SNS_POSTS_NUMBER
+  ,SNS_POSTS_WRITER,SNS_POSTS_DATE
+  ,SNS_POSTS_EDIT_DATE,
+  SNS_POSTS_HASHTAG,
+  SNS_POSTS_AUTHORITY,
+  SNS_POSTS_REPORT,
+  SNS_POSTS_CONTENT
+  FROM SNS_POSTS WHERE SNS_POSTS_WRITER=#{id}
+	ORDER BY SNS_POSTS_DATE DESC) tot on sp.SNS_POSTS_NUMBER=tot.SNS_POSTS_NUMBER
+  WHERE TOT.rn<=#{rowNum} ORDER BY SP.SNS_POSTS_DATE DESC
+	 ]]>
+	</select>
+</mapper>

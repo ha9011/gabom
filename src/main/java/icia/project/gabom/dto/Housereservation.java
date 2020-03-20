@@ -14,6 +14,7 @@ public class Housereservation {
 	private String house_hostid;
 	private int house_number;
 	private String member_guestid;
+	private String house_name;
 	
 	@DateTimeFormat(pattern="yyyy-mm-dd")
 	private String reservation_checkin;

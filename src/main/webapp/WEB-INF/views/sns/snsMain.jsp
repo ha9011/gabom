@@ -286,6 +286,7 @@ img.myImage {
 	background-color: #F2F2F2;
 	border-radius: 20px;
 	margin-top: 15px;
+	margin-bottom: 20px;
 }
 
 .snsImageContainer {
@@ -301,6 +302,7 @@ img.myImage {
 
 #commentImg {
 	width: 50px;
+	height:45px;
 	margin-right: 10px;
 }
 
@@ -391,6 +393,38 @@ td a {
 .searchBar {
 	display: flex;
 }
+	#timeLineProfileBox{
+			display: flex;
+			font-family: 'Jua';
+			font-weight: bold;
+			font-size: 22px;
+			text-align: center;
+			background-image: url(resources/snsImage/yy.JPG);
+			background-size: cover;
+			color: white;
+			height: 150px;
+			border-radius: 20px;
+		}
+		#timeLineProfileBox img{
+			width: 150px;
+			margin: 0;
+		}
+		#timeLineProfileBox div{
+			margin-top: 32px;
+		}
+		#friendRequestBtn{
+			width: 200px;
+			font-family: 'Jua';
+			height: 40px;
+			border-radius: 10px;
+			color: #337ab7;
+			font-weight: bold;
+			font-size: 15px;
+		}
+		.friendRequestBtnBox{
+			margin-top: 10px;
+			align-items: center;
+		}
 </style>
 <script type="text/javascript">
 $(window).scroll(function(){
@@ -470,8 +504,8 @@ $(function () {
 						<br /> <br />
 					</div>
 					<hr />
-					<div id="friendBox" class="container"></div>
 					<div id="writeBox" class="container"></div>
+					<div id="timeLineProfileBoxTot" class="container"></div>
 					<div class="container" id="snsTimeLineMain"></div>
 					<div id="more">
 						<a href="#;">더보기</a>
@@ -482,6 +516,70 @@ $(function () {
 		</div>
 	</div>
 	<div class='info' style='display: none'>설정이 변경되었습니다.</div>
+	<!-- 타임라인내 프로필 -->
+	<script type="text/javascript">
+	function makeTimeLineProfile(id) {
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+				method:'post',
+				url:"sns/timeline/profile",
+				data:{"id":id},
+				dataType : "json"
+		}).done((profileJson)=>{
+				make(profileJson);
+		});
+		function make(json) {
+			console.log("프로필토탈",json);
+			let make="";
+			make+='<div class="container" id="timeLineProfileBox">';
+			make+='<img src="'+json.pic+'" class="img-thumbnail img-responsive">';
+			make+='<div class="container">아이디<br/><br/>'+json.id+'</div>';
+			make+='<div class="container">이름<br/><br/>'+json.name+'</div>';
+			make+='<div class="container">게시글<br/><br/>'+json.post+'</div>';
+			make+='<div class="container">친구<br/><br/>'+json.friend+'</div>';
+			make+='<div class="container">친구 요청<br/><br/>'+json.friendRequset+'</div>';
+			make+='</div>';
+			//make+='<div class="container friendRequestBtnBox">';
+			//make+='<button type="button" class="btn-default pull-right" id="friendRequestBtn">';
+			//make+='친구 신청</button></div>';
+			$("#timeLineProfileBoxTot").html(make);
+			$("#timeLineProfileBoxTot").hide();
+			$("#timeLineProfileBoxTot").slideDown();
+		}
+	}
+	</script>
+	<!-- 어사이드 유저 이름 클릭 -->
+	<script type="text/javascript">
+	$("#snsProfileName").on("click",function(e){
+		let asideUserId=e.target.text;
+		//userTimeLine(asideUserId);
+		if(userId==asideUserId){
+			$.ajaxSetup({
+				beforeSend : function(xhr){
+		 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+			});//먼저 보냄
+			$.ajax({
+					method:'post',
+					url:"sns/mypost",
+					data:{"row":low},
+					dataType : "json"
+			}).done((myPostJson)=>{
+				makeTimeLineProfile(asideUserId);
+				makeTimeLine(myPostJson);
+			});
+		}
+	});
+	</script>	
+	<!-- 유저 정보와 글 출력 -->
+	<script type="text/javascript">
+	function userTimeLine(memberId) {
+					
+		
+	}
+	</script>
 	<!-- 댓글삭제 -->
 	<script type="text/javascript">
 		function commentDel(postNum,commentNum) {
@@ -521,8 +619,8 @@ $(function () {
 		htmlString+='<textarea class="form-control" aria-describedby="basic-addon1" rows="7" cols="70"'; 
 		htmlString+='style="resize: none;" id="contentsVal'+commentNumber+'">'+showComment+'</textarea>';
 		htmlString+='<div class="pull-right">';
-		htmlString+='<button class="btn btn-default" type="button" id=commentEdit>수정</button>';
-		htmlString+='<button class="btn btn-default" type="button" id=commentEditCancel>취소</button>';
+		htmlString+='<button class="btn btn-default" type="button" id=commentEdit style="font-weight: bold;">수정</button>';
+		htmlString+='<button class="btn btn-default" type="button" id=commentEditCancel style="font-weight: bold;">취소</button>';
 		htmlString+='</div></div>';
 		$(contentsVal).html(htmlString);
 		$("#commentEdit").on("click",function(){
@@ -577,6 +675,8 @@ function search(searchData) {
 	<!-- 검색 결과 출력 -->
 	<script type="text/javascript">
 	function makeSearchList(json,data) {
+		console.log(json);
+		$("#timeLineProfileBoxTot").empty();
 		$("#snsTimeLineMain").empty();
 		$("#more").css("display","none");
 		let $tot=$("<div>").addClass("container");
@@ -598,13 +698,16 @@ function search(searchData) {
 		str+='style="width: 66px;height: 60px;">';
 		str+='<a href="#;">'+json["friendList"][k]["id"]+'</a></td>';
 		str+='<td id="friendBtn">';
+		if(json["friendList"][k]["id"]==userId){
+			str+='<button type="button" class="btn btn-primary">내 글</button>';
+		}
 		if(json["friendList"][k]["status"]==0){
 		str+='<button type="button" class="btn btn-primary">친구신청</button>';
 		}
 		if(json["friendList"][k]["status"]==1){
 			str+='<button type="button" class="btn btn-primary">요청완료</button>';	
 		}
-		if(json["friendList"][k]["status"]==2){
+		if(json["friendList"][k]["status"]==2&&json["friendList"][k]["id"]!=userId){
 			str+='<button type="button" class="btn btn-primary">친구</button>';
 		}
 		if(json["friendList"][k]["status"]==3){
@@ -640,6 +743,8 @@ function search(searchData) {
 		$friend.append(str);
 		$friend.appendTo($tot);
 		$("#snsTimeLineMain").html($tot);
+		$("#snsTimeLineMain").hide();
+		$("#snsTimeLineMain").fadeIn();
 	}//
 	
 	
@@ -804,9 +909,9 @@ function commentInsert(number) {
 		}).done((json)=>{
 			makeTimeLine(json);
 			$("#writeBox").css("border","0 solid white");
+			$("#writeBox").slideUp();
 			$("#writeBox").empty();
 		});
-		
 		
 	});
 	</script>
@@ -894,7 +999,9 @@ function commentInsert(number) {
 		photo+='<div id="coverBox">';
 		photo+='</div>';
 		photo+='</form>';
-		$("#writeBox").html(photo);	
+		$("#writeBox").html(photo);
+		$("#writeBox").hide();
+		$("#writeBox").slideDown();
 	}
 	
 	
@@ -1050,6 +1157,7 @@ function infoSecurity(e) {
 $("div").on("click","#cancel",function(){
 	if(confirm("입력하신 내용을 잃습니다. 취소 하시겠습니까?")){
 		$("#writeBox").css("border","0 solid white");
+		$("#writeBox").slideUp();
 		$("#writeBox").empty();
 	}else{
 		return false;
@@ -1078,7 +1186,7 @@ $("div").on("click","#cancel",function(){
 //페이지 프로필파일과 이름을 출력 해주는 함수
 function setProfile(json) {
 	$("#snsProfileImg img").attr("src",json.member_profile_picture);
-	$("#snsProfileName").html("<a href='#;'>"+json.member_name+"</a>님");
+	$("#snsProfileName").html("<a href='#;'>"+json.member_id+"</a>님");
 	userId=json.member_id;
 	console.log(userId);
 	jsonPicture=json.member_profile_picture;	
@@ -1248,9 +1356,11 @@ function printComment(commentJson,number) {
 		commentBox+='<div class="commentCancelBtn" id="commentCancelBtn'+number+'">닫기</div>';
 		commentBox+='</div>';	
 		$("."+number).html(commentBox);
-		
+		$("."+number).hide();
+		$("."+number).slideDown();
 		var commentCancel="#commentCancelBtn"+number;
 		$(commentCancel).on("click",function(){
+			$("."+number).slideUp();
 			$("."+number).empty();
 		});
 		

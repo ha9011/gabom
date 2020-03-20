@@ -13,6 +13,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <link rel="icon" href="favicon.ico">
 <!-- Bootstrap core CSS -->
@@ -71,6 +72,7 @@ header {
 	border: 2px solid white;
 }
 
+
 #day {
 	display: flex;
 	margin: 0 50%;
@@ -86,6 +88,21 @@ header {
 .addbtn {
 	float: right;
 	margin: 10px;
+}
+.icon{
+margin:0 20%;
+}
+#date{
+width:200px;
+font-size:30px;
+display:inline-flex;
+list-style:none;
+}
+.number:nth-child(n+2){
+display: none;
+}
+.number:nth-child(1){
+font-size: 50px;
 }
 
 /* 채팅영역 */
@@ -120,7 +137,6 @@ header {
 				<img style="width: 200px;" src="./resources/headerImage/logo3.png"
 					alt="logo">
 			</div>
-
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse"
@@ -316,8 +332,47 @@ function sigunguChange() {
 
 
 //-------------------------------------------------------------------------------------
+//date 날짜 들어가는 div
 
-//날짜 
+ for(i of trip_data){
+	var li =$('<li data-trnum="'+i.trip_number+'" class="number">'+i.trip_day+'</li>');
+	$("#date").append(li);
+} 
+
+
+ $("#left").on("click",function(e){
+	 ///var trnum =e.target.dataset.trnum
+	 //console.log(trnum);
+		console.log("왼쪽버튼")
+		console.log($(".number"))
+		//console.log($(".number").length)
+		var $lastNumber = $(".number").length-1
+		console.log($lastNumber)
+		var $li = $(".number")[$lastNumber];
+		$("#date").prepend($li);
+		
+		console.log($(".number")[0]);
+		console.log($(".number")[0].dataset.trnum);
+		
+	})
+
+
+
+ $("#right").on("click",function(e){
+	 var trnum =e.target.dataset.trnum
+	 console.log(trnum);
+		console.log("오른쪽버튼")
+		console.log($(".number"))
+		console.log($(".number").length)
+		var $li = $(".number")[0];
+		$("#date").append($li);
+	})
+
+
+
+
+
+
 
 
 //------------------------------------------------------------------------------------날짜 변환 클릭

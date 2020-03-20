@@ -12,6 +12,4 @@ public class Sns_friend {
 	private String friend_my_id;
 	private String friend_id;
 	private int friend_status;
-	
-
 }
