@@ -34,10 +34,13 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession sess, Principal pr) {
-		
 		System.out.println("첫페이지 ");
-		sess.setAttribute("userID", pr.getName());
-		return "home";
+		if(pr==null) {
+			return "home";
+		}else {
+			sess.setAttribute("userID", pr.getName());
+			return "home";
+		}
 	}
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
