@@ -289,10 +289,9 @@ border-radius: 10px;
  console.log(reqmel);
 
  
- var sd = getFormatDate(mylist[0].trip_start_date);
- var ed = getFormatDate(mylist[0].trip_start_date);
  
- console.log(sd, ed)
+ 
+ //console.log(sd, ed)
  //------------------------------------------------------------------데이터 영역
  
  var propic =$('<img style="width:300px;border-radius:70%;" src="'+myinfo[0].member_profile_picture+'">');
@@ -343,6 +342,7 @@ border-radius: 10px;
  //-------------------------------------------------------------------유저 정보 영역
  
   for(i of mylist) { //게시글
+	  
 	  console.log(i.trip_area);
  	  if(i.trip_area == 1){
 		i.trip_area = "서울"		  
@@ -380,7 +380,8 @@ border-radius: 10px;
 		i.trip_area = "제주도"		  
  	  }
 	  
-	  
+ 	var sd = getFormatDate(i.trip_start_date);
+ 	var ed = getFormatDate(i.trip_end_date);	  
 	  
     var tr = $('<tr></tr>'); 
     
