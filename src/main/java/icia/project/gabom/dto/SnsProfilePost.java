@@ -5,11 +5,13 @@ import org.apache.ibatis.type.Alias;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-@Alias("friend")
+@Alias("profilePost")
 @Data
 @Accessors(chain=true)
-public class Sns_friend {
-	private String friend_my_id;
-	private String friend_id;
-	private int friend_status;
+public class SnsProfilePost {
+	private String id;
+	private String name;
+	private String pic;
+	private String content;
+	private int post;
 }
