@@ -703,17 +703,19 @@ public class SomoimManagement {
 		return json2;
 	}
 
-	public String showimginfo(String num) {
+	public String showimginfo(String num, String name) {
 		String json = null;
 
 		Somoim_photoalbum somodetailpic = sDao.showimginfo(num);// 사진가져오는것
-
 		List<Somoim_photo_reple> spreple = sDao.getimgreple(num);
-		somodetailpic.setSpreple(spreple);
-
 		int splike = sDao.getimglike(num);
-		somodetailpic.setSplike(splike);
+		Somoim_photoalbum myLike = sDao.getMyImgLike(num, name); //num는 사진임. 이 사진에 대해서 내가 있냐 없냐.
 
+		somodetailpic.setMylike(myLike.getMylike());
+		somodetailpic.setSpreple(spreple);
+		somodetailpic.setSplike(splike);
+		
+		
 		json = new Gson().toJson(somodetailpic);
 		System.out.println("사진 정보" + json);
 
@@ -766,10 +768,12 @@ public class SomoimManagement {
 		int photo_number =  spreple.getPhoto_number();
 		String reply_content =  spreple.getReply_content();
 		
-		System.out.println("댓글번호"+reply_number);
 		System.out.println("댓글내용"+reply_content);
+		System.out.println("댓글번호"+reply_number);
 		
-		int modifypicreple = sDao.modifypicreple(spreple);//삭제
+		
+		int modifypicreple = sDao.modifypicreple(spreple);//수정
+		System.out.println("리플 수정 성공했니 : " + modifypicreple);
 		List<Somoim_photo_reple> selectreple = sDao.recallreple(photo_number);//긁어온거
 		
 		
@@ -828,6 +832,21 @@ public class SomoimManagement {
 		map.put("기존",osList);
 		
 		return new Gson().toJson(map);
+	}
+
+	public String photolike(int photonum, int status, int somoimNum, String name) {
+		Somoim_photoalbum likeCountDto = new Somoim_photoalbum();
+		if(status==1) { // 좋아요 추가
+			int insertLike = sDao.insertPhotoLike(photonum,name,somoimNum);
+		}else { // 삭제 하기
+			int deleteLike = sDao.deletePhotoLike(photonum,name);
+		}
+		
+		int splike = sDao.getimglike(Integer.toString(photonum));
+		System.out.println("몇개 좋아요? : " + splike);
+		
+		likeCountDto.setSplike(splike);
+		return new Gson().toJson(likeCountDto);
 	}
 
 	

@@ -437,7 +437,7 @@ public class RestSomoimController {
 	      System.out.println("사진 관련 보여줘 ");
 	      System.out.println(num);
 	      
-	      String json= simm.showimginfo(num);
+	      String json= simm.showimginfo(num, pr.getName());
 
 	      return json;
 	   }
@@ -475,11 +475,24 @@ public class RestSomoimController {
 	   public String modifypicreple(Somoim_photo_reple spreple, Principal pr) {
 	      System.out.println("댓글수정하러 가자 ");
 	      System.out.println("댓글 내용"+spreple.getReply_content());
-	      System.out.println("댓글 내용"+spreple.getReply_number());
+	      System.out.println("댓글 번호"+spreple.getReply_number());
 	      
 		  String json= simm.modifypicreple(spreple);
 
 	      return json;
-	   }	   
+	   }	
+	   
+	 //사진 좋아요
+	   @PostMapping(value = "/photolike", produces="text/plain;charset=utf-8")
+	   public String photolike(@RequestParam("status")int status, @RequestParam("photonum")int photonum,@RequestParam("somoimNum")int somoimNum, Principal pr) {
+	      System.out.println("사진 좋아요 ");
+	      System.out.println("사진 번호 "+photonum);
+	      System.out.println("소모임번호  "+somoimNum);
+	      System.out.println("좋아요 상태 1: 좋아요 0: 삭제"+status);
+	      
+		  String result= simm.photolike(photonum, status,somoimNum, pr.getName());
+		  
+	      return result;
+	   }	
 	
 }
