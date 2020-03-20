@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import icia.project.gabom.service.SnsCommentHate;
 
 @RestController
-public class RestSnsCommetHateController {
+public class RestSnsCommentHateController {
 	@Autowired
 	SnsCommentHate snsCommentHate;
 	

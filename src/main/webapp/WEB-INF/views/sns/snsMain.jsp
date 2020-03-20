@@ -30,7 +30,7 @@ width: 100%;
 height: 700px;
 } */
 #snsMain {
-	background-image: url(resources/snsImage/bg2.jpg);
+	background-image: url(resources/snsImage/cl3.jpg);
 	background-size: cover;
 }
 
@@ -219,6 +219,11 @@ img.myImage {
 	background-color: white;
 }
 
+#snsTimeLineFilterBox {
+	background-image: url(resources/snsImage/cl4.jpg);
+	background-size: cover;
+}
+
 #postsPhotoBox {
 	float: none;
 	display: flex;
@@ -280,10 +285,8 @@ img.myImage {
 #writeBox {
 	background-color: #F2F2F2;
 	border-radius: 20px;
-	margin-top: 15px;	
+	margin-top: 15px;
 }
-
-
 
 .snsImageContainer {
 	float: none;
@@ -384,8 +387,9 @@ td a {
 	width: 70px;
 	height: auto;
 }
-.searchBar{
-display: flex;
+
+.searchBar {
+	display: flex;
 }
 </style>
 <script type="text/javascript">
@@ -402,45 +406,15 @@ $(function () {
 	$('body').fadeIn();
 	getProflie();
 	setTimeLine();
+	$("#searchText").focusin(function(){
+		$(window).keydown(function(key) {
+	        if (key.keyCode == 13) {
+	        	 var searchData=$("#searchText").val();
+	        	 search(searchData);
+	        }
+	        });
+	});
 });//onload End
-
-//내글만 보기  ajax
-/* $(function mytime() {
-	
-	$.ajaxSetup({
-		beforeSend : function(xhr){
- 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-	});//먼저 보냄
-	$.ajax({
-			method:'get',
-			url:"sns/mytimeline",
-			dataType : "json"
-	}).done((timeLineJson)=>{
-		console.log("타임라인 통신 성공")
-		//makeTimeLine(timeLineJson);
-	});
-	
-	
-});//내글만보기  End */
-
-//친구글 같이 보기  ajax
-/* $(function friendtime() {
-	$.ajaxSetup({
-		beforeSend : function(xhr){
- 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-	});//먼저 보냄
-	$.ajax({
-			method:'get',
-			url:"sns/friendtimeline",
-			dataType : "json"
-	}).done((timeLineJson)=>{
-		console.log("타임라인 통신 성공")
-		//makeTimeLine(timeLineJson);
-	});
-	
-	
-});//친구글만 보기  End */
-
 </script>
 </head>
 <body>
@@ -481,14 +455,20 @@ $(function () {
 				
 				<div class="jumbotron col-xs-9 col-md-10 col-sm-9 pull-right"
 					id="snsTimeLine">
-					<div class="navbar-default" id="snsTimeLinefilter">
-						<div class="form-group searchBar">
-							<input type="text" class="form-control serachText" id="searchText" placeholder="검색"
-							style="font-size: 23px;text-align: center;height: 50px;">
-						<button type="button" class="btn btn-default" id="searchBtn" style="width: 70px;background-color:#337ab7;"><i class="fas fa-search fa-2x" style="color: white;"></i></button>
+					<div class="jumbotron" id="snsTimeLineFilterBox">
+						<div class="navbar-default" id="snsTimeLinefilter">
+							<div class="form-group searchBar">
+								<input type="text" class="form-control serachText"
+									id="searchText" placeholder="검색"
+									style="font-size: 23px; text-align: center; height: 50px;">
+								<button type="button" class="btn btn-default" id="searchBtn"
+									style="width: 70px; background-color: #337ab7;">
+									<i class="fas fa-search fa-2x" style="color: white;"></i>
+								</button>
+							</div>
 						</div>
+						<br /> <br />
 					</div>
-					<br /> <br />
 					<hr />
 					<div id="friendBox" class="container"></div>
 					<div id="writeBox" class="container"></div>
@@ -498,12 +478,186 @@ $(function () {
 					</div>
 				</div>
 			</div>
+			
 		</div>
 	</div>
 	<div class='info' style='display: none'>설정이 변경되었습니다.</div>
+	<!-- 댓글삭제 -->
+	<script type="text/javascript">
+		function commentDel(postNum,commentNum) {
+			console.log("삭제",commentNum);
+			console.log(postNum);
+			if(confirm("삭제 하시겠습니까?")){
+				$.ajaxSetup({
+					beforeSend : function(xhr){
+			 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+				});//먼저 보냄
+				let commentDelData={
+						"postNum":postNum,
+						"commentNum":commentNum
+				}
+				$.ajax({
+						method:'post',
+						url:"sns/comment/delete",
+						data:commentDelData,
+						dataType : "json"
+				}).done((commentDelJson)=>{
+					let commentRowNum="#commentRowBox"+commentNum;
+					$(commentRowNum).remove();
+				});
+				
+				
+			}
+		}	
+	</script>
+	<!-- 댓글 수정 -->
+	<script type="text/javascript">
+	function commentEdit(number,commentNumber) {
+		var contentsVal="#commentContents"+commentNumber;
+		var commentEditVal="#contentsVal"+commentNumber;
+		let showComment=$(contentsVal).html();
+		showComment=showComment.split("<br>").join("\r\n");
+		var htmlString='<div id="commentEditTot">';
+		htmlString+='<textarea class="form-control" aria-describedby="basic-addon1" rows="7" cols="70"'; 
+		htmlString+='style="resize: none;" id="contentsVal'+commentNumber+'">'+showComment+'</textarea>';
+		htmlString+='<div class="pull-right">';
+		htmlString+='<button class="btn btn-default" type="button" id=commentEdit>수정</button>';
+		htmlString+='<button class="btn btn-default" type="button" id=commentEditCancel>취소</button>';
+		htmlString+='</div></div>';
+		$(contentsVal).html(htmlString);
+		$("#commentEdit").on("click",function(){
+			let editcomment=$(commentEditVal).val();
+				editcomment=editcomment.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+				commentEditAjax(editcomment);		
+		});
+		$("#commentEditCancel").on("click",function(){
+			if(confirm("취소 하시겠습니까?")){
+				$(contentsVal).text($(commentEditVal).prop("defaultValue"));
+				$("#commentEditTot").empty();
+			}
+		});
+		function commentEditAjax(data) {
+			$.ajaxSetup({
+				beforeSend : function(xhr){
+		 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+			});//먼저 보냄
+			let commentEditData={
+					"data":data,
+					"commentNumber":commentNumber
+			}
+			$.ajax({
+					method:'post',
+					url:"sns/comment/edit",
+					data:commentEditData,
+					dataType : "json"
+			}).done((commentEditJson)=>{
+				$(contentsVal).html(commentEditJson.content);
+				$("#commentEditTot").empty();
+			});
+		} 
+	}
+	</script>
+	<!-- 검색 서비스 -->
+	<script type="text/javascript">
+function search(searchData) {
+	$.ajaxSetup({
+		beforeSend : function(xhr){
+ 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+	});//먼저 보냄
+	$.ajax({
+			method:'post',
+			url:"sns/search",
+			data:{"searchData":searchData},
+			dataType : "json"
+	}).done((searchJson)=>{
+		makeSearchList(searchJson,searchData);
+	});
+}
+	</script>
+	<!-- 검색 결과 출력 -->
+	<script type="text/javascript">
+	function makeSearchList(json,data) {
+		$("#snsTimeLineMain").empty();
+		$("#more").css("display","none");
+		let $tot=$("<div>").addClass("container");
+		let $friend=$("<div>")
+		.addClass("container")
+		.text("\""+data+"\"에 관련된 친구 검색 결과");
+		let str="";
+		str+='<table class="table table-hover table-responsive">';
+		str+='<tbody>';
+		if(json["friendList"]==undefined){
+		str+='<tr>';
+		str+='<td style="width: 600px;">검색 결과가 없습니다.</td>';
+		str+='</tr>';
+		}else{
+		for(let k in json["friendList"]){
+		str+='<tr>';
+		str+='<td style="width: 600px;">';
+		str+='<img src="'+json["friendList"][k]["pic"]+'" class="img-thumbnail img-responsive img-circle"';
+		str+='style="width: 66px;height: 60px;">';
+		str+='<a href="#;">'+json["friendList"][k]["id"]+'</a></td>';
+		str+='<td id="friendBtn">';
+		if(json["friendList"][k]["status"]==0){
+		str+='<button type="button" class="btn btn-primary">친구신청</button>';
+		}
+		if(json["friendList"][k]["status"]==1){
+			str+='<button type="button" class="btn btn-primary">요청완료</button>';	
+		}
+		if(json["friendList"][k]["status"]==2){
+			str+='<button type="button" class="btn btn-primary">친구</button>';
+		}
+		if(json["friendList"][k]["status"]==3){
+			str+='<button type="button" class="btn btn-primary">차단 해제</button>';
+		}
+		str+='</td>';
+		str+='</tr>';
+		}
+		}
+		str+='</tbody>';
+		str+='</table>';
+		str+='<div class="pull-right"><a href="#;">친구 더보기</a></div>';
+		str+='<hr/><br/><br/>';
+		str+='\"'+data+'\"에 관련된 게시글 검색 결과';
+		str+='<table class="table table-hover table-responsive">';
+		str+='<tbody>';
+		if(json["publicPost"]==undefined){
+			str+='<tr>';
+			str+='<td style="width: 600px;">검색 결과가 없습니다.</td>';
+			str+='</tr>';
+			}else{
+		for(let k in json["publicPost"]){
+		str+='<tr>';
+		str+='<input type="hidden" value="'+json["publicPost"][k]["postNumber"]+'">';
+		str+='<td><a href="#;">'+json["publicPost"][k]["contents"]+'</a></td>';
+		str+='<td>'+json["publicPost"][k]["date"]+'</td>';
+		str+='</tr>';
+		}
+			}
+		str+='</tbody>';
+		str+='</table>';
+		str+='<div class="pull-right"><a href="#;">게시글 더보기</a></div>';
+		$friend.append(str);
+		$friend.appendTo($tot);
+		$("#snsTimeLineMain").html($tot);
+	}//
+	
+	
+	
+	
+	</script>
+	<!-- 검색 클릭 이벤트 -->
+	<script type="text/javascript">
+	 $("#searchBtn").click(function() {
+		 var searchData=$("#searchText").val();
+		 search(searchData);
+	});
+	
+	</script>
 	<!-- 글삭제 -->
 	<script type="text/javascript">
 	function postDelete(e) {
+		if(confirm("삭제 하시겠습니까?")){
 		var postNumber=e.id.substr(7);
 		$.ajaxSetup({
 			beforeSend : function(xhr){
@@ -517,8 +671,9 @@ $(function () {
 		}).done((delJson)=>{
 			makeTimeLine(delJson);
 		});
-	}
-		
+	}else{
+	return false;}
+	}//end
 	</script>
 	<!-- 타임라인 버튼 -->
 	<script type="text/javascript">
@@ -545,7 +700,6 @@ $(function () {
 		var editPostBoxId="#editBox"+editPostNumber;
 		const preContents="#postContents"+editPostNumber;
 		//첫값
-		console.log($(preContents)[0].defaultValue);
 		$editTotalBox=$("<div>").addClass("container editBtnBox");
 		$editBox=$("<div>").addClass("collapse navbar-collapse")
 		.append("<ul>").addClass("nav navbar-nav navbar-right");
@@ -771,9 +925,6 @@ $("#writeBox").on('change','#ex_file',function(){
 	<!-- 정보공개 변환 -->
 	<script type="text/javascript">
 function infoSecurity(e) {
-	/* console.log(e.value);
-	console.log(e);
-	console.log(e.id.substr(12)); */
 	let postNumber=e.id.substr(12);
 	let securityVal;
 	if(e.value=="전체 공개"){
@@ -927,7 +1078,7 @@ $("div").on("click","#cancel",function(){
 //페이지 프로필파일과 이름을 출력 해주는 함수
 function setProfile(json) {
 	$("#snsProfileImg img").attr("src",json.member_profile_picture);
-	$("#snsProfileName").html(json.member_name+"님");
+	$("#snsProfileName").html("<a href='#;'>"+json.member_name+"</a>님");
 	userId=json.member_id;
 	console.log(userId);
 	jsonPicture=json.member_profile_picture;	
@@ -1052,6 +1203,7 @@ function comment(number) {
 	<!-- 댓글 출력 서비스 -->
 	<script type="text/javascript">
 function printComment(commentJson,number) {
+	
 	$("."+number).empty();
 	console.log(commentJson);
 		let commentBox="";
@@ -1061,12 +1213,12 @@ function printComment(commentJson,number) {
 	if(commentJson.comment=="댓글이 없습니다."){
 		commentBox+='<tr>';
 		commentBox+='<td>'+commentJson.comment+'</td>';
-		commentBox+='<tr>';
+		commentBox+='</tr>';
 	}else{
 			for(let k in commentJson){
-			commentBox+='<tr>';
+			commentBox+='<tr id="commentRowBox'+commentJson[k]["number"]+'">';
 			commentBox+='<td style="width: 70px"><img src="'+commentJson[k]["profilePic"]+'" class="img-thumbnail img-responsive img-circle" id="commentImg">'+commentJson[k]["id"]+'</td>';
-			commentBox+='<td style="width: 500px">'+commentJson[k]["content"]+'</td>';
+			commentBox+='<td style="width: 500px" id="commentContents'+commentJson[k]["number"]+'">'+commentJson[k]["content"]+'</td>';
 			commentBox+='<td style="background-color: white">';
 			commentBox+='<button type="button" class="btn-default commentLike" onclick="commentLike(\''+commentJson[k]["number"]+'\')">';
 			commentBox+='<i class="far fa-thumbs-up commentLike" id="commentLike'+commentJson[k]["number"]+'">'+commentJson[k]["like"]+'</i></button>';
@@ -1076,7 +1228,8 @@ function printComment(commentJson,number) {
 			commentBox+='<td style="background-color: white; width: 150px">';
 			
 			if(userId==commentJson[k]["id"]){
-				commentBox+='<a>수정</a>/<a>삭제</a>';	
+				commentBox+='<a onclick=commentEdit("'+number+'","'+commentJson[k]["number"]+'")>';
+				commentBox+='수정</a>/<a onclick=commentDel("'+number+'","'+commentJson[k]["number"]+'")>삭제</a>';	
 			}else{
 				commentBox+='<a>신고</a>';
 			}
@@ -1144,7 +1297,6 @@ function printComment(commentJson,number) {
 			data:{"commentNumber":commentNumber},
 			dataType : "json"
 	}).done((commentHateTotalJson)=>{
-		console.log(commentHateTotalJson);
 		$($likeCommentval).text(commentHateTotalJson.likeTotal);
 		$($hateCommentval).text(commentHateTotalJson.hateTotal);
 	});

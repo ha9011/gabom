@@ -8,9 +8,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -269,7 +271,8 @@ public class RestSomoimController {
 			System.out.println(" // 아이디 : " + pr.getName()); // 참석자를 확인할 정모의 고유번호
 			System.out.println("소모임관리 키워드 // 글번호 : " + somoim_number ); 
 			String result = simm.managementSomoim(pr,somoim_number);		
-			
+			// 지우고 맴버 다시 다 부르기
+			System.out.println(result);
 			return result;
 		}
 	
@@ -311,16 +314,66 @@ public class RestSomoimController {
 		}
 	
 	
+	   
 	
-	
-	
+	 //채팅 infinity db select
+	   @RequestMapping(value = "/repleModify", produces = "text/plain;charset=utf-8")
+		public String repleModify(
+				@RequestParam("reple_content")String content,
+				@RequestParam("reple_number")int replenumber,
+				Principal pr
+			) {
+		   
+		    System.out.println("댓글 수정 ");
+		    System.out.println(" // content : " + content);
+		    System.out.println(" // replenumber : " + replenumber);
+		    
+			String result = simm.repleModify(content,replenumber);		
+			
+			return result;
+		}
 	
 
+	   //강퇴하기!
+	   @RequestMapping(value = "/deletemember", produces = "text/plain;charset=utf-8")
+		public  @ResponseBody String deleteRegistIng(
+				@RequestParam("id")String id,
+				@RequestParam("sNumber")int sNumber,
+				Principal pr
+			) {
+		   
+		    System.out.println(" 강퇴 ");
+		    System.out.println(" // id : " + id);
+		    System.out.println(" // sNumber : " + sNumber);
+		    
+			String result = simm.deletemember(id,sNumber);		
+			
+			return result;
+		}
+	
+	  //가입 허락
+	   @RequestMapping(value = "/permitmember", produces = "text/plain;charset=utf-8")
+		public String permitmember(
+				@RequestParam("id")String id,
+				@RequestParam("sNumber")int sNumber,
+				Principal pr
+			) {
+		   
+		    System.out.println(" 허락 ");
+		    System.out.println(" // id : " + id);
+		    System.out.println(" // sNumber : " + sNumber);
+		    
+		    
+			String result = simm.permitmember(id,sNumber);		
+			
+			
+			return result;
+		}
 	
 	
 	
-	
-	
+	   
+	   
 	
 	
 	

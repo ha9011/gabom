@@ -198,7 +198,6 @@ $(".upload-name").hide();
              contentType:false,  //제이슨 아니니깐 까보지마!!
               dataType:"json", //rest 컨트롤 이용   
              success:function(data){
-                
                 alert("사진 업로드 완료");
                 console.log(data)
               
@@ -209,10 +208,24 @@ $(".upload-name").hide();
                 let tr = $("<tr></tr>")
                 for(let i of data ){
                    
-                   var img=$('<td><a class="pic" name="'+i.photo_number+'" href="#imgmodal" data-toggle="modal" > <img   class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'"></a></td>');
                     
-                   tr.append(img);
-                   console.log("index : "+index);
+                	
+                	
+                	var img
+            		if(mysomoimInfo==null){
+            			img = $('<td><a class="pic" name="'+i.photo_number+'"  data-toggle="modal" > <img   class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'"></a></td>');
+            		}else if(mysomoimInfo.member_status == 1){  // 0 - 대기, 1 - 승인, 2 - 탈퇴회면
+            			img = $('<td><a class="pic" name="'+i.photo_number+'"  href="#imgmodal"  data-toggle="modal" > <img   class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'"></a></td>');
+            		}else{
+            			img = $('<td><a class="pic" name="'+i.photo_number+'"  data-toggle="modal" > <img   class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'"></a></td>');
+            		}
+                	
+                	
+                	
+                	
+                	
+                	tr.append(img);
+                	console.log("index : "+index);
                    $("#imgarea").append(tr);
                    
                if(index%3===0){
@@ -285,9 +298,18 @@ const showalbumlist = ()=>{
          let tr = $("<tr></tr>")
          for(let i of data ){
             
-            var img=$('<td><a class="pic" name="'+i.photo_number+'" href="#imgmodal" data-toggle="modal" > <img   class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'"></a></td>');
-             tr.append(img);
-            console.log("index : "+index);
+        		var img
+        		if(mysomoimInfo==null){
+        			img = $('<td><a class="pic" name="'+i.photo_number+'"  data-toggle="modal" > <img   class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'"></a></td>');
+        		}else if(mysomoimInfo.member_status == 1){  // 0 - 대기, 1 - 승인, 2 - 탈퇴회면
+        			img = $('<td><a class="pic" name="'+i.photo_number+'"  href="#imgmodal"  data-toggle="modal" > <img   class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'"></a></td>');
+        		}else{
+        			img = $('<td><a class="pic" name="'+i.photo_number+'"  data-toggle="modal" > <img   class="img-fluid img-thumbnail" src=".'+i.photo_sysfile+'"></a></td>');
+        		}
+        	 
+        	 
+        	 tr.append(img);
+         	console.log("index : "+index);
             $("#imgarea").append(tr);
             
             if(index % 3===0){

@@ -124,6 +124,15 @@ public class SomoimManagement {
 		System.out.println("jsonSmList : " + jsonRecommandSmList);
 		mav.addObject("jsonRecommandSmList", jsonRecommandSmList);
 		
+		// 공지, 정모글 한달 기준으로 퍼오기.
+		SomoimBoard sb = new SomoimBoard();
+		List<SomoimBoard> sbNotiList = sDao.selectNotiSomoim(pr.getName());
+		String jsonSbNotiList = new Gson().toJson(sbNotiList);
+		System.out.println("jsonSbNotiList : " + jsonSbNotiList);
+		mav.addObject("jsonSbNotiList", jsonSbNotiList);
+		
+		
+		
 		mav.setViewName("somoim/mainsomoim");
 		return mav;
 	}
@@ -787,6 +796,37 @@ public class SomoimManagement {
 		}
 		
 		
+	}
+
+	public String repleModify(String content, int replenumber) {
+		int result = sDao.repleModify(content,replenumber);
+		System.out.println("댓글 수정 성공?? : " + result);
+		return "";
+	}
+
+	public String deletemember(String id, int sNumber) {
+		int result = sDao.deleteMember(id,sNumber);
+		System.out.println("기존 맴버 삭제 성공 ?: " + result);
+		
+		Map<String,List<Member>> map = new HashMap<String, List<Member>>();
+		List<Member> osList = sDao.orginSomoimMember(sNumber);
+		map.put("기존",osList);
+		
+		
+		return new Gson().toJson(map);
+	}
+
+	public String permitmember(String id, int sNumber) {
+		
+		
+		int result = sDao.permitmember(id,sNumber);
+		Map<String,List<Member>> map = new HashMap<String, List<Member>>();
+		List<Member> rsList = sDao.registSomoimMember(sNumber);
+		List<Member> osList = sDao.orginSomoimMember(sNumber);
+		map.put("대기",rsList);
+		map.put("기존",osList);
+		
+		return new Gson().toJson(map);
 	}
 
 	

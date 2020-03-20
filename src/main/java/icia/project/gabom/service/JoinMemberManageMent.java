@@ -47,12 +47,15 @@ public class JoinMemberManageMent {
 		
 		String member_profile_original =null;
 		String member_profile_picture = null;
+		String filepath = "./resources/userprofileimage/upload/";
+		long fileTimeStamp = System.currentTimeMillis();
 		if(profillCheck.equals("1")) {
+			
 			System.out.println("파일있음");
 			member_profile_original = multi.getFile("member_profile_picture").getOriginalFilename();
 			System.out.println("member_profile_original : "+member_profile_original); //member_profile_picture : loginpic.jpg
 			
-			 member_profile_picture = "./resources/userprofileimage/upload/"+member_id+System.currentTimeMillis()+"."
+			 member_profile_picture = filepath+member_id+ fileTimeStamp+"."
 		               +member_profile_original.substring(member_profile_original.lastIndexOf(".")+1);
 		
 		
@@ -92,11 +95,13 @@ public class JoinMemberManageMent {
 		//db에 데이터 넣기
 		int resultJoinMember = ijDao.insertJoinMember(mb);  
 		
+		
+		//파일전용으로 바꾸기
 		if(profillCheck.equals("1")) {
 			System.out.println("파일있음");
 			member_profile_original = multi.getFile("member_profile_picture").getOriginalFilename();
 			System.out.println("member_profile_original : "+member_profile_original); //member_profile_picture : loginpic.jpg
-			 member_profile_picture = member_id+System.currentTimeMillis()+"."
+			 member_profile_picture = member_id+fileTimeStamp+"."
 		               +member_profile_original.substring(member_profile_original.lastIndexOf(".")+1);
 		}else {
 			System.out.println("파일없음");

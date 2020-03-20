@@ -91,7 +91,7 @@ body{
 <br>
 
 			<div id="btn">
-			<button id="register" type="submit" class="btn btn-outline-primary">신청완료</button>
+			<button id="register" type="submit" class="btn btn-outline-primary">개설</button>
 			<button id="cancel" type="button" class="btn btn-outline-dark">취소</button>
 			</div>
 			<br>

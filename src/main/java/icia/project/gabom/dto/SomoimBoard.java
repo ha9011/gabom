@@ -56,4 +56,11 @@ public class SomoimBoard {
 	private int paging_number;
 	private String htmlPaging;
 	
+	// 공지사항 보여줄때 쓰임
+	
+	private String somoim_sys_mainpicture;
+	private String somoim_name;
+	
+	
+	
 }
