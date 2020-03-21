@@ -52,6 +52,10 @@
 	
 }
 
+.contentFrameInner{
+	font-weight: bold;
+}
+
 .section {
 	border: 1px solid gray;
 	width: 30%;
@@ -80,7 +84,11 @@
 	height: 90%;
 	width: 100%;
 }
+#showNotilistContent{
+	height: 90%;
+	width: 100%;
 
+}
 #makeSomoim {
 	margin-top: 5px;
 	width: 100%;
@@ -145,7 +153,7 @@
 			<div id="myNoti" class="section">
 				<div class="title">my Noti</div>
 
-				<div class="showlist"></div>
+				<div class="showlist" id="showNotilistContent"></div>
 			</div>
 		</div>
 	</div>
@@ -187,6 +195,34 @@
 
 </body>
 <script type="text/javascript">
+	var notilist = ${jsonSbNotiList}
+	console.log("notilist",notilist)
+
+	//showNotilistContent id 여기다 가 추가
+ 	for( v of notilist){
+ 		var mymoimFrame = $("<div class='mymoimFrame' data-roomnumber='"+v.somoim_number +"'></div>");
+		
+		var imageFrame = $("<div class='imageFrame mymoimcont'><div><img width='100px' height='100px' src='."+v.somoim_sys_mainpicture+"' >  </div> </div>");
+		
+		var contentFrame =  $("<div class='contentFrame mymoimcont'>  </div>");
+		
+		var contentUp ;
+		var type = v.board_type == 'noti' ? '공지' : '정모';
+		contentUp = $("<div class='contentFrameInner'> <div><span>새로운 ["+type+"]가 게시되었습니다.</span> </div>  </div>")
+		
+		
+		var contentdown = $("<div class='contentFrameInner'>"+v.somoim_name +"</div>")
+		
+		contentFrame.append(contentUp)
+		contentFrame.append(contentdown)
+		
+		mymoimFrame.append(imageFrame)
+		mymoimFrame.append(contentFrame)
+		
+		$("#showNotilistContent").append(mymoimFrame)
+ 	}
+	
+	
 	$("#searchSomoimBtn").on("click",function(){
 		
 		var formData = new FormData(document.getElementById("searchFrm"));

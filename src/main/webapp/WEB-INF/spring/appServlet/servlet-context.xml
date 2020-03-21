@@ -66,9 +66,11 @@
  <websocket:mapping handler="EchoHandler" path="/Echo" />
  <websocket:handshake-interceptors>  
       <beans:bean
-          class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+          class="icia.project.gabom.websocket.AlramChattingHandler"/>
  </websocket:handshake-interceptors>
 </websocket:handlers>
+
+
 
 <!-- websocket  채팅용-->
 <!-- session을 이용하기 위해 websocket:handshake-interceptors를 쓴다. -->

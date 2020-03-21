@@ -33,10 +33,11 @@ public class ChattingHandler extends TextWebSocketHandler {
 	
 	@Override  //연결 됐을때
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println("afterConnectionEstablished : " + session );
+		//System.out.println("afterConnectionEstablished : " + session );
 		sessions.add(session);
 		
         Map<String, Object> map = session.getAttributes();  // 담긴 친구 부르기 handler에서
+        
         String userID = (String)map.get("userID");  // 유저 아이디// 방//
         System.out.println("userID : " +userID);
         Integer somoimNum = Integer.parseInt((String)map.get("somoimNum"));  // 유저 아이디// 방//
@@ -51,6 +52,7 @@ public class ChattingHandler extends TextWebSocketHandler {
     	   userChatMember.put(somoimNum,personalMember);
        }
         
+       
 	}
 
 	@Override//메시지 쐇을때

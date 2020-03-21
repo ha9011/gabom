@@ -51,7 +51,7 @@
 </select>
 
 <select id="selectRoomMember" parameterType="String" resultType="Map">
-	select m.member_profile_picture, m.member_profile_contents, m.member_name, sm.member_grade from SOMOIM_MEMBER sm, Member m where sm.MEMBER_NAME = m.MEMBER_ID and sm.somoim_number = #{roomnum} and sm.member_status = 1 
+	select m.member_profile_picture, m.member_profile_contents, m.member_name, m.member_id, sm.member_grade from SOMOIM_MEMBER sm, Member m where sm.MEMBER_NAME = m.MEMBER_ID and sm.somoim_number = #{roomnum} and sm.member_status = 1 
 </select>
 
 
@@ -457,6 +457,16 @@ select jr.*, nvl2(jm.member_number,1,0) as my_attend_check from JUNGMO_ROOM jr, 
 	and sb.board_type in ('noti', 'jungmo')
  
 </select>
+
+
+
+
+
+<select id="joinMemberSomoimList" parameterType="int" resultType="member">
+	 select * from SOMOIM_MEMBER where somoim_number = #{somoim_number} and member_status = 1
+</select>
+
+
 
 
 

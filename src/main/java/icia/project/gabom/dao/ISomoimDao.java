@@ -133,6 +133,9 @@ public interface ISomoimDao {
 	
 	List<SomoimBoard> selectNotiSomoim(@Param("id")String name);
 	
+	//소켓
+	List<Member> joinMemberSomoimList(@Param("somoim_number")int somoim_number);
+	
 	//--------------------------------------------------------------------------------------------이예상
 	
 	boolean somoalbumInsert(Map<String, String> fMap);
@@ -168,6 +171,8 @@ public interface ISomoimDao {
 
 	@Delete("DELETE FROM SOMOIM_PHOTO_LIKE WHERE PHOTO_NUMBER=#{photo_number} AND LIKE_ID=#{name}")
 	int deletePhotoLike(@Param("photo_number")int photonum, @Param("name")String name);
+
+	
 
 	
 
