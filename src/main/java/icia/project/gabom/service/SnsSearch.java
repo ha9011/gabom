@@ -36,7 +36,6 @@ public class SnsSearch {
 		}
 		total.put("publicPost", publicResult);
 		for (Member member : memberList) {
-			System.out.println(member.getMember_id());
 			Member friendStatus = snsSearchDao.check(member.getMember_id(), principal.getName());
 			if (friendStatus == null || friendStatus != null) {
 				friendListResult = setFriendListResult(member, friendListResult,friendStatus);

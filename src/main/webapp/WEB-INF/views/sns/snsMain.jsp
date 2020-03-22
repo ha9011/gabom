@@ -23,12 +23,6 @@
 	href="https://fonts.googleapis.com/css?family=Jua&display=swap&subset=korean"
 	rel="stylesheet">
 <style type="text/css">
-/* #showImage{
-/* background-image: url(resources/snsImage/sns3.jpg);*/
-/* z-index: 100;
-width: 100%;
-height: 700px;
-} */
 #snsMain {
 	background-image: url(resources/snsImage/cl3.jpg);
 	background-size: cover;
@@ -410,6 +404,7 @@ td a {
 
 #timeLineProfileBox div {
 	margin-top: 32px;
+	cursor: pointer;
 }
 
 #timeLineProfileBox img {
@@ -438,7 +433,7 @@ td a {
 	.timeLineProfileBoxName {
 		display: none;
 	}
-	.timeLineProfileBoxRequest {
+	.timeLineProfileBoxPost {
 		display: none;
 	}
 }
@@ -531,6 +526,62 @@ $(function () {
 		</div>
 	</div>
 	<div class='info' style='display: none'>설정이 변경되었습니다.</div>
+	<!-- 친구 요청 목록 출력 -->
+	<script type="text/javascript">
+	function requestPrint(json) {
+		$("#snsTimeLineMain").empty();
+		$("#snsTimeLineMain").html(json);
+		
+		
+		
+		
+	}
+	
+	
+	</script>
+	<!-- 친구 요청 목록 -->
+	<script type="text/javascript">
+	function friendRequestTot(id) {
+		if(id==userId){
+			$.ajaxSetup({
+				beforeSend : function(xhr){
+		 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+			});//먼저 보냄
+			$.ajax({
+					method:'post',
+					url:"sns/friend/request/sum",
+					data:{"id":userId},
+					dataType : "json"
+			}).done((json)=>{
+				requestPrint(json);
+			});			
+		}else{
+			$('.info').text("본인만 이용 가능합니다.").css("background-color","red").fadeIn(400).delay(1000).fadeOut(400);
+		}
+	}
+	</script>
+	<!-- 친구 요청 취소 -->
+	<script type="text/javascript">
+	function friendRequestStatus(id) {
+		if(confirm("취소 하시겠습니까?")){
+			$.ajaxSetup({
+				beforeSend : function(xhr){
+		 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+			});//먼저 보냄
+			$.ajax({
+					method:'post',
+					url:"sns/friend/request/cancel",
+					data:{"friendId":id},
+					dataType : "json"
+			}).done((msgJson)=>{
+				makeTimeLineProfile(id);
+				$('.info').text(msgJson.message).fadeIn(400).delay(1000).fadeOut(400);
+			});		
+		}
+	}	
+	
+	
+	</script>
 	<!-- 친구 요청 -->
 	<script type="text/javascript">
 	function friendRequest(id){
@@ -546,7 +597,6 @@ $(function () {
 		}).done((userJson)=>{
 			$('.info').text(userJson.message).fadeIn(400).delay(1000).fadeOut(400);
 			makeTimeLineProfile(id);
-			location.href="#";
 		});
 	}	
 	
@@ -625,7 +675,8 @@ $(function () {
 			make+='<div class="container timeLineProfileBoxName">이름<br/><br/>'+json.name+'</div>';
 			make+='<div class="container timeLineProfileBoxPost">게시글<br/><br/>'+json.post+'</div>';
 			make+='<div class="container timeLineProfileBoxFriend">친구<br/><br/>'+json.friend+'</div>';
-			make+='<div class="container timeLineProfileBoxRequest">친구 요청<br/><br/>'+json.friendRequset+'</div>';
+			make+='<div class="container timeLineProfileBoxRequest" onclick=friendRequestTot(\''+json.id+'\')>';
+			make+='친구 요청<br/><br/>'+json.friendRequset+'</div>';
 			make+='</div>';
 			if(json.friendStatus==0&&userId!=json.id){
 				make+='<div class="container friendRequestBtnBox">';
@@ -635,8 +686,10 @@ $(function () {
 			}
 			if(json.friendStatus==1&&userId!=json.id){
 				make+='<div class="container friendRequestBtnBox">';
-				make+='<button type="button" class="btn-default pull-right friendRequestBtn">';
-				make+='요청중</button></div>';
+				make+='<button type="button" class="btn-default pull-right friendRequestBtn"';
+				make+='onclick="friendRequestStatus(\''+json.id+'\')">';
+				make+='요청중</button>';
+				make+='</div>';
 			}
 			if(json.friendStatus==2&&userId!=json.id){
 				make+='<div class="container friendRequestBtnBox">';
@@ -644,7 +697,6 @@ $(function () {
 				make+='onclick="friendCancel(\''+json.id+'\')">';
 				make+='친구 해제</button></div>';
 			}
-			location.href="#";
 			$("#timeLineProfileBoxTot").html(make);
 			$("#timeLineProfileBoxTot").hide();
 			$("#timeLineProfileBoxTot").slideDown();

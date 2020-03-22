@@ -18,8 +18,6 @@ public class RestSnsSearchController {
 	@PostMapping(value = "sns/search", produces = "application/json;charset=UTF-8")
 	public String search(@RequestParam("searchData") String data,Principal principal) {
 		
-		System.out.println("검색들어옴");
-		System.out.println(data);
 		String json=snsSearch.search(data,principal);
 		return json;
 	}

@@ -3,10 +3,23 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="icia.project.gabom.dao.SnsFriendRequestDao">
 	<update id="check">
-	UPDATE SNS_FRIEND SET FRIEND_STATUS=1
-	WHERE FRIEND_MY_ID=#{id} AND FRIEND_ID=#{userId}
+		UPDATE SNS_FRIEND SET FRIEND_STATUS=1
+		WHERE FRIEND_MY_ID=#{id} AND FRIEND_ID=#{userId}
 	</update>
 	<insert id="insert">
-	INSERT INTO SNS_FRIEND VALUES(#{id},#{userId},1)
+		INSERT INTO SNS_FRIEND VALUES(#{id},#{userId},1)
 	</insert>
+	<delete id="cancel">
+		DELETE FROM SNS_FRIEND
+		WHERE FRIEND_MY_ID=#{id} AND
+		FRIEND_ID=#{userId}
+	</delete>
+	<select id="sum" resultType="member">
+		SELECT SF.FRIEND_MY_ID MEMBER_ID,
+		MB.MEMBER_PROFILE_PICTURE
+		FROM SNS_FRIEND SF
+		LEFT JOIN MEMBER MB
+		ON SF.FRIEND_MY_ID=MB.MEMBER_ID
+		WHERE FRIEND_ID=#{id} AND SF.FRIEND_STATUS=1
+	</select>
 </mapper>
