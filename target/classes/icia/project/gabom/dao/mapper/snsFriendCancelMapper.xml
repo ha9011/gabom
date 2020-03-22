@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.SnsFriendCancelDao">
+	<delete id="cancel" parameterType="friendS">
+	DELETE FROM SNS_FRIEND WHERE FRIEND_MY_ID=#{myId} AND FRIEND_ID=#{friendId}
+	</delete>
+	<delete id="cancel2" parameterType="friendS">
+	DELETE FROM SNS_FRIEND WHERE FRIEND_MY_ID=#{friendId} AND FRIEND_ID=#{myId}
+	</delete>
+</mapper>

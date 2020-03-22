@@ -1,5 +1,7 @@
 package icia.project.gabom.service;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +18,19 @@ public class SnsTimeLineProfileBox {
 	@Autowired
 	SnsTimeLineProfileDao snsTimeLineProfileDao;
 	
-	public String profile(String id) {
+	public String profile(String id, Principal principal) {
 			//가져올 목록 아이디 이름 친구숫자 프로필 사진 글 개수 내소개
+		//21일 추가 할 항목 친구 상태 
 		SnsTimeLineProfileBoxDto result=null;
 		SnsProfilePost profilePost=snsTimeLineProfileDao.profilePost(id);
-		if(profilePost!=null) {
-			Sns_friend friend=snsTimeLineProfileDao.friendTot(id);
-			Sns_friend friendRequest=snsTimeLineProfileDao.friendRequest(id);
-			result= new SnsTimeLineProfileBoxDto();
-			result=setResult(profilePost,friend,friendRequest,result);
+		if(profilePost!=null||profilePost==null) {
+			Sns_friend friendStatus=snsTimeLineProfileDao.friendStatus(id,principal.getName());
+			if(friendStatus==null||friendStatus!=null) {
+				Sns_friend friend=snsTimeLineProfileDao.friendTot(id);
+				Sns_friend friendRequest=snsTimeLineProfileDao.friendRequest(id);
+				result= new SnsTimeLineProfileBoxDto();
+				result=setResult(profilePost,friend,friendRequest,result,friendStatus);
+			}
 		}
 		
 		return new Gson().toJson(result);
@@ -33,11 +39,16 @@ public class SnsTimeLineProfileBox {
 	private SnsTimeLineProfileBoxDto setResult(SnsProfilePost profilePost,
 			Sns_friend friend,
 			Sns_friend friendRequest,
-			SnsTimeLineProfileBoxDto result) {
+			SnsTimeLineProfileBoxDto result, Sns_friend friendStatus) {
 			result.setId(profilePost.getId()).setName(profilePost.getName())
 			.setPic(profilePost.getPic()).setContent(profilePost.getContent())
 			.setPost(profilePost.getPost()).setFriend(friend.getFriend_status())
 			.setFriendRequset(friendRequest.getFriend_status());
+			if(friendStatus==null) {
+				result.setFriendStatus(0);
+			}else {
+				result.setFriendStatus(friendStatus.getFriend_status());
+			}
 		return result;
 	}
 

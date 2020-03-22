@@ -17,5 +17,6 @@ public class SnsTimeLineProfileBoxDto {
 	private int post;
 	private int friend;
 	private int friendRequset;
+	private int friendStatus;
 	
 }

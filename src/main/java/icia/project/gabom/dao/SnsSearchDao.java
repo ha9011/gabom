@@ -15,11 +15,13 @@ public interface SnsSearchDao {
 	
 	List<Snsposts> searchPost(@Param("searchData")String data,@Param("id") String string);
 
-	//List<Snsposts> searchFriendPost(@Param("searchData")String data,@Param("id")String name);
 
 	List<Member> searchFriendList(@Param("searchData")String data);
 
-	List<SnsFriendStatus> search(@Param("id") String name);
+	
+	Member check(@Param("userId")String member_id,@Param("id")String id);
+
+
 	
 	
 }

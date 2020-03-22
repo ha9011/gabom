@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.SnsFriendRequestDao">
+	<update id="check">
+	UPDATE SNS_FRIEND SET FRIEND_STATUS=1
+	WHERE FRIEND_MY_ID=#{id} AND FRIEND_ID=#{userId}
+	</update>
+	<insert id="insert">
+	INSERT INTO SNS_FRIEND VALUES(#{id},#{userId},1)
+	</insert>
+</mapper>

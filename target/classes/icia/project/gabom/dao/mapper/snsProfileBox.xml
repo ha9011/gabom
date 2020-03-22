@@ -23,6 +23,10 @@
 	<select id="friendRequest" resultType="friend">
 	SELECT COUNT(FRIEND_MY_ID) 
 	FRIEND_STATUS FROM SNS_FRIEND 
-	WHERE FRIEND_MY_ID=#{id} AND FRIEND_STATUS=1
+	WHERE FRIEND_STATUS=1 AND FRIEND_ID=#{id}
+	</select>
+	<select id="friendStatus" resultType="friend">
+	SELECT FRIEND_STATUS 
+	FROM SNS_FRIEND WHERE FRIEND_MY_ID=#{id} AND FRIEND_ID=#{userId}
 	</select>
 </mapper>
