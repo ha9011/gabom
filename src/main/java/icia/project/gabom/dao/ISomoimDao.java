@@ -133,6 +133,9 @@ public interface ISomoimDao {
 	
 	List<SomoimBoard> selectNotiSomoim(@Param("id")String name);
 	
+	//소켓
+	List<Member> joinMemberSomoimList(@Param("somoim_number")int somoim_number);
+	
 	//--------------------------------------------------------------------------------------------이예상
 	
 	boolean somoalbumInsert(Map<String, String> fMap);
@@ -157,8 +160,19 @@ public interface ISomoimDao {
 
 	int insertpicreple(Somoim_photo_reple picreple);
 	
-	@Update("UPDATE SOMOIM_PHOTO_REPLE SET REPLY_CONTENT=#{reply_content} WHERE REPLY_NUMBER=#{reply_number} ")
+	@Update("UPDATE SOMOIM_PHOTO_REPLE SET REPLY_CONTENT = #{reply_content} WHERE REPLY_NUMBER= #{reply_number} ")
 	int modifypicreple(Somoim_photo_reple spreple);
+	
+	@Select("SELECT count(*) as mylike FROM SOMOIM_PHOTO_LIKE WHERE LIKE_ID = #{name} AND PHOTO_NUMBER = #{photo_number}")
+	Somoim_photoalbum getMyImgLike(@Param("photo_number")String num, @Param("name")String name);
+
+	@Insert("INSERT INTO SOMOIM_PHOTO_LIKE VALUES( SEQ_SOMOIM_PHOTO_LIKE.nextval, #{name} ,#{photo_number}  , #{somoimNum} ,0)" )
+	int insertPhotoLike(@Param("photo_number")int photonum, @Param("name")String name, @Param("somoimNum")int somoimNum);
+
+	@Delete("DELETE FROM SOMOIM_PHOTO_LIKE WHERE PHOTO_NUMBER=#{photo_number} AND LIKE_ID=#{name}")
+	int deletePhotoLike(@Param("photo_number")int photonum, @Param("name")String name);
+
+	
 
 	
 

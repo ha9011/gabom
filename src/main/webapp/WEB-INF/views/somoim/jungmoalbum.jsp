@@ -5,7 +5,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <style>
-
+.repleTitleFrame{
+	display : flex;
+	justify-content: space-between;
+}
 body {margin: 10px}
 #btnbox{
 float:right;
@@ -145,7 +148,9 @@ margin: 0 5px;
             
             <div id="modalimg"></div>
             <div id="likearea">
-               <img id="piclikebtn" width='5%' height='5%' src="../resources/somoimboard/like.PNG">&nbsp;&nbsp;&nbsp;<span id="likecnt"></span> 명이 이 글을 좋아합니다
+            
+               <img id="piclikebtn" width='5%' height='5%' src="">&nbsp;&nbsp;&nbsp;<span id="likecnt"></span> 명이 이 글을 좋아합니다
+            
             </div>
             <div id="repleinsrt">
             </div>
@@ -168,6 +173,48 @@ margin: 0 5px;
             
             
 <script>
+//댓글 리스트 보여주는 메소드
+const repleShowList = (data) =>{
+	   
+	   for( i of data){
+        var reple_id = $('<div class="repleTitleFrame"><a href="#">'+i.reply_id+'님의 댓글</a></div>');
+        var reply_content =$('<div id="replecontent'+i.reply_number+'" class="picreply_content">'+i.reply_content+'</div>')
+        var reply_modiInput =$('<input id="repleinput'+i.reply_number+'" style="display:none;" class="picreply_modiInput">') // type="hidden" 
+        var reple_date =$('<div>'+i.reply_date+'</div>');
+        
+        $("#reple").append(reple_id);//아이디 
+        $("#reple").append(reply_content);//컨텐츠
+        $("#reple").append(reply_modiInput);//컨텐츠
+        $("#reple").append(reple_date);//입력날짜
+        
+        
+        
+        if(i.reply_id == myinfo.member_name){
+           //$(".picreply_content").empty();
+           //$(".picreply_content").append('<input style="width:80% ;height:100%" id="picreply_content" value="'+i.reply_content+'">');
+           var modibtn = $("<div style='display:inline-block'></div>")
+           $("<button data-replenum ='"+ i.reply_number+"' data-photonum ='"+i.photo_number+"'></button").attr("class","btn btn-warning btnDelete")
+                 .text("삭제").appendTo(modibtn);
+           $("<button data-replenum ='"+ i.reply_number+"' data-photonum ='"+i.photo_number+"' data-replenum ='"+ i.reply_number+"'></button").attr("class","btn btn-info btnModify")
+                 .text("수정").appendTo(modibtn);
+           $("<button style='display:none' data-replenum ='"+ i.reply_number+"' data-photonum ='"+i.photo_number+"' data-replenum ='"+ i.reply_number+"'></button").attr("class","btn btn-info btnModiCancel")
+           .text("취소").appendTo(modibtn);
+           $("<button style='display:none' data-replenum ='"+ i.reply_number+"' data-photonum ='"+i.photo_number+"' data-replenum ='"+ i.reply_number+"'></button").attr("class","btn btn-info btnModiConfirm")
+           .text("확정").appendTo(modibtn);
+           
+           reple_id.append(modibtn)
+         
+        } 
+     }
+}
+
+
+
+
+
+
+
+
 $(".upload-name").hide();
    $("#ex_filename").on('click', function() {
       $(".upload-name").show();
@@ -265,11 +312,13 @@ $(".upload-name").hide();
 //--------------------------------------------------------------------------------------------------------------사진 불러오기  끝  
    
    // 엘범 누르면 사진이 나옴
+var myinfo=${JsonMysomoimInfo};
+
 const showalbumlist = ()=>{
    
    console.log("기본정보",${JsonBasicInfo})
    
-   var myinfo=${JsonMemberList};
+   //var myinfo=${JsonMemberList};
    console.log("회원",myinfo)
    
    var basicInfo =   ${JsonBasicInfo};
@@ -296,6 +345,7 @@ const showalbumlist = ()=>{
          
          let index = 1;
          let tr = $("<tr></tr>")
+         
          for(let i of data ){
             
         		var img
@@ -319,10 +369,6 @@ const showalbumlist = ()=>{
             index++;                
 
          }
-         
-         
-    
-         
       },
       error:function(error){
          alert("fail")
@@ -330,6 +376,7 @@ const showalbumlist = ()=>{
       }
       
    }) //ajax end
+}
 //---------------------------------------------------------------------------------------------------------------------------------------사진첩에서 처음 불러올때    
  //사진 클릭시 모달 생성  
  
@@ -339,7 +386,7 @@ $(document).on('click',".pic", function() {
    console.log("클릭한 사진번호"+$(this).attr("name"));
    
    var imgnum= $(this).attr("name");
-     console.log(imgnum);
+    console.log(imgnum);
    
    
    $.ajax({
@@ -357,6 +404,17 @@ $(document).on('click',".pic", function() {
            $("#reple").empty();//댓글 지움
            $("#user_id").empty();//유저이름 지움
            
+          //내가 좋아요 하냐 안하냐에 따라 변경 
+          if(data.mylike == 1){  // 좋아요
+        	  $("#piclikebtn").attr('src','../resources/somoimboard/like.PNG');
+        	  $("#piclikebtn")[0].dataset.like='1';
+        	  $("#piclikebtn")[0].dataset.photonum=data.photo_number;
+          }else{ //싫어요
+        	  $("#piclikebtn").attr('src','../resources/somoimboard/unlike.PNG');
+        	  $("#piclikebtn")[0].dataset.like='0';
+        	  $("#piclikebtn")[0].dataset.photonum=data.photo_number;
+          }
+           
           //console.log(data.photo_sysfile);
           var pic_name= $('<h1>'+data.photo_orifile+'</h1>'); 
           $("#exampleModalLongTitle").append(pic_name);//사진 이름
@@ -367,11 +425,11 @@ $(document).on('click',".pic", function() {
           var likecnt = $('<h5>'+data.splike+'</h5>');
           $("#likecnt").append(likecnt);//좋아요 수 넣고
           
-          var user_id =$('<div id="user_id"><h5>'+myinfo[0].MEMBER_NAME+'</h5></div>');
+          var user_id =$('<div id="user_id"><h5>'+myinfo.member_name+'</h5></div>');
           var insertreple = $('<input id="reple_content" name="reple_content" type="text">');
-          var insertreplebtn = $('<button id="repleinsert_btn"  class="btn btn-primary" data-somonum ="'+somoim.somoim_number+'"  data-reply_id ="'+myinfo[0].MEMBER_NAME+'" data-photonum ="'+data.photo_number+'">등록</button>');
+          var insertreplebtn = $('<button id="repleinsert_btn"  class="btn btn-primary" data-somonum ="'+somoim.somoim_number+'"  data-reply_id ="'+myinfo.member_name+'" data-photonum ="'+data.photo_number+'">등록</button>');
           
-          console.log(myinfo[0].MEMBER_NAME);
+          console.log(myinfo.member_name);
           console.log(data.photo_number);
           
           $("#repleinsrt").append(user_id);//유저이름
@@ -383,30 +441,13 @@ $(document).on('click',".pic", function() {
           
          
           
+          console.log("사진 클릭시 ======== " +myinfo.member_name )
+          console.log(myinfo)
+          console.log(data.reply_id)
+          console.log(data)
           
-          for( i of data.spreple){
-             
-             var reple_id = $('<div><a href="#">'+i.reply_id+'</a>'+'님의 댓글'+'<div>');
-             var reply_content =$('<div class="picreply_content">'+i.reply_content+'</div>')
-             var reple_date =$('<div>'+i.reply_date+'</div>');
-             
-             $("#reple").append(reple_id);//아이디 
-             $("#reple").append(reply_content);//컨텐츠
-             $("#reple").append(reple_date);//입력날짜
-             
-             console.log("사진번호",i.photo_number);
-             
-             if(data.reply_id == myinfo.MEMBER_NAME){
-                //$(".picreply_content").empty();
-                //$(".picreply_content").append('<input style="width:80% ;height:100%" id="picreply_content" value="'+i.reply_content+'">');
-                
-                 $("<button data-replenum ='"+ i.reply_number+"' data-photonum ='"+i.photo_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
-                                      .text("삭제").appendTo($("#reple"));
-                 $("<button data-replenum ='"+ i.reply_number+"' data-photonum ='"+i.photo_number+"'></button").attr("id","btnModify").attr("class","btn btn-info")
-                                    .text("수정").appendTo($("#reple"));
-              } 
-             
-          }
+          repleShowList(data.spreple);
+          
            
          },
          error:function(error){
@@ -415,7 +456,7 @@ $(document).on('click',".pic", function() {
          }
       
    })//ajax end -----------------------------------------------------------------------------------------------------------------------
-   
+})  
 
    $(document).on('click',"#btnDelete", function(e) {
       var reply_number = e.target.dataset.replenum
@@ -429,6 +470,11 @@ $(document).on('click',".pic", function() {
             } 
       console.log(data);
       console.log(e.target.dataset.replenum);
+
+      $.ajaxSetup({         
+            beforeSend : function(xhr){
+               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+            });
       
       $.ajax({
          
@@ -442,28 +488,8 @@ $(document).on('click',".pic", function() {
                $("#reple").empty();//댓글 지움
                console.log(data);
                //댓글 리스트 출력
-                for( i of data){
-                   
-                   console.log(i);
-                   
-                   var reple_id = $('<div><a href="#">'+i.reply_id+'</a>'+'님의 댓글'+'<div>');
-                   var reply_content =$('<div class="picreply_content">'+i.reply_content+'</div>')
-                   var reple_date =$('<div>'+i.reply_date+'</div>');
-                   
-                   $("#reple").append(reple_id);//아이디 
-                   $("#reple").append(reply_content);//컨텐츠
-                   $("#reple").append(reple_date);//입력날짜
-                   
-                   if(data.reply_id == myinfo.MEMBER_NAME){
-                      //$(".picreply_content").empty();
-                      //$(".picreply_content").append('<input style="width:80% ;height:100%" id="picreply_content" value="'+i.reply_content+'">');
-                      
-                      $("<button data-replenum ='"+ i.reply_number+"' data-photonum ='"+i.photo_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
-                            .text("삭제").appendTo($("#reple"));
-                      $("<button data-replenum ='"+ i.reply_number+"' data-photonum ='"+i.photo_number+"'></button").attr("id","btnModify").attr("class","btn btn-info")
-                            .text("수정").appendTo($("#reple"));
-                    } 
-                }
+               repleShowList(data);
+               
             },
             
             error:function(error){
@@ -476,21 +502,28 @@ $(document).on('click',".pic", function() {
    })//삭제 끝--------------------------------------------------------------------------------------------------------------------------
 
 
-
+//댓글 넣기
    $(document).on('click',"#repleinsert_btn", function(e) {
       var reply_id = e.target.dataset.reply_id
       var photo_number = e.target.dataset.photonum
       var reply_content=$("#reple_content").val();
       var somoim_number = e.target.dataset.somonum
       console.log(reply_id,photo_number,reple_content,somoim_number);
+      
       var data = {
                "reply_id" : reply_id,
                "photo_number" : photo_number,
                "reply_content" : reply_content,
                "somoim_number" : somoim_number
             } 
-      console.log(data);
+      
+      console.log("댓글 저장할 데이터  : ",data);
       //console.log(e.target.dataset.replenum);
+      
+	$.ajaxSetup({         
+      beforeSend : function(xhr){
+         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+      });
       
       $.ajax({
          
@@ -504,28 +537,8 @@ $(document).on('click',".pic", function() {
                console.log(data);
                
                //댓글 리스트 출력
-                for( i of data){
-                   
-                   var reple_id = $('<div><a href="#">'+i.reply_id+'</a>'+'님의 댓글'+'<div>');
-                   var reply_content =$('<div class="picreply_content">'+i.reply_content+'</div>')
-                   var reple_date =$('<div>'+i.reply_date+'</div>');
-                   
-                   $("#reple").append(reple_id);//아이디 
-                   $("#reple").append(reply_content);//컨텐츠
-                   $("#reple").append(reple_date);//입력날짜
-                   
-                   
-                   
-                   if(data.reply_id == myinfo.MEMBER_NAME){
-                      //$(".picreply_content").empty();
-                      //$(".picreply_content").append('<input style="width:80% ;height:100%" id="picreply_content" value="'+i.reply_content+'">');
-                      
-                      $("<button data-replenum ='"+ i.reply_number+"' data-photonum ='"+i.photo_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
-                            .text("삭제").appendTo($("#reple"));
-                      $("<button data-replenum ='"+ i.reply_number+"' data-photonum ='"+i.photo_number+"' data-replenum ='"+ i.reply_number+"'></button").attr("id","btnModify").attr("class","btn btn-info")
-                            .text("수정").appendTo($("#reple"));
-                    } 
-                }
+               repleShowList(data);
+               
             },
             
             error:function(error){
@@ -544,20 +557,133 @@ $(document).on('click',".pic", function() {
    //})
    
    
-   //댓글 수정
-   $(document).on('click','#btnModify', function (e) {
-      var reply_content=$("#picreply_content").val();
-      var reply_number = e.target.dataset.replenum
-      var photo_number = e.target.dataset.photonum
-      //console.log(reply_content,reply_number);
-      
-      var data = {
-               "reply_content" : reply_content,
-               "reply_number" : reply_number,
-               "photo_number" : photo_number            
-   } 
+   
+   
+   
+   //좋아요 버튼 누를 때
+   $('#piclikebtn').on('click', function(e){
+	   var likestatus = e.target.dataset.like;
+	   var photonum = e.target.dataset.photonum;
+
+	   console.log(likestatus)
+	   var status 
+	   if(likestatus==0){  // 없는 상태니깐 
+		   $("#piclikebtn").attr('src','../resources/somoimboard/like.PNG');
+	     	  $("#piclikebtn")[0].dataset.like='1';
+	     	  status = 1;
+	   }else{
+		   $("#piclikebtn").attr('src','../resources/somoimboard/unlike.PNG');
+	     	  $("#piclikebtn")[0].dataset.like='0';
+	     	 status = 0;
+	   }
+	   
+	   
+	   var data = {
+			   "status" : status,
+			   "photonum" : photonum,
+			   "somoimNum" : ${JsonBasicInfo}.somoim_number
+	   }
+	   
+	   console.log("좋아요 버튼 :",data)
+	   $.ajaxSetup({         
+	         beforeSend : function(xhr){
+	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	         });
+	   
+    $.ajax({
+       
+         url: "photolike",
+          type: 'post',
+          data :data,
+          dataType: "json", //rest 컨트롤 이용   
+          success:function(data){
+             //alert("like 성공")
+             console.log(data);
+             console.dir($("#likecnt")[0].children[0])
+             $($("#likecnt")[0].children[0]).text(data.splike);
+            // console.log(data.splike);
+          },
+          
+          error:function(error){
+             alert("댓글이 수정을 실패했습니다.");
+                console.log(error);
+          }
+       
+       
+    });//ajax 끝
+	   
+	   
+   })
+   
+   
+   //수정 버튼 누를 때
+   $(document).on('click', '.btnModify', function(e){
+	  console.log("수정 버튼")
+	  console.dir(e.currentTarget.parentElement.parentElement.nextSibling.textContent)  //내용임..
+	  var repleNumber = e.target.dataset.replenum
+	  var originContent = $("#replecontent"+repleNumber).text();//e.currentTarget.parentElement.parentElement.nextSibling.textContent;
+	   console.log("댓글 번호 : " + repleNumber);
+	   console.log("원래 내용 : " + originContent);
+	   
+	   $(e.currentTarget).hide();
+	   $(e.currentTarget.parentNode.children[2]).show();
+	   $(e.currentTarget.parentNode.children[3]).show();
+	   
+	   
+	   $("#repleinput"+repleNumber).show();
+	   $("#repleinput"+repleNumber).val(originContent);
+	   $("#replecontent"+repleNumber).hide();
+   })
+   
+   //수정 버튼 누를 때
+   $(document).on('click', '.btnModiCancel', function(e){
+	  console.log("수정 취소 버튼")
+	  var repleNumber = e.target.dataset.replenum
+	  var originContent = $("#replecontent"+repleNumber).text();//e.currentTarget.parentElement.parentElement.nextSibling.textContent;
+	   
+	  $(e.currentTarget.parentNode.children[1]).show();
+	   $(e.currentTarget.parentNode.children[2]).hide();
+	   $(e.currentTarget.parentNode.children[3]).hide();
+	   
+	   
+	   $("#repleinput"+repleNumber).hide();
+	   $("#repleinput"+repleNumber).val("");
+	   $("#replecontent"+repleNumber).show();
+   })
+   
+   //수정 확정 누를 때
+   $(document).on('click', '.btnModiConfirm', function(e){
+	  console.log("수정 확정 버튼")
+	  
+	  var repleNumber = e.target.dataset.replenum
+	  var newContent = $("#repleinput"+repleNumber).val();
+	  console.log("=====확정===")
+	  console.log(repleNumber)
+	   console.log(newContent)
+	   
+	   $(e.currentTarget.parentNode.children[1]).show();
+	   $(e.currentTarget.parentNode.children[2]).hide();
+	   $(e.currentTarget.parentNode.children[3]).hide();
+	   
+	   
+	   $("#repleinput"+repleNumber).hide();
+	   $("#repleinput"+repleNumber).val("");
+	   $("#replecontent"+repleNumber).text(newContent);
+	   $("#replecontent"+repleNumber).show();
+	   
+	   
+	   var data = {
+               "reply_content" : newContent,
+               "reply_number" : repleNumber,          
+  	 	} 
+	   
       console.log(data);
-      
+
+	   $.ajaxSetup({         
+	         beforeSend : function(xhr){
+	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	         });
+	   
       $.ajax({
          
            url: "modifypicreple",
@@ -565,33 +691,12 @@ $(document).on('click',".pic", function() {
             data :data,
             dataType: "json", //rest 컨트롤 이용   
             success:function(data){
-               $("#reple_content").val("");
-               $("#reple").empty();//댓글 지움
-               console.log(data);
+               //$("#reple_content").val("");
+               //$("#reple").empty();//댓글 지움
+               //console.log(data);
                alert("댓글이 수정되었습니다.");
                //댓글 리스트 출력
-                for( i of data){
-                   
-                   var reple_id = $('<div><a href="#">'+i.reply_id+'</a>'+'님의 댓글'+'<div>');
-                   var reply_content =$('<div class="picreply_content">'+i.reply_content+'</div>')
-                   var reple_date =$('<div>'+i.reply_date+'</div>');
-                   
-                   $("#reple").append(reple_id);//아이디 
-                   $("#reple").append(reply_content);//컨텐츠
-                   $("#reple").append(reple_date);//입력날짜
-                   
-                   
-                   
-                   if(data.reply_id == myinfo.MEMBER_NAME){
-                      //$(".picreply_content").empty();
-                      //$(".picreply_content").append('<input style="width:80% ;height:100%" id="picreply_content" value="'+i.reply_content+'">');
-                      
-                      $("<button data-replenum ='"+ i.reply_number+"' data-photonum ='"+i.photo_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
-                            .text("삭제").appendTo($("#reple"));
-                      $("<button data-replenum ='"+ i.reply_number+"' data-photonum ='"+i.photo_number+"' data-replenum ='"+ i.reply_number+"'></button").attr("id","btnModify").attr("class","btn btn-info")
-                            .text("수정").appendTo($("#reple"));
-                    } 
-                }
+               //repleShowList(data);  
             },
             
             error:function(error){
@@ -606,6 +711,7 @@ $(document).on('click',".pic", function() {
    
    
    
+  
    
    
    
@@ -620,8 +726,7 @@ $(document).on('click',".pic", function() {
    
    
    
+ // 모달 클릭이벤트 
    
-}); // 모달 클릭이벤트 
-   
-} // 처음 사진
+ // 처음 사진
   </script>

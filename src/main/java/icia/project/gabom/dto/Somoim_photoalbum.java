@@ -18,7 +18,7 @@ public class Somoim_photoalbum {
 	private String photo_orifile;
 	private String photo_sysfile;
 	
-	
+	private int mylike = 0; //내가 이 사진을 좋아하는지 // db count해서 1이면 좋아하는거 없으면 초기값 0이므로 없게 //
 	private int splike = 0;  // 좋아요 갯수
 	
 	@DateTimeFormat(pattern="yyyy-mm-dd")

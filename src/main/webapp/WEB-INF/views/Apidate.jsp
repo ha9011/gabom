@@ -34,7 +34,7 @@
 <body>
 	<div>
 		<form>
-			지역 선택 <select id="select_areacode" name="areacode" title="지역선택">
+			지역 선택 <select id="select_sigunguCode" name="areacode" title="지역선택">
 				<option value="1">서울</option>
 				<option value="2">인천</option>
 				<option value="3">대전</option>
@@ -146,7 +146,7 @@
 							
 								var td = $('<td></td>');
 							   
-								var img = $("<img width='200px' height='200px' src='"+i.firstimage+"'>");
+								var img = $("<img width='150px' height='150px' src='"+i.firstimage+"'>");
 								
 								var a = $("<a href='apitest?contentid="+i.contentid+"', target='_blank'></a>");
 			                               

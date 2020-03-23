@@ -39,9 +39,9 @@
    	</select>
    	
    	<select id="detailplan" resultType="trip">
-   		SELECT *
+   		SELECT TP.TRIP_NUMBER, TP.TRIP_ID, TP.TRIP_TITLE, TP.TRIP_START_DATE, TP.TRIP_END_DATE,TPD.TRIP_DAY
 		FROM TRIP_PLAN TP, TRIP_PLAN_DATE TPD
-		WHERE TP.TRIP_NUMBER=TPD.TRIP_NUMBER AND TP.TRIP_NUMBER=#{trip_number}
+		WHERE TP.TRIP_NUMBER=TPD.TRIP_NUMBER AND TP.TRIP_NUMBER=#{trip_number} ORDER BY TPD.TRIP_DAY 
    	</select>
    
 </mapper>
