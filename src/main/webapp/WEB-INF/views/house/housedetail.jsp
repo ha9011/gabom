@@ -107,12 +107,14 @@ width:70px;
 font-size:20px;
 height:40px;
 margin:5px;
+margin-left:200px;
 }
 #replylist{
 font-size:20px;
 float:left;
 text-align:left;
 }
+
 </style>
 
 </head>
@@ -284,8 +286,8 @@ text-align:left;
 					<div class="blog-post-body">
 						<h2>댓글</h2>
 						<div id="replyinsert">
-							<div id="user_id"><h3>유저아이디</h3></div>
-							<input style="width:500px;" id="reple_content" name="reple_content" type="text">
+							<div id="user_id"></div>
+							<input style="width:700px;" id="reple_content" name="reple_content" type="text">
 							<button id="repleinsert_btn"  class="btn btn-primary">등록</button>
 						</div>
 						<div id="replylist">
@@ -394,8 +396,13 @@ $("#info").append(house_info);
     var reple_list=${reple_list};
     console.log(reple_list);
     var login_id = ${memberinfo}
-    console.log("로인아이디",login_id);
+    console.log("로그인아이디",login_id);
     console.log(login_id[0].member_id)
+    
+    var user_id =$('<h2>'+login_id[0].member_id+'</h2>');
+    	$("#user_id").append(user_id);
+    
+    
     
     for( i of reple_list){
 		var rpline =$()
@@ -410,6 +417,45 @@ $("#info").append(house_info);
     	 }
 		
 	}
+    
+    $("#repleinsert_btn").on('click',function(e){
+    	var houe_reple_content =$("#reple_content").val();
+    	var house_number = house[0].house_number;
+    	
+    	var data = {
+    			"house_reple_content":houe_reple_content,
+    			"house_number":house_number
+    	}
+    	console.log("data",data);
+    	
+    	 $.ajaxSetup({         
+   	      beforeSend : function(xhr){
+   	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+   	      });//먼저 보냄
+       console.log(data);
+       $.ajax({
+           url:'hrest/insertreple',
+           type:'post',
+           data:data,
+           processData:false,
+           contentType:false,  //제이슨 아니니깐 까보지마!!
+            dataType:"json", //rest 컨트롤 이용   
+           success:function(data){
+              alert("댓글 입력완료 ");
+              console.log(data)
+              
+              
+           },
+           error:function(error){
+              alert("댓글 입력 실패 ")
+              console.log(error);
+           }
+           
+        })
+    	
+    	
+    	
+    });// 댓글 등록 끝 
     
     
     $("#btnDelete").on('click',function(e){

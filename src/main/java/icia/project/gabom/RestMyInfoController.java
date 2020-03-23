@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.project.gabom.dto.Foodreservation;
+import icia.project.gabom.dto.House_review;
 import icia.project.gabom.dto.Housereservation;
 import icia.project.gabom.service.MyInfoManagement;
 
@@ -64,4 +65,25 @@ public class RestMyInfoController {
 		return json;
 	}
 	
+	@PostMapping(value = "/myhreview", produces="text/plain;charset=utf-8")
+	public String myhreview(Principal pc) {
+		System.out.println("리뷰 목록");
+		String json = MIMM.myhreview(pc);
+		
+		return json;
+	}
+	
+	
+	@PostMapping(value = "/inserthreview", produces="text/plain;charset=utf-8")
+	public String inserthreview(Principal pc,House_review hrv) {
+		System.out.println("집 리뷰등록");
+		
+		System.out.println("리뷰내용:"+hrv.getHouse_review_content());
+		System.out.println("집 번호:"+hrv.getHouse_number());
+		System.out.println("리뷰사진:"+hrv.getHouse_review_orifile());
+		
+		String json = MIMM.inserthreview(pc,hrv);
+		
+		return json;
+	}
 }

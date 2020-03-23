@@ -35,19 +35,21 @@ public interface IhouseDao {
 	List<House> changesearch(String house_address);
 
 	@Select("select * from registhouse r, housefile HF WHERE R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND R.HOUSE_NUMBER=#{house_number}")
-	List<House> detailhouse(String house_number);
+	List<House> detailhouse(int house_number);
 	
 	//----------------------------------------------------------------------------------------------------------예약
 	int housereservation(Housereservation hreservation);
 	
 	@Select("select * from HOUSERESERVATION WHERE HOUSE_NUMBER=#{house_number} order by RESERVATION_CHECKIN")
-	List<Housereservation> detailreser(@Param("house_number") String house_number);
+	List<Housereservation> detailreser(@Param("house_number") int house_number);
 	
 	@Select("SELECT * FROM HOUSEREPLE WHERE HOUSE_NUMBER=#{house_number} ORDER BY HOUSE_REPLE_TIME DESC" )
-	List<House_reple> replelist(String house_number);
+	List<House_reple> replelist(int house_number);
 	
 	@Select("SELECT * FROM MEMBER WHERE MEMBER_ID=#{member_id}")
-	List<Member> memberinfo(String member_id); 
+	List<Member> memberinfo(String member_id);
+
+	void insertreple(House_reple hreple); 
 	
 	
 	

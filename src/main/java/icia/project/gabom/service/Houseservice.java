@@ -82,7 +82,7 @@ public class Houseservice {
 	}
 
 
-	public ModelAndView housedetail(String house_number, Housereservation reserlist, Principal principal) {
+	public ModelAndView housedetail(int house_number, Housereservation reserlist, Principal principal) {
 		mav = new ModelAndView();
 		String view = null;
 		String json = null;
@@ -143,6 +143,25 @@ public class Houseservice {
 		System.out.println("json="+json);
 		System.out.println("예약했니?");
 		
+		return json;
+	}
+
+
+	public String insertreple(House_reple hr, Principal ppl) {
+		String json = null;
+		
+		int house_number = hr.getHouse_number();
+		String member_guestid = ppl.getName();
+		String house_reple_content = hr.getHouse_reple_content();
+		
+		House_reple hreple = new House_reple();
+		
+		hreple.setHouse_number(house_number).setHouse_reple_content(house_reple_content).setMember_guestid(member_guestid);
+		hDao.insertreple(hreple);//댓글 넣고 
+		
+		List<House_reple> reple_list = hDao.replelist(house_number);//다시 불러옴
+		
+		json = new Gson().toJson(reple_list);
 		return json;
 	}
 

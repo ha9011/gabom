@@ -27,5 +27,9 @@ public interface IMyInfoDao {
 
 	@Delete("DELETE FROM FOODRESERVATION WHERE FOODRESERVATION_NUMBER=#{foodreservation_number}")
 	void deletefreser(int foodreservation_number);
+
+	List<Housereservation> getreviewmyreser(String member_guestid);
+
+	List<Foodreservation> getreviewmyfreser(String member_guestid);
 	
 }

@@ -12,9 +12,9 @@
 	
 	<insert id="housereservation" parameterType="hreservation" >
 	INSERT INTO HOUSERESERVATION VALUES(SQ_HOUSERESERVATION.nextval,#{house_number},#{house_hostid},#{member_guestid},#{reservation_checkin},#{reservation_checkout},#{reservation_person},#{reservation_totalprice})
-		<selectKey keyProperty="reservation_number" resultType="integer" order="AFTER">
-				SELECT SQ_HOUSERESERVATION.CURRVAL FROM DUAL
-			</selectKey>
 	</insert>
 	
+	<insert id="insertreple">
+		INSERT INTO HOUSEREPLE VALUES(SEQ_HOUSE_REPLE_NUMBER.nextval,#{house_number},#{member_guestid},SYSDATE,#{house_reple_content})
+	</insert>
 </mapper>

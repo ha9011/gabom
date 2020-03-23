@@ -42,6 +42,22 @@ width:100%;
 	clip:rect(0,0,0,0); 
 	border: 0; 
 }
+/* named upload */
+.filebox .upload-name {
+  display: inline-block;
+  padding: .5em .75em;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  border: 1px solid #0080FF;
+  border-bottom-color: #0080FF;
+  border-radius: .25em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 #profileArea{
 margin-top:70%; 
 }
@@ -154,6 +170,57 @@ width: 1550px;
 
   <!-- Custom scripts for this template -->
   <script src="./resources/js/resume.min.js"></script>
+
+<!-- freview Modal -->
+<div class="modal fade" id="exampleModalfreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">리뷰를 작성해주세요</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+    		<div class="filebox"> 
+    			<label for="ex_filename">업로드</label> 
+    			<input type="file" id="ex_filename" class="upload-hidden" multiple>
+    		</div>
+    		<input id="freview_content" style="width:100%;min-height:400px;" type="text">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-lg" data-dismiss="modal">Close</button>
+        <button type="button" class="freview btn btn-lg">Success</button>
+      </div>
+    </div>
+  </div>
+</div>
+   
+<!-- hreview Modal -->
+<div class="modal fade" id="exampleModalhreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">리뷰를 작성해주세요</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+    		<div class="filebox"> 
+    			<label for="ex_filename">업로드</label> 
+    			<input type="file" id="ex_filename" class="upload-hidden">
+    		</div>
+    		<input id="hreview_content" style="width:100%;min-height:400px;" type="text">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-lg" data-dismiss="modal">Close</button>
+        <button type="button" class="hreview btn btn-lg">Success</button>
+      </div>
+    </div>
+  </div>
+</div>
+   
 
 </body>
 
@@ -554,6 +621,138 @@ $(document).on('click','.fcbtn',function(e) {
     }
 })
 
+//----------------------------------------------------------------------------리뷰 작성란 
+$("#myreview").on('click', function(e) {
+	e.preventDefault;
+	
+	$.ajaxSetup({         
+	      beforeSend : function(xhr){
+	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	      });//먼저 보냄
+
+	      $.ajax({
+	  		url:'myinfo/myhreview',
+	  		type:'post',
+	  	 	dataType:"json", //rest 컨트롤 이용	
+	  		success:function(data){
+	  			console.log(data);
+	  			$("#title").empty();
+	  			$("#Content").empty();
+	  			
+	  			var title = $('<div><h3>'+a+'님의 리뷰내역 '+'</h3></div>');
+	  			$("#title").append(title);
+	  			
+	  			var table =$('<table class="table"></table>');//전체 테이블 
+	  			$("#Content").append(table);
+	  			
+				var t_tr =$('<tr></tr>');//타이틀 tr
+				table.append(t_tr);
+				
+				var t_th1 =$('<th>'+'예약번호'+'</th>');//
+				var t_th2 =$('<th>'+'예약자명'+'</th>');//
+				var t_th3 =$('<th>'+'예약장소'+'</th>');//
+				var t_th4 =$('<th>'+'예약날짜'+'</th>');//
+				var t_th5 =$('<th>'+'예약 인원'+'</th>');//
+				var t_th6 =$('<th>'+'리뷰작성'+'</th>');//
+				t_tr.append(t_th1);
+				t_tr.append(t_th2);
+				t_tr.append(t_th3);
+				t_tr.append(t_th4);
+				t_tr.append(t_th5);
+				t_tr.append(t_th6);
+			
+				
+	  			for(i of data.hlist){
+	  				var cid = getFormatDate(i.reservation_checkin);
+	  				var subtr =$('<tr></tr>');
+		  			table.append(subtr);
+	  				
+	  				var t_td1 =$('<td>'+i.reservation_number+'</td>');//
+     				var t_td2 =$('<td>'+i.member_guestid+'님'+'</td>');//
+     				var t_td3 =$('<td>'+i.house_name+'</td>');//
+     				var t_td4 =$('<td>'+cid+'</td>');//
+     				var t_td5 =$('<td>'+i.reservation_person+'명'+'</td>');//
+     				var t_td6 =$('<td><button class="hreviewbtn btn btn-success" data-toggle="modal" data-target="#exampleModalhreview" data-resernum="'+i.reservation_number+'">리뷰작성</button></td>');//
+     				subtr.append(t_td1);
+     				subtr.append(t_td2);
+     				subtr.append(t_td3);
+     				subtr.append(t_td4);
+     				subtr.append(t_td5);
+     				subtr.append(t_td6);
+     				
+     				$(".hreview").attr("data-resernum",i.reservation_number);
+	  				
+	  			}
+	  			
+	  			for(i of data.flist){
+	  				
+	  				var rd = getFormatDate(i.foodreservation_date);
+	  				
+		  			var subtr =$('<tr></tr>');
+		  			table.append(subtr);
+		  				
+		  			var t_td1 =$('<td>'+i.foodreservation_number+'</td>');//
+		  			var t_td2 =$('<td>'+i.member_guestid+'님'+'</td>');//
+		  			var t_td3 =$('<td>'+i.food_name+'</td>');//
+		  			var t_td4 =$('<td>'+rd+'</td>');//
+		  			var t_td5 =$('<td>'+i.foodreservation_person+'명'+'</td>');//
+		  			var t_td6 =$('<td><button class="freviewbtn btn btn-success" data-toggle="modal" data-target="#exampleModalfreview" data-fresernum="'+i.foodreservation_number+'">리뷰작성</button></td>');//
+		  				subtr.append(t_td1);
+		  				subtr.append(t_td2);
+		  				subtr.append(t_td3);
+		  				subtr.append(t_td4);
+		  				subtr.append(t_td5);
+		  				subtr.append(t_td6);
+		  				
+		  				$(".freview").attr("data-fresernum",i.foodreservation_number);
+     				
+	  			}
+	  			
+	  			
+	  		},
+	           
+	           error:function(error){
+	                 console.log(error);
+	              }
+	     });//ajax 끝
+})//---------------------------------------------------------------리뷰 작성 끝 
+//hreviewbtn 숙박리뷰작성
+//freviewbtn 맛집리뷰작성 
+//ex_filename 파일
+//review_content 리플내용 
+$(document).on('click',".hreview",function(e){
+	var house_review_content = $("#hreview_content").val();
+	var house_review_orifile =$("#ex_filename").val();
+	var house_number = e.target.dataset.resernum
+	
+	var data = {
+			"house_review_content":house_review_content,
+			"house_review_orifile":house_review_orifile,
+			"house_number":house_number
+			}
+	
+	console.log(data)
+	
+	
+	$.ajaxSetup({         
+	      beforeSend : function(xhr){
+	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	      });//먼저 보냄
+
+	      $.ajax({
+	  		url:'myinfo/inserthreview',
+	  		type:'post',
+	  		data: data,
+	  	 	dataType:"json", //rest 컨트롤 이용	
+	  		success:function(data){
+	  		
+	  		},
+	           
+	           error:function(error){
+	                 console.log(error);
+	              }
+	     });//ajax 끝
+})
 
 
 
@@ -561,6 +760,14 @@ $(document).on('click','.fcbtn',function(e) {
 
 
 
+
+
+
+
+
+
+
+//----------------------------------------------------------------------------
 //날짜 포맷 변환기  str -> date ->str
 function getFormatDate(strdate){
    var date = new Date(strdate);
