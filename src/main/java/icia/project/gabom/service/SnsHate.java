@@ -4,6 +4,7 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpServerErrorException.GatewayTimeout;
 
 import com.google.gson.Gson;
@@ -20,9 +21,8 @@ public class SnsHate {
 	SnsHateDao snsHateDao;
 	@Autowired
 	SnsLikeDao snsLikeDao;
-
+	@Transactional
 	public String hate(Principal principal, int postNumber) {
-		String json = null;
 		SnsLikeHateCounter snsHate = new SnsLikeHateCounter();
 		snsHate.setMemberId(principal.getName()).setPostNumber(postNumber);
 		SnsLikeHateCounter snsHateInsert = new SnsLikeHateCounter();
@@ -42,7 +42,7 @@ public class SnsHate {
 		JsonObject	totalObject= new JsonObject();
 		totalObject.addProperty("hateTotal", hateTotal);
 		totalObject.addProperty("likeTotal", likeTotal);
-		return json=new Gson().toJson(totalObject);
+		return new Gson().toJson(totalObject);
 	}// hateEnd
 
 }

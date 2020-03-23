@@ -20,8 +20,6 @@ public class RestSnsMyPostController {
 	@PostMapping(value = "sns/mypost", produces = "application/json;charset=UTF-8")
 	public String myPost(@RequestParam("row") int row,Principal principal) {
 		
-		System.out.println("내글 보기 들어옴");
-		System.out.println(row);
 		String json=snsMyPost.myPost(row,principal);
 		return json;
 	}

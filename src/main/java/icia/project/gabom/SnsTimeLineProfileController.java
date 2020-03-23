@@ -1,5 +1,7 @@
 package icia.project.gabom;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,9 +16,9 @@ public class SnsTimeLineProfileController {
 	SnsTimeLineProfileBox snsTimeLineProfile; 
 	
 	@PostMapping(value = "/sns/timeline/profile", produces = "application/json;charset=UTF-8")
-	public String timeLineProFile(@RequestParam("id") String id) {
+	public String timeLineProFile(@RequestParam("id") String id,Principal principal) {
 		
-		String json=snsTimeLineProfile.profile(id);
+		String json=snsTimeLineProfile.profile(id,principal);
 		return json;
 	}
 	

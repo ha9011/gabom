@@ -33,7 +33,6 @@ public class SnsMyPost {
 	@Transactional
 	public String myPost(int low, Principal principal) {
 		String json = null;
-		System.out.println("내글 low"+low);
 		String id = principal.getName();
 		if(low==0) {
 			low=1;

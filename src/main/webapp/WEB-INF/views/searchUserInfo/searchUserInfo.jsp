@@ -294,7 +294,6 @@
 			.attr('role','alert').text('요청 오류');
 		});
 	}
-	
 	</script>
 </body>
 </html>
