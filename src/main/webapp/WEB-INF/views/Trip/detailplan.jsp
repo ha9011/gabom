@@ -178,7 +178,7 @@ font-size: 50px;
 			</div>
 			<div id="t_destination">
 				<button id="apiup" class="addbtn btn-lg btn-primary"
-					data-toggle="modal" data-target="#area_modal">장소추가</button>
+					data-toggle="modal" data-target="#area_modal" onclick="sigunguChange()">장소추가</button>
 				<!-- onclick="modal" -->
 				<button class="addbtn btn-lg btn-primary" onclick="memo()">메모추가</button>
 			</div>
@@ -198,7 +198,9 @@ font-size: 50px;
 							</button>
 						</div>
 						<div class="modal-body" id="api_search_body">
-							<select id="select_sigunguCode" name="sigunguCode" title="시군구선택" onchange="sigunguChange()"></select>
+							시군구선택<select id="select_sigunguCode" title="시군구선택" >
+
+							</select>
 							<table id="areatable"></table>
 
 						</div>
@@ -319,11 +321,148 @@ $("#apiup").on("click",function(e) {
 // 		}); //select function End
 
 
-//select 체인지 
-function sigunguChange() {
-	var 
-}
+//----------------------------------------select 체인지 -----------------------------------------
+	function sigunguChange() {
+		var SEOUL = ["강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구",	"송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"];
+		var INCHEON = ["강화군","계양구","미추홀구","남동구","동구","부평구","서구","연수구","웅진군","중구"];
+		var DAEJEON = ["대덕구","동구","서구","유성구","중구"];
+		var DAEGU = ["남구","달서구","달성군","동구","북구","서구","수성구","중구"];
+		var GWANGJU = ["광산구","남구","동구","북구","서구"];
+		var BUSAN = ["강서구","금서구","기장군","남구","동구","동래구","부산진구","북구","사상구","사하구","서구","수영구","연제구","영도구","중구","해운대구"];
+		var ULSAN = ["중구","남구","동구","북구","울주군"];
+		var SEJONG = ["새종특별자치시"];
+		var GYEONGGI = ["가평군","고양시","과천시","광명시","광주시","구리시","군포시","김포시","남양주시","동두천시","부천시","성남시","수원시","시흥시","안산시","안성시","안양시","양주시","양평군","여주시","연천군","오산시","용인시","의왕시","의정부시","이천시","파주시","평택시","포천시","하남시","화성시"];
+		var KANGWON = ["강릉시","고성군","동해시","삼척시","속초시","양구군","양양군","영월군","원주시","인제군","정선군","철원군","춘천시","태백시","평창군","홍천군","화천군","횡성군"];
+		var CHUNGBUK = ["괴산군","단양군","보은군","영동군","옥천군","음성군","제천시","진천군","청원군","청주시","충주시","증평군"];
+		var CHUNGNAM = ["공주시","금산군","논산시","당진시","보령시","부여군","서산시","서천군","아산시","예산군","천안시","청양군","태안군","홍성군","계룡시"];//아산시9, 예산군11
+		var GYUNGBUK = ["경산시","경주시","고령군","구미시","군위군","김천시","문경시","봉화군","상주시","성주군","안동시","영덕군","영양군","영주시","영천시","예천군","울릉군","울진군","의성군","청도군","청송군","칠곡군","포항시"];
+		var GYUNGNAM = ["거제시","거창군","고성군","김해시","남해군","마산시","밀양시","사천시","산청군","양산시","의령군","진주시","진해시","창녕군","창원시","통영시","하동군","함안군","함양군","합천군"];//양산시10,의령군12
+		var JEONBUK = ["고창군","군산시","김제시","남원시","무주군","부안군","순창군","완주군","익산시","임실군","장수군","전주시","정읍시","진안군"];
+		var JEONNAM = ["강진군","고흥군","곡성군","광양시","구례군","나주시","담양군","목포시","무안군","보성군","순천시","신안군","여수시","영광군","영암군","완도군","장성군","장흥군","진도군","함평군","해남군","화순군"];//여수시13, 영광군16
+		var JEJU = ["남제주군","북제주군","서귀포시","제주시"];
+		
+		var selectItem = areaCode;
+		console.log("selectItem=",selectItem);
+		var changeItem;
+		if(selectItem == 1){
+			changeItem = SEOUL;
+		}else if(selectItem == 2){
+			changeItem = INCHEON;
+		}else if(selectItem == 3){
+			changeItem = DAEJEON;
+		}else if(selectItem == 4){
+			changeItem = DAEGU;
+		}else if(selectItem == 5){
+			changeItem = GWANGJU;
+		}else if(selectItem == 6){
+			changeItem = BUSAN;
+		}else if(selectItem == 7){
+			changeItem = ULSAN;
+		}else if(selectItem == 8){
+			changeItem = SEJONG;
+		}else if(selectItem == 31){
+			changeItem = GYEONGGI;
+		}else if(selectItem == 32){
+			changeItem = KANGWON;
+		}else if(selectItem == 33){
+			changeItem = CHUNGBUK;
+		}else if(selectItem == 34){
+			changeItem = CHUNGNAM;
+		}else if(selectItem == 35){
+			changeItem = GYUNGBUK;
+		}else if(selectItem == 36){
+			changeItem = GYUNGNAM;
+		}else if(selectItem == 37){
+			changeItem = JEONBUK;
+		}else if(selectItem == 38){
+			changeItem = JEONNAM;
+		}else if(selectItem == 39){
+			changeItem = JEJU;
+		}
+		console.log("changeItem",changeItem);
+		console.log("selectItem=",selectItem);
+		$("#select_sigunguCode").empty();
+		var option = $("<option selected disabled>전체</option>");
+		$("#select_sigunguCode").append(option);
+		for(var count = 0; count<changeItem.length; count++){
+			var option1 = $('<option id="sigunguSelect" data-areacode="'+selectItem+'" data-sigungucode="'+changeItem[count]+'" value="'+changeItem[count]+'">'+changeItem[count]+'</option>');
+			$("#select_sigunguCode").append(option1);
+		}
+ 	};
+ 	//-------------------------------------------------------------시군구코드select ajax----------------------------------
+$(document).on("change","#select_sigunguCode", function (e){
+	console.log("클릭되니?");
+	var a =$("#select_sigunguCode option:selected");
+//	console.log("a:"+a);
+//	console.dir(a);
+	console.log("222",a[0].dataset.areacode);
+	console.log("223",a[0].dataset.sigungucode);
+	
+	var parms = {
+		"areaCode": a[0].dataset.areacode ,
+		"sigunguCode": a[0].dataset.sigungucode
+	}
+	console.log("parms",parms);
+	
+	$.ajaxSetup({
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");
+		}
+	});
+	console.log("지역검색 시작");
+	$.ajax({
+		url : 'sigungusearch',
+		type : 'get',
+		data : parms,
+		dataType : 'json',
+		success : function(msg) {
+			console.log(msg);
+			
+			$("#areatable").empty();
+			
+			let index = 1;
+			
+			let tr = $("<tr></tr>");
+			
+			console.log("size : " + msg.length);
+			console.log("몫 : " + parseInt(msg.length/3));
+			for(let i of msg){
+	
+				
+			    if(index%9===1 ){
+			    	let div = $("<div id='areadiv"+Math.ceil(index/9)+"' date-pagenum='"+Math.ceil(index/9)+"'></div>");
+			         $("#areatable").append(div); 
+			    }
 
+				let td = $('<td></td>');
+				let img = $("<img width='150px' height='150px' src='"+i.firstimage+"'>");
+				let a = $("<a href='apitest?contentid="+i.contentid+"', target='_blank'></a>");
+				a.append(img);
+				td.append(a);
+				tr.append(td);
+
+				if(index%3===0){
+					$("#areadiv"+Math.ceil(index/9)).append(tr);
+					tr = $("<tr></tr>")
+				}else if(index==msg.length){
+					$("#areadiv"+Math.ceil(index/9)).append(tr);
+					tr = $("<tr></tr>")
+				}
+           
+// 				if(index%9===0){
+			         
+// 			         $("#areatable").append(div);
+// 		   		 }
+           
+           		index++;                
+			}
+		},
+		error : function(jqXHR, status, e) {
+			console.log("지역검색 에러");
+		}
+	}); //ajax End
+	
+});
 
 
 
