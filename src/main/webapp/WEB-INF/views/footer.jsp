@@ -115,7 +115,6 @@
 	</div>
 	<div id="footer">여기는 footer 영역입니다.</div>
 	
-	
 	<div class="toast" data-autohide="false">
     <div class="toast-header">
       <strong class="mr-auto text-primary">알람이 왔습니다!!</strong>

@@ -17,5 +17,8 @@ public class SnsTimeLineProfileBoxDto {
 	private int post;
 	private int friend;
 	private int friendRequset;
+	private int friendStatus;
+	//상대가 나한테 신청했는지 본다.
+	private int reverse;
 	
 }

@@ -23,12 +23,6 @@
 	href="https://fonts.googleapis.com/css?family=Jua&display=swap&subset=korean"
 	rel="stylesheet">
 <style type="text/css">
-/* #showImage{
-/* background-image: url(resources/snsImage/sns3.jpg);*/
-/* z-index: 100;
-width: 100%;
-height: 700px;
-} */
 #snsMain {
 	background-image: url(resources/snsImage/cl3.jpg);
 	background-size: cover;
@@ -222,6 +216,7 @@ img.myImage {
 #snsTimeLineFilterBox {
 	background-image: url(resources/snsImage/cl4.jpg);
 	background-size: cover;
+	height: 150px;
 }
 
 #postsPhotoBox {
@@ -302,7 +297,7 @@ img.myImage {
 
 #commentImg {
 	width: 50px;
-	height:45px;
+	height: 45px;
 	margin-right: 10px;
 }
 
@@ -393,38 +388,157 @@ td a {
 .searchBar {
 	display: flex;
 }
-	#timeLineProfileBox{
-			display: flex;
-			font-family: 'Jua';
-			font-weight: bold;
-			font-size: 22px;
-			text-align: center;
-			background-image: url(resources/snsImage/yy.JPG);
-			background-size: cover;
-			color: white;
-			height: 150px;
-			border-radius: 20px;
-		}
-		#timeLineProfileBox img{
-			width: 150px;
-			margin: 0;
-		}
-		#timeLineProfileBox div{
-			margin-top: 32px;
-		}
-		#friendRequestBtn{
-			width: 200px;
-			font-family: 'Jua';
-			height: 40px;
-			border-radius: 10px;
-			color: #337ab7;
-			font-weight: bold;
-			font-size: 15px;
-		}
-		.friendRequestBtnBox{
-			margin-top: 10px;
-			align-items: center;
-		}
+
+#timeLineProfileBox {
+	display: flex;
+	font-family: 'Jua';
+	font-weight: bold;
+	font-size: 22px;
+	text-align: center;
+	background-image: url(resources/snsImage/yy.JPG);
+	background-size: cover;
+	color: white;
+	height: 150px;
+	border-radius: 20px;
+}
+
+#timeLineProfileBox div {
+	margin-top: 32px;
+	cursor: pointer;
+}
+
+#timeLineProfileBox img {
+	width: 170px;
+	margin: 0;
+	height: 150px;
+	margin: 0;
+}
+
+.friendRequestBtnBox .friendRequestBtn {
+	width: 200px;
+	font-family: 'Jua';
+	height: 40px;
+	border-radius: 10px;
+	color: #337ab7;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.friendRequestBtnBox {
+	margin-top: 10px;
+	align-items: center;
+}
+
+@media ( max-width :1200px) {
+	.timeLineProfileBoxName {
+		display: none;
+	}
+	.timeLineProfileBoxPost {
+		display: none;
+	}
+}
+
+.friendReqList {
+	text-align: center;
+	cursor: pointer;
+}
+
+.friendReqContent {
+	font-size: 22px;
+}
+
+.friendReqContent div {
+	margin-top: 55px;
+}
+
+.friendReqContent button {
+	width: 76px;
+	margin-left: 7px;
+	margin-right: 7px;
+	border-radius: 15px;
+}
+
+.friendListContent div {
+	margin-top: 20px;
+	margin-right: 70px;
+}
+
+.friendListContent button {
+	border-radius: 15px;
+}
+
+.friendList img {
+	margin-left: 30px;
+}
+
+.searchData {
+	margin-top: 15px;
+	padding-right: 170px;
+}
+
+.imgBox {
+	position: fixed;
+	left: 380px;
+	right: 380px; bottom : 100px;
+	z-index: 9999;
+	background-color: #337ab7;
+	color: #F0F0F0;
+	font-family: 'Jua';
+	font-size: 15px;
+	padding: 10px;
+	text-align: center;
+	border-radius: 10px;
+	bottom: 100px;
+}
+
+.imgBox img {
+	width: 100%;
+	height: auto;
+}
+
+#friendMore {
+	text-align: center;
+	background-color: #337ab7;
+	color: white;
+	width: 100%;
+	height: 32px;
+	border-radius: 8px;
+	display: none;
+}
+
+#friendMore a {
+	color: white;
+	font-family: 'Jua';
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#myPostMore {
+	text-align: center;
+	background-color: #337ab7;
+	color: white;
+	width: 100%;
+	height: 32px;
+	border-radius: 8px;
+	display: none;
+}
+
+#myPostMore a {
+	color: white;
+	font-family: 'Jua';
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.searchTot {
+	font-family: 'Jua';
+	font-size: 16px;
+	font-weight: bold;
+}
+.searchD{
+	color: #337ab7;
+
+}
 </style>
 <script type="text/javascript">
 $(window).scroll(function(){
@@ -459,34 +573,32 @@ $(function () {
 	<div class="container-fluid" id="snsMain">
 		<div class="container-fluid">
 			<div class="row">
-			
-			
 				<aside class="container col-xs-3 col-md-2 col-sm-3" id="snsAside">
 					<a href="#snsMain">TOP</a>
 					<div id="snsProfileImg">
-						<img src="" class="img-responsive img-thumbnail">
+						<img src="" class="img-responsive img-thumbnail"
+							onclick="asideRead()">
 					</div>
 					<br />
 					<div class="snsProfile">
 						<ul class="nav nav-pills nav-stacked">
 							<li><div id="snsProfileName"></div></li>
-							<li role="presentation" id="snsProfileNotice" onclick="notice()"><a
-								href="#;">알람</a></li>
+							<!-- <li role="presentation" id="snsProfileNotice" onclick="notice()"><a
+								href="#;">알람</a></li> -->
 							<li role="presentation" id="snsProfileInfo"><a href="#">정보수정</a></li>
 							<li role="presentation" id="snsFriendList"><a href="#">내친구</a></li>
 							<!-- <li role="presentation" id="snsProfileMyPosts"><a href="#">내글</a></li> -->
 						</ul>
 						<ul class="nav nav-pills nav-stacked">
 							<li role="presentation" class="active" id="snsWirte"><a
-								href="#;">글작성</a></li>
+								href="#">글작성</a></li>
 							<li role="presentation" class="active" id="timeLine"><a
-								href="#;">타임라인</a></li>
+								href="#">타임라인</a></li>
 							<li role="presentation" class="active" id="travelPlan"><a
 								href="#">여행계획</a></li>
 						</ul>
 					</div>
 				</aside>
-				
 				<div class="jumbotron col-xs-9 col-md-10 col-sm-9 pull-right"
 					id="snsTimeLine">
 					<div class="jumbotron" id="snsTimeLineFilterBox">
@@ -510,12 +622,274 @@ $(function () {
 					<div id="more">
 						<a href="#;">더보기</a>
 					</div>
+					<div id=friendMore>
+						<a href="#;">더보기</a>
+					</div>
+					<div id="myPostMore">
+						<a href="#;">더보기</a>
+					</div>
 				</div>
 			</div>
-			
+
 		</div>
 	</div>
 	<div class='info' style='display: none'>설정이 변경되었습니다.</div>
+	<div class="imgBox" style="display: none"></div>
+	<!-- 이미지 크게 -->
+	<script>
+	function resizeImg(osrc){
+				let make="";
+				make+='<div><img src="'+osrc+'" onclick="closeImgBox()"/></div>';
+				$(".imgBox").html(make);
+				$(".imgBox").fadeIn();
+		}
+	function closeImgBox() {
+		$(".imgBox").fadeOut();
+	}
+	</script>
+	<!-- 게시글 검색 결과 눌렀을때 -->
+	<script type="text/javascript">
+	function serachPost(postNumber) {
+		console.log(postNumber);
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+				method:'post',
+				url:"sns/search/post",
+				data:{"postNumber":postNumber},
+				dataType : "json"
+		}).done((json)=>{
+			makeTimeLine(json);
+		});			
+	}
+	</script>
+	<!-- 친구 목록 출력 -->
+	<script type="text/javascript">
+	function makeFriendList(json) {
+		$("#more").css("display","none");
+		$("#snsTimeLineMain").empty();
+		let table=$("<table>").addClass("table table-hover friendList").css("margin-top","26px");
+		let tbody=table.append("<tbody>");
+		let make="";
+		if(json.message=="친구가 없습니다."){
+			$('.info').text(json.message).fadeIn(400).delay(1000).fadeOut(400);
+		}else{
+		for(let k in json){
+			make+='<tr>';
+			make+='<td onclick="moveThisNamePost(\''+json[k].member_id+'\')">';
+			make+='<img src="'+json[k].member_profile_picture+'"';
+			make+='class="img-thumbnail img-responsive" style="width: 70px;height: 70px;"/>';
+			make+='</td>';
+			make+='<td class="friendListContent" onclick="moveThisNamePost(\''+json[k].member_id+'\')">';
+			make+='<div><a href="#;">'+json[k].member_id+'</a></div>';
+			make+='</td>';
+			make+='<td class="friendListContent">';
+			make+='<div><button type="button" class="btn-default"';
+			make+='onclick="friendCancel(\''+json[k].member_id+'\')">친구 해제</button></div>';
+			make+='</tr>';
+		}
+		}
+		tbody.append(make);
+		tbody.append(table);
+		table.appendTo($("#snsTimeLineMain"));
+		$("#snsTimeLineMain").hide();
+		$("#snsTimeLineMain").slideDown();
+	}
+	</script>
+	<!-- 친구 리스트 ajax-->
+	<script type="text/javascript">
+	function friendList(id) {
+		if(id==userId){
+			$.ajaxSetup({
+				beforeSend : function(xhr){
+		 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+			});//먼저 보냄
+			$.ajax({
+					method:'post',
+					url:"sns/friend/list",
+					data:{"id":userId},
+					dataType : "json"
+			}).done((json)=>{
+				makeFriendList(json);
+			});			
+		}else{
+			$('.info').text("본인만 이용 가능합니다.").css("background-color","red").fadeIn(400).delay(1000)
+			.fadeOut(400,function(){
+			$('.info').css("background-color","#337ab7");
+			});
+		}
+	}
+	</script>
+	<!-- 친구 수락 -->
+	<script type="text/javascript">
+	function friendAccept(id) {
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+				method:'post',
+				url:"sns/friend/request/accept",
+				data:{"id":id},
+				dataType : "json"
+		}).done((json)=>{
+			makeTimeLineProfile(id);
+			moveThisNamePost(id);
+			$('.info').text(json.message).fadeIn(400).delay(1000).fadeOut(400);
+		});			
+	}
+	</script>
+	<!-- 친구 요청 목록 출력 -->
+	<script type="text/javascript">
+	function requestPrint(json) {
+		$("#more").css("display","none");
+		$("#snsTimeLineMain").empty();
+		let table=$("<table>").addClass("table table-hover friendReqList").css("margin-top","26px");
+		let tbody=table.append("<tbody>");
+		let make="";
+		if(json.message=="요청이 없습니다."){
+			$('.info').text(json.message).fadeIn(400).delay(1000).fadeOut(400);
+		}else{
+		for(let k in json){
+			make+='<tr class="'+k+'">';
+			make+='<td onclick="moveThisNamePost(\''+json[k].member_id+'\')">';
+			make+='<img src="'+json[k].member_profile_picture+'"';
+			make+='class="img-thumbnail img-responsive" style="width: 150px;height: 150px;"/>';
+			make+='</td>';
+			make+='<td class="friendReqContent" onclick="moveThisNamePost(\''+json[k].member_id+'\')">';
+			make+='<div><a href="#;">'+json[k].member_id+'</a></div>';
+			make+='</td>';
+			make+='<td class="friendReqContent">';
+			make+='<div><button type="button" class="btn-default" onclick="friendAccept(\''+json[k].member_id+'\',\''+k+'\')">수락</button><span>';
+			make+='<button type="button" class="btn-default">거절</button></span></div>';
+			make+='</tr>';
+		}
+		}
+		tbody.append(make);
+		tbody.append(table);
+		table.appendTo($("#snsTimeLineMain"));
+		$("#snsTimeLineMain").hide();
+		$("#snsTimeLineMain").slideDown();
+	}
+	</script>
+	<!-- 친구 요청 목록 -->
+	<script type="text/javascript">
+	function friendRequestTot(id) {
+		if(id==userId){
+			$.ajaxSetup({
+				beforeSend : function(xhr){
+		 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+			});//먼저 보냄
+			$.ajax({
+					method:'post',
+					url:"sns/friend/request/sum",
+					data:{"id":userId},
+					dataType : "json"
+			}).done((json)=>{
+				requestPrint(json);
+			});			
+		}else{
+			$('.info').text("본인만 이용 가능합니다.").css("background-color","red").fadeIn(400).delay(600)
+			.fadeOut(400,function(){
+			$('.info').css("background-color","#337ab7");
+			});
+		}
+	}
+	</script>
+	<!-- 친구 요청 취소 -->
+	<script type="text/javascript">
+	function friendRequestStatus(id) {
+		if(confirm("취소 하시겠습니까?")){
+			$.ajaxSetup({
+				beforeSend : function(xhr){
+		 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+			});//먼저 보냄
+			$.ajax({
+					method:'post',
+					url:"sns/friend/request/cancel",
+					data:{"friendId":id},
+					dataType : "json"
+			}).done((msgJson)=>{
+				moveThisNamePost(id);
+				$('.info').text(msgJson.message).fadeIn(400).delay(1000).fadeOut(400);
+			});		
+		}
+	}	
+	
+	</script>
+	<!-- 친구 요청 -->
+	<script type="text/javascript">
+	function friendRequest(id){
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+				method:'post',
+				url:"sns/friend/request",
+				data:{"friendId":id},
+				dataType : "json"
+		}).done((userJson)=>{
+			$('.info').text(userJson.message).fadeIn(400).delay(1000).fadeOut(400);
+			moveThisNamePost(id);
+		});
+	}	
+	
+	</script>
+	<!-- 친구 해제 -->
+	<script type="text/javascript">
+	function friendCancel(friendId) {
+		console.log(friendId);
+		if(confirm("친구 상태를 해제하시겠습니까?")){
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+				method:'post',
+				url:"sns/friend/cancel",
+				data:{"friendId":friendId},
+				dataType : "json"
+		}).done((msgJson)=>{
+			$('.info').text(msgJson.message).fadeIn(400).delay(1000).fadeOut(400);
+			moveThisNamePost(friendId);
+		});
+		}
+	}
+	
+	</script>
+	<!-- 다른사람 글 보기 -->
+	<script type="text/javascript">
+	var userPostRow=1;
+	function moveThisNamePost(id) {
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+		});//먼저 보냄
+		let userPostData={
+				"id":id,
+				"row":userPostRow
+		}
+		$.ajax({
+				method:'post',
+				url:"sns/user/posts",
+				data:userPostData,
+				dataType : "json"
+		}).done((userJson)=>{
+			makeTimeLine(userJson);
+			makeTimeLineProfile(id);
+			$("#more").css("display","none");
+			$("#myPostMore").css("display", "none");
+			$("#friendMore").css("display", "block");
+		});
+		$("#friendMore").click(function () {
+		userPostRow++;
+		moveThisNamePost(id);
+		});
+	}	
+	</script>
 	<!-- 타임라인내 프로필 -->
 	<script type="text/javascript">
 	function makeTimeLineProfile(id) {
@@ -532,19 +906,45 @@ $(function () {
 				make(profileJson);
 		});
 		function make(json) {
-			console.log("프로필토탈",json);
 			let make="";
 			make+='<div class="container" id="timeLineProfileBox">';
-			make+='<img src="'+json.pic+'" class="img-thumbnail img-responsive">';
-			make+='<div class="container">아이디<br/><br/>'+json.id+'</div>';
-			make+='<div class="container">이름<br/><br/>'+json.name+'</div>';
-			make+='<div class="container">게시글<br/><br/>'+json.post+'</div>';
-			make+='<div class="container">친구<br/><br/>'+json.friend+'</div>';
-			make+='<div class="container">친구 요청<br/><br/>'+json.friendRequset+'</div>';
+			make+='<img src="'+json.pic+'" class="img-thumbnail img-responsive" onclick=resizeImg(this.src)>';
+			make+='<div class="container timeLineProfileBoxId">아이디';
+				if(json.friendStatus==2&&userId!=json.id){
+					make+='<i class="fas fa-star" style="color:gold"></i>';
+				}
+			make+='<br/><br/>'+json.id+'</div>';
+			make+='<div class="container timeLineProfileBoxName">이름<br/><br/>'+json.name+'</div>';
+			make+='<div class="container timeLineProfileBoxPost">게시글<br/><br/>'+json.post+'</div>';
+			make+='<div class="container timeLineProfileBoxFriend" onclick="friendList(\''+json.id+'\')">친구<br/><br/>'+json.friend+'</div>';
+			make+='<div class="container timeLineProfileBoxRequest" onclick=friendRequestTot(\''+json.id+'\')>';
+			make+='친구 요청<br/><br/>'+json.friendRequset+'</div>';
 			make+='</div>';
-			//make+='<div class="container friendRequestBtnBox">';
-			//make+='<button type="button" class="btn-default pull-right" id="friendRequestBtn">';
-			//make+='친구 신청</button></div>';
+			if(json.reverse==1){
+				make+='<div class="container friendRequestBtnBox">';
+				make+='<button type="button" class="btn-default pull-right friendRequestBtn">거절</button><span>';
+				make+='<button type="button" class="btn-default pull-right friendRequestBtn" onclick="friendAccept(\''+json.id+'\')">수락</button></span>';
+				make+='</div>';
+			}
+			else if(json.friendStatus==0&&userId!=json.id){
+				make+='<div class="container friendRequestBtnBox">';
+				make+='<button type="button" class="btn-default pull-right friendRequestBtn"';
+				make+='onclick="friendRequest(\''+json.id+'\')">';
+				make+='친구 신청</button></div>';
+			}
+			else if(json.friendStatus==1&&userId!=json.id){
+				make+='<div class="container friendRequestBtnBox">';
+				make+='<button type="button" class="btn-default pull-right friendRequestBtn"';
+				make+='onclick="friendRequestStatus(\''+json.id+'\')">';
+				make+='요청중</button>';
+				make+='</div>';
+			}
+			else if(json.friendStatus==2&&userId!=json.id){
+				make+='<div class="container friendRequestBtnBox">';
+				make+='<button type="button" class="btn-default pull-right friendRequestBtn"';
+				make+='onclick="friendCancel(\''+json.id+'\')">';
+				make+='친구 해제</button></div>';
+			}
 			$("#timeLineProfileBoxTot").html(make);
 			$("#timeLineProfileBoxTot").hide();
 			$("#timeLineProfileBoxTot").slideDown();
@@ -553,10 +953,12 @@ $(function () {
 	</script>
 	<!-- 어사이드 유저 이름 클릭 -->
 	<script type="text/javascript">
-	$("#snsProfileName").on("click",function(e){
-		let asideUserId=e.target.text;
-		//userTimeLine(asideUserId);
-		if(userId==asideUserId){
+	var asideRow=1;
+	$("#snsProfileName").on("click",function(){
+		asideRead();
+	});
+		function asideRead() {
+			console.log(asideRow);
 			$.ajaxSetup({
 				beforeSend : function(xhr){
 		 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
@@ -564,27 +966,24 @@ $(function () {
 			$.ajax({
 					method:'post',
 					url:"sns/mypost",
-					data:{"row":low},
+					data:{"row":asideRow},
 					dataType : "json"
 			}).done((myPostJson)=>{
-				makeTimeLineProfile(asideUserId);
+				makeTimeLineProfile(userId);
 				makeTimeLine(myPostJson);
+				$("#more").css("display","none");
+				$("#friendMore").css("display", "none");
+				$("#myPostMore").css("display", "block");
 			});
 		}
-	});
-	</script>	
-	<!-- 유저 정보와 글 출력 -->
-	<script type="text/javascript">
-	function userTimeLine(memberId) {
-					
-		
-	}
+		$("#myPostMore").click(function() {
+			asideRow++;
+			asideRead();
+		})
 	</script>
 	<!-- 댓글삭제 -->
 	<script type="text/javascript">
 		function commentDel(postNum,commentNum) {
-			console.log("삭제",commentNum);
-			console.log(postNum);
 			if(confirm("삭제 하시겠습니까?")){
 				$.ajaxSetup({
 					beforeSend : function(xhr){
@@ -657,19 +1056,36 @@ $(function () {
 	</script>
 	<!-- 검색 서비스 -->
 	<script type="text/javascript">
+	let searchPostRow=1;
+	let searchFriendRow=1;
 function search(searchData) {
 	$.ajaxSetup({
 		beforeSend : function(xhr){
  		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
 	});//먼저 보냄
+	let searchTotData={
+			"searchData":searchData,
+			"postRow":searchPostRow,
+			"friendRow":searchFriendRow
+	}
 	$.ajax({
 			method:'post',
 			url:"sns/search",
-			data:{"searchData":searchData},
+			data:searchTotData,
 			dataType : "json"
 	}).done((searchJson)=>{
 		makeSearchList(searchJson,searchData);
 	});
+	$(document).on("click","#postMoreBtn",function(){
+		searchPostRow++;
+		search(searchData);
+	});
+	searchPostRow=1;
+	$(document).on("click","#friendMoreBtn",function(){
+		searchFriendRow++;
+		search(searchData);
+	});
+	searchFriendRow=1;
 }
 	</script>
 	<!-- 검색 결과 출력 -->
@@ -679,39 +1095,51 @@ function search(searchData) {
 		$("#timeLineProfileBoxTot").empty();
 		$("#snsTimeLineMain").empty();
 		$("#more").css("display","none");
-		let $tot=$("<div>").addClass("container");
-		let $friend=$("<div>")
-		.addClass("container")
-		.text("\""+data+"\"에 관련된 친구 검색 결과");
+		let $tot=$("<div>").addClass("container searchTot");
+		let $friend=$("<div>").addClass("container")
+		.html("<div style='display:flex;margin-bottom:20px;'><div class=searchD>\""+data+"\"</div>에 관련된 친구 검색 결과</div>");
 		let str="";
 		str+='<table class="table table-hover table-responsive">';
 		str+='<tbody>';
-		if(json["friendList"]==undefined){
+		if(json["friendList"].length==0){
 		str+='<tr>';
 		str+='<td style="width: 600px;">검색 결과가 없습니다.</td>';
 		str+='</tr>';
 		}else{
 		for(let k in json["friendList"]){
 		str+='<tr>';
-		str+='<td style="width: 600px;">';
+		str+='<td>';
 		str+='<img src="'+json["friendList"][k]["pic"]+'" class="img-thumbnail img-responsive img-circle"';
 		str+='style="width: 66px;height: 60px;">';
-		str+='<a href="#;">'+json["friendList"][k]["id"]+'</a></td>';
+		str+='</td>';
+		str+='<td>';
+		str+='<div class="searchData">';
+		str+='<a href="#;">'+json["friendList"][k]["id"]+'</a></div></td>';
 		str+='<td id="friendBtn">';
 		if(json["friendList"][k]["id"]==userId){
-			str+='<button type="button" class="btn btn-primary">내 글</button>';
+			str+='<div class="searchData">';
+			str+='<button type="button" class="btn btn-primary" onclick="moveThisNamePost(\''+userId+'\')">내 글</button>';
+			str+='</div>';		
 		}
-		if(json["friendList"][k]["status"]==0){
-		str+='<button type="button" class="btn btn-primary">친구신청</button>';
+		if(json["friendList"][k]["status"]==0&&json["friendList"][k]["id"]!=userId){
+			str+='<div class="searchData">';
+			str+='<button type="button" class="btn btn-primary" onclick=friendRequest(\''+json["friendList"][k]["id"]+'\')>친구신청</button>';
+			str+='</div class="searchData">';
 		}
 		if(json["friendList"][k]["status"]==1){
-			str+='<button type="button" class="btn btn-primary">요청완료</button>';	
+			str+='<div class="searchData">';
+			str+='<button type="button" class="btn btn-primary" onclick="friendRequestStatus(\''+json["friendList"][k]["id"]+'\')">요청중</button>';	
+			str+='</div>';
 		}
 		if(json["friendList"][k]["status"]==2&&json["friendList"][k]["id"]!=userId){
-			str+='<button type="button" class="btn btn-primary">친구</button>';
+			str+='<div class="searchData">';
+			str+='<button type="button" class="btn btn-primary" onclick=friendCancel(\''+json["friendList"][k]["id"]+'\')>친구 해제</button>';
+			str+='</div>';
 		}
 		if(json["friendList"][k]["status"]==3){
+			str+='<div class="searchData">';
 			str+='<button type="button" class="btn btn-primary">차단 해제</button>';
+			str+='</div>';
 		}
 		str+='</td>';
 		str+='</tr>';
@@ -719,18 +1147,18 @@ function search(searchData) {
 		}
 		str+='</tbody>';
 		str+='</table>';
-		str+='<div class="pull-right"><a href="#;">친구 더보기</a></div>';
+		str+='<div class="pull-right"><a href="#;" id="friendMoreBtn">친구 더보기</a></div>';
 		str+='<hr/><br/><br/>';
-		str+='\"'+data+'\"에 관련된 게시글 검색 결과';
+		str+='<div style="display:flex; margin-bottom:20px;"><div class=searchD>\"'+data+'\"</div>에 관련된 게시글 검색 결과</div>';
 		str+='<table class="table table-hover table-responsive">';
 		str+='<tbody>';
-		if(json["publicPost"]==undefined){
+		if(json["publicPost"].length==0){
 			str+='<tr>';
 			str+='<td style="width: 600px;">검색 결과가 없습니다.</td>';
 			str+='</tr>';
 			}else{
 		for(let k in json["publicPost"]){
-		str+='<tr>';
+		str+='<tr onclick="serachPost(\''+json["publicPost"][k]["postNumber"]+'\')">';
 		str+='<input type="hidden" value="'+json["publicPost"][k]["postNumber"]+'">';
 		str+='<td><a href="#;">'+json["publicPost"][k]["contents"]+'</a></td>';
 		str+='<td>'+json["publicPost"][k]["date"]+'</td>';
@@ -739,7 +1167,7 @@ function search(searchData) {
 			}
 		str+='</tbody>';
 		str+='</table>';
-		str+='<div class="pull-right"><a href="#;">게시글 더보기</a></div>';
+		str+='<div class="pull-right"><a href="#;" id="postMoreBtn">게시글 더보기</a></div>';
 		$friend.append(str);
 		$friend.appendTo($tot);
 		$("#snsTimeLineMain").html($tot);
@@ -785,6 +1213,7 @@ function search(searchData) {
 	$("#timeLine").click(function () {
 	setTimeLine();		
 	$("#more").css("display","block");
+	$("#timeLineProfileBoxTot").empty();
 	}
 	);
 	
@@ -792,11 +1221,11 @@ function search(searchData) {
 	</script>
 	<!-- 알람 -->
 	<script type="text/javascript">
-		function notice() {
+	/* 	function notice() {
 			$("#more").css("display","none");
 			$("#snsTimeLineMain").empty();
 			$("#snsTimeLineMain").text("asdasdasdasdas");
-		}
+		} */
 	</script>
 	<!-- 글 수정 스크립트 -->
 	<script type="text/javascript">
@@ -1085,7 +1514,7 @@ function infoSecurity(e) {
 		}else{
 		$timeLine += '<div class="jumbotron" id="posts">';
 		}
-		$timeLine += '<div class="row">';
+		$timeLine += '<div class="row" onclick="moveThisNamePost(\''+timeLineJson[j]["posts_writer"]+'\')">';
 		$timeLine += '<a href="#;"><img src='+timeLineJson[j]["profilePicture"]+' class="img-responsive col-xs-4 col-md-2 col-sm-4 myImage" id="timeLineProfile"></a>';
 		$timeLine += '<div id="snsMember_id"><a href="#;">'+timeLineJson[j]["posts_writer"]+'</a> 님의 글</div>';
 		$timeLine += '<input type="hidden" value='+timeLineJson[j]["posts_number"]+' id="posts_number">';
@@ -1094,7 +1523,7 @@ function infoSecurity(e) {
 		if(userId==timeLineJson[j]["posts_writer"]){
 		$timeLine += '<a href="#;" id="postdel'+timeLineJson[j]["posts_number"]+'" onclick="postDelete(this)">삭제</a>';
 		}else{
-		$timeLine += '<a href="#;">신고</a>';
+		$timeLine += '<a href="#;" onclick="reportPost(\''+timeLineJson[j]["posts_number"]+'\')">신고</a>';
 		}
 		if(userId==timeLineJson[j]["posts_writer"]){
 		$timeLine += '<div class="container col-xs-5 col-md-3 col-sm-5 pull-right">';
@@ -1142,12 +1571,11 @@ function infoSecurity(e) {
 		$('#snsTimeLineMain').append($timeLine);
 		 for(var k=0;k<timeLineJson[j]["photoList"].length;k++){
 		let $snsPostsImageBox=$("<div class='cover'>");
-		let $postsimageBox=$('<img class="img-thumbnail img-responsive">');
+		let $postsimageBox=$('<img class="img-thumbnail img-responsive" onclick="resizeImg(this.src)">');
 		$postsimageBox.attr("src","resources/snsPostsImage/"+timeLineJson[j]["photoList"][k]["sns_photo_origin_name"]);
 		$postsimageBox.appendTo($snsPostsImageBox);
 		$snsPostsImageBox.appendTo($("#"+j));
 		}
-		
 		 }
 		 
 	}
@@ -1252,22 +1680,6 @@ $.ajax({
 	  setTimeLine();
 	  $("#more").html('<a href="#;">더보기</a>');
  });
- 
- 
- 
- 
-/* //스크롤 바닥 감지
-    $(window).scroll(function(){
-        let $window = $(this);
-        let scrollTop = $window.scrollTop();
-        let windowHeight = $window.height();
-        let documentHeight = $(document).height();
-        // scrollbar의 thumb가 바닥 전 20px까지 도달 하면 리스트를 가져온다.
-        if( scrollTop + windowHeight +20> documentHeight ){
-        	  setTimeLine();
-        	  low++;
-        }
-    });  */
 </script>
 	<!-- 타임라인 Ajax -->
 	<script type="text/javascript">
