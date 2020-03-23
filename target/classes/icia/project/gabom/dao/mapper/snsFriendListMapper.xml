@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.SnsFriendListDao">
+	<select id="get" resultType="member">
+	SELECT SF.FRIEND_ID MEMBER_ID,
+		MB.MEMBER_PROFILE_PICTURE
+		FROM SNS_FRIEND SF
+		LEFT JOIN MEMBER MB
+		ON SF.FRIEND_ID=MB.MEMBER_ID
+		WHERE FRIEND_MY_ID=#{id} AND SF.FRIEND_STATUS=2
+	</select>
+</mapper>

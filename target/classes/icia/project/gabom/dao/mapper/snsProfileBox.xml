@@ -28,4 +28,8 @@
 	SELECT FRIEND_STATUS 
 	FROM SNS_FRIEND WHERE FRIEND_MY_ID=#{id} AND FRIEND_ID=#{userId}
 	</select>
+	<select id="reverse" resultType="friend">
+	SELECT FRIEND_STATUS 
+	FROM SNS_FRIEND WHERE FRIEND_MY_ID=#{userId} AND FRIEND_ID=#{id}
+	</select>
 </mapper>

@@ -151,9 +151,9 @@
 	<br/>
 	</div>
 </div>
-<div>
+<%-- <div>
 	<jsp:include page="/WEB-INF/views/footer.jsp"/>
-</div>
+</div> --%>
 	<script type="text/javascript">
 	let result="${message.message}"
 		if(result!=''&&result!=undefined){

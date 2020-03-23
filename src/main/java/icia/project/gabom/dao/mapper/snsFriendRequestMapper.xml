@@ -26,4 +26,11 @@
 	UPDATE SNS_FRIEND SET FRIEND_STATUS=2 
 	WHERE FRIEND_ID=#{id} AND FRIEND_MY_ID=#{userId}
 	</update>
+	<update id="acceptCheck2">
+	UPDATE SNS_FRIEND SET FRIEND_STATUS=2 
+	WHERE FRIEND_ID=#{userId} AND FRIEND_MY_ID=#{id}
+	</update>
+	<insert id="acceptInsert">
+	INSERT INTO SNS_FRIEND VALUES(#{id},#{userId},2)
+	</insert>
 </mapper>

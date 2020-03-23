@@ -25,11 +25,13 @@ public class SnsTimeLineProfileBox {
 		SnsProfilePost profilePost=snsTimeLineProfileDao.profilePost(id);
 		if(profilePost!=null||profilePost==null) {
 			Sns_friend friendStatus=snsTimeLineProfileDao.friendStatus(id,principal.getName());
-			if(friendStatus==null||friendStatus!=null) {
+			Sns_friend reverseStatus=snsTimeLineProfileDao.reverse(id,principal.getName());
+			if(friendStatus==null||friendStatus!=null
+					||reverseStatus==null||reverseStatus!=null) {
 				Sns_friend friend=snsTimeLineProfileDao.friendTot(id);
 				Sns_friend friendRequest=snsTimeLineProfileDao.friendRequest(id);
 				result= new SnsTimeLineProfileBoxDto();
-				result=setResult(profilePost,friend,friendRequest,result,friendStatus);
+				result=setResult(profilePost,friend,friendRequest,result,friendStatus,reverseStatus);
 			}
 		}
 		
@@ -39,7 +41,7 @@ public class SnsTimeLineProfileBox {
 	private SnsTimeLineProfileBoxDto setResult(SnsProfilePost profilePost,
 			Sns_friend friend,
 			Sns_friend friendRequest,
-			SnsTimeLineProfileBoxDto result, Sns_friend friendStatus) {
+			SnsTimeLineProfileBoxDto result, Sns_friend friendStatus, Sns_friend reverseStatus) {
 			result.setId(profilePost.getId()).setName(profilePost.getName())
 			.setPic(profilePost.getPic()).setContent(profilePost.getContent())
 			.setPost(profilePost.getPost()).setFriend(friend.getFriend_status())
@@ -48,6 +50,11 @@ public class SnsTimeLineProfileBox {
 				result.setFriendStatus(0);
 			}else {
 				result.setFriendStatus(friendStatus.getFriend_status());
+			}
+			if(reverseStatus==null) {
+				result.setReverse(0);
+			}else {
+				result.setReverse(reverseStatus.getFriend_status());
 			}
 		return result;
 	}

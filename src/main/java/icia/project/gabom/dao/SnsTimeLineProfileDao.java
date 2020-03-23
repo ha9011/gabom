@@ -16,4 +16,6 @@ public interface SnsTimeLineProfileDao {
 
 	Sns_friend friendStatus(@Param("userId")String userId,@Param("id") String id);
 
+	Sns_friend reverse(@Param("userId")String userId,@Param("id") String id);
+
 }

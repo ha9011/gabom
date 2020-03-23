@@ -110,9 +110,9 @@ section .overlay {
 	<jsp:include page="/WEB-INF/views/video.jsp"/>
 </div>
  --%>
-<div>
+<%-- <div>
 	<jsp:include page="/WEB-INF/views/footer.jsp"/>
-</div>
+</div> --%>
 
 
 </body>

@@ -20,4 +20,6 @@ public interface SnsFriendRequestDao {
 
 	int acceptCheck2(@Param("userId") String friendId,@Param("id") String id);
 
+	boolean acceptInsert(@Param("userId") String friendId,@Param("id") String id);
+
 }
