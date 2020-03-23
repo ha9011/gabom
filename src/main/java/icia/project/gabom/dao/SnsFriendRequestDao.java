@@ -16,5 +16,8 @@ public interface SnsFriendRequestDao {
 
 	List<Member> sum(@Param("id") String id);
 
+	int acceptCheck(@Param("userId") String friendId,@Param("id") String id);
+
+	int acceptCheck2(@Param("userId") String friendId,@Param("id") String id);
 
 }

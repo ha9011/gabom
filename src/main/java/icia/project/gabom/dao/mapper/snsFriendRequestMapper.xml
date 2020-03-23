@@ -22,4 +22,8 @@
 		ON SF.FRIEND_MY_ID=MB.MEMBER_ID
 		WHERE FRIEND_ID=#{id} AND SF.FRIEND_STATUS=1
 	</select>
+	<update id="acceptCheck">
+	UPDATE SNS_FRIEND SET FRIEND_STATUS=2 
+	WHERE FRIEND_ID=#{id} AND FRIEND_MY_ID=#{userId}
+	</update>
 </mapper>

@@ -61,7 +61,7 @@ public class JoinMemberManageMent {
 		
 		}else {
 			System.out.println("파일없음");
-			member_profile_original = "bagicProfile.jpg";
+			member_profile_original = "basicprofile.jpg";
 			System.out.println("member_profile_original : "+member_profile_original); //member_profile_picture : loginpic.jpg
 			member_profile_picture= "./resources/userprofileimage/upload/"+member_profile_original;
 		

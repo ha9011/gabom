@@ -437,6 +437,21 @@ td a {
 		display: none;
 	}
 }
+.friendReqList{
+text-align: center;
+cursor: pointer;
+}
+.friendReqContent{
+	font-size: 22px;
+}
+.friendReqContent div{
+margin-top: 55px;}
+.friendReqContent button{
+width: 76px;
+margin-left: 7px;
+margin-right: 7px;
+border-radius: 15px;
+}
 </style>
 <script type="text/javascript">
 $(window).scroll(function(){
@@ -526,15 +541,57 @@ $(function () {
 		</div>
 	</div>
 	<div class='info' style='display: none'>설정이 변경되었습니다.</div>
+	<!-- 친구 수락 -->
+	<script type="text/javascript">
+	function friendAccept(id) {
+		alert(id);
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+				method:'post',
+				url:"sns/friend/request/accept",
+				data:{"id":id},
+				dataType : "json"
+		}).done((json)=>{
+			console.log(json);
+		});			
+		
+		
+	}
+	
+	
+	
+	</script>
 	<!-- 친구 요청 목록 출력 -->
 	<script type="text/javascript">
 	function requestPrint(json) {
+		console.log(json);
+		$("#more").css("display","none");
 		$("#snsTimeLineMain").empty();
-		$("#snsTimeLineMain").html(json);
-		
-		
-		
-		
+		let table=$("<table>").addClass("table table-hover friendReqList").css("margin-top","26px");
+		let tbody=table.append("<tbody>");
+		let make="";
+		for(let k in json){
+			make+='<tr>';
+			make+='<td>';
+			make+='<img src="'+json[k].member_profile_picture+'"';
+			make+='class="img-thumbnail img-responsive" style="width: 150px;height: 150px;"/>';
+			make+='</td>';
+			make+='<td class="friendReqContent">';
+			make+='<div><a href="#;">'+json[k].member_id+'</a></div>';
+			make+='</td>';
+			make+='<td class="friendReqContent">';
+			make+='<div><button type="button" class="btn-default" onclick="friendAccept(\''+json[k].member_id+'\')">수락</button><span>';
+			make+='<button type="button" class="btn-default">거절</button></span></div>';
+			make+='</tr>';
+		}
+		tbody.append(make);
+		tbody.append(table);
+		table.appendTo($("#snsTimeLineMain"));
+		$("#snsTimeLineMain").hide();
+		$("#snsTimeLineMain").slideDown();
 	}
 	
 	

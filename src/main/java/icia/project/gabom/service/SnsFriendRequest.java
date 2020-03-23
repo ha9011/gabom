@@ -35,7 +35,7 @@ public class SnsFriendRequest {
 		return new Gson().toJson(result);
 	}
 
-
+	@Transactional
 	public String cancel(String friendId, Principal principal) {
 		JsonObject result=null;
 		int checkResult=snsFriendRequestDao.cancel(friendId,principal.getName());
@@ -49,7 +49,7 @@ public class SnsFriendRequest {
 		return new Gson().toJson(result);
 	}
 
-	
+	@Transactional
 	public String sum(String id) {
 		List<Member> memberList=snsFriendRequestDao.sum(id);
 		if(memberList.size()==0) {
@@ -58,6 +58,14 @@ public class SnsFriendRequest {
 			return new Gson().toJson(result);
 		}
 		return new Gson().toJson(memberList);
+	}
+	@Transactional
+	public String accept(String userId, Principal principal) {
+		int check=snsFriendRequestDao.acceptCheck(userId,principal.getName());
+		if(check==0) {
+			
+		}
+		return null;
 	}
 
 }
