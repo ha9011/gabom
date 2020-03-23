@@ -2,46 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="icia.project.gabom.dao.ITripplanDao">
-   
-   <insert id="savetripplan" parameterType="trip">
-      INSERT INTO TRIP_PLAN VALUES(SEQ_TRIP_PLAN.nextval,#{trip_id},#{trip_title},#{trip_area},#{trip_start_date},#{trip_end_date})
-      <selectKey keyProperty="trip_number" resultType="integer" order="AFTER">
-            SELECT SEQ_TRIP_PLAN.CURRVAL FROM DUAL
-      </selectKey>
-   </insert>
-   
-   <insert id="savetripdate" parameterType="tripdate">
-      INSERT INTO TRIP_PLAN_DATE VALUES(#{date},#{trip_number2},#{index})
-   </insert>
 
-	 <insert id="togetherplan" parameterType="trfriend">
-      INSERT INTO TRIP_MEMBER VALUES(#{trip_number},#{share_id},0)
-     </insert>
-   	
-   	<select id="requestmember" resultType="trfriend">
-   		select TP.TRIP_TITLE, TP.TRIP_ID, TM.SHARE_ID, TM.TRIP_TYPE 
-   		from TRIP_PLAN TP, TRIP_MEMBER TM 
-   		where TP.TRIP_NUMBER=TM.TRIP_NUMBER AND TRIP_ID=#{trip_id} AND TM.TRIP_TYPE=0
-   	</select>
-   	
-   	<select id="requestme" resultType="trfriend">
-   		select TP.TRIP_TITLE, TP.TRIP_ID, TM.SHARE_ID, TM.TRIP_TYPE,TP.TRIP_NUMBER 
-   		from TRIP_PLAN TP, TRIP_MEMBER TM 
-   		where TP.TRIP_NUMBER=TM.TRIP_NUMBER AND SHARE_ID=#{trip_id} AND TM.TRIP_TYPE=0
-   	</select>
-   	
-   	<select id="getmyplan" resultType="trfriend" >
-   		SELECT  TP.TRIP_NUMBER,TP.TRIP_ID,TP.TRIP_TITLE, TP.TRIP_AREA, TP.TRIP_START_DATE, tp.trip_end_date
+	<insert id="savetripplan" parameterType="trip">
+		INSERT INTO TRIP_PLAN
+		VALUES(SEQ_TRIP_PLAN.nextval,#{trip_id},#{trip_title},#{trip_area},#{trip_start_date},#{trip_end_date})
+		<selectKey keyProperty="trip_number" resultType="integer"
+			order="AFTER">
+			SELECT SEQ_TRIP_PLAN.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<insert id="savetripdate" parameterType="tripdate">
+		INSERT INTO TRIP_PLAN_DATE VALUES(#{date},#{trip_number2},#{index})
+	</insert>
+
+	<insert id="togetherplan" parameterType="trfriend">
+		INSERT INTO TRIP_MEMBER VALUES(#{trip_number},#{share_id},0)
+	</insert>
+
+	<select id="requestmember" resultType="trfriend">
+		select TP.TRIP_TITLE, TP.TRIP_ID, TM.SHARE_ID, TM.TRIP_TYPE
+		from TRIP_PLAN TP, TRIP_MEMBER TM
+		where TP.TRIP_NUMBER=TM.TRIP_NUMBER AND TRIP_ID=#{trip_id} AND
+		TM.TRIP_TYPE=0
+	</select>
+
+	<select id="requestme" resultType="trfriend">
+		select TP.TRIP_TITLE, TP.TRIP_ID, TM.SHARE_ID, TM.TRIP_TYPE,TP.TRIP_NUMBER
+		from TRIP_PLAN TP, TRIP_MEMBER TM
+		where TP.TRIP_NUMBER=TM.TRIP_NUMBER AND SHARE_ID=#{trip_id} AND
+		TM.TRIP_TYPE=0
+	</select>
+
+	<select id="getmyplan" resultType="trfriend">
+		SELECT TP.TRIP_NUMBER,TP.TRIP_ID,TP.TRIP_TITLE, TP.TRIP_AREA,
+		TP.TRIP_START_DATE, tp.trip_end_date
 		FROM TRIP_PLAN TP, TRIP_MEMBER TM
-		WHERE TP.TRIP_NUMBER=TM.TRIP_NUMBER  AND share_id=#{trip_id} and trip_type=1
+		WHERE TP.TRIP_NUMBER=TM.TRIP_NUMBER AND share_id=#{trip_id} and
+		trip_type=1
 		UNION
 		select * from TRIP_PLAN where trip_id=#{trip_id}
-   	</select>
-   	
-   	<select id="detailplan" resultType="trip">
-   		SELECT TP.TRIP_NUMBER, TP.TRIP_ID, TP.TRIP_TITLE, TP.TRIP_START_DATE, TP.TRIP_END_DATE,TPD.TRIP_DAY
+	</select>
+
+	<select id="detailplan" resultType="trip">
+		SELECT TP.TRIP_NUMBER, TP.TRIP_ID, TP.TRIP_TITLE, TP.TRIP_START_DATE,
+		TP.TRIP_END_DATE,TPD.TRIP_DAY,TP.TRIP_AREA
 		FROM TRIP_PLAN TP, TRIP_PLAN_DATE TPD
-		WHERE TP.TRIP_NUMBER=TPD.TRIP_NUMBER AND TP.TRIP_NUMBER=#{trip_number} ORDER BY TPD.TRIP_DAY 
-   	</select>
-   
+		WHERE TP.TRIP_NUMBER=TPD.TRIP_NUMBER AND TP.TRIP_NUMBER=#{trip_number}
+		ORDER BY TPD.TRIP_DAY
+	</select>
+
 </mapper>
