@@ -2566,6 +2566,7 @@ $("#joinsomoim").on("click",function(e){
 	var somoim_number = e.target.dataset.somoimnum
 	console.log(somoim_number);
 	var data = {"somoim_number" : somoim_number }
+	
 	$.ajaxSetup({         
 	      beforeSend : function(xhr){
 	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
