@@ -3,8 +3,6 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="icia.project.gabom.dao.SnsSearchDao">
 	<select id="searchPost" resultType="snspost">
-		<!-- SELECT * FROM SNS_POSTS WHERE SYS.DBMS_LOB.INSTR(SNS_POSTS_CONTENT,#{searchData})>0 
-			AND SNS_POSTS_AUTHORITY=0 AND ROWNUM<=10 ORDER BY SNS_POSTS_DATE DESC -->
 	<![CDATA[
 	SELECT * FROM SNS_POSTS SPPP JOIN
 (SELECT ROW_NUMBER() 
@@ -39,7 +37,7 @@ OR SP.SNS_POSTS_AUTHORITY=0
 ORDER BY SP.SNS_POSTS_NUMBER DESC) TOT
 ON SPP.SNS_POSTS_NUMBER=TOT.SNS_POSTS_NUMBER)TOTT
 ON SPPP.SNS_POSTS_NUMBER=TOTT.SNS_POSTS_NUMBER
-WHERE SYS.DBMS_LOB.INSTR(SPPP.SNS_POSTS_CONTENT,#{searchData})>0 AND TOTT.RN<=15
+WHERE SYS.DBMS_LOB.INSTR(SPPP.SNS_POSTS_CONTENT,#{searchData})>0 AND TOTT.RN<=#{rowNum}
 		]]>
 	</select>
 	<select id="searchFriendPost" resultType="snspost">
@@ -57,12 +55,15 @@ WHERE SYS.DBMS_LOB.INSTR(SPPP.SNS_POSTS_CONTENT,#{searchData})>0 AND TOTT.RN<=15
 	<![CDATA[
 	SELECT MEMBER_ID,MEMBER_PROFILE_PICTURE 
 	FROM MEMBER
-	WHERE MEMBER_ID LIKE '%'||#{searchData}||'%' AND ROWNUM<=10
+	WHERE MEMBER_ID LIKE '%'||#{searchData}||'%' AND ROWNUM<=#{rowNum}
 	 ]]>
 	</select>
 	<select id="check" resultType="member">
 	SELECT FRIEND_STATUS FRIENDSTATUS FROM 
 	SNS_FRIEND WHERE FRIEND_MY_ID=#{id} AND 
 	FRIEND_ID=#{userId}
+	</select>
+	<select id="searchPostResult" resultType="snspost">
+	SELECT * FROM SNS_POSTS WHERE SNS_POSTS_NUMBER=#{postNumber}
 	</select>
 </mapper>
