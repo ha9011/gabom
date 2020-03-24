@@ -105,6 +105,15 @@ public class RestSomoimController {
 		return new Gson().toJson(map);
 	}
 
+	
+	// 게시글 tab 누를 때 게시글 가져오기
+	@RequestMapping(value = "/somoimboards", produces = "text/plain;charset=utf-8")
+	public String somoimboards(@RequestParam("somoimNumber") int somoimNumber, Principal pr) {
+			System.out.println("글쓰기 // 아이디 : " + pr.getName()); // 참석자를 확인할 정모의 고유번호
+			String result = simm.selectSomoimBoards(somoimNumber);
+			return result;
+	}
+		
 	// 게시글 쓰고, 다시 가져오기
 	@RequestMapping(value = "/boardwrite", produces = "text/plain;charset=utf-8")
 	public String boardwrite(MultipartHttpServletRequest multi, Principal pr) {
@@ -228,13 +237,14 @@ public class RestSomoimController {
 	   
 	   //게시글 댓글 삭제 
 	   @RequestMapping(value = "/deleteboardreple", produces = "text/plain;charset=utf-8")
-		public String deleteboardreple(Somoimreple sr, Principal pr) {
+		public String deleteboardreple(Somoimreple sr, Principal pr, @RequestParam("paging_number") int paging_number) {
 			mav = new ModelAndView();
 			System.out.println("댓글삭제 // 아이디 : " + pr.getName()); // 참석자를 확인할 정모의 고유번호
 			System.out.println("댓글삭제 // 글번호 : " + sr.toString()); 
+			System.out.println("댓글삭제 // 페이징 번호  : " + paging_number); 
 			
 			//insertSomoimBoard
-			String result = simm.deleteSomoimBoardReple(sr, pr.getName());
+			String result = simm.deleteSomoimBoardReple(sr, pr.getName(),paging_number);
 			
 			
 			return result;

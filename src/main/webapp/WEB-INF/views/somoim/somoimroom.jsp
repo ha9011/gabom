@@ -308,7 +308,7 @@
 				<!-- Nav pills -->
 				<ul class="nav nav-pills" role="tablist" id="tablist">
 					<li class="nav-item"><a class="nav-link active"
-						data-toggle="pill" href="#noti">공지</a></li>
+						onclick="showNotiMember()" data-toggle="pill" href="#noti">공지</a></li>
 
 					<li class="nav-item"><a id="boardListSection"
 						onclick="showboardlist()" class="nav-link" data-toggle="pill"
@@ -528,9 +528,13 @@
 						</div>
 
 						<input type="file" id="firstPic" name="firstPic"
-							class='boardInputFile' style="display: none"> <input
+							class='boardInputFile' style="display: none"> 
+							
+							<input
 							type="file" id="secondPic" name="secondPic"
-							class='boardInputFile' style="display: none"> <input
+							class='boardInputFile' style="display: none"> 
+							
+							<input
 							type="file" id="thirdPic" name="thirdPic" class='boardInputFile'
 							style="display: none;"> <br> <br>
 						<div class="form-group form-check">
@@ -713,7 +717,30 @@ const showManagelist = ()=>{
 }
 
 
-
+//맴버 리스트 
+const showAllMemberList= (JsonMemberList)=>{
+	
+	for( v of JsonMemberList){
+		console.log("맴버 리스트 나옴?")
+		var MemberListFrame = $("<div class='attendListFrame'> </div>");
+		var MemberListPic = $("<div class='attendPicFrame'> <img src='."+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
+			var MemberListCont =  $("<div class='attendCont'> </div>");	
+			var MemberListTitle = $("<div class='attendTitle'>"+v.member_name+"</div>");	
+			var MemberListIntroduce = $("<div class='attendIntroduce'>"+v.member_profile_contents+"</div>");
+			
+			MemberListCont.append(MemberListTitle);
+			MemberListCont.append(MemberListIntroduce);
+			
+			MemberListFrame.append(MemberListPic);
+			MemberListFrame.append(MemberListCont);
+			
+			$("#MemberList").append(MemberListFrame);
+			
+	}
+	
+	
+	
+}
 
 //게시글 호출하는 메소드
 const showAllList = (boardlist)=>{
@@ -861,7 +888,9 @@ $(document).on("click","#kickOut",function(e){
 		success:function(data){
 			alert("삭제 성공");
 			showOriginMember(data);
-			//showIngMember(data);
+			JsonMemberList = data['기존']
+			
+			
 		},
 		error:function(error){
 			alert("fail")
@@ -895,6 +924,7 @@ $(document).on("click","#agreeSomoim",function(e){
 			alert("승인 성공");
 			showOriginMember(data);
 			showIngMember(data);
+			JsonMemberList = data['기존']
 		},
 		error:function(error){
 			alert("fail")
@@ -986,20 +1016,19 @@ $(document).on("click","#rejectSomoim",function(e){
 	 
 	 //스크롤이벤트
 	
-	let today = new Date();
-
-	today.setDate(today.getDate()-2);
-	
-	let selectDay =today;  // 기준날짜 
-	console.log("날짜")
-	console.log(selectDay);
+	let basicDate = new Date(recentChatData[0].chatting_date);
+	 basicDate.setDate(today.getDate()-1);
+	let selectDay = basicDate;  // 기준날짜 
+	//console.log("날짜")
+	//console.log(selectDay);
 	
 	let chatScrollToggle = 0;
+	
 	 $("#chattingRoom").scroll(function(e){
 		 console.log("===")
 		 //console.log(e);
 		 //console.dir(e);
-		 console.log("===")
+		// console.log("===")
         let scrollTop = e.target.scrollTop ;
 		let scrollHeight = e.target.scrollHeight;
 		let clientHeight = e.target.clientHeight;
@@ -1010,21 +1039,13 @@ $(document).on("click","#rejectSomoim",function(e){
         let index = 0 ;
         for(let v of e.target.children){
         	console.log("----");
-//         	console.log("v.offsetTop :  " + v.offsetTop)
-//         	console.log("v.offsetHeight :  " + v.offsetHeight)
-//         	console.log("total : " + total)
-//         	console.log("내 스크롤 위치 : " +  scrollTop)
-//         	console.log("박스상단 위치 : " +  v.offsetTop)
-//         	console.log("박스하단 위치 : " +  total)
          	let total = Number(v.offsetTop)+Number(v.offsetHeight) 
         	if(v.offsetTop < scrollTop && (total) > scrollTop ){
         		console.log("채팅날짜 이벤트 실행")
         		$("#chatDate").text(v.dataset.date);
         		break;
         	}
-        	
         	index++;
-        	//console.log(index)
         }
         
         console.log("scrollTop : " +  scrollTop)
@@ -1032,7 +1053,7 @@ $(document).on("click","#rejectSomoim",function(e){
      	console.log("clientHeight : " +  clientHeight)
 
 		console.log("toggle 이벤트 시작전  : " + chatScrollToggle)
-        if (scrollTop <= (scrollHeight/10) && scrollHeight >= clientHeight && chatScrollToggle==0 ) {
+        if (scrollTop <= (scrollHeight/8) && scrollHeight >= clientHeight && chatScrollToggle==0 ) {
         	console.log("이벤트발생")
         	console.log("toggle key : " + chatScrollToggle)
         	console.log("검색날짜 : " + getFormatDate(selectDay) )
@@ -1043,14 +1064,15 @@ $(document).on("click","#rejectSomoim",function(e){
         			console.log("셋타임아웃")
         			console.log("toggle key : " + chatScrollToggle)
         			chatScrollToggle=0;
+        			
         			let chatData = {
     		    			"date":getFormatDate(selectDay),
     		    			"somoimNumber": ${JsonBasicInfo}.somoim_number,
     				}
             	//성공시 날짜변경
     			//selectDay.setDate(selectDay.getDate()-1);
-    				console.log("변경된 날짜")
-    				console.log(selectDay);
+    			//	console.log("변경된 날짜")
+    			//	console.log(selectDay);
         			//console.log(data)
 					let iDate =getFormatDate(selectDay)
 					let iDateChatFrame = $("<div id='yesterday' class='chatFrame' data-date='"+iDate+"'> </div>");
@@ -1069,7 +1091,7 @@ $(document).on("click","#rejectSomoim",function(e){
     					success:function(data){
     						
     						//alert("success");
-    						console.log(data)
+    						//console.log(data)
     						for(let v of data ){
     							
     							//c chatting
@@ -1116,19 +1138,10 @@ $(document).on("click","#rejectSomoim",function(e){
     							
     						}
     						
-    						//새로 생성된 div
-    						//console.log("----새로 생성된 ----")
-    						//console.log(iDateChatFrame[0].clientHeight);
-    						//console.dir(iDateChatFrame[0].clientHeight);
     						if(iDateChatFrame[0].clientHeight!=0){
     							$("#chattingRoom").scrollTop(iDateChatFrame[0].clientHeight);
         							
     						}
-    						
-    						
-    						
-    						
-    						
     						
     					},
     					error:function(error){
@@ -1136,7 +1149,7 @@ $(document).on("click","#rejectSomoim",function(e){
     						console.log(error);
     					}
     				})
-			}, 500);
+			}, 400);
         	
         	
         	
@@ -1147,7 +1160,7 @@ $(document).on("click","#rejectSomoim",function(e){
         	
         	
         } else {
-        	console.log("?아닌디??")
+        	console.log("======아직 인피니티 아님===")
         	//$("#confirm").attr('disabled', true);
         }
 	
@@ -1209,6 +1222,7 @@ $(document).on("click","#rejectSomoim",function(e){
 		    		
 		    		
 		    		}
+		    		
 		    		console.log($("#chattingRoom"));
 		    		console.dir($("#chattingRoom"));
 		    		$("#chattingRoom").scrollTop($("#chattingRoom")[0].scrollHeight);
@@ -1337,10 +1351,11 @@ $(document).on("click","#rejectSomoim",function(e){
 	 $(document).on("click",".deleteReple",function(e){
 		console.log("댓글삭제")
 		console.log(e.target.dataset.num)
-		
+		console.log("댓글 삭제시 해당 현재 페이지 : " + paging_number )
 		var data = { 
 			"somoim_board_reple_number" : e.target.dataset.num,
-			"board_number" : boardinfo.board_number
+			"board_number" : boardinfo.board_number,
+			"paging_number" : paging_number
 			}
 		
 		
@@ -1358,7 +1373,12 @@ $(document).on("click","#rejectSomoim",function(e){
 						console.log(data)
 						
 					    $("#replelist").empty();
+						//
 						
+						// 페이징 채우기
+						$("#replepaging").empty()
+						$("#replepaging").html(data.htmlPaging)
+					
 						//댓글모두 부르기
 						showboardreple(data)
 						
@@ -1632,10 +1652,11 @@ $(document).on("click","#rejectSomoim",function(e){
 		 console.log(e.target.dataset.page);
 
 		 var board_number =e.target.dataset.bnum;
-		 var paging_number =e.target.dataset.page;
+		 paging_number =e.target.dataset.page;
 		 console.log("board_number  : " + board_number );
 		 console.log("paging_number  : " + paging_number );
 		 var data = {
+				
 				 "board_number" : board_number,
 				 "paging_number" : paging_number,
 		 }
@@ -1900,7 +1921,8 @@ console.log("내등급",${JsonMysomoimInfo})
 console.log("회원",${JsonMemberList})
 console.log("정모모임",${JsonJungmoRoom})
 console.log("내참석리스트",${JsonAttendlist})
-
+var paging_number = 1;
+var JsonMemberList = ${JsonMemberList};
 var mysomoimInfo = ${JsonMysomoimInfo}
 var Attendlist = ${JsonAttendlist};
 var boardlist = ${JsonBoardList};
@@ -1912,22 +1934,10 @@ for(let add = 0 ; add < ${JsonJungmoRoom}.length-Attendlist.length; add++){
 
 console.log("기본정보",${JsonBasicInfo})
 console.log("채팅 : " , ${JsonchatData})
-var chatData = 	${JsonchatData}
+var recentChatData = 	${JsonchatData}
 //채팅에 넣기
 
-
-
-let yesterdayChat= chatData.yesterday;
-let todayChat = chatData.today;
-console.log("today",todayChat);
-console.log("yester",yesterdayChat);
-
-if(yesterdayChat[0]==undefined){
-	
-}else{
-	let yDate = getFormatDate(yesterdayChat[0].chatting_date)
-	let yDateChatFrame = $("<div id='yesterday' class='chatFrame' data-date='"+yDate+"'> </div>");
-	for(let v of yesterdayChat ){
+	for(let v of recentChatData ){
 		
 		//c chatting
 		let cSomoimNumber = v.somoim_number;
@@ -1937,68 +1947,12 @@ if(yesterdayChat[0]==undefined){
 		let cTime = getFormatOnlyTime(v.chatting_date)
 		let cProfile ="."+v.chatting_profile;
 		
-			if(${JsonMysomoimInfo}==null || ${JsonMysomoimInfo}.member_status==0){
-				
-			}else if(cId===${JsonMysomoimInfo}.member_name){ //내가 보낸 데이터일 경우
-				
-				let media = $("<div class='media border p-3 myCommnet' data-date='"+getFormatDate(new Date())+"'></div>");
-				let mediabody = $("<div class='media-body'></div>");
-						
-				let bodyName = $("<h4><small><i> "+cTime+" </i></small></h4>");
-				let bodyCont = $("<p>"+cCont+"</p>");
-				
-				mediabody.append(bodyName);
-				mediabody.append(bodyCont);
-						
-				media.append(mediabody);
-				yDateChatFrame.append(media)
-				
-	 		}else{ //타인이 보낸 데이터 일경우
-	 			let media = $("<div class='media border p-3 yourCommnet'></div>");
-		 			
-	 			let img = $("<img src='"+cProfile+"' alt='John Doe' class='mr-3 mt-3 rounded-circle' style='width:60px;'>")
-		 		media.append(img);
-		 		
-	 			let mediabody = $("<div class='media-body'></div>");
-		 		
-	 			let bodyName = $("<h4>"+cId+"<small><i>"+cTime+"</i></small></h4>");
-	 			let bodyCont = $("<p>"+cCont+"</p>");
-		 		mediabody.append(bodyName);
-		 		mediabody.append(bodyCont);
-		 		
-		 		media.append(mediabody);
-		 		yDateChatFrame.append(media)
-	 		}
-		$("#chattingRoom").append(yDateChatFrame)
-		
-	}
-	$("#chattingRoom").scrollTop($("#chattingRoom")[0].scrollHeight);
-}
-
-//todayChat
-
-
-if(todayChat[0]==undefined){
-	
-}else{
-
-	let tDate = getFormatDate(new Date())  // 오늘 날짜의 첫번째 챗팅을 가져오는건데 없는 경우에 에러뜬다..
-	let tDateChatFrame = $("<div id='yesterday' class='chatFrame' data-date='"+tDate+"'> </div>");
-	for(let v of todayChat ){
-		
-		//c chatting
-		let cSomoimNumber = v.somoim_number;
-		let cId = v.chatting_name;
-		let cCont = v.chatting_content;
-		let cDate = getFormatDate(v.chatting_date);
-		let cTime = getFormatOnlyTime(v.chatting_date)
-		let cProfile ="."+v.chatting_profile;
 			if(${JsonMysomoimInfo}==null || ${JsonMysomoimInfo}.member_status==0){
 				
 			
 			}else if(cId===${JsonMysomoimInfo}.member_name){ //내가 보낸 데이터일 경우
 				
-				let media = $("<div class='media border p-3 myCommnet' data-date='"+getFormatDate(new Date())+"'></div>");
+				let media = $("<div class='media border p-3 myCommnet' data-date='"+cDate+"'></div>");
 				let mediabody = $("<div class='media-body'></div>");
 						
 				let bodyName = $("<h4><small><i> "+cTime+" </i></small></h4>");
@@ -2008,10 +1962,11 @@ if(todayChat[0]==undefined){
 				mediabody.append(bodyCont);
 						
 				media.append(mediabody);
-				tDateChatFrame.append(media)
+				
+				$("#chattingRoom").append(media)
 				
 	 		}else{ //타인이 보낸 데이터 일경우
-	 			let media = $("<div class='media border p-3 yourCommnet'></div>");
+	 			let media = $("<div class='media border p-3 yourCommnet' data-date='"+cDate+"'></div>");
 		 			
 	 			let img = $("<img src='"+cProfile+"' alt='John Doe' class='mr-3 mt-3 rounded-circle' style='width:60px;'>")
 		 		media.append(img);
@@ -2024,67 +1979,52 @@ if(todayChat[0]==undefined){
 		 		mediabody.append(bodyCont);
 		 		
 		 		media.append(mediabody);
-		 		tDateChatFrame.append(media)
+		 		$("#chattingRoom").append(media)
 	 		}
-		$("#chattingRoom").append(tDateChatFrame)
+		
 	}
-}
+
+
+
 $("#chattingRoom").scrollTop($("#chattingRoom")[0].scrollHeight);
-// for(v of chatData){
+
+// if(data.id === ${JsonMysomoimInfo}.member_name ){ //내가 보낸 데이터 일경우
+// 	//chattingRoom	
 	
-// 	//c chatting
-// 	var cSomoimNumber = v.somoim_number;
-// 	var cId = v.chatting_name;
-// 	var cCont = v.chatting_content;
-// 	var cDate = getFormatDate(v.chatting_date);
-// 	var cTime = getFormatOnlyTime(v.chatting_date)
+// 	var media = $("<div class='media border p-3 myCommnet' data-date='"+getFormatDate(new Date())+"' ></div>");
+// 	var mediabody = $("<div class='media-body'></div>");
 	
+// 	var bodyName = $("<h4><small><i> "+chatTime+" </i></small></h4>");
+// 	var bodyCont = $("<p>"+data.msg+"</p>");
+// 	mediabody.append(bodyName);
+// 	mediabody.append(bodyCont);
 	
-// 	if(cID===${JsonMysomoimInfo}.member_name){ //내가 보낸 데이터일 경우
-		
-// 	}else{ //타인이 보낸 데이터 일경우
-		
-// 	}	
+// 	media.append(mediabody);
+// 	$("#chattingRoom").append(media)
 	
-	
-// // 	if(data.id === ${JsonMysomoimInfo}.member_name ){ //내가 보낸 데이터 일경우
-// // 		//chattingRoom	
-		
-// // 		var media = $("<div class='media border p-3 myCommnet'></div>");
-// // 		var mediabody = $("<div class='media-body'></div>");
-		
-// // 		var bodyName = $("<h4><small><i> "+chatTime+" </i></small></h4>");
-// // 		var bodyCont = $("<p>"+data.msg+"</p>");
-// // 		mediabody.append(bodyName);
-// // 		mediabody.append(bodyCont);
-		
-// // 		media.append(mediabody);
-// // 		$("#chattingRoom").append(media)
-		
-// // 		//$("#chattingRoom").append($("<div class='myCommnet' >"+data.msg+"</div>"))
-// // 	}else{ // 내가 보낸 데이터가 아닐경우
+// 	//$("#chattingRoom").append($("<div class='myCommnet' >"+data.msg+"</div>"))
+// }else{ // 내가 보낸 데이터가 아닐경우
 
 
-// // 		var media = $("<div class='media border p-3 yourCommnet'></div>");
-		
-// // 		var img = $("<img src='"+data.profilePicture+"' alt='John Doe' class='mr-3 mt-3 rounded-circle' style='width:60px;'>")
-// // 		media.append(img);
-		
-// // 		var mediabody = $("<div class='media-body'></div>");
-		
-// // 		var bodyName = $("<h4>"+data.id+"<small><i>"+chatTime+"</i></small></h4>");
-// // 		var bodyCont = $("<p>"+data.msg+"</p>");
-// // 		mediabody.append(bodyName);
-// // 		mediabody.append(bodyCont);
-		
-// // 		media.append(mediabody);
-// // 		$("#chattingRoom").append(media)
+// 	var media = $("<div class='media border p-3 yourCommnet'></div>");
 	
+// 	var img = $("<img src='"+data.profilePicture+"' alt='John Doe' class='mr-3 mt-3 rounded-circle' style='width:60px;'>")
+// 	media.append(img);
 	
-// // 	}
+// 	var mediabody = $("<div class='media-body'></div>");
 	
+// 	var bodyName = $("<h4>"+data.id+"<small><i>"+chatTime+"</i></small></h4>");
+// 	var bodyCont = $("<p>"+data.msg+"</p>");
+// 	mediabody.append(bodyName);
+// 	mediabody.append(bodyCont);
 	
+// 	media.append(mediabody);
+// 	$("#chattingRoom").append(media)
+
+
 // }
+
+
 
 	// 정모만들기 버튼
 	var formData=()=>{
@@ -2110,10 +2050,14 @@ $("#chattingRoom").scrollTop($("#chattingRoom")[0].scrollHeight);
 	
 	console.log("실행되니");
 	
+	
+	//소켓 보내기 위해 방장 외 회원 아이디 답는 거 
 	let somoimAllMember =  new Array();
-	for(let v of ${JsonMemberList}){
-		if(v.MEMBER_ID!=${JsonBasicInfo}.somoim_maker){
-		somoimAllMember.push(v.MEMBER_ID);
+	
+	
+	for(let v of JsonMemberList){
+		if(v.member_id!=${JsonBasicInfo}.somoim_maker){
+		somoimAllMember.push(v.member_id);
 		}
 	}
 	
@@ -2496,25 +2440,9 @@ let somoimnumber = String(${JsonBasicInfo}.somoim_number);
 	})//참석 리스트 end
 	
 	//맴버 리스트 모두 호출 class 이름 조심.... 
-	var JsonMemberList = ${JsonMemberList};
+	//var JsonMemberList = ${JsonMemberList};
 	console.log(JsonMemberList)
-	for( v of JsonMemberList){
-		console.log("맴버 리스트 나옴?")
-		var MemberListFrame = $("<div class='attendListFrame'> </div>");
-		var MemberListPic = $("<div class='attendPicFrame'> <img src='."+v.MEMBER_PROFILE_PICTURE+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
-			var MemberListCont =  $("<div class='attendCont'> </div>");	
-			var MemberListTitle = $("<div class='attendTitle'>"+v.MEMBER_NAME+"</div>");	
-			var MemberListIntroduce = $("<div class='attendIntroduce'>"+v.MEMBER_PROFILE_CONTENTS+"</div>");
-			
-			MemberListCont.append(MemberListTitle);
-			MemberListCont.append(MemberListIntroduce);
-			
-			MemberListFrame.append(MemberListPic);
-			MemberListFrame.append(MemberListCont);
-			
-			$("#MemberList").append(MemberListFrame);
-			
-	}
+	showAllMemberList(JsonMemberList);
 	
 	
 	
@@ -2666,7 +2594,7 @@ $("#joinsomoim").on("click",function(e){
 				console.log(typeof data.result)
 				
 				var boardData = JSON.parse(data.result)  
-				boardlist = boardData;
+				boardlist = boardData;  // 새로 업데이트
 				console.log(boardData)
 				console.dir(boardData)
 				
@@ -2783,18 +2711,52 @@ $("#joinsomoim").on("click",function(e){
 	}
 	
 	
-	
+	// 엄청난 실수를 해버렸다.... 클릭시 업데이트 해오는 게 맞다. ajax 써야한다
 	const showboardlist = ()=>{
-		console.log("??")
+		console.log("게시판 tab 클릭")
 		$("#somoimBoardCont").empty();
 		console.log(boardlist);
 		console.log("???")
 		
-		showAllList(boardlist);
+		var data = {"somoimNumber" : ${JsonBasicInfo}.somoim_number}
+		
+		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");} 
+		});
+		
+		$.ajax({
+	  		url: "somoimboards",
+	  		type: 'post',
+	  		data : data,
+	  		dataType: "json", //rest 컨트롤 이용	
+	  		success:function(data){
+	  			//alert("success");
+	  			console.log(data)
+	  			
+				showAllList(data);
+				
+	  		},
+	  		error:function(error){
+	  			alert("fail")
+	  			console.log(error);
+	  		}
+	  		
+	  	}) //ajax end
+		
+		
+		
 	}
 	
 	
-	
+	const showNotiMember = ()=>{
+		
+		//JsonMemberList
+		console.log("공지 tab 클릭")
+		$("#MemberList").empty();
+		showAllMemberList(JsonMemberList);
+		
+	}
 	
 	
 	
@@ -3048,10 +3010,15 @@ $("#joinsomoim").on("click",function(e){
   			console.log("??",data.somoimreple.somoim_board_reple_date)
   			
   			
-  			showboardreple(data);
+  			
   			
   			//페이징 
-  			
+  			showboardreple(data);
+				
+				
+				
+				//페이징 
+			
 			$("#replepaging").html(data.htmlPaging)
 			
   		},

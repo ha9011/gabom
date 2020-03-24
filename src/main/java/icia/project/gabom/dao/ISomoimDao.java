@@ -32,7 +32,7 @@ public interface ISomoimDao {
 
 	Somoim selectRoomInfo(@Param("roomnum")String roomnum);
 
-	List<Map<String,Object>> selectRoomMember(@Param("roomnum")String roomnum);
+	List<Member> selectRoomMember(@Param("roomnum")String roomnum);
 
 	int insertMakeJunmoRoom(Jungmoroom jungmoroom);
 
@@ -118,9 +118,8 @@ public interface ISomoimDao {
 	int insertchatting(@Param("id")String id,@Param("msg")String msg, @Param("somoimNumber")int somoimNumber);
 	
 
-	List<ChattingSomoim> selectTodayChattingData(@Param("somoim_number")int somoimNumber);
+	List<ChattingSomoim> selectRecentChattingData(@Param("somoim_number")int somoimNumber);
 
-	List<ChattingSomoim> selectYesterdayChattingData(@Param("somoim_number")int somoimNumber);
 
 	List<ChattingSomoim> selectInfinityChattingData(@Param("somoim_number")int somoimNumber, @Param("date")String date);
 

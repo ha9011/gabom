@@ -50,8 +50,13 @@
 	SELECT * FROM somoim where somoim_number = #{roomnum}
 </select>
 
-<select id="selectRoomMember" parameterType="String" resultType="Map">
-	select m.member_profile_picture, m.member_profile_contents, m.member_name, m.member_id, sm.member_grade from SOMOIM_MEMBER sm, Member m where sm.MEMBER_NAME = m.MEMBER_ID and sm.somoim_number = #{roomnum} and sm.member_status = 1 
+<select id="selectRoomMember" parameterType="String" resultType="member">
+	select m.member_profile_picture as member_profile_picture ,
+	 m.member_profile_contents as member_profile_contents,
+	  m.member_name as member_name,
+	   m.member_id as member_id,
+	    sm.member_grade as member_grade
+	     from SOMOIM_MEMBER sm, Member m where sm.MEMBER_NAME = m.MEMBER_ID and sm.somoim_number = #{roomnum} and sm.member_status = 1 
 </select>
 
 
@@ -423,16 +428,28 @@ select jr.*, nvl2(jm.member_number,1,0) as my_attend_check from JUNGMO_ROOM jr, 
 
 
 
-<select id="selectTodayChattingData" parameterType="int" resultType="chattingsomoim">
-	 select sc.*, m.member_profile_picture chatting_profile from somoim_chatting sc, member m  where sc.chatting_name = m.Member_id and SOMOIM_NUMBER = #{somoim_number} and chatting_date between to_CHAR(sysdate, 'YYYY/MM/DD') and to_CHAR(sysdate+1, 'YYYY/MM/DD') order by chatting_date asc
+<select id="selectRecentChattingData" parameterType="int" resultType="chattingsomoim">
+	<![CDATA[
+	 select sc.*, m.member_profile_picture chatting_profile 
+	from somoim_chatting sc, member m  
+	where sc.chatting_name = m.Member_id 
+	and SOMOIM_NUMBER = #{somoim_number} 
+	and chatting_date between to_CHAR((select min(chatting_date) from (select * from somoim_chatting where SOMOIM_NUMBER = #{somoim_number} order by chatting_date desc ) where RowNum <= 10), 'YYYY/MM/DD') 
+	and to_CHAR((select min(chatting_date)+1 from (select * from somoim_chatting where SOMOIM_NUMBER = #{somoim_number} order by chatting_date desc ) where RowNum <= 10)+2, 'YYYY/MM/DD')
+	order by chatting_date asc
+	]]>
 </select>
 
-<select id="selectYesterdayChattingData" parameterType="int" resultType="chattingsomoim">
-	 select sc.*, m.member_profile_picture chatting_profile from somoim_chatting sc, member m  where sc.chatting_name = m.Member_id and SOMOIM_NUMBER = #{somoim_number} and chatting_date between to_CHAR(sysdate-1, 'YYYY/MM/DD') and to_CHAR(sysdate, 'YYYY/MM/DD') order by chatting_date asc
-</select>
 
 <select id="selectInfinityChattingData"  resultType="chattingsomoim">
-	 select sc.*, m.member_profile_picture chatting_profile from somoim_chatting sc, member m  where sc.chatting_name = m.Member_id and SOMOIM_NUMBER = #{somoim_number} and chatting_date between #{date} and TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')+1, 'YYYY/MM/DD') order by chatting_date asc
+	 select sc.*, 
+	 m.member_profile_picture chatting_profile 
+	 from somoim_chatting sc, member m  
+	 where sc.chatting_name = m.Member_id 
+	 and SOMOIM_NUMBER = #{somoim_number} 
+	 and chatting_date between #{date} 
+	 and TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')+1, 'YYYY/MM/DD') 
+	 order by chatting_date asc
 </select>
 
 <update id="repleModify" >

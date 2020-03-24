@@ -466,7 +466,6 @@ $(document).on('click',".pic", function() {
       var data = {
                "reply_number" : reply_number,
                "photo_number" : photo_number
-               
             } 
       console.log(data);
       console.log(e.target.dataset.replenum);

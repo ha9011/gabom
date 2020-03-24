@@ -54,6 +54,7 @@ public class SomoimController {
 		
 		//view = somoim/mainsomoim
 		return "redirect:"+result;
+		//redirect: mainsomoim
 	}
 	
 	

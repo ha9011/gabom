@@ -159,7 +159,7 @@ public class SomoimManagement {
 		mav.addObject("roomnum", roomnum);
 
 		// 1-2회원
-		List<Map<String, Object>> mList = sDao.selectRoomMember(roomnum);
+		List<Member> mList = sDao.selectRoomMember(roomnum);
 		String JsonMemberList = new Gson().toJson(mList);
 		System.out.println("sm JsonMemberList : " + JsonMemberList);
 		mav.addObject("JsonMemberList", JsonMemberList); // 기본정보 받아옴
@@ -196,15 +196,10 @@ public class SomoimManagement {
 		
 		// 채팅글 가져오기, 오늘 기준으로 전날꺼부터,  나머진 인피니트 스크롤
 		
-		Map<String,List<ChattingSomoim>> mapChatData = new HashMap<String, List<ChattingSomoim>>();
-		//today
-		List<ChattingSomoim> selectTodayChattingData = sDao.selectTodayChattingData(Integer.parseInt(roomnum));
-		List<ChattingSomoim> selectYesterdayChattingData = sDao.selectYesterdayChattingData(Integer.parseInt(roomnum));
+		//recent chat
+		List<ChattingSomoim> selectRecentChattingData = sDao.selectRecentChattingData(Integer.parseInt(roomnum));
 		
-		mapChatData.put("today", selectTodayChattingData);
-		mapChatData.put("yesterday", selectYesterdayChattingData);
-		
-		String chatData = new Gson().toJson(mapChatData);
+		String chatData = new Gson().toJson(selectRecentChattingData);
 		System.out.println("jsonchatData : " + chatData);
 		mav.addObject("JsonchatData", chatData);
 		
@@ -397,8 +392,6 @@ public class SomoimManagement {
 		// 댓글 넣었으니 다시 다 불러오기,
 		List<Somoimreple> repleList = sDao.selectBoardRepleList(board_number);
 		boardSomoim.setSomoimreple(repleList);
-
-		boardSomoim.setSomoimreple(repleList);
 		boardSomoim.setHtmlPaging(getPaging(1, boardSomoim.getBoard_number())); // 처음은 무조건 1페이지
 
 		return new Gson().toJson(boardSomoim);
@@ -463,8 +456,8 @@ public class SomoimManagement {
 	// =============== 페이징
 	public String getPaging(int pNum, int boardNum) {
 		int maxNum = sDao.getBoardRepleCount(boardNum);
-		int listCount = 5; // 10개씩 보여주기
-		int pageCount = 2; // 이게 뭔말이지?
+		int listCount = 5; // 10개씩 보여주기 몇개씩 보여주기
+		int pageCount = 3; // 이게 뭔말이지?
 		String boardName = "replelist"; // ?
 		// 왜 임포트가 안되징?
 		Paging paging = new Paging(maxNum, pNum, listCount, pageCount, boardNum, boardName);
@@ -621,16 +614,27 @@ public class SomoimManagement {
 		return jsonresultMap;
 	}
 	
-	
-	public String deleteSomoimBoardReple(Somoimreple sr, String name) {
+	//게시판 댓글 삭제
+	public String deleteSomoimBoardReple(Somoimreple sr, String name, int paging_number) {
 		SomoimBoard sb = new SomoimBoard();
 		int result = sDao.deleteSomoimBoardReple(sr.getSomoim_board_reple_number());
 		
-		// 댓글 넣었으니 다시 다 불러오기, -> 페이징이니 다는 부르지 않고...
-		List<Somoimreple> repleList = sDao.selectBoardRepleList(sr.getBoard_number());
-		sb.setSomoimreple(repleList);
+		// 댓글 삭 다시 다 불러오기, -> 페이징이니 다는 부르지 않고...
+		sb.setBoard_number(sr.getBoard_number());
+		sb.setPaging_number(paging_number);
+		System.out.println("sb page, bn 확인 : " + sb.toString());
 		
+		List<Somoimreple> repleList = sDao.selectPagingBoardRepleList(sb);
+
+		//List<Somoimreple> repleList = sDao.selectBoardRepleList(sr.getBoard_number());
+		sb.setSomoimreple(repleList);
+		sb.setHtmlPaging(getPaging(paging_number, sr.getBoard_number())); // 몇페이지에, 몇번 게시
+		
+//		System.out.println(paging_number + " " + sr.getBoard_number());
+//		System.out.println("paging test getPaging : " + getPaging(paging_number, sr.getBoard_number()));
+//		System.out.println("paging test : " +  sb.getHtmlPaging());
 		return new Gson().toJson(sb);
+		
 	}
 
 	public String joinsomoim(Principal pr, int somoim_number) {
@@ -734,7 +738,6 @@ public class SomoimManagement {
 		
 		int deletereple = sDao.deletereple(reply_number);//삭제
 		List<Somoim_photo_reple> selectreple = sDao.recallreple(photo_number);//긁어온거
-		
 		
 		json = new Gson().toJson(selectreple);
 		return json;
@@ -848,6 +851,20 @@ public class SomoimManagement {
 		
 		likeCountDto.setSplike(splike);
 		return new Gson().toJson(likeCountDto);
+	}
+
+	public String selectSomoimBoards(int somoimNumber) {
+		// 게시글가져오기
+			List<SomoimBoard> notiBoardList = sDao.selectNotiBoard(somoimNumber);
+
+			List<SomoimBoard> unNotiBoardList = sDao.selectUnNotiBoard(somoimNumber);
+
+			Map<String, List<SomoimBoard>> resultMap = new HashMap<String, List<SomoimBoard>>();
+			resultMap.put("공지", notiBoardList);
+			resultMap.put("비공지", unNotiBoardList);
+
+			String jsonresultMap = new Gson().toJson(resultMap);
+		return jsonresultMap;
 	}
 
 	
