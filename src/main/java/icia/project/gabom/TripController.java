@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import icia.project.gabom.dao.ITripplanDao;
 import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.dto.Trip_plan;
+import icia.project.gabom.service.TripApiService;
 import icia.project.gabom.service.TripService;
 
 @Controller
@@ -23,6 +24,9 @@ public class TripController {
    
    @Autowired
    private TripService trs;
+   
+   @Autowired
+	private TripApiService ts; //api서비스
    
    
    @RequestMapping(value = "/trip", method = RequestMethod.GET)
@@ -52,5 +56,16 @@ public class TripController {
       //System.out.println(mav);
       return mav;
    }
+   //tripdetailapi
+   @RequestMapping(value = "/tripdetailapi", method = RequestMethod.GET)
+	public ModelAndView tripdetailapi(String contentid) {
+		System.out.println("tripdetailapi");
+		System.out.println("contentid="+contentid);
+		mav = new ModelAndView();
+		String resultJson = ts.getdetailCommon(contentid);
+		mav.addObject("detailcommon", resultJson);  //${qwe}
+		mav.setViewName("Trip/tripdetailapi");
+		return mav;
+	}
 
 }
