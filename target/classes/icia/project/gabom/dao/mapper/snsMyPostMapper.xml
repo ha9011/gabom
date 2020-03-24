@@ -20,4 +20,7 @@
   WHERE TOT.rn<=#{rowNum} ORDER BY SP.SNS_POSTS_DATE DESC
 	 ]]>
 	</select>
+	<select id="check" resultType="int">
+	SELECT COUNT(SNS_POSTS_NUMBER) FROM SNS_POSTS WHERE SNS_POSTS_WRITER=#{id}
+	</select>
 </mapper>

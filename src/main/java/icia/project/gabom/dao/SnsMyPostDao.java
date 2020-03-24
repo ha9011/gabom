@@ -11,5 +11,7 @@ public interface SnsMyPostDao {
 	
 	List<Snsposts> myPost(@Param("id")String id,@Param("rowNum") int lowNum);
 
+	int check(@Param("id")String id);
+
 	
 }

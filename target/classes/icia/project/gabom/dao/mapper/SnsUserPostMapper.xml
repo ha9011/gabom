@@ -36,11 +36,8 @@
 		ORDER BY SP.SNS_POSTS_NUMBER DESC) TOT
 		ON SP.SNS_POSTS_NUMBER=TOT.SNS_POSTS_NUMBER WHERE ROWNUM<=#{rowNum}
 		 AND SP.SNS_POSTS_WRITER=#{userId}]]>
-
-
-
-
-
-
+	</select>
+	<select id="checkNumber" resultType="int">
+	SELECT COUNT(SNS_POSTS_NUMBER) FROM SNS_POSTS WHERE SNS_POSTS_WRITER=#{userId}
 	</select>
 </mapper>

@@ -19,4 +19,5 @@ public class SnsCommentResult {
 	private String profilePic;
 	private int like;
 	private int hate;
+	private int max;
 }

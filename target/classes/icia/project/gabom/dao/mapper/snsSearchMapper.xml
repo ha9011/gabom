@@ -83,11 +83,17 @@ ON SPPPP.SNS_POSTS_NUMBER=TOTTT.SNS_POSTS_NUMBER WHERE TOTTT.RNN<=#{rowNum}
 	 ]]>
 	</select>
 	<select id="check" resultType="member">
-	SELECT FRIEND_STATUS FRIENDSTATUS FROM 
-	SNS_FRIEND WHERE FRIEND_MY_ID=#{id} AND 
-	FRIEND_ID=#{userId}
+		SELECT FRIEND_STATUS FRIENDSTATUS FROM
+		SNS_FRIEND WHERE FRIEND_MY_ID=#{id} AND
+		FRIEND_ID=#{userId}
 	</select>
 	<select id="searchPostResult" resultType="snspost">
-	SELECT * FROM SNS_POSTS WHERE SNS_POSTS_NUMBER=#{postNumber}
+		SELECT * FROM SNS_POSTS WHERE SNS_POSTS_NUMBER=#{postNumber}
+	</select>
+	<select id="checkFriendTotNum" resultType="int">
+		SELECT COUNT(MEMBER_ID) FROM MEMBER WHERE MEMBER_ID like '%'||#{searchData}||'%'
+	</select>
+	<select id="checkPostTotNum" resultType="int">
+	SELECT COUNT(SNS_POSTS_NUMBER) FROM SNS_POSTS WHERE SNS_POSTS_CONTENT like '%'||#{searchData}||'%'
 	</select>
 </mapper>

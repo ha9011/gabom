@@ -87,4 +87,18 @@ public class SnsFriendRequest {
 		return new Gson().toJson(resultObj);
 	}
 
+	public String refusal(String reqId, Principal principal) {
+		boolean result=snsFriendRequestDao.refusal(reqId,principal.getName());
+		JsonObject resultObj= null;
+		if(result) {
+			resultObj=new JsonObject();	
+			resultObj.addProperty("message", "거절 하셨습니다.");
+		}else {
+			resultObj=new JsonObject();	
+			resultObj.addProperty("message", "오류.");
+		}
+		
+		return new Gson().toJson(resultObj);
+	}
+
 }

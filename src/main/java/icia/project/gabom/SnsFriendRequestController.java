@@ -39,5 +39,10 @@ public class SnsFriendRequestController {
 		String json=snsFriendRequest.accept(id,principal);
 		return json;
 	}
+	@PostMapping(value = "/sns/friend/request/refusal", produces="text/plain;charset=utf-8")
+	public String friendRequestRefusal(@RequestParam("reqId") String reqId,Principal principal) {
+		String json=snsFriendRequest.refusal(reqId,principal);
+		return json;
+	}
 	
 }

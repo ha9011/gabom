@@ -16,4 +16,6 @@ public interface SnsUserPostDao {
 
 	List<Snsposts> userFriendPost(@Param("userId")String userId,@Param("rowNum") int rowNum);
 
+	int checkNumber(@Param("userId")String userId);
+
 }
