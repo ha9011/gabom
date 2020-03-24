@@ -23,7 +23,10 @@
 <link href="./resources/css/owl.theme.default.min.css" rel="stylesheet">
 <link href="./resources/css/animate.css" rel="stylesheet">
 <link href="./resources/css/style.css" rel="stylesheet">
-
+<!-- 페이징 처리 플러그인 CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>   
+<!-- 페이징 처리 플러그인 -->   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 <!-- Placed at the end of the document so the pages load faster -->
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
@@ -201,10 +204,11 @@ font-size: 50px;
 							시군구선택<select id="select_sigunguCode" title="시군구선택" >
 
 							</select>
-							<table id="areatable"></table>
+							<table id="areatable" class="table table-bordered">
+							</table>
 
+ 						<div id="pagination"></div> 
 						</div>
-						<div class="pageNavi"></div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">Close</button>
@@ -247,6 +251,12 @@ var totaldate =$('<h1>'+sd+' - '+ed+'</h1>')
 $("#apiup").append()
 $("#titel").append(titel);
 $("#totaldate").append(totaldate);
+//--------------------------------페이징 --------------------------------------------
+
+   
+
+
+
 //--------------------------------areaCode로 지역 검색-------------------------------------
 $("#apiup").on("click",function(e) {
 	console.log('버튼클릭');
@@ -266,52 +276,62 @@ $("#apiup").on("click",function(e) {
 		dataType : 'json',
 		success : function(msg) {
 			console.log(msg);
-			//response = JSON.parse(msg);
-			// 					console.log("111", response);
-			//console.log("112",response.response.body.items.item);
-			//var myItem = response.response.body.items.item;
-			//console.log("111", myItem);
-			
-			$("#areatable").empty();
 			
 			
-			
-			let index = 1;
-			
-			let tr = $("<tr></tr>");
-			
-			console.log("size : " + msg.length);
-			console.log("몫 : " + parseInt(msg.length/3));
-			for(let i of msg){
-	
-				
-			    if(index%9===1 ){
-			    	let div = $("<div id='areadiv"+Math.ceil(index/9)+"' date-pagenum='"+Math.ceil(index/9)+"'></div>");
-			         $("#areatable").append(div); 
-			    }
+			let container = $('#pagination');
+            container.pagination({
+                
+                 dataSource: msg, //받아온 데이터
+                 pageSize: 9,
+                 callback: function (msg, pagination) { //데이터 찍어주는 부분
+                    console.log("data=",msg);
+                 
+                    $("#areatable").empty();
+        			
+        			
+        			let index = 1;
+        			
+        			let tr = $("<tr></tr>");
+        			
+        			console.log("size : " + msg.length);
+        			console.log("몫 : " + parseInt(msg.length/3));
+        			for(let i of msg){
+        	
+        				
+        			    if(index%9===1 ){
+        			    	let div = $("<div id='areadiv"+Math.ceil(index/9)+"' date-pagenum='"+Math.ceil(index/9)+"'></div>");
+        			         $("#areatable").append(div); 
+        			    }
 
-				let td = $('<td></td>');
-				let img = $("<img width='150px' height='150px' src='"+i.firstimage+"'>");
-				let a = $("<a href='apitest?contentid="+i.contentid+"', target='_blank'></a>");
-				a.append(img);
-				td.append(a);
-				tr.append(td);
+        				let td = $('<td></td>');
+        				let img = $("<img width='150px' height='150px' src='"+i.firstimage+"'>");
+        				let a = $("<a href='tripdetailapi?contentid="+i.contentid+"', target='_blank'></a>");
+        				a.append(img);
+        				td.append(a);
+        				tr.append(td);
 
-				if(index%3===0){
-					$("#areadiv"+Math.ceil(index/9)).append(tr);
-					tr = $("<tr></tr>")
-				}else if(index==msg.length){
-					$("#areadiv"+Math.ceil(index/9)).append(tr);
-					tr = $("<tr></tr>")
-				}
-           
-// 				if(index%9===0){
-			         
-// 			         $("#areatable").append(div);
-// 		   		 }
-           
-           		index++;                
-			}
+        				if(index%3===0){
+        					$("#areadiv"+Math.ceil(index/9)).append(tr);
+        					tr = $("<tr></tr>")
+        				}else if(index==msg.length){
+        					$("#areadiv"+Math.ceil(index/9)).append(tr);
+        					tr = $("<tr></tr>")
+        				}
+                   
+//         				if(index%9===0){
+        			         
+//         			         $("#areatable").append(div);
+//         		   		 }
+
+                   
+                   		index++;                
+        			}
+                    
+                 }
+            
+             })         
+			
+			
 		},
 		error : function(jqXHR, status, e) {
 			console.log("지역검색 에러");
@@ -416,7 +436,16 @@ $(document).on("change","#select_sigunguCode", function (e){
 		data : parms,
 		dataType : 'json',
 		success : function(msg) {
+			
+		
 			console.log(msg);
+			let container = $('#pagination');
+            container.pagination({
+                
+                 dataSource: msg, //받아온 데이터
+                 pageSize: 9,
+                 callback: function (msg, pagination) { //데이터 찍어주는 부분
+                    console.log("data=",msg);
 			
 			$("#areatable").empty();
 			
@@ -436,7 +465,7 @@ $(document).on("change","#select_sigunguCode", function (e){
 
 				let td = $('<td></td>');
 				let img = $("<img width='150px' height='150px' src='"+i.firstimage+"'>");
-				let a = $("<a href='apitest?contentid="+i.contentid+"', target='_blank'></a>");
+				let a = $("<a href='tripdetailapi?contentid="+i.contentid+"', target='_blank'></a>");
 				a.append(img);
 				td.append(a);
 				tr.append(td);
@@ -456,6 +485,8 @@ $(document).on("change","#select_sigunguCode", function (e){
            
            		index++;                
 			}
+                 }
+            })   
 		},
 		error : function(jqXHR, status, e) {
 			console.log("지역검색 에러");
