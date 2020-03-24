@@ -16,6 +16,7 @@ public class SnsFriendList {
 
 	@Autowired
 	SnsFriendListDao snsFriendListDao;
+		
 	
 	public String get(String id) {
 		List<Member> result=snsFriendListDao.get(id);

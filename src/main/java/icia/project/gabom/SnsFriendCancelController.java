@@ -20,9 +20,6 @@ public class SnsFriendCancelController {
 	public String friendCancel(@RequestParam("friendId") String friendId
 		,Principal principal) {
 		
-		System.out.println("친구 삭제 들어옴");
-		System.out.println(friendId);
-		System.out.println(principal.getName());
 		String json=snsFriendCancel.cancel(friendId,principal);
 		
 		return json;

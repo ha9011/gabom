@@ -13,6 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import icia.project.gabom.dao.SearchIdDao;
 import icia.project.gabom.dto.Member;
@@ -23,6 +24,7 @@ public class SendUserId {
 	@Autowired
 	SearchIdDao searchIdDao;
 
+	@Transactional
 	public HashMap<String, String> sendUserId(String member_email) {
 
 		Member member = searchIdDao.searchId(member_email);

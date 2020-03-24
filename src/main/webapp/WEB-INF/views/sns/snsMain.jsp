@@ -576,8 +576,8 @@ $(function () {
 				<aside class="container col-xs-3 col-md-2 col-sm-3" id="snsAside">
 					<a href="#snsMain">TOP</a>
 					<div id="snsProfileImg">
-						<img src="" class="img-responsive img-thumbnail"
-							onclick="asideRead()">
+						<a href="#timeLineProfileBoxTot"><img src="" class="img-responsive img-thumbnail"
+							onclick="asideRead()"></a>
 					</div>
 					<br />
 					<div class="snsProfile">
@@ -591,9 +591,9 @@ $(function () {
 						</ul>
 						<ul class="nav nav-pills nav-stacked">
 							<li role="presentation" class="active" id="snsWirte"><a
-								href="#">글작성</a></li>
+								href="#writeBox">글작성</a></li>
 							<li role="presentation" class="active" id="timeLine"><a
-								href="#">타임라인</a></li>
+								href="#snsTimeLineMain">타임라인</a></li>
 							<li role="presentation" class="active" id="travelPlan"><a
 								href="#">여행계획</a></li>
 						</ul>
@@ -622,7 +622,7 @@ $(function () {
 					<div id="more">
 						<a href="#;">더보기</a>
 					</div>
-					<div id=friendMore>
+					<div id="friendMore">
 						<a href="#;">더보기</a>
 					</div>
 					<div id="myPostMore">
@@ -636,7 +636,7 @@ $(function () {
 	<div class='info' style='display: none'>설정이 변경되었습니다.</div>
 	<div class="imgBox" style="display: none"></div>
 	<!-- 이미지 크게 -->
-	<script>
+	<script type="text/javascript">
 	function resizeImg(osrc){
 				let make="";
 				make+='<div><img src="'+osrc+'" onclick="closeImgBox()"/></div>';
@@ -1095,6 +1095,8 @@ function search(searchData) {
 		$("#timeLineProfileBoxTot").empty();
 		$("#snsTimeLineMain").empty();
 		$("#more").css("display","none");
+		$("#friendMore").css("display","none");
+		$("#myPostMore").css("display","none");
 		let $tot=$("<div>").addClass("container searchTot");
 		let $friend=$("<div>").addClass("container")
 		.html("<div style='display:flex;margin-bottom:20px;'><div class=searchD>\""+data+"\"</div>에 관련된 친구 검색 결과</div>");
@@ -1213,6 +1215,8 @@ function search(searchData) {
 	$("#timeLine").click(function () {
 	setTimeLine();		
 	$("#more").css("display","block");
+	$("#friendMore").css("display","none");
+	$("#myPostMore").css("display","none");
 	$("#timeLineProfileBoxTot").empty();
 	}
 	);
@@ -1281,8 +1285,6 @@ function search(searchData) {
 	</script>
 	<!-- 댓글 입력 -->
 	<script type="text/javascript">
-
-
 function commentInsert(number) {
 	var commentWriteContents="#commentWriteBox"+number+" input";
 	var commentData={
@@ -1614,7 +1616,7 @@ $("div").on("click","#cancel",function(){
 //페이지 프로필파일과 이름을 출력 해주는 함수
 function setProfile(json) {
 	$("#snsProfileImg img").attr("src",json.member_profile_picture);
-	$("#snsProfileName").html("<a href='#;'>"+json.member_id+"</a>님");
+	$("#snsProfileName").html("<a href='#timeLineProfileBoxTot'>"+json.member_id+"</a>님");
 	userId=json.member_id;
 	console.log(userId);
 	jsonPicture=json.member_profile_picture;	

@@ -5,9 +5,6 @@ import icia.project.gabom.dto.SnsCommentDto;
 
 public interface SnsCommentInsertDao {
 
-	
-	
-	
 	boolean insert(SnsCommentDto comment);
 
 }

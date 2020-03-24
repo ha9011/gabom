@@ -4,6 +4,7 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 
@@ -18,6 +19,7 @@ public class SnsTimeLineProfileBox {
 	@Autowired
 	SnsTimeLineProfileDao snsTimeLineProfileDao;
 	
+	@Transactional
 	public String profile(String id, Principal principal) {
 			//가져올 목록 아이디 이름 친구숫자 프로필 사진 글 개수 내소개
 		//21일 추가 할 항목 친구 상태 

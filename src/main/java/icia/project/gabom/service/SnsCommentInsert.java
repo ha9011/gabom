@@ -27,8 +27,6 @@ public class SnsCommentInsert {
 		.setId(principal.getName());
 		boolean result= snsCommnetInsertDao.insert(comment);
 			if(result) {
-				//SnsCommentDto SelectComment=snsCommnetInsertDao.select(comment);
-				//Member member=snsCommnetInsertDao.picSelect(comment);
 				json=snsComment.snsComment(comment.getPostNumber());
 			}
 		return json;
