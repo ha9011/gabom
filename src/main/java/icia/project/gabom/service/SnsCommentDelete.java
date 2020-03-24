@@ -2,6 +2,7 @@ package icia.project.gabom.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -14,6 +15,7 @@ public class SnsCommentDelete {
 	@Autowired
 	SnsCommentDeleteDao commentDel;
 	
+	@Transactional
 	public String delete(int num, int postNum) {
 		boolean result=commentDel.delete(num);
 		JsonObject jsonResult= new JsonObject();

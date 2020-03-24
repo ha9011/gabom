@@ -26,4 +26,6 @@ public class SnsTimeLineResult {
 	private int hate;
 	private String profilePicture;
 	private int commentCount;
+	private int max;
+	private int rowNum;
 }

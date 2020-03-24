@@ -38,6 +38,10 @@ public class SnsMyPost {
 			low=1;
 		}
 		int lowNum=5*low;
+		int resultNum=snsMyPost.check(id);
+		if(lowNum>resultNum) {
+			lowNum=resultNum;
+		}
 		SnsTimeLineResult result = null;
 		HashMap<Integer, SnsTimeLineResult> snsTimeLineResultMap = new HashMap<Integer, SnsTimeLineResult>();
 		List<Snsposts> snsWriteTimeLine = snsMyPost.myPost(id,lowNum);// 글 5개를 가져와서
@@ -51,7 +55,7 @@ public class SnsMyPost {
 				int commentCount=snsTimeLineDao.commentCount(number);
 				member.setMember_id(post.getSns_posts_writer());
 				member = getProfile.getProfile(member);
-				result = setPost(result, post, photoList, likeHateCounter, member,commentCount);
+				result = setPost(result, post, photoList, likeHateCounter, member,commentCount,lowNum,resultNum);
 				snsTimeLineResultMap.put(number,result);
 			}
 		}
@@ -59,7 +63,7 @@ public class SnsMyPost {
 		return json;
 	}
 	private SnsTimeLineResult setPost(SnsTimeLineResult result, Snsposts post, List<SnsPhoto> photoList,
-			SnsLikeHateCounter likeHateCounter, Member member, int commentCount) {
+			SnsLikeHateCounter likeHateCounter, Member member, int commentCount, int lowNum, int resultNum) {
 			result.setLike(likeHateCounter.getSnsLike())
 			.setHate(likeHateCounter.getSnsHate());
 		result.setPosts_number(post.getSns_posts_number()).setPosts_writer(post.getSns_posts_writer())
@@ -67,7 +71,7 @@ public class SnsMyPost {
 				.setPosts_authority(post.getSns_posts_authority()).setPosts_report(post.getSns_posts_report())
 				.setSns_posts_date(post.getSns_posts_date()).setSns_posts_edit_date(post.getSns_posts_edit_date())
 				.setProfilePicture(member.getMember_profile_picture()).setCommentCount(commentCount);
-		result.setPhotoList(photoList);
+		result.setPhotoList(photoList).setMax(resultNum).setRowNum(lowNum);
 		return result;
 	}
 }

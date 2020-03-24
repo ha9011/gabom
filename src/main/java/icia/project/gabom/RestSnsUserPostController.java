@@ -20,8 +20,6 @@ public class RestSnsUserPostController {
 
 	@PostMapping(value = "sns/user/posts", produces = "application/json;charset=UTF-8")
 	public String userPost(@RequestParam("id") String id, @RequestParam("row") int row, Principal principal) {
-		System.out.println("다른 사람 글 들어옴");
-		System.out.println(id);
 		String json = null;
 		if (principal.getName().equals(id)) {
 			json = snsMyPost.myPost(row, principal);

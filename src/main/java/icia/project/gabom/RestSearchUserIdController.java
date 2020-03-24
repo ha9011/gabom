@@ -19,7 +19,6 @@ public class RestSearchUserIdController {
 	//이메일 존재 여부 확인
 	@PostMapping(value ="/user/id/email", produces = "application/json;charset=UTF-8")
 	public HashMap<String,String> SearchUserId(Member member) {
-		System.out.println("들어온 이메일"+member.getMember_email());
 		HashMap<String,String> sucessMessage=searchUserEmail.searchUserEmail(member.getMember_email());
 		return sucessMessage;
 	}

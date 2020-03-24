@@ -41,19 +41,28 @@ public class SnsSearch {
 		}
 		int postRowTotNum=10*postRow;
 		int friendRowtotNum=10*friendRow;
+		int postTotNum=snsSearchDao.checkPostTotNum(data);
+		int friendtotNum=snsSearchDao.checkFriendTotNum(data);
+		if(postRowTotNum>postTotNum) {
+			postRowTotNum=postTotNum;
+		}
+		if(friendRowtotNum>friendtotNum) {
+			friendRowtotNum=friendtotNum;
+		}
 		HashMap<String, List<SnsSerachResult>> total = new HashMap<String, List<SnsSerachResult>>();
 		List<Snsposts> postList = snsSearchDao.searchPost(data, principal.getName(),postRowTotNum);
 		List<Member> memberList = snsSearchDao.searchFriendList(data,friendRowtotNum);
 		List<SnsSerachResult> publicResult = new ArrayList<SnsSerachResult>();
 		List<SnsSerachResult> friendListResult = new ArrayList<SnsSerachResult>();
 		for (Snsposts post : postList) {
-			publicResult = setResult(post, publicResult);
+			publicResult = setResult(post, publicResult,postRowTotNum,postTotNum);
 		}
 		total.put("publicPost", publicResult);
 		for (Member member : memberList) {
 			Member friendStatus = snsSearchDao.check(member.getMember_id(), principal.getName());
 			if (friendStatus == null || friendStatus != null) {
-				friendListResult = setFriendListResult(member, friendListResult,friendStatus);
+				friendListResult = setFriendListResult(member,
+						friendListResult,friendStatus,friendtotNum,friendRowtotNum);
 			}
 		}
 		total.put("friendList",friendListResult);
@@ -101,9 +110,12 @@ public class SnsSearch {
 	
 	
 	
-	private List<SnsSerachResult> setFriendListResult(Member member, List<SnsSerachResult> friendListResult, Member friendStatus) {
+	private List<SnsSerachResult> setFriendListResult(Member member, List<SnsSerachResult> friendListResult,
+			Member friendStatus, int friendtotNum,
+			int friendRowtotNum) {
 		SnsSerachResult resultDto = new SnsSerachResult();
-		resultDto.setId(member.getMember_id()).setPic(member.getMember_profile_picture());
+		resultDto.setId(member.getMember_id()).setPic(member.getMember_profile_picture())
+		.setMax(friendtotNum).setRow(friendRowtotNum);
 		if(friendStatus==null) {
 			resultDto.setStatus(0);
 		}else {
@@ -117,12 +129,16 @@ public class SnsSearch {
 	
 	
 	
-	private List<SnsSerachResult> setResult(Snsposts post, List<SnsSerachResult> resultArr) {
+	private List<SnsSerachResult> setResult(Snsposts post, List<SnsSerachResult> resultArr,
+			int postRowTotNum, int postTotNum) {
 		SnsSerachResult resultDto = new SnsSerachResult();
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String date = format1.format(post.getSns_posts_date());
 		resultDto.setPostNumber(post.getSns_posts_number()).setWriter(post.getSns_posts_writer()).setDate(date)
-				.setReport(post.getSns_posts_report()).setContents(post.getSns_posts_content());
+				.setReport(post.getSns_posts_report())
+				.setContents(post.getSns_posts_content())
+				.setMax(postTotNum)
+				.setRow(postRowTotNum);
 		resultArr.add(resultDto);
 		return resultArr;
 	}

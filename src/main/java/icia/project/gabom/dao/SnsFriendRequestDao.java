@@ -22,4 +22,6 @@ public interface SnsFriendRequestDao {
 
 	boolean acceptInsert(@Param("userId") String friendId,@Param("id") String id);
 
+	boolean refusal(@Param("reqId")String reqId,@Param("id") String id);
+
 }
