@@ -15,9 +15,12 @@ public class House_review {
 	private int house_number;
 	private String member_guestid;
 	private String house_review_content;
+	private int reservation_number;
 	
 	@DateTimeFormat(pattern="yyyy-mm-dd")
 	private String house_review_date;
+	
+	private String house_name;
 	
 	//후기 사진 
 	private String house_review_orifile;

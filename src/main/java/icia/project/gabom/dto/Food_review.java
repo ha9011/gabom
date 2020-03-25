@@ -15,6 +15,7 @@ public class Food_review {
 		private int food_number;
 		private String member_guestid;
 		private String food_review_content;
+		private int foodreservation_number;
 		
 		@DateTimeFormat(pattern="yyyy-mm-dd")
 		private String food_review_date;

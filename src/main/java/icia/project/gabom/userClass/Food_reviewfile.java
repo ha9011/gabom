@@ -18,19 +18,18 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import icia.project.gabom.dao.IMyInfoDao;
-import icia.project.gabom.dto.House_review;
 
 
 @Service
-public class House_reviewFlie {
+public class Food_reviewfile {
    //파일 업로드 메소드   
 	
-	String fullPathmain = "E:\\Spring\\gabom\\src\\main\\webapp\\resources\\housereview";
+	String fullPathmain = "E:\\Spring\\gabom\\src\\main\\webapp\\resources\\foodreview";
 
 	@Autowired
 	private IMyInfoDao minfDao;
 	
-   public boolean fileUpreview(MultipartHttpServletRequest multi, int house_review_number){
+   public boolean fileUpfreview(MultipartHttpServletRequest multi, int food_review_number){
 	   System.out.println("fileUp");
 	      //1.이클립스의 물리적 저장경로 찾기
 	      String root=fullPathmain;
@@ -65,7 +64,7 @@ public class House_reviewFlie {
 	         
 	         //3.파일을 가져오기-파일태그 여러개
 	         Map<String,String> fMap=new HashMap<String, String>();
-	         List<MultipartFile> fList = multi.getFiles("house_review_orifile");
+	         List<MultipartFile> fList = multi.getFiles("food_review_orifile");
 	        
 	         boolean f1=false;
 	         for(int i=0;i<fList.size();i++) {
@@ -73,19 +72,19 @@ public class House_reviewFlie {
 		         MultipartFile mf=fList.get(i); //실제파일
 		         String oriFileName=mf.getOriginalFilename();  //a.txt
 		         System.out.println(oriFileName);
-		         fMap.put("house_review_number",Integer.toString(house_review_number));
-		         fMap.put("house_review_orifile", oriFileName);
+		         fMap.put("food_review_number",Integer.toString(food_review_number));
+		         fMap.put("food_review_orifile", oriFileName);
 		         //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
-		         String sysFileName="house_review_img"+System.currentTimeMillis()+"."
+		         String sysFileName="food_review_img"+System.currentTimeMillis()+"."
 		               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
 		         
-		         String sysFileNameDB2="./resources/housereviewupload/"+sysFileName;
-		         fMap.put("house_review_sysfile", sysFileNameDB2);
+		         String sysFileNameDB2="./resources/foodreviewupload/"+sysFileName;
+		         fMap.put("food_review_sysfile", sysFileNameDB2);
 		         //5.메모리->실제 파일 업로드
 		         
 		         try {
 		            mf.transferTo(new File(path+sysFileName)); // 서버upload에 파일 저장
-		            f1=minfDao.housereviewimage(fMap); // db에 올림
+		            f1=minfDao.foodreviewimage(fMap); // db에 올림
 		         }catch (IOException e) {
 		            // TODO Auto-generated catch block
 		            e.printStackTrace();

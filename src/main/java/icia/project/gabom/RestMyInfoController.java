@@ -1,12 +1,18 @@
 package icia.project.gabom;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.sun.mail.handlers.multipart_mixed;
 
 import icia.project.gabom.dto.Foodreservation;
 import icia.project.gabom.dto.House_review;
@@ -75,14 +81,40 @@ public class RestMyInfoController {
 	
 	
 	@PostMapping(value = "/inserthreview", produces="text/plain;charset=utf-8")
-	public String inserthreview(Principal pc,House_review hrv) {
+	public String inserthreview(Principal pc,MultipartHttpServletRequest multi) {
 		System.out.println("집 리뷰등록");
+		//System.out.println("사진"+multi.getFile("house_review_orifile").getOriginalFilename());
 		
-		System.out.println("리뷰내용:"+hrv.getHouse_review_content());
-		System.out.println("집 번호:"+hrv.getHouse_number());
-		System.out.println("리뷰사진:"+hrv.getHouse_review_orifile());
+		List<MultipartFile> files=multi.getFiles("house_review_orifile");
+		System.out.println("files="+files.get(0).getOriginalFilename());
 		
-		String json = MIMM.inserthreview(pc,hrv);
+		String json = MIMM.inserthreview(pc,multi);
+		
+		return json;
+	}
+	
+	@PostMapping(value = "/showhreview", produces="text/plain;charset=utf-8")
+	public String showhreview(@RequestParam("house_review_number")int house_review_number) {
+		System.out.println("집 리뷰 상세보기 ");
+		
+		System.out.println("리뷰번호"+house_review_number);
+		
+		String json = MIMM.showhreview(house_review_number);
+		
+		return json;
+	}
+	
+	
+	
+	@PostMapping(value = "/insertfreview", produces="text/plain;charset=utf-8")
+	public String insertfreview(Principal pc,MultipartHttpServletRequest multi) {
+		System.out.println("집 리뷰등록");
+		//System.out.println("사진"+multi.getFile("house_review_orifile").getOriginalFilename());
+		
+		List<MultipartFile> files=multi.getFiles("food_review_orifile");
+		System.out.println("files="+files.get(0).getOriginalFilename());
+		
+		String json = MIMM.insertfreview(pc,multi);
 		
 		return json;
 	}

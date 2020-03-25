@@ -75,7 +75,7 @@ input {
 }
 
 section {
-	margin: -100px 0;
+	margin:-150px 0;
 }
 
 .carousel-inner {
@@ -88,7 +88,9 @@ section {
 	width: 100%;
 	height: 500px;
 }
-
+.ma{
+margin-bottom: 120px;
+}
 
 </style>
 
@@ -162,7 +164,7 @@ section {
 		</section>
 		<!--사진영역 -->
 
-		<section>
+		<section class="ma">
 			<div class="row">
 				<div class="col-md-5">
 					<article class="blog-post">
@@ -179,8 +181,8 @@ section {
 							<h3 class="sidebar-title">지금 예약하기</h3>
 							<div class="widget-container widget-about">
 								<form id="reservation" name="reservation"  method="post">
-								날짜:<input type="text" id="datepicker" class="datepicker" name="foodreservation_date" />
-                                                                             시간:<input type="text" id="timepicker" class="timepicker" name="foodreservation_time" /><br>
+								날짜:<input autocomplete="off" type="text" id="datepicker" class="datepicker" name="foodreservation_date" />
+                                                                             시간:<input autocomplete="off" type="text" id="timepicker" class="timepicker" name="foodreservation_time" /><br>
 								인원 : <input name="foodreservation_person" type="number" id="person">명 
 								<input type="hidden" name="food_hostid" id="hostid" > 
 								<input type="hidden" name="food_number" id="food_number"><br>
@@ -195,6 +197,7 @@ section {
 				<!-- 예약 form -->
 				</div>
 		</section>
+		
 			<section>
 			<div class="col-md-12">
 				<article class="blog-post">
@@ -235,8 +238,8 @@ section {
 	</div>
 	<!-- /.container -->
 
-
-	<script src="./resources/js/bootstrap.min.js"></script>
+<!-- 
+	<script src="./resources/js/bootstrap.min.js"></script> -->
 	<script src="./resources/js/jquery.bxslider.js"></script>
 	<script src="./resources/js/mooz.scripts.min.js"></script>
 </body>

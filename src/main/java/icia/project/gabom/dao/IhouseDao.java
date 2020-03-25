@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 
 import icia.project.gabom.dto.House;
 import icia.project.gabom.dto.House_reple;
+import icia.project.gabom.dto.House_review;
 import icia.project.gabom.dto.Housereservation;
 import icia.project.gabom.dto.Member;
 
@@ -49,7 +50,10 @@ public interface IhouseDao {
 	@Select("SELECT * FROM MEMBER WHERE MEMBER_ID=#{member_id}")
 	List<Member> memberinfo(String member_id);
 
-	void insertreple(House_reple hreple); 
+	void insertreple(House_reple hreple);
+	
+	
+	List<House_review> reviewlist(int house_number); 
 	
 	
 	
