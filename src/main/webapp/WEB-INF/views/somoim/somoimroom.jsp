@@ -632,7 +632,7 @@
 	<button style='display: none' id='boardTrigger' data-toggle="modal"
 		data-target='#myBoardModal'></button>
 
-	<div id="chatDate">-</div>
+	<div style="display:none;" id="chatDate"></div>
 
 	<footer>
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
@@ -1016,8 +1016,8 @@ $(document).on("click","#rejectSomoim",function(e){
 	 
 	 //스크롤이벤트
 	
-	let basicDate = new Date(recentChatData[0].chatting_date);
-	 basicDate.setDate(today.getDate()-1);
+	let basicDate = new Date("${nextDay}");
+	console.log("다음 검색 할 날짜 : " + basicDate)
 	let selectDay = basicDate;  // 기준날짜 
 	//console.log("날짜")
 	//console.log(selectDay);
@@ -1042,7 +1042,9 @@ $(document).on("click","#rejectSomoim",function(e){
          	let total = Number(v.offsetTop)+Number(v.offsetHeight) 
         	if(v.offsetTop < scrollTop && (total) > scrollTop ){
         		console.log("채팅날짜 이벤트 실행")
+        		
         		$("#chatDate").text(v.dataset.date);
+        		$("#chatDate").show();
         		break;
         	}
         	index++;
@@ -1053,7 +1055,8 @@ $(document).on("click","#rejectSomoim",function(e){
      	console.log("clientHeight : " +  clientHeight)
 
 		console.log("toggle 이벤트 시작전  : " + chatScrollToggle)
-        if (scrollTop <= (scrollHeight/8) && scrollHeight >= clientHeight && chatScrollToggle==0 ) {
+		// 인피니티 시작이다.
+        if (scrollTop <= (scrollHeight/8) && scrollHeight >= clientHeight && chatScrollToggle==0 && selectDay!='없음') {
         	console.log("이벤트발생")
         	console.log("toggle key : " + chatScrollToggle)
         	console.log("검색날짜 : " + getFormatDate(selectDay) )
@@ -1076,7 +1079,8 @@ $(document).on("click","#rejectSomoim",function(e){
         			//console.log(data)
 					let iDate =getFormatDate(selectDay)
 					let iDateChatFrame = $("<div id='yesterday' class='chatFrame' data-date='"+iDate+"'> </div>");
-        		selectDay.setDate(selectDay.getDate()-1);  //날짜 변경
+        		
+        		
         		
             	$.ajaxSetup({         
     			    	  beforeSend : function(xhr){
@@ -1092,7 +1096,20 @@ $(document).on("click","#rejectSomoim",function(e){
     						
     						//alert("success");
     						//console.log(data)
-    						for(let v of data ){
+    						console.log("채팅 인피니티 성공--")
+    						console.log(data)
+    						
+    						if(data.hasOwnProperty('date')){ // date가 있으면 진행
+    							selectDay = new Date(data.date);
+    						}else{ // 없으면 다음 date가 없다는 거임 
+    							selectDay = '없음';	  // 그러니 ajax 안해도 된다는 걸 의미
+    						}
+    						
+    						console.log(chatData)
+    						console.log("select Day : "+ selectDay)
+    						
+    						
+    						for(let v of data.chattingData ){
     							
     							//c chatting
     							let cSomoimNumber = v.somoim_number;
@@ -1150,13 +1167,6 @@ $(document).on("click","#rejectSomoim",function(e){
     					}
     				})
 			}, 400);
-        	
-        	
-        	
-        	
-        	
-        	
-        	
         	
         	
         } else {

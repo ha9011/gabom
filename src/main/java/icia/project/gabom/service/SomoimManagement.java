@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 
 import icia.project.gabom.dao.ISomoimDao;
+import icia.project.gabom.dto.ChattingInfinite;
 import icia.project.gabom.dto.ChattingSomoim;
 import icia.project.gabom.dto.Food;
 import icia.project.gabom.dto.House;
@@ -202,6 +203,14 @@ public class SomoimManagement {
 		String chatData = new Gson().toJson(selectRecentChattingData);
 		System.out.println("jsonchatData : " + chatData);
 		mav.addObject("JsonchatData", chatData);
+		
+		//다음 검색할 날짜 축출하기
+		String date = selectRecentChattingData.get(0).getChatting_date();  // 검색된 친구들 중 마지막 날짜
+		System.out.println("다음 검색 날짜 : " + date);
+		String nextDay = sDao.selectNextDayInfinityChattingData(Integer.parseInt(roomnum),date); // 그 다음 날짜 찾기
+		System.out.println("다음 날짜는 언제인지요?? : " + nextDay );
+		
+		mav.addObject("nextDay", nextDay);
 		
 		mav.setViewName("somoim/somoimroom");
 		return mav;
@@ -664,9 +673,22 @@ public class SomoimManagement {
 	
 	
 	public String selectDateChatting(String date, int somoimNumber) {
+		
+		
 		List<ChattingSomoim> selectInfinityChattingData = sDao.selectInfinityChattingData(somoimNumber,date);
-		String result = new Gson().toJson(selectInfinityChattingData);
-		System.out.println("긁혀짐?:" +result);
+		
+		//
+		
+		String nextDay = sDao.selectNextDayInfinityChattingData(somoimNumber,date);
+		System.out.println("다음 날짜는 언제인지요?? : " + nextDay );
+		
+		ChattingInfinite ci = new ChattingInfinite();
+		ci.setDate(nextDay).setChattingData(selectInfinityChattingData);
+		System.out.println("긁혀짐?:" +ci.toString());
+		
+		String result = new Gson().toJson(ci);
+		
+		
 		return result;
 	}
 

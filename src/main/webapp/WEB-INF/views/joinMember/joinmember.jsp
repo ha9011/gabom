@@ -377,11 +377,19 @@
 			return true;
 		}
 
+	
 	$("#member_id").on("blur", function(e){
 		console.log("아이디 중복 확인 blur");
 		var userCheck = $("#checkID");
 		var id = e.target.value;
 		console.log(id);
+		
+
+		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+		      
 		$.ajax({
 			url:"join/userid",
 			data:"member_id="+id,
@@ -426,6 +434,12 @@
 		var checkEmail = $("#checkEmail");
 		var email = e.target.value;
 		console.log(email);
+		
+		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+		      
 		$.ajax({
 			url:"join/useremail",
 			data:"member_email="+email,

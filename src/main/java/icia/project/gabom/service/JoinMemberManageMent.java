@@ -147,6 +147,7 @@ public class JoinMemberManageMent {
 		
 		Member result = ijDao.idCheck(mb);
 		System.out.println("result : " + result);
+		
 		if( result == null) {
 			System.out.println("아이디가 존재 하지 않습니다.");
 		}else {

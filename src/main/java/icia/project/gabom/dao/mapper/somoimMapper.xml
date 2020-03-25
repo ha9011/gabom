@@ -430,7 +430,7 @@ select jr.*, nvl2(jm.member_number,1,0) as my_attend_check from JUNGMO_ROOM jr, 
 
 <select id="selectRecentChattingData" parameterType="int" resultType="chattingsomoim">
 	<![CDATA[
-	 select sc.*, m.member_profile_picture chatting_profile 
+	 select sc.chatting_content, to_char(sc.chatting_date,'YYYY-MM-DD') as chatting_date ,sc.chatting_name, sc.somoim_number ,m.member_profile_picture chatting_profile 
 	from somoim_chatting sc, member m  
 	where sc.chatting_name = m.Member_id 
 	and SOMOIM_NUMBER = #{somoim_number} 
@@ -451,6 +451,29 @@ select jr.*, nvl2(jm.member_number,1,0) as my_attend_check from JUNGMO_ROOM jr, 
 	 and TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')+1, 'YYYY/MM/DD') 
 	 order by chatting_date asc
 </select>
+
+<select id="selectNextDayInfinityChattingData"  resultType="String">
+<![CDATA[
+
+     
+WITH t As(
+	select chatting_date 
+	 from somoim_chatting sc, member m  
+	 where sc.chatting_name = m.Member_id 
+	 and SOMOIM_NUMBER = #{somoim_number} 
+	 and chatting_date between #{date} 
+	 and TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')+1, 'YYYY/MM/DD') 
+	  and rownum = 1       
+)
+select * from(
+select sc.chatting_date from somoim_chatting sc, t d
+where sc.chatting_date < d.chatting_date
+order by sc.chatting_date desc 
+) where rownum = 1
+
+]]>
+</select>
+
 
 <update id="repleModify" >
 	update SOMOIM_BOARD_REPLE set SOMOIM_BOARD_REPLE_CONTENT = #{content} where SOMOIM_BOARD_REPLE_NUMBER = #{replenumber} 

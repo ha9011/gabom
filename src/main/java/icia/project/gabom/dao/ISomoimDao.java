@@ -123,7 +123,8 @@ public interface ISomoimDao {
 
 	List<ChattingSomoim> selectInfinityChattingData(@Param("somoim_number")int somoimNumber, @Param("date")String date);
 
-
+	String selectNextDayInfinityChattingData(@Param("somoim_number")int somoimNumber, @Param("date")String date);
+	
 	int repleModify(@Param("content")String content, @Param("replenumber")int replenumber);
 	
 	int deleteMember(@Param("id")String id, @Param("sNumber")int sNumber);
@@ -132,6 +133,7 @@ public interface ISomoimDao {
 	
 	List<SomoimBoard> selectNotiSomoim(@Param("id")String name);
 	
+
 	//소켓
 	List<Member> joinMemberSomoimList(@Param("somoim_number")int somoim_number);
 	
