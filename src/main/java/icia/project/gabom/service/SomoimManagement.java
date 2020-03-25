@@ -854,23 +854,6 @@ public class SomoimManagement {
 
 
 
-//	public String modifyreple(Somoim_photo_reple spreple) {
-//		String json= null;
-//		
-//		int reply_number =  spreple.getReply_number();
-//		int photo_number =  spreple.getPhoto_number();
-//		
-//		System.out.println("댓글번호"+reply_number);
-//		System.out.println("사진번호"+photo_number);
-//		
-//		int modifyreple = sDao.modifyreple(reply_number);//삭제
-//		List<Somoim_photo_reple> selectreple = sDao.recallreple(photo_number);//긁어온거
-//		
-//		
-//		json = new Gson().toJson(selectreple);
-//		return json;
-//	}
-
 
 
 }

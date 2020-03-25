@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import icia.project.gabom.dao.IhouseDao;
 import icia.project.gabom.dto.House;
 import icia.project.gabom.dto.House_reple;
+import icia.project.gabom.dto.House_review;
 import icia.project.gabom.dto.Housereservation;
 import icia.project.gabom.dto.Member;
 
@@ -82,19 +83,22 @@ public class Houseservice {
 	}
 
 
-	public ModelAndView housedetail(String house_number, Housereservation reserlist, Principal principal) {
+	public ModelAndView housedetail(int house_number, Housereservation reserlist, Principal principal) {
 		mav = new ModelAndView();
 		String view = null;
 		String json = null;
 		String json2 = null;
 		String json3 = null;
 		String json4 = null;
+		String json5 = null;
 		
 		List<House> detailhouse = hDao.detailhouse(house_number);
 		
 		List<Housereservation> detailreser = hDao.detailreser(house_number);
 		
 		List<House_reple> reple_list = hDao.replelist(house_number);
+		
+		List<House_review> review_list =hDao.reviewlist(house_number);
 		
 		String member_id=principal.getName();
 		
@@ -109,12 +113,14 @@ public class Houseservice {
 		json2 = new Gson().toJson(detailreser);
 		json3 = new Gson().toJson(reple_list);
 		json4 = new Gson().toJson(memberinfo);
+		json5 = new Gson().toJson(review_list);
 		//System.out.println("json="+json);
 		System.out.println("json2="+json2);
 		mav.addObject("detailhouse",json);
 		mav.addObject("detailreser",json2);
 		mav.addObject("reple_list",json3);
 		mav.addObject("memberinfo",json4);
+		mav.addObject("review_list",json5);
 		
 		System.out.println("해당 방 정보 보여줘");
 		mav.setViewName(view); //view에 url로 이동
@@ -143,6 +149,25 @@ public class Houseservice {
 		System.out.println("json="+json);
 		System.out.println("예약했니?");
 		
+		return json;
+	}
+
+
+	public String insertreple(House_reple hr, Principal ppl) {
+		String json = null;
+		
+		int house_number = hr.getHouse_number();
+		String member_guestid = ppl.getName();
+		String house_reple_content = hr.getHouse_reple_content();
+		
+		House_reple hreple = new House_reple();
+		
+		hreple.setHouse_number(house_number).setHouse_reple_content(house_reple_content).setMember_guestid(member_guestid);
+		hDao.insertreple(hreple);//댓글 넣고 
+		
+		List<House_reple> reple_list = hDao.replelist(house_number);//다시 불러옴
+		
+		json = new Gson().toJson(reple_list);
 		return json;
 	}
 

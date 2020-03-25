@@ -16,6 +16,7 @@ public class Foodreservation {
 	private String foodreservation_date;
 	private int foodreservation_person;
 	private String foodreservation_time;
+	private int food_review_status;
 	
 	private String food_name;
 

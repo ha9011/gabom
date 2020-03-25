@@ -4,6 +4,7 @@ import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.project.gabom.dao.IhouseDao;
+import icia.project.gabom.dto.House_reple;
 import icia.project.gabom.dto.Housereservation;
 import icia.project.gabom.service.Houseservice;
 
@@ -48,4 +50,18 @@ public class HouseRestController {
 		return json;
 	
 	}
+	
+	   @PostMapping(value = "/insertreple" ,produces = "application/json;charset=utf-8")
+	   public String insertreple(Principal ppl,House_reple hr) {
+		   System.out.println("숙박 댓글 입력 ");
+		   System.out.println("댓글 입력 아이디:"+ppl.getName());
+		   System.out.println("댓글 내용:"+hr.getHouse_reple_content());
+		   System.out.println("집 번호:"+hr.getHouse_number());
+		   System.out.println();
+		   
+	      String json = hs.insertreple(hr,ppl);
+	      
+	      return json;
+	   }
+	   
 }
