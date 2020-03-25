@@ -10,13 +10,11 @@ import icia.project.gabom.dto.House;
 
 @Controller
 public class SnsMainController {
-
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value = "/snsmain")
 	public String snsMain() {
 		return "sns/snsMain";
 	}
-
 
 }

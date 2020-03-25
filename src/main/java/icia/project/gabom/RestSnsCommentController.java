@@ -18,7 +18,6 @@ public class RestSnsCommentController {
 	@PostMapping(value = "sns/comment", produces = "application/json;charset=UTF-8")
 	public String snsComment(@RequestParam("postNumber") int postNumber,
 			@RequestParam("commentRow") int row) {
-		System.out.println("늘어나라"+row);
 		String json=snsComment.snsComment(postNumber,row);
 		return json;
 	}

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import icia.project.gabom.service.SnsFriendRequest;
 
 @RestController
-public class SnsFriendRequestController {
+public class RestSnsFriendRequestController {
 	
 	
 	@Autowired

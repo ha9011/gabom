@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import icia.project.gabom.service.SnsCommentDelete;
 
 @RestController
-public class SnsCommentDeleteController {
+public class RestSnsCommentDeleteController {
 
 	@Autowired
 	SnsCommentDelete snsCommentDelete;

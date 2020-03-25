@@ -18,7 +18,7 @@ public class RestSnsUserPostController {
 	@Autowired
 	SnsMyPost snsMyPost;
 
-	@PostMapping(value = "sns/user/posts", produces = "application/json;charset=UTF-8")
+	@PostMapping(value = "/sns/user/posts", produces = "application/json;charset=UTF-8")
 	public String userPost(@RequestParam("id") String id, @RequestParam("row") int row, Principal principal) {
 		String json = null;
 		if (principal.getName().equals(id)) {

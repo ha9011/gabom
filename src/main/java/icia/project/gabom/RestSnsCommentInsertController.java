@@ -15,7 +15,6 @@ public class RestSnsCommentInsertController {
 	@Autowired
 	SnsCommentInsert snsCommentInsert;
 	
-	
 	@PostMapping(value = "/sns/comment/insert", produces="text/plain;charset=utf-8")
 	public String commentInsert(@RequestParam("postNumber") int postNumber,
 			@RequestParam("commentContent") String commentContent,Principal principal) {

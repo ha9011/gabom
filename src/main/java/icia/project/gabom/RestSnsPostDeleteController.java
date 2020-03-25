@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import icia.project.gabom.service.SnsPostDelete;
 
 @RestController
-public class RestPostDeleteController {
+public class RestSnsPostDeleteController {
 	
 	@Autowired
 	SnsPostDelete snsPostDelete;
