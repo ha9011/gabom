@@ -39,7 +39,7 @@ public class SnsHate {
 		}
 		int hateTotal=snsHateDao.total(postNumber);
 		int likeTotal = snsLikeDao.total(postNumber);
-		JsonObject	totalObject= new JsonObject();
+		JsonObject totalObject= new JsonObject();
 		totalObject.addProperty("hateTotal", hateTotal);
 		totalObject.addProperty("likeTotal", likeTotal);
 		return new Gson().toJson(totalObject);

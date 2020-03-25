@@ -18,7 +18,6 @@ public class SnsPostSecurity {
 
 		boolean result = snsPostSecurityDao.edit(postNumber, securityVal);
 		JsonObject securityEditObj = new JsonObject();
-		System.out.println("시큐리티 다녀옴" + result);
 		if (result) {
 			securityEditObj.addProperty("message", "설정이 변경 되었습니다.");
 		} else {

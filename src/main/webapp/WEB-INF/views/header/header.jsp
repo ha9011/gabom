@@ -106,8 +106,9 @@ background-color: #E6E6E6
             <li><a href="snsmain" id="sns" >SNS</a></li>
             <li><a href="housechoice" id="room" >숙박</a></li>
             <li><a href="foodmain" id="popularRestaurant">맛집</a></li>
-            <li><a href="#" id="vip">VIP</a></li>
+            <li><a href="somoim/mainsomoim" id="somoim">소모임</a></li>
             <li><a href="#" id="service">고객센터</a></li>
+            <li><a href="adminmenu" id="admin">관리자</a></li>
          </ul>
       </div>
       <script type="text/javascript">
@@ -136,10 +137,10 @@ background-color: #E6E6E6
             $('#popularRestaurant').html('맛집');
          });
          
-         $("#vip").hover(function () {
-            $('#vip').html('<i class="fas fa-crown"></i>');
+         $("#somoim").hover(function () {
+            $('#somoim').html('<i class="fas fa-users"></i>');
          },function(){
-            $('#vip').html('VIP');
+            $('#somoim').html('소모임');
          });
          
          $("#service").hover(function () {
@@ -147,10 +148,14 @@ background-color: #E6E6E6
          },function(){
             $('#service').html('고객센터');
          });
+         $("#admin").hover(function () {
+             $('#admin').html('<i class="far fa-sun fa-spin"></i>');
+          },function(){
+             $('#admin').html('관리자');
+          });
       </script>
       <script type="text/javascript">
       $(function() {
-         //여기에 로딩이 끝나고 시큐리티에 아이디가 있으면 ajax로 로그인 상태를 체크 해야됨
           $("body").css("display", "none");
           $("body").fadeIn(500);
           $("#sns").click(function(event){

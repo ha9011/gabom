@@ -14,8 +14,6 @@ public class RestSearchPasswordDataController {
 	
 	@Autowired
 	MatchData matchData;
-	
-	
 	@PostMapping(value ="/user/password/data", produces = "application/json;charset=UTF-8")
 	public HashMap<String,String> searchPasswordData(Member member){
 		HashMap<String,String> sucessMessage = matchData.matchdata(member);

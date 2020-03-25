@@ -25,6 +25,12 @@ public interface SnsSearchDao {
 	List<Snsposts> searchPostResult(@Param("postNumber")int postNumber);
 
 
+	int checkPostTotNum(@Param("searchData")String data);
+
+
+	int checkFriendTotNum(@Param("searchData")String data);
+
+
 	
 	
 }

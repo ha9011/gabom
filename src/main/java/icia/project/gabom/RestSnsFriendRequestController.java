@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import icia.project.gabom.service.SnsFriendRequest;
 
 @RestController
-public class SnsFriendRequestController {
+public class RestSnsFriendRequestController {
 	
 	
 	@Autowired
@@ -37,6 +37,11 @@ public class SnsFriendRequestController {
 	@PostMapping(value = "/sns/friend/request/accept", produces="text/plain;charset=utf-8")
 	public String friendRequestAccept(@RequestParam("id") String id,Principal principal) {
 		String json=snsFriendRequest.accept(id,principal);
+		return json;
+	}
+	@PostMapping(value = "/sns/friend/request/refusal", produces="text/plain;charset=utf-8")
+	public String friendRequestRefusal(@RequestParam("reqId") String reqId,Principal principal) {
+		String json=snsFriendRequest.refusal(reqId,principal);
 		return json;
 	}
 	

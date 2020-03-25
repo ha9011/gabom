@@ -27,7 +27,6 @@ public class SnsProfile {
 		memberObject.addProperty("member_name", member.getMember_name());
 		memberObject.addProperty("member_profile_picture", member.getMember_profile_picture());
 		String json=gson.toJson(memberObject);
-		System.out.println("json"+json);
 		return json;
 	}
 

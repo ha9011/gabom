@@ -33,4 +33,9 @@
 	<insert id="acceptInsert">
 	INSERT INTO SNS_FRIEND VALUES(#{id},#{userId},2)
 	</insert>
+	<delete id="refusal">
+	DELETE FROM SNS_FRIEND
+	WHERE FRIEND_MY_ID=#{reqId} AND
+	FRIEND_ID=#{id}
+	</delete>
 </mapper>

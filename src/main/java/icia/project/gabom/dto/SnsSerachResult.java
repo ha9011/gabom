@@ -19,4 +19,6 @@ public class SnsSerachResult {
 	private String id;
 	private String pic;
 	private int status;
+	private int max;
+	private int row;
 }

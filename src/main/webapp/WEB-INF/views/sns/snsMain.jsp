@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Gabom SNS</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
@@ -25,7 +25,7 @@
 <style type="text/css">
 #snsMain {
 	background-image: url(resources/snsImage/cl3.jpg);
-	background-size: cover;
+	background-size: 100%;
 }
 
 #snsProfileImg img {
@@ -33,8 +33,8 @@
 	margin: 0 auto;
 	width: 100%;
 	height: 100%;
-	margin-top: 70px;
 	border-radius: 40px;
+	margin-top: 20px;
 }
 
 #snsAside {
@@ -130,7 +130,6 @@
 }
 
 #travelPlan {
-	margin-bottom: 40px;
 }
 
 #writeButton {
@@ -255,7 +254,7 @@ img.myImage {
 	padding-top: 12px;
 }
 
-#snsComment {
+.snsComment {
 	font-family: 'Jua';
 	font-weight: bold;
 	font-size: 19px;
@@ -444,15 +443,15 @@ td a {
 }
 
 .friendReqContent {
-	font-size: 22px;
+	font-size: 18px;
 }
 
 .friendReqContent div {
-	margin-top: 55px;
+	margin-top: 30px;
 }
 
 .friendReqContent button {
-	width: 76px;
+	width: 56px;
 	margin-left: 7px;
 	margin-right: 7px;
 	border-radius: 15px;
@@ -479,7 +478,8 @@ td a {
 .imgBox {
 	position: fixed;
 	left: 380px;
-	right: 380px; bottom : 100px;
+	right: 380px;
+	bottom: 100px;
 	z-index: 9999;
 	background-color: #337ab7;
 	color: #F0F0F0;
@@ -535,9 +535,25 @@ td a {
 	font-size: 16px;
 	font-weight: bold;
 }
-.searchD{
-	color: #337ab7;
 
+.searchD {
+	color: #337ab7;
+}
+
+.commentMore {
+	font-family: 'Jua';
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+.commentTd{
+	cursor: pointer;
+}
+.top{
+	font-family: 'Jua';
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 30px;
 }
 </style>
 <script type="text/javascript">
@@ -557,8 +573,7 @@ $(function () {
 	$("#searchText").focusin(function(){
 		$(window).keydown(function(key) {
 	        if (key.keyCode == 13) {
-	        	 var searchData=$("#searchText").val();
-	        	 search(searchData);
+	        	 enterSearch();
 	        }
 	        });
 	});
@@ -566,7 +581,7 @@ $(function () {
 </script>
 </head>
 <body>
-	<header>
+	<header id="header">
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
 	<div id="showImageBox" class="container-fluid"></div>
@@ -574,10 +589,9 @@ $(function () {
 		<div class="container-fluid">
 			<div class="row">
 				<aside class="container col-xs-3 col-md-2 col-sm-3" id="snsAside">
-					<a href="#snsMain">TOP</a>
 					<div id="snsProfileImg">
-						<img src="" class="img-responsive img-thumbnail"
-							onclick="asideRead()">
+						<a href="#timeLineProfileBoxTot"><img src=""
+							class="img-responsive img-thumbnail" onclick="asideRead()"></a>
 					</div>
 					<br />
 					<div class="snsProfile">
@@ -585,17 +599,21 @@ $(function () {
 							<li><div id="snsProfileName"></div></li>
 							<!-- <li role="presentation" id="snsProfileNotice" onclick="notice()"><a
 								href="#;">알람</a></li> -->
-							<li role="presentation" id="snsProfileInfo"><a href="#">정보수정</a></li>
+							<li role="presentation" id="snsProfileInfo"><a href="myinfo">정보수정</a></li>
 							<li role="presentation" id="snsFriendList"><a href="#">내친구</a></li>
 							<!-- <li role="presentation" id="snsProfileMyPosts"><a href="#">내글</a></li> -->
 						</ul>
 						<ul class="nav nav-pills nav-stacked">
 							<li role="presentation" class="active" id="snsWirte"><a
-								href="#">글작성</a></li>
+								href="#writeBox">글작성</a></li>
 							<li role="presentation" class="active" id="timeLine"><a
-								href="#">타임라인</a></li>
+								href="#snsTimeLineMain">타임라인</a></li>
 							<li role="presentation" class="active" id="travelPlan"><a
-								href="#">여행계획</a></li>
+								href="trip">여행계획</a></li>
+							<li role="presentation" class="active" id="search"><a
+								href="#snsTimeLineFilterBox">검색</a></li>
+							<li role="presentation" class="active top">
+							<a href="#">TOP</a></li>
 						</ul>
 					</div>
 				</aside>
@@ -622,7 +640,7 @@ $(function () {
 					<div id="more">
 						<a href="#;">더보기</a>
 					</div>
-					<div id=friendMore>
+					<div id="friendMore">
 						<a href="#;">더보기</a>
 					</div>
 					<div id="myPostMore">
@@ -635,8 +653,191 @@ $(function () {
 	</div>
 	<div class='info' style='display: none'>설정이 변경되었습니다.</div>
 	<div class="imgBox" style="display: none"></div>
+	<!-- 어사이드 내친구 -->
+	<script type="text/javascript">
+	$("#snsFriendList").click(function() {
+		friendList(userId);
+		makeTimeLineProfile(userId);
+	});
+	</script>
+	<!-- 검색 결과 내 친구 해제 -->
+	<script type="text/javascript">
+	function searchInFriendCancel(id) {
+		if(confirm("친구 상태를 해제 하시겠습니까?")){
+			$.ajaxSetup({
+				beforeSend : function(xhr){
+		 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+			});//먼저 보냄
+			$.ajax({
+					method:'post',
+					url:"sns/friend/cancel",
+					data:{"friendId":id},
+					dataType : "json"
+			}).done((msgJson)=>{
+				$('.info').text(msgJson.message).fadeIn(400).delay(1000).fadeOut(400);
+				$('.info').text(msgJson.message).fadeIn(400).delay(1000).fadeOut(400);
+				let req="#searchInFriendCancelBox"+id;
+				$(req).remove();
+				let str="";
+				str+='<div class="searchData">';
+				str+='<button type="button" class="btn btn-primary" id="searchInfriendReq'+id+'"';
+				str+='onclick=searchInfriendReq(\''+id+'\')>친구신청</button>';
+				str+='</div>'
+				let newReq="#friendBtn"+id;
+				$(newReq).html(str);
+			});
+			}
+	}
+	</script>
+	<!-- 검색 결과 내 친구 요청 취소 -->
+	<script type="text/javascript">
+	function searchInFriendReqStatus(id) {
+	if(confirm("취소 하시겠습니까?")){
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+		});//먼저 보냄
+			$.ajax({
+				method:'post',
+				url:"sns/friend/request/cancel",
+				data:{"friendId":id},
+				dataType : "json"
+			}).done((msgJson)=>{
+				$('.info').text(msgJson.message).fadeIn(400).delay(1000).fadeOut(400);
+				let req="#friendReqStatusBox"+id;
+				$(req).remove();
+				let str="";
+				str+='<div class="searchData">';
+				str+='<button type="button" class="btn btn-primary" id="searchInfriendReq'+id+'"';
+				str+='onclick=searchInfriendReq(\''+id+'\')>친구신청</button>';
+				str+='</div>'
+				let newReq="#friendBtn"+id;
+				$(newReq).html(str);
+			});		
+		}
+	}
+	</script>
+	<!-- 검색결과 내 친구 요청 -->
+	<script type="text/javascript">
+	function searchInfriendReq(reqId) {
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+				method:'post',
+				url:"sns/friend/request",
+				data:{"friendId":reqId},
+				dataType : "json"
+		}).done((userJson)=>{
+			$('.info').text(userJson.message).fadeIn(400).delay(1000).fadeOut(400);
+			let req="#friendReqBox"+reqId;
+			$(req).remove();
+			let str="";
+			str+='<div class="searchData">';
+			str+='<button type="button" class="btn btn-primary" id="friendReqStatus'+reqId+'"';
+			str+='onclick="searchInFriendReqStatus(\''+reqId+'\')">요청중</button>';
+			str+='</div>';
+			let newReq="#friendBtn"+reqId;
+			$(newReq).html(str);
+		});
+	}
+	</script>
+	<!-- 친구 요청 내 친구 거절 -->
+	<script type="text/javascript">
+	function friendReqInCancel(reqId) {
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+				method:'post',
+				url:"sns/friend/request/refusal",
+				data:{"reqId":reqId},
+				dataType : "json"
+		}).done((json)=>{
+			$('.info').text(json.message).fadeIn(400).delay(1000).fadeOut(400);
+			let tr="#proInReq"+reqId;
+			let td=tr+" td";
+			$(tr).remove();
+			let friendReqCnt=$(".timeLineProfileBoxRequest").text().substr(5);
+			let friendReqCntNumber=parseInt(friendReqCnt);
+			$(".timeLineProfileBoxRequest").html("친구 요청<br/><br/>"+(friendReqCntNumber-1));
+		});
+	}
+	</script>
+	<!-- 타임라인 내 친구 거절 -->
+	<script type="text/javascript">
+	function friendReqCancel(reqId) {
+		console.log(reqId);
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+				method:'post',
+				url:"sns/friend/request/refusal",
+				data:{"reqId":reqId},
+				dataType : "json"
+		}).done((json)=>{
+			$('.info').text(json.message).fadeIn(400).delay(1000).fadeOut(400);
+			makeTimeLineProfile(reqId);
+		});
+	}
+	</script>
+	<!-- 친구 요청 내 친구 수락 -->
+	<script type="text/javascript">
+	function friendReqInAccept(id) {
+	$.ajaxSetup({
+		beforeSend : function(xhr){
+ 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+	});//먼저 보냄
+	$.ajax({
+			method:'post',
+			url:"sns/friend/request/accept",
+			data:{"id":id},
+			dataType : "json"
+	}).done((json)=>{
+		$('.info').text(json.message).fadeIn(400).delay(1000).fadeOut(400);
+		let tr="#proInReq"+id;
+		let td=tr+" td";
+		$(tr).remove();
+		let friendCnt=$(".timeLineProfileBoxFriend").text().substr(2);
+		let friendCntNumber=parseInt(friendCnt);
+		$(".timeLineProfileBoxFriend").html('친구<br/><br/>'+(friendCntNumber+1));
+		let friendReqCnt=$(".timeLineProfileBoxRequest").text().substr(5);
+		let friendReqCntNumber=parseInt(friendReqCnt);
+		$(".timeLineProfileBoxRequest").html("친구 요청<br/><br/>"+(friendReqCntNumber-1));
+	});			
+	}
+	</script>
+	<!-- 친구 목록 내  친구 해제 -->
+	<script type="text/javascript">
+		function friendListInCancel(id) {
+			if(confirm("친구상태를 해제 하시겠습니까?")){
+			$.ajaxSetup({
+				beforeSend : function(xhr){
+		 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
+			});//먼저 보냄
+			$.ajax({
+					method:'post',
+					url:"sns/friend/cancel",
+					data:{"friendId":id},
+					dataType : "json"
+			}).done((json)=>{
+				$('.info').text(json.message).fadeIn(400).delay(1000).fadeOut(400);
+				let tr="#proFriendList"+id;
+				let td=tr+" td";
+				$(tr).remove();
+				let friendCnt=$(".timeLineProfileBoxFriend").text().substr(2);
+				let friendCntNumber=parseInt(friendCnt);
+				$(".timeLineProfileBoxFriend").html('친구<br/><br/>'+(friendCntNumber-1));
+			});			
+			}
+		}	
+	</script>
 	<!-- 이미지 크게 -->
-	<script>
+	<script type="text/javascript">
 	function resizeImg(osrc){
 				let make="";
 				make+='<div><img src="'+osrc+'" onclick="closeImgBox()"/></div>';
@@ -650,7 +851,6 @@ $(function () {
 	<!-- 게시글 검색 결과 눌렀을때 -->
 	<script type="text/javascript">
 	function serachPost(postNumber) {
-		console.log(postNumber);
 		$.ajaxSetup({
 			beforeSend : function(xhr){
 	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
@@ -661,6 +861,9 @@ $(function () {
 				data:{"postNumber":postNumber},
 				dataType : "json"
 		}).done((json)=>{
+			for(let k in json){
+			makeTimeLineProfile(json[k]["posts_writer"]);
+			}
 			makeTimeLine(json);
 		});			
 	}
@@ -668,7 +871,10 @@ $(function () {
 	<!-- 친구 목록 출력 -->
 	<script type="text/javascript">
 	function makeFriendList(json) {
+		location.href="#showImageBox";
 		$("#more").css("display","none");
+		$("#friendList").css("display","none");
+		$("#myPostMore").css("display","none");
 		$("#snsTimeLineMain").empty();
 		let table=$("<table>").addClass("table table-hover friendList").css("margin-top","26px");
 		let tbody=table.append("<tbody>");
@@ -677,7 +883,7 @@ $(function () {
 			$('.info').text(json.message).fadeIn(400).delay(1000).fadeOut(400);
 		}else{
 		for(let k in json){
-			make+='<tr>';
+			make+='<tr id="proFriendList'+json[k].member_id+'">';
 			make+='<td onclick="moveThisNamePost(\''+json[k].member_id+'\')">';
 			make+='<img src="'+json[k].member_profile_picture+'"';
 			make+='class="img-thumbnail img-responsive" style="width: 70px;height: 70px;"/>';
@@ -687,7 +893,7 @@ $(function () {
 			make+='</td>';
 			make+='<td class="friendListContent">';
 			make+='<div><button type="button" class="btn-default"';
-			make+='onclick="friendCancel(\''+json[k].member_id+'\')">친구 해제</button></div>';
+			make+='onclick="friendListInCancel(\''+json[k].member_id+'\')">친구 해제</button></div>';
 			make+='</tr>';
 		}
 		}
@@ -735,7 +941,6 @@ $(function () {
 				data:{"id":id},
 				dataType : "json"
 		}).done((json)=>{
-			makeTimeLineProfile(id);
 			moveThisNamePost(id);
 			$('.info').text(json.message).fadeIn(400).delay(1000).fadeOut(400);
 		});			
@@ -745,6 +950,8 @@ $(function () {
 	<script type="text/javascript">
 	function requestPrint(json) {
 		$("#more").css("display","none");
+		$("#friendList").css("display","none");
+		$("#myPostMore").css("display","none");
 		$("#snsTimeLineMain").empty();
 		let table=$("<table>").addClass("table table-hover friendReqList").css("margin-top","26px");
 		let tbody=table.append("<tbody>");
@@ -753,17 +960,17 @@ $(function () {
 			$('.info').text(json.message).fadeIn(400).delay(1000).fadeOut(400);
 		}else{
 		for(let k in json){
-			make+='<tr class="'+k+'">';
+			make+='<tr class="'+k+'" id="proInReq'+json[k].member_id+'">';
 			make+='<td onclick="moveThisNamePost(\''+json[k].member_id+'\')">';
 			make+='<img src="'+json[k].member_profile_picture+'"';
-			make+='class="img-thumbnail img-responsive" style="width: 150px;height: 150px;"/>';
+			make+='class="img-thumbnail img-responsive" style="width: 110px;height: 100px;"/>';
 			make+='</td>';
 			make+='<td class="friendReqContent" onclick="moveThisNamePost(\''+json[k].member_id+'\')">';
 			make+='<div><a href="#;">'+json[k].member_id+'</a></div>';
 			make+='</td>';
 			make+='<td class="friendReqContent">';
-			make+='<div><button type="button" class="btn-default" onclick="friendAccept(\''+json[k].member_id+'\',\''+k+'\')">수락</button><span>';
-			make+='<button type="button" class="btn-default">거절</button></span></div>';
+			make+='<div><button type="button" class="btn-default" onclick="friendReqInAccept(\''+json[k].member_id+'\',\''+k+'\')">수락</button><span>';
+			make+='<button type="button" class="btn-default" onclick="friendReqInCancel(\''+json[k].member_id+'\')">거절</button></span></div>';
 			make+='</tr>';
 		}
 		}
@@ -817,7 +1024,6 @@ $(function () {
 			});		
 		}
 	}	
-	
 	</script>
 	<!-- 친구 요청 -->
 	<script type="text/javascript">
@@ -836,13 +1042,12 @@ $(function () {
 			moveThisNamePost(id);
 		});
 	}	
-	
 	</script>
 	<!-- 친구 해제 -->
 	<script type="text/javascript">
 	function friendCancel(friendId) {
 		console.log(friendId);
-		if(confirm("친구 상태를 해제하시겠습니까?")){
+		if(confirm("친구 상태를 해제 하시겠습니까?")){
 		$.ajaxSetup({
 			beforeSend : function(xhr){
 	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
@@ -858,12 +1063,16 @@ $(function () {
 		});
 		}
 	}
-	
 	</script>
 	<!-- 다른사람 글 보기 -->
 	<script type="text/javascript">
 	var userPostRow=1;
 	function moveThisNamePost(id) {
+		if(id==userId){
+			asideRead();
+			return;
+		}
+		thisId=id;
 		$.ajaxSetup({
 			beforeSend : function(xhr){
 	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
@@ -883,12 +1092,18 @@ $(function () {
 			$("#more").css("display","none");
 			$("#myPostMore").css("display", "none");
 			$("#friendMore").css("display", "block");
-		});
-		$("#friendMore").click(function () {
-		userPostRow++;
-		moveThisNamePost(id);
+			for(let k in userJson){
+				if(userJson[k]["max"]==userJson[k]["rowNum"]){
+					userPostRow=1;
+					$("#friendMore").css("display", "none");
+				}
+			}
 		});
 	}	
+		$("#friendMore").click(function () {
+		userPostRow++;
+		moveThisNamePost(thisId);
+		});
 	</script>
 	<!-- 타임라인내 프로필 -->
 	<script type="text/javascript">
@@ -922,7 +1137,7 @@ $(function () {
 			make+='</div>';
 			if(json.reverse==1){
 				make+='<div class="container friendRequestBtnBox">';
-				make+='<button type="button" class="btn-default pull-right friendRequestBtn">거절</button><span>';
+				make+='<button type="button" class="btn-default pull-right friendRequestBtn" onclick="friendReqCancel(\''+json.id+'\')">거절</button><span>';
 				make+='<button type="button" class="btn-default pull-right friendRequestBtn" onclick="friendAccept(\''+json.id+'\')">수락</button></span>';
 				make+='</div>';
 			}
@@ -974,12 +1189,18 @@ $(function () {
 				$("#more").css("display","none");
 				$("#friendMore").css("display", "none");
 				$("#myPostMore").css("display", "block");
+				for(let k in myPostJson){
+					if(myPostJson[k]["max"]==myPostJson[k]["rowNum"]){
+						$("#myPostMore").css("display", "none");
+						asideRow=1;
+					}
+				}
 			});
 		}
 		$("#myPostMore").click(function() {
 			asideRow++;
 			asideRead();
-		})
+		});
 	</script>
 	<!-- 댓글삭제 -->
 	<script type="text/javascript">
@@ -1001,6 +1222,12 @@ $(function () {
 				}).done((commentDelJson)=>{
 					let commentRowNum="#commentRowBox"+commentNum;
 					$(commentRowNum).remove();
+					let commentCnt="#snsComment"+postNum;
+					let cnt=$(commentCnt).text();
+					let cnt2=cnt.substr(6);
+					let cnt3=cnt2.split(")")[0];
+					let cnt4=parseInt(cnt3);
+					$(commentCnt).text("댓글 보기("+(cnt4-1)+")");
 				});
 				
 				
@@ -1058,7 +1285,7 @@ $(function () {
 	<script type="text/javascript">
 	let searchPostRow=1;
 	let searchFriendRow=1;
-function search(searchData) {
+	function search(searchData) {
 	$.ajaxSetup({
 		beforeSend : function(xhr){
  		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
@@ -1074,19 +1301,32 @@ function search(searchData) {
 			data:searchTotData,
 			dataType : "json"
 	}).done((searchJson)=>{
+		$("#searchText").val("");
 		makeSearchList(searchJson,searchData);
+		for(let k in searchJson["publicPost"]){
+			if(searchJson["publicPost"][k]["max"]==searchJson["publicPost"][k]["row"]){
+				$("#postMoreBtn").css("display","none");
+				searchPostRow=1;
+			}
+		}
+		for(let k in searchJson["friendList"]){
+			if(searchJson["friendList"][k]["max"]==searchJson["friendList"][k]["row"]){
+				$("#friendMoreBtn").css("display","none");
+				searchFriendRow=1;
+			}
+		}
+		
 	});
-	$(document).on("click","#postMoreBtn",function(){
-		searchPostRow++;
-		search(searchData);
-	});
-	searchPostRow=1;
-	$(document).on("click","#friendMoreBtn",function(){
+
+	}
+	function friendMoreBtn(data){
 		searchFriendRow++;
-		search(searchData);
-	});
-	searchFriendRow=1;
-}
+		search(data);
+	}
+	function postMoreBtn(data) {
+		searchPostRow++;
+		search(data);
+	}
 	</script>
 	<!-- 검색 결과 출력 -->
 	<script type="text/javascript">
@@ -1095,6 +1335,8 @@ function search(searchData) {
 		$("#timeLineProfileBoxTot").empty();
 		$("#snsTimeLineMain").empty();
 		$("#more").css("display","none");
+		$("#friendMore").css("display","none");
+		$("#myPostMore").css("display","none");
 		let $tot=$("<div>").addClass("container searchTot");
 		let $friend=$("<div>").addClass("container")
 		.html("<div style='display:flex;margin-bottom:20px;'><div class=searchD>\""+data+"\"</div>에 관련된 친구 검색 결과</div>");
@@ -1110,30 +1352,33 @@ function search(searchData) {
 		str+='<tr>';
 		str+='<td>';
 		str+='<img src="'+json["friendList"][k]["pic"]+'" class="img-thumbnail img-responsive img-circle"';
-		str+='style="width: 66px;height: 60px;">';
+		str+='style="width: 66px;height: 60px;" onclick="moveThisNamePost(\''+json["friendList"][k]["id"]+'\')">';
 		str+='</td>';
 		str+='<td>';
 		str+='<div class="searchData">';
-		str+='<a href="#;">'+json["friendList"][k]["id"]+'</a></div></td>';
-		str+='<td id="friendBtn">';
+		str+='<a href="#;" onclick="moveThisNamePost(\''+json["friendList"][k]["id"]+'\')">'+json["friendList"][k]["id"]+'</a></div></td>';
+		str+='<td id="friendBtn'+json["friendList"][k]["id"]+'">';
 		if(json["friendList"][k]["id"]==userId){
 			str+='<div class="searchData">';
 			str+='<button type="button" class="btn btn-primary" onclick="moveThisNamePost(\''+userId+'\')">내 글</button>';
 			str+='</div>';		
 		}
 		if(json["friendList"][k]["status"]==0&&json["friendList"][k]["id"]!=userId){
-			str+='<div class="searchData">';
-			str+='<button type="button" class="btn btn-primary" onclick=friendRequest(\''+json["friendList"][k]["id"]+'\')>친구신청</button>';
-			str+='</div class="searchData">';
+			str+='<div class="searchData" id="friendReqBox'+json["friendList"][k]["id"]+'">';
+			str+='<button type="button" class="btn btn-primary" id="searchInfriendReq'+json["friendList"][k]["id"]+'"';
+			str+='onclick=searchInfriendReq(\''+json["friendList"][k]["id"]+'\')>친구신청</button>';
+			str+='</div>';
 		}
 		if(json["friendList"][k]["status"]==1){
-			str+='<div class="searchData">';
-			str+='<button type="button" class="btn btn-primary" onclick="friendRequestStatus(\''+json["friendList"][k]["id"]+'\')">요청중</button>';	
+			str+='<div class="searchData" id="friendReqStatusBox'+json["friendList"][k]["id"]+'">';
+			str+='<button type="button" class="btn btn-primary" id="friendReqStatus'+json["friendList"][k]["id"]+'"';
+			str+='onclick="searchInFriendReqStatus(\''+json["friendList"][k]["id"]+'\')">요청중</button>';	
 			str+='</div>';
 		}
 		if(json["friendList"][k]["status"]==2&&json["friendList"][k]["id"]!=userId){
-			str+='<div class="searchData">';
-			str+='<button type="button" class="btn btn-primary" onclick=friendCancel(\''+json["friendList"][k]["id"]+'\')>친구 해제</button>';
+			str+='<div class="searchData" id="searchInFriendCancelBox'+json["friendList"][k]["id"]+'">';
+			str+='<button type="button" class="btn btn-primary"';
+			str+='onclick=searchInFriendCancel(\''+json["friendList"][k]["id"]+'\')>친구 해제</button>';
 			str+='</div>';
 		}
 		if(json["friendList"][k]["status"]==3){
@@ -1147,7 +1392,7 @@ function search(searchData) {
 		}
 		str+='</tbody>';
 		str+='</table>';
-		str+='<div class="pull-right"><a href="#;" id="friendMoreBtn">친구 더보기</a></div>';
+		str+='<div class="pull-right"><a href="#;" id="friendMoreBtn" onclick="friendMoreBtn(\''+data+'\')">친구 더보기</a></div>';
 		str+='<hr/><br/><br/>';
 		str+='<div style="display:flex; margin-bottom:20px;"><div class=searchD>\"'+data+'\"</div>에 관련된 게시글 검색 결과</div>';
 		str+='<table class="table table-hover table-responsive">';
@@ -1167,22 +1412,30 @@ function search(searchData) {
 			}
 		str+='</tbody>';
 		str+='</table>';
-		str+='<div class="pull-right"><a href="#;" id="postMoreBtn">게시글 더보기</a></div>';
+		str+='<div class="pull-right"><a href="#;" id="postMoreBtn" onclick="postMoreBtn(\''+data+'\')">게시글 더보기</a></div>';
 		$friend.append(str);
 		$friend.appendTo($tot);
 		$("#snsTimeLineMain").html($tot);
 		$("#snsTimeLineMain").hide();
 		$("#snsTimeLineMain").fadeIn();
 	}//
-	
-	
-	
-	
 	</script>
 	<!-- 검색 클릭 이벤트 -->
 	<script type="text/javascript">
+	function enterSearch() {
+		let searchData=$("#searchText").val();
+		 if(searchData==""){
+    		 $('.info').text("내용을 입력하세요").fadeIn(400).delay(1000).fadeOut(400);
+    		 return false;
+    	 }
+		 search(searchData);
+	}
 	 $("#searchBtn").click(function() {
 		 var searchData=$("#searchText").val();
+		 if(searchData==""){
+    		 $('.info').text("내용을 입력하세요").fadeIn(400).delay(1000).fadeOut(400);
+    		 return false;
+    	 }
 		 search(searchData);
 	});
 	
@@ -1203,6 +1456,7 @@ function search(searchData) {
  			dataType : "json"
 		}).done((delJson)=>{
 			makeTimeLine(delJson);
+			location.href="#snsTimeLineMain";
 		});
 	}else{
 	return false;}
@@ -1213,19 +1467,51 @@ function search(searchData) {
 	$("#timeLine").click(function () {
 	setTimeLine();		
 	$("#more").css("display","block");
+	$("#friendMore").css("display","none");
+	$("#myPostMore").css("display","none");
 	$("#timeLineProfileBoxTot").empty();
 	}
 	);
 	
 	
 	</script>
-	<!-- 알람 -->
+	<!-- 댓글 입력후 출력 -->
 	<script type="text/javascript">
-	/* 	function notice() {
-			$("#more").css("display","none");
-			$("#snsTimeLineMain").empty();
-			$("#snsTimeLineMain").text("asdasdasdasdas");
-		} */
+	function commentUnitMake(commentJson,number){
+		let classNum="."+number+" tbody";
+		let firstTr=classNum+" tr:first td";
+		let text=$(firstTr).text();
+		if(text=="댓글이 없습니다."){
+			$(firstTr).remove();
+		}
+		let commentBox="";
+		commentBox+='<tr id="commentRowBox'+commentJson["number"]+'">';
+		commentBox+='<td style="width: 70px;" class="commentTd" onclick="moveThisNamePost(\''+commentJson["id"]+'\')"><img src="'+commentJson["profilePic"]+'" class="img-thumbnail img-responsive img-circle"';
+		commentBox+='id="commentImg"><a href="#showImageBox">'+commentJson["id"]+'</a></td>';
+		commentBox+='<td style="width: 500px;" id="commentContents'+commentJson["number"]+'">'+commentJson["content"]+'</td>';
+		commentBox+='<td style="background-color: white">';
+		commentBox+='<button type="button" class="btn-default commentLike" onclick="commentLike(\''+commentJson["number"]+'\')">';
+		commentBox+='<i class="far fa-thumbs-up commentLike" id="commentLike'+commentJson["number"]+'">'+commentJson["like"]+'</i></button>';
+		commentBox+='<button type="button" class="btn-default commentHate" onclick="commentHate(\''+commentJson["number"]+'\')"><i class="far fa-thumbs-down commentHate" id="commentHate'+commentJson["number"]+'">'+commentJson["hate"]+'</i></button>';
+		commentBox+='</td>';
+		commentBox+='<td style="background-color: white">'+commentJson["date"]+'</td>';
+		commentBox+='<td style="background-color: white; width: 150px">';
+		if(userId==commentJson["id"]){
+			commentBox+='<a onclick=commentEdit("'+number+'","'+commentJson["number"]+'")>';
+			commentBox+='수정</a>/<a onclick=commentDel("'+number+'","'+commentJson["number"]+'")>삭제</a>';	
+		}else{
+			commentBox+='<a>신고</a>';
+		}
+		commentBox+='</td>';
+		commentBox+='</tr>';
+		$(classNum).append(commentBox);
+		let commentCnt="#snsComment"+number;
+		let cnt=$(commentCnt).text();
+		let cnt2=cnt.substr(6);
+		let cnt3=cnt2.split(")")[0];
+		let cnt4=parseInt(cnt3);
+		$(commentCnt).text("댓글 보기("+(cnt4+1)+")");
+	}
 	</script>
 	<!-- 글 수정 스크립트 -->
 	<script type="text/javascript">
@@ -1281,9 +1567,7 @@ function search(searchData) {
 	</script>
 	<!-- 댓글 입력 -->
 	<script type="text/javascript">
-
-
-function commentInsert(number) {
+	function commentInsert(number) {
 	var commentWriteContents="#commentWriteBox"+number+" input";
 	var commentData={
 			postNumber:number,
@@ -1299,10 +1583,9 @@ function commentInsert(number) {
 			data:commentData,
 			dataType : "json"
 	}).done((commentJson)=>{
-		printComment(commentJson,number);
+		commentUnitMake(commentJson,number);
+		$(commentWriteContents).val("");
 	});
-	
-	
 }
 
 
@@ -1353,7 +1636,7 @@ function commentInsert(number) {
 		$("#snsProfileNotice a").html('알람');
 	});
 	$("#snsProfileInfo a").hover(function () {
-		$("#snsProfileInfo a").html('<i class="fas fa-tools"></i>');
+		$("#snsProfileInfo a").html('<i class="fas fa-cog fa-spin"></i>');
 	},function(){
 		$("#snsProfileInfo a").html('정보수정');
 	});
@@ -1370,9 +1653,19 @@ function commentInsert(number) {
 	});
 	
 	$("#timeLine a").hover(function () {
-		$("#timeLine a").html('<i class="far fa-clock"></i>');
+		$("#timeLine a").html('<i class="far fa-clock fa-spin"></i>');
 	},function(){
 		$("#timeLine a").html('타임라인');
+	});
+	$(".top a").hover(function () {
+		$(".top a").html('<i class="fas fa-arrow-circle-up"></i>');
+	},function(){
+		$(".top a").html('TOP');
+	});
+	$("#search a").hover(function () {
+		$("#search a").html('<i class="fa fa-search"></i>');
+	},function(){
+		$("#search a").html('검색');
 	});
 	
 	/* $("#socialClub a").hover(function () {
@@ -1556,7 +1849,7 @@ function infoSecurity(e) {
 		$timeLine += '</div>';
 		$timeLine += '<div id="postsOptionBox" class="navbar-default navbar-right">';
 		$timeLine += '<div id="snsOption">';
-		$timeLine += '<button type="button"><i class="fas fa-share snsOptionSelector"></i> </button>';
+		/* $timeLine += '<button type="button"><i class="fas fa-share snsOptionSelector"></i> </button>'; */
 		$timeLine += '<button type="button"><i class="far fa-thumbs-up snsOptionSelector like" id="snsLike'+timeLineJson[j]["posts_number"]+'" onclick="likeSend(\''+timeLineJson[j]["posts_number"]+'\',\''+timeLineJson[j]["posts_writer"]+'\')">'+timeLineJson[j]["like"]+'</i></button>';
 		$timeLine += '<button type="button"><i class="far fa-thumbs-down snsOptionSelector hate" id="snsHate'+timeLineJson[j]["posts_number"]+'" onclick="hateSend(\''+timeLineJson[j]["posts_number"]+'\',\''+timeLineJson[j]["posts_writer"]+'\')">'+timeLineJson[j]["hate"]+'</i></button></div>';
 		$timeLine += '</div>';
@@ -1564,7 +1857,7 @@ function infoSecurity(e) {
 		$timeLine += '<div class="container snsImageContainer" id="'+j+'" >';
 		$timeLine += '</div>';
 		$timeLine += '<div class="container">';
-		$timeLine += '<div class="navbar-default" id="snsCommentBox"><a href="#;" id="snsComment" onclick="comment(\''+timeLineJson[j]["posts_number"]+'\')">댓글 보기('+timeLineJson[j]["commentCount"]+')</a></div>';
+		$timeLine += '<div class="navbar-default" id="snsCommentBox"><a href="#;" class="snsComment" id="snsComment'+timeLineJson[j]["posts_number"]+'" onclick="comment(\''+timeLineJson[j]["posts_number"]+'\')">댓글 보기('+timeLineJson[j]["commentCount"]+')</a></div>';
 		$timeLine += '<div class="'+timeLineJson[j]["posts_number"]+'" id="commentReal"></div>';
 		$timeLine += '</div>';
 		$timeLine += '</div>';
@@ -1582,7 +1875,7 @@ function infoSecurity(e) {
 </script>
 	<!-- 글작성 취소 스크립트 -->
 	<script type="text/javascript">
-$("div").on("click","#cancel",function(){
+	$("div").on("click","#cancel",function(){
 	if(confirm("입력하신 내용을 잃습니다. 취소 하시겠습니까?")){
 		$("#writeBox").css("border","0 solid white");
 		$("#writeBox").slideUp();
@@ -1614,7 +1907,7 @@ $("div").on("click","#cancel",function(){
 //페이지 프로필파일과 이름을 출력 해주는 함수
 function setProfile(json) {
 	$("#snsProfileImg img").attr("src",json.member_profile_picture);
-	$("#snsProfileName").html("<a href='#;'>"+json.member_id+"</a>님");
+	$("#snsProfileName").html("<a href='#timeLineProfileBoxTot'>"+json.member_id+"</a>님");
 	userId=json.member_id;
 	console.log(userId);
 	jsonPicture=json.member_profile_picture;	
@@ -1673,7 +1966,6 @@ $.ajax({
 	<!-- 더보기 기능 -->
 	<script type="text/javascript">
  var low = 1;
- 
  $("#more").click(function() {
 	 $("#more").html('<i class="fas fa-spinner fa-pulse fa-2x"></i>');
 	  low++;
@@ -1705,25 +1997,38 @@ function setTimeLine() {
 </script>
 	<!-- 댓글출력 Ajax -->
 	<script type="text/javascript">
-function comment(number) {
+	let commentRow=1;
+	function comment(number) {
 	$.ajaxSetup({
 		beforeSend : function(xhr){
  		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
 	});//먼저 보냄
+	commentData={
+			"commentRow":commentRow,
+			"postNumber":number
+	}
 	$.ajax({
 			method:'post',
 			url:"sns/comment",
-			data:{"postNumber":number},
+			data:commentData,
 			dataType : "json"
 	}).done((commentJson)=>{
 		printComment(commentJson,number);
+		if(commentJson.length==commentJson[0]["max"]){
+			let commentM="#commentMore"+number;
+			$(commentM).hide();
+			commentRow=1;
+		}
 	});
 }
+	function commentMore(number){
+		commentRow++
+		comment(number);
+	}
 </script>
 	<!-- 댓글 출력 서비스 -->
 	<script type="text/javascript">
-function printComment(commentJson,number) {
-	
+	function printComment(commentJson,number) {
 	$("."+number).empty();
 	console.log(commentJson);
 		let commentBox="";
@@ -1737,12 +2042,14 @@ function printComment(commentJson,number) {
 	}else{
 			for(let k in commentJson){
 			commentBox+='<tr id="commentRowBox'+commentJson[k]["number"]+'">';
-			commentBox+='<td style="width: 70px"><img src="'+commentJson[k]["profilePic"]+'" class="img-thumbnail img-responsive img-circle" id="commentImg">'+commentJson[k]["id"]+'</td>';
-			commentBox+='<td style="width: 500px" id="commentContents'+commentJson[k]["number"]+'">'+commentJson[k]["content"]+'</td>';
+			commentBox+='<td style="width: 70px" class="commentTd" onclick="moveThisNamePost(\''+commentJson[k]["id"]+'\')"><img src="'+commentJson[k]["profilePic"]+'" class="img-thumbnail';
+			commentBox+='img-responsive img-circle" id="commentImg"><a href="#showImageBox">'+commentJson[k]["id"]+'</a></td>';
+			commentBox+='<td style="width: 500px" id="commentContents'+commentJson[k]["number"]+'">'+commentJson[k]["content"]+'</a></td>';
 			commentBox+='<td style="background-color: white">';
 			commentBox+='<button type="button" class="btn-default commentLike" onclick="commentLike(\''+commentJson[k]["number"]+'\')">';
 			commentBox+='<i class="far fa-thumbs-up commentLike" id="commentLike'+commentJson[k]["number"]+'">'+commentJson[k]["like"]+'</i></button>';
-			commentBox+='<button type="button" class="btn-default commentHate" onclick="commentHate(\''+commentJson[k]["number"]+'\')"><i class="far fa-thumbs-down commentHate" id="commentHate'+commentJson[k]["number"]+'">'+commentJson[k]["hate"]+'</i></button>';
+			commentBox+='<button type="button" class="btn-default commentHate" onclick="commentHate(\''+commentJson[k]["number"]+'\')"><i class="far fa-thumbs-down commentHate"';
+			commentBox+='id="commentHate'+commentJson[k]["number"]+'">'+commentJson[k]["hate"]+'</i></button>';
 			commentBox+='</td>';
 			commentBox+='<td style="background-color: white">'+commentJson[k]["date"]+'</td>';
 			commentBox+='<td style="background-color: white; width: 150px">';
@@ -1759,6 +2066,9 @@ function printComment(commentJson,number) {
 	}
 		commentBox+='</tbody>';
 		commentBox+='</table>';	
+		commentBox+='<div class="container">';
+		commentBox+='<div class="pull-left commentMore" id="commentMore'+number+'"><a href="#;" onclick=commentMore(\''+number+'\')>댓글 더보기</a></div>';
+		commentBox+='</div>';
 		commentBox+='<div class="input-group commentWriteBox" id="commentWriteBox'+number+'">';
 		commentBox+='<input type="text" class="form-control" placeholder="댓글 입력">';
 		commentBox+='<span class="input-group-btn">';
@@ -1775,8 +2085,6 @@ function printComment(commentJson,number) {
 			$("."+number).slideUp();
 			$("."+number).empty();
 		});
-		
-		
 }//서비스 End
 
 </script>
@@ -1805,7 +2113,7 @@ function printComment(commentJson,number) {
 </script>
 	<!-- 댓글 싫어요 -->
 	<script type="text/javascript">
- function commentHate(commentNumber) {
+ 	function commentHate(commentNumber) {
 	
 	var $likeCommentval="#commentLike"+commentNumber;
 	var $hateCommentval="#commentHate"+commentNumber;

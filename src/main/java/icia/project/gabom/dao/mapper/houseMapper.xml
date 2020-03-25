@@ -11,10 +11,17 @@
 	</insert>
 	
 	<insert id="housereservation" parameterType="hreservation" >
-	INSERT INTO HOUSERESERVATION VALUES(SQ_HOUSERESERVATION.nextval,#{house_number},#{house_hostid},#{member_guestid},#{reservation_checkin},#{reservation_checkout},#{reservation_person},#{reservation_totalprice})
-		<selectKey keyProperty="reservation_number" resultType="integer" order="AFTER">
-				SELECT SQ_HOUSERESERVATION.CURRVAL FROM DUAL
-			</selectKey>
+	INSERT INTO HOUSERESERVATION VALUES(SQ_HOUSERESERVATION.nextval,#{house_number},#{house_hostid},#{member_guestid},#{reservation_checkin},#{reservation_checkout},#{reservation_person},#{reservation_totalprice},0)
 	</insert>
 	
+	<insert id="insertreple">
+		INSERT INTO HOUSEREPLE VALUES(SEQ_HOUSE_REPLE_NUMBER.nextval,#{house_number},#{member_guestid},SYSDATE,#{house_reple_content})
+	</insert>
+	
+	
+	<select id="reviewlist" resultType="hreview">
+		SELECT * 
+		FROM HOUSE_REVIEW HR, HOUSE_REVIEW_IMAGE HRI
+		WHERE HR.HOUSE_REVIEW_NUMBER=HRI.HOUSE_REVIEW_NUMBER AND HR.HOUSE_NUMBER=#{house_number}
+	</select>
 </mapper>

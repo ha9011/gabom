@@ -55,7 +55,7 @@ public class Housecontroller { //검색, 메인, 상세보기 컨트롤러
 	}
 	
 	@RequestMapping(value = "/housedetail", method = RequestMethod.GET)
-	public ModelAndView housedetail(String house_number,Housereservation reserlist,Principal principal) {
+	public ModelAndView housedetail(int house_number,Housereservation reserlist,Principal principal) {
 		System.out.println("reserlist="+reserlist);
 		System.out.println("housedetail");
 		System.out.println("집번호는"+house_number);

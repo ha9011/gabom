@@ -130,7 +130,7 @@ public class RestApiController {
 		parameter = parameter + "&" + "contentTypeId=12";
 		parameter = parameter + "&" + "areaCode="+areaCode;  //지역코드(변경되는 부분)
 		parameter = parameter + "&" + "sigunguCode="; //시군구 코드 
-		System.out.println("if전="+parameter);
+		
 		if(areaCode.equals("1")) { //areaCode가 서울일때
 			if(sigunguCode.equals("강남구")) {
 				parameter = parameter + 1;
@@ -634,7 +634,7 @@ public class RestApiController {
 				parameter = parameter + 4;
 			}
 		}
-		System.out.println("if후="+parameter);
+		
 		parameter = parameter + "&" + "pageNo=1&numOfRows=300"; //페이지번호,한페이지 검색 결과 수
 		parameter = parameter + "&" + "MobileOS=ETC"; 			//필수 os구분
 		parameter = parameter + "&" + "MobileApp=gabom"; 		//필수 서비스명

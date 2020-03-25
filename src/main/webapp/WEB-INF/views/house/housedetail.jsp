@@ -26,18 +26,18 @@
 <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css">
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<!-- <script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
 	integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
 	crossorigin="anonymous">
-<!-- 달력 부트스트랩 -->
 
 
 <style>
 body {
 	overflow: scroll;
+	font-size:20px;
 }
 
 .container {
@@ -70,11 +70,14 @@ input {
 
 #reservation {
 	font-size: 20px;
-	margin: 10% 0;
+	margin: 5% 0;
+	border:2px solid lightgray;
+	width:550px;
 }
 
 #reser {
 	height: 100px;
+	
 }
 
 #insertbtn {
@@ -83,6 +86,7 @@ input {
 
 section {
 	margin: -100px 0;
+	font-size:20px;
 }
 
 .carousel-inner {
@@ -107,12 +111,27 @@ width:70px;
 font-size:20px;
 height:40px;
 margin:5px;
+margin-left:200px;
 }
 #replylist{
 font-size:20px;
 float:left;
 text-align:left;
 }
+.ui-datepicker{
+width:300px;
+height:250px;
+font-size:20px;
+}
+#ma{
+margin-top:-180px;
+margin-bottom:50px;
+}
+#ma2{
+margin-bottom:50px;
+font-size:20px;
+}
+
 </style>
 
 </head>
@@ -191,7 +210,7 @@ text-align:left;
 		<!--사진영역 -->
 
 
-		<section>
+		<section id="ma">
 			<div class="row">
 				<div class="col-md-6">
 					<article class="blog-post">
@@ -206,12 +225,12 @@ text-align:left;
 					<aside>
 						<!-- sidebar-widget -->
 						<div id="reser" class="sidebar-widget">
-							<h3 class="sidebar-title">지금 예약하기</h3>
+							<h2 class="sidebar-title">지금 예약하기</h2>
 							<div class="widget-container widget-about">
 								<form id="reservation" name="reservation" method="post">
 									<input class="date" type="text" name="reservation_checkin"
-										id="datepicker1"> -<input class="date" type="text"
-										name="reservation_checkout" id="datepicker2">
+										id="datepicker1" autocomplete="off" > -<input class="date" type="text"
+										name="reservation_checkout" id="datepicker2" autocomplete="off" >
 									<button
 										style="font-size: 20px; width: 100px; height: 50px; background-color: #064D84"
 										type="button" id="dtcommit" class="btn btn-primary">날짜확정</button>
@@ -234,7 +253,7 @@ text-align:left;
 		</section>
 		<!-- middle end -->
 
-		<section>
+		<section id="ma2">
 			<div class="row">
 				<div class="col-md-6">
 					<article class="blog-post">
@@ -264,13 +283,9 @@ text-align:left;
 					<div class="blog-post-image"></div>
 					<div class="blog-post-body">
 						<h2>후기</h2>
-						<p>ew months ago, we found ridiculously cheap plane tickets
-							for Boston and off we went. It was our first visit to the city
-							and, believe it or not, Stockholm in February was more pleasant
-							than Boston in March. It probably has a lot to do with the fact
-							that we arrived completely unprepared. That I, in my converse and
-							thin jacket, did not end up with pneumonia is honestly not even
-							fair.</p>
+						<div id="review">
+						
+						</div>
 					</div>
 				</article>
 			</div>
@@ -284,8 +299,8 @@ text-align:left;
 					<div class="blog-post-body">
 						<h2>댓글</h2>
 						<div id="replyinsert">
-							<div id="user_id"><h3>유저아이디</h3></div>
-							<input style="width:500px;" id="reple_content" name="reple_content" type="text">
+							<div id="user_id"></div>
+							<input style="width:700px;" id="reple_content" name="reple_content" type="text">
 							<button id="repleinsert_btn"  class="btn btn-primary">등록</button>
 						</div>
 						<div id="replylist">
@@ -329,7 +344,7 @@ $("#img4").attr('src', house[4].house_sysname);
 
 //------------------------------------------------------------------------------이미지 영역
 
-var host=$('<h2>'+house[0].house_hostid+'님의 하우스'+'</h2>');
+var host=$('<h1 style="margin-left:10px;width:500px;">'+house[0].house_hostid+'님의 하우스'+'</h1>');
 var house_info= $('<p class="info">'+'주소:'+house[0].house_address+'  '+'<br>'
         +'1박가격:'+house[0].house_price+'만원'+'<br>'
         +'수용가능인원:'+house[0].house_person+'&nbsp'+'&nbsp'+'&nbsp'
@@ -361,7 +376,6 @@ $("#info").append(house_info);
   $("#insertbtn").on("click", function (e) {
 	  	e.preventDefault();
 	 	console.log("ajax 예약");
-        //var formData = $("#reservation").serializeObject();
        var formData = new FormData(document.getElementById("reservation")); 
         	
        console.log(formData.get("reservation_checkin"));
@@ -394,8 +408,13 @@ $("#info").append(house_info);
     var reple_list=${reple_list};
     console.log(reple_list);
     var login_id = ${memberinfo}
-    console.log("로인아이디",login_id);
+    console.log("로그인아이디",login_id);
     console.log(login_id[0].member_id)
+    
+    var user_id =$('<h2>'+login_id[0].member_id+'</h2>');
+    	$("#user_id").append(user_id);
+    
+    
     
     for( i of reple_list){
 		var rpline =$()
@@ -411,18 +430,62 @@ $("#info").append(house_info);
 		
 	}
     
+    $("#repleinsert_btn").on('click',function(e){
+    	var houe_reple_content =$("#reple_content").val();
+    	var house_number = house[0].house_number;
+    	
+    	var data = {
+    			"house_reple_content":houe_reple_content,
+    			"house_number":house_number
+    	}
+    	console.log("data",data);
+    	
+    	 $.ajaxSetup({         
+   	      beforeSend : function(xhr){
+   	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+   	      });//먼저 보냄
+       console.log(data);
+       $.ajax({
+           url:'hrest/insertreple',
+           type:'post',
+           data:data,
+           processData:false,
+           contentType:false,  //제이슨 아니니깐 까보지마!!
+            dataType:"json", //rest 컨트롤 이용   
+           success:function(data){
+              alert("댓글 입력완료 ");
+              console.log(data)
+              
+              
+           },
+           error:function(error){
+              alert("댓글 입력 실패 ")
+              console.log(error);
+           }
+           
+        })
+    	
+    	
+    	
+    });// 댓글 등록 끝 
     
-    $("#btnDelete").on('click',function(e){
+    
+    $("#btnDelete").on('click',function(e){//댓글 삭제
     	var replenum = e.target.dataset.replenum
     	console.log("댓글 번호 ",replenum);
     })
     
     
     
-    
-    
-    
-    
+//-----------------------------------------------------------------------------------댓글영역    
+    //review 영역
+  var review =${review_list};
+  console.log("리뷰리스트 ",review);
+   
+  for (i of review){
+	  
+	  var reimg = $('<img>');
+  }
     
     
     

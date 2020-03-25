@@ -11,7 +11,7 @@
 	</insert>
 	
 	<insert id="foodreservation" parameterType="freservation" >
-	INSERT INTO FOODRESERVATION VALUES(SQ_FOODRESERVATION.nextval,#{food_number},#{food_hostid},#{member_guestid},#{foodreservation_date},#{foodreservation_time},#{foodreservation_person})
+	INSERT INTO FOODRESERVATION VALUES(SQ_FOODRESERVATION.nextval,#{food_number},#{food_hostid},#{member_guestid},#{foodreservation_date},#{foodreservation_time},#{foodreservation_person},0)
 		<selectKey keyProperty="foodreservation_number" resultType="integer" order="AFTER">
 				SELECT SQ_FOODRESERVATION.CURRVAL FROM DUAL
 			</selectKey>

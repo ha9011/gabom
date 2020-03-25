@@ -32,11 +32,14 @@ public class SnsUserPosts {
 	@Transactional
 	public String userPosts(int row, String userId, Principal principal) {
 		String json = null;
-		String id = principal.getName();
 		if(row==0) {
 			row=1;
 		}
 		int rowNum=5*row;
+		int checkNum=snsUserPostDao.checkNumber(userId);
+		if(rowNum>checkNum) {
+			rowNum=checkNum;
+		}
 		SnsTimeLineResult result = null;
 		HashMap<Integer, SnsTimeLineResult> snsTimeLineResultMap = new HashMap<Integer, SnsTimeLineResult>();
 		List<Snsposts> snsWriteTimeLine=null;
@@ -44,7 +47,6 @@ public class SnsUserPosts {
 		if(status==null||status.getStatus()==0||status.getStatus()==1) {
 			 snsWriteTimeLine = snsUserPostDao.userPublicPost(userId,rowNum);// 글 5개를 가져와서
 		}else if (status.getStatus()==2) {
-			System.out.println("2면");
 			 snsWriteTimeLine = snsUserPostDao.userFriendPost(userId,rowNum);
 		}
 		for (int i = 0; i < snsWriteTimeLine.size(); i++) {
@@ -57,18 +59,16 @@ public class SnsUserPosts {
 				int commentCount=snsTimeLineDao.commentCount(number);
 				member.setMember_id(post.getSns_posts_writer());
 				member = getProfile.getProfile(member);
-				result = setPost(result, post, photoList, likeHateCounter, member,commentCount);
+				result = setPost(result, post, photoList,
+						likeHateCounter, member,commentCount,checkNum,rowNum);
 				snsTimeLineResultMap.put(number,result);
 			}
 		}
 		json = new Gson().toJson(snsTimeLineResultMap);
 		return json;
 	}
-	
-	
-	
 	private SnsTimeLineResult setPost(SnsTimeLineResult result, Snsposts post, List<SnsPhoto> photoList,
-			SnsLikeHateCounter likeHateCounter, Member member, int commentCount) {
+			SnsLikeHateCounter likeHateCounter, Member member, int commentCount, int checkNum, int rowNum) {
 			result.setLike(likeHateCounter.getSnsLike())
 			.setHate(likeHateCounter.getSnsHate());
 		result.setPosts_number(post.getSns_posts_number()).setPosts_writer(post.getSns_posts_writer())
@@ -76,7 +76,7 @@ public class SnsUserPosts {
 				.setPosts_authority(post.getSns_posts_authority()).setPosts_report(post.getSns_posts_report())
 				.setSns_posts_date(post.getSns_posts_date()).setSns_posts_edit_date(post.getSns_posts_edit_date())
 				.setProfilePicture(member.getMember_profile_picture()).setCommentCount(commentCount);
-		result.setPhotoList(photoList);
+		result.setPhotoList(photoList).setMax(checkNum).setRowNum(rowNum);
 		return result;
 	}
 

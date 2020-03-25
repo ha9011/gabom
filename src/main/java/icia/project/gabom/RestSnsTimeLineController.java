@@ -26,22 +26,16 @@ public class RestSnsTimeLineController {
 	
 	@GetMapping(value = "/sns/mytimeline", produces = "application/json;charset=UTF-8")
 	public String mytimeline(Principal principal, Snsposts snsposts ) {
-		System.out.println("내타임라인 들어옴");
 		
 		String json = snsts.mytimeline(snsposts,principal);
-		System.out.println("탐라 주인 아이디="+principal.getName());
-		
-		System.out.println("전체 게시물 먼저 보여줘="+json);
 		
 		return json;
 	}
 	
 	@GetMapping(value = "/sns/friendtimeline", produces = "application/json;charset=UTF-8")
 	public String friendtimeline(Principal principal, Snsposts snsposts ) {
-		System.out.println("친구타임라인 들어옴");
 		
 		String json = snsts.friendtimeline(snsposts,principal);
-		System.out.println("전체 게시물 먼저 보여줘="+json);
 		
 		return json;
 	}
