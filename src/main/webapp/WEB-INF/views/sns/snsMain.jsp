@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Gabom SNS</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
@@ -25,7 +25,7 @@
 <style type="text/css">
 #snsMain {
 	background-image: url(resources/snsImage/cl3.jpg);
-	background-size: cover;
+	background-size: 100%;
 }
 
 #snsProfileImg img {
@@ -33,8 +33,8 @@
 	margin: 0 auto;
 	width: 100%;
 	height: 100%;
-	margin-top: 70px;
 	border-radius: 40px;
+	margin-top: 20px;
 }
 
 #snsAside {
@@ -130,7 +130,6 @@
 }
 
 #travelPlan {
-	margin-bottom: 40px;
 }
 
 #writeButton {
@@ -547,6 +546,15 @@ td a {
 	font-weight: bold;
 	margin-bottom: 20px;
 }
+.commentTd{
+	cursor: pointer;
+}
+.top{
+	font-family: 'Jua';
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 30px;
+}
 </style>
 <script type="text/javascript">
 $(window).scroll(function(){
@@ -565,8 +573,7 @@ $(function () {
 	$("#searchText").focusin(function(){
 		$(window).keydown(function(key) {
 	        if (key.keyCode == 13) {
-	        	 var searchData=$("#searchText").val();
-	        	 search(searchData);
+	        	 enterSearch();
 	        }
 	        });
 	});
@@ -582,7 +589,6 @@ $(function () {
 		<div class="container-fluid">
 			<div class="row">
 				<aside class="container col-xs-3 col-md-2 col-sm-3" id="snsAside">
-					<a href="#snsMain">TOP</a>
 					<div id="snsProfileImg">
 						<a href="#timeLineProfileBoxTot"><img src=""
 							class="img-responsive img-thumbnail" onclick="asideRead()"></a>
@@ -593,7 +599,7 @@ $(function () {
 							<li><div id="snsProfileName"></div></li>
 							<!-- <li role="presentation" id="snsProfileNotice" onclick="notice()"><a
 								href="#;">알람</a></li> -->
-							<li role="presentation" id="snsProfileInfo"><a href="#">정보수정</a></li>
+							<li role="presentation" id="snsProfileInfo"><a href="myinfo">정보수정</a></li>
 							<li role="presentation" id="snsFriendList"><a href="#">내친구</a></li>
 							<!-- <li role="presentation" id="snsProfileMyPosts"><a href="#">내글</a></li> -->
 						</ul>
@@ -603,7 +609,11 @@ $(function () {
 							<li role="presentation" class="active" id="timeLine"><a
 								href="#snsTimeLineMain">타임라인</a></li>
 							<li role="presentation" class="active" id="travelPlan"><a
-								href="#">여행계획</a></li>
+								href="trip">여행계획</a></li>
+							<li role="presentation" class="active" id="search"><a
+								href="#snsTimeLineFilterBox">검색</a></li>
+							<li role="presentation" class="active top">
+							<a href="#">TOP</a></li>
 						</ul>
 					</div>
 				</aside>
@@ -643,6 +653,13 @@ $(function () {
 	</div>
 	<div class='info' style='display: none'>설정이 변경되었습니다.</div>
 	<div class="imgBox" style="display: none"></div>
+	<!-- 어사이드 내친구 -->
+	<script type="text/javascript">
+	$("#snsFriendList").click(function() {
+		friendList(userId);
+		makeTimeLineProfile(userId);
+	});
+	</script>
 	<!-- 검색 결과 내 친구 해제 -->
 	<script type="text/javascript">
 	function searchInFriendCancel(id) {
@@ -1052,7 +1069,6 @@ $(function () {
 	var userPostRow=1;
 	function moveThisNamePost(id) {
 		if(id==userId){
-			alert("일로오냐");
 			asideRead();
 			return;
 		}
@@ -1285,7 +1301,7 @@ $(function () {
 			data:searchTotData,
 			dataType : "json"
 	}).done((searchJson)=>{
-		console.log("왔다",searchJson);
+		$("#searchText").val("");
 		makeSearchList(searchJson,searchData);
 		for(let k in searchJson["publicPost"]){
 			if(searchJson["publicPost"][k]["max"]==searchJson["publicPost"][k]["row"]){
@@ -1406,8 +1422,20 @@ $(function () {
 	</script>
 	<!-- 검색 클릭 이벤트 -->
 	<script type="text/javascript">
+	function enterSearch() {
+		let searchData=$("#searchText").val();
+		 if(searchData==""){
+    		 $('.info').text("내용을 입력하세요").fadeIn(400).delay(1000).fadeOut(400);
+    		 return false;
+    	 }
+		 search(searchData);
+	}
 	 $("#searchBtn").click(function() {
 		 var searchData=$("#searchText").val();
+		 if(searchData==""){
+    		 $('.info').text("내용을 입력하세요").fadeIn(400).delay(1000).fadeOut(400);
+    		 return false;
+    	 }
 		 search(searchData);
 	});
 	
@@ -1458,8 +1486,9 @@ $(function () {
 		}
 		let commentBox="";
 		commentBox+='<tr id="commentRowBox'+commentJson["number"]+'">';
-		commentBox+='<td style="width: 70px"><img src="'+commentJson["profilePic"]+'" class="img-thumbnail img-responsive img-circle" id="commentImg">'+commentJson["id"]+'</td>';
-		commentBox+='<td style="width: 500px" id="commentContents'+commentJson["number"]+'">'+commentJson["content"]+'</td>';
+		commentBox+='<td style="width: 70px;" class="commentTd" onclick="moveThisNamePost(\''+commentJson["id"]+'\')"><img src="'+commentJson["profilePic"]+'" class="img-thumbnail img-responsive img-circle"';
+		commentBox+='id="commentImg"><a href="#showImageBox">'+commentJson["id"]+'</a></td>';
+		commentBox+='<td style="width: 500px;" id="commentContents'+commentJson["number"]+'">'+commentJson["content"]+'</td>';
 		commentBox+='<td style="background-color: white">';
 		commentBox+='<button type="button" class="btn-default commentLike" onclick="commentLike(\''+commentJson["number"]+'\')">';
 		commentBox+='<i class="far fa-thumbs-up commentLike" id="commentLike'+commentJson["number"]+'">'+commentJson["like"]+'</i></button>';
@@ -1538,7 +1567,7 @@ $(function () {
 	</script>
 	<!-- 댓글 입력 -->
 	<script type="text/javascript">
-function commentInsert(number) {
+	function commentInsert(number) {
 	var commentWriteContents="#commentWriteBox"+number+" input";
 	var commentData={
 			postNumber:number,
@@ -1555,6 +1584,7 @@ function commentInsert(number) {
 			dataType : "json"
 	}).done((commentJson)=>{
 		commentUnitMake(commentJson,number);
+		$(commentWriteContents).val("");
 	});
 }
 
@@ -1606,7 +1636,7 @@ function commentInsert(number) {
 		$("#snsProfileNotice a").html('알람');
 	});
 	$("#snsProfileInfo a").hover(function () {
-		$("#snsProfileInfo a").html('<i class="fas fa-tools"></i>');
+		$("#snsProfileInfo a").html('<i class="fas fa-cog fa-spin"></i>');
 	},function(){
 		$("#snsProfileInfo a").html('정보수정');
 	});
@@ -1623,9 +1653,19 @@ function commentInsert(number) {
 	});
 	
 	$("#timeLine a").hover(function () {
-		$("#timeLine a").html('<i class="far fa-clock"></i>');
+		$("#timeLine a").html('<i class="far fa-clock fa-spin"></i>');
 	},function(){
 		$("#timeLine a").html('타임라인');
+	});
+	$(".top a").hover(function () {
+		$(".top a").html('<i class="fas fa-arrow-circle-up"></i>');
+	},function(){
+		$(".top a").html('TOP');
+	});
+	$("#search a").hover(function () {
+		$("#search a").html('<i class="fa fa-search"></i>');
+	},function(){
+		$("#search a").html('검색');
 	});
 	
 	/* $("#socialClub a").hover(function () {
@@ -2002,12 +2042,14 @@ function setTimeLine() {
 	}else{
 			for(let k in commentJson){
 			commentBox+='<tr id="commentRowBox'+commentJson[k]["number"]+'">';
-			commentBox+='<td style="width: 70px"><img src="'+commentJson[k]["profilePic"]+'" class="img-thumbnail img-responsive img-circle" id="commentImg">'+commentJson[k]["id"]+'</td>';
-			commentBox+='<td style="width: 500px" id="commentContents'+commentJson[k]["number"]+'">'+commentJson[k]["content"]+'</td>';
+			commentBox+='<td style="width: 70px" class="commentTd" onclick="moveThisNamePost(\''+commentJson[k]["id"]+'\')"><img src="'+commentJson[k]["profilePic"]+'" class="img-thumbnail';
+			commentBox+='img-responsive img-circle" id="commentImg"><a href="#showImageBox">'+commentJson[k]["id"]+'</a></td>';
+			commentBox+='<td style="width: 500px" id="commentContents'+commentJson[k]["number"]+'">'+commentJson[k]["content"]+'</a></td>';
 			commentBox+='<td style="background-color: white">';
 			commentBox+='<button type="button" class="btn-default commentLike" onclick="commentLike(\''+commentJson[k]["number"]+'\')">';
 			commentBox+='<i class="far fa-thumbs-up commentLike" id="commentLike'+commentJson[k]["number"]+'">'+commentJson[k]["like"]+'</i></button>';
-			commentBox+='<button type="button" class="btn-default commentHate" onclick="commentHate(\''+commentJson[k]["number"]+'\')"><i class="far fa-thumbs-down commentHate" id="commentHate'+commentJson[k]["number"]+'">'+commentJson[k]["hate"]+'</i></button>';
+			commentBox+='<button type="button" class="btn-default commentHate" onclick="commentHate(\''+commentJson[k]["number"]+'\')"><i class="far fa-thumbs-down commentHate"';
+			commentBox+='id="commentHate'+commentJson[k]["number"]+'">'+commentJson[k]["hate"]+'</i></button>';
 			commentBox+='</td>';
 			commentBox+='<td style="background-color: white">'+commentJson[k]["date"]+'</td>';
 			commentBox+='<td style="background-color: white; width: 150px">';

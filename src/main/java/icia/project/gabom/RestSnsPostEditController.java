@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import icia.project.gabom.service.SnsPostEdit;
 
 @RestController
-public class RestPostEditController {
+public class RestSnsPostEditController {
 	@Autowired
 	SnsPostEdit snsPostEdit;
 	

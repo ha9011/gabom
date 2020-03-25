@@ -15,8 +15,6 @@ public class RestSnsHateController {
 	@Autowired
 	SnsHate snsHate;
 	
-	
-	
 		@PostMapping(value = "sns/timeline/hate", produces = "application/json;charset=UTF-8")
 		public String snsHate(Principal principal,@RequestParam("postNumber") int postNumber) {
 			String json=snsHate.hate(principal,postNumber);

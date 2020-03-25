@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import icia.project.gabom.service.SnsFriendCancel;
 
 @RestController
-public class SnsFriendCancelController {
+public class RestSnsFriendCancelController {
 
 	@Autowired
 	SnsFriendCancel snsFriendCancel;

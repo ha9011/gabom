@@ -19,7 +19,6 @@ public class RestSnsMyPostController {
 	
 	@PostMapping(value = "sns/mypost", produces = "application/json;charset=UTF-8")
 	public String myPost(@RequestParam("row") int row,Principal principal) {
-		
 		String json=snsMyPost.myPost(row,principal);
 		return json;
 	}

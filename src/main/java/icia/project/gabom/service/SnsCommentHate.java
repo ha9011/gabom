@@ -38,10 +38,10 @@ public class SnsCommentHate {
 		}
 		int hateTotal=snsCommentHateDao.total(commentNumber);
 		int likeTotal=commentLikeDao.total(commentNumber);
-		JsonObject likeTotalObject= new JsonObject();
-		likeTotalObject.addProperty("hateTotal", hateTotal);
-		likeTotalObject.addProperty("likeTotal", likeTotal);
-		return new Gson().toJson(likeTotalObject);
+		JsonObject hateTotalObject= new JsonObject();
+		hateTotalObject.addProperty("hateTotal", hateTotal);
+		hateTotalObject.addProperty("likeTotal", likeTotal);
+		return new Gson().toJson(hateTotalObject);
 	}
 
 }

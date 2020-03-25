@@ -11,13 +11,12 @@ import icia.project.gabom.service.SnsTimeLineProfileBox;
 
 
 @RestController
-public class SnsTimeLineProfileController {
+public class RestSnsTimeLineProfileController {
 	@Autowired
 	SnsTimeLineProfileBox snsTimeLineProfile; 
 	
 	@PostMapping(value = "/sns/timeline/profile", produces = "application/json;charset=UTF-8")
 	public String timeLineProFile(@RequestParam("id") String id,Principal principal) {
-		
 		String json=snsTimeLineProfile.profile(id,principal);
 		return json;
 	}

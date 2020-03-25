@@ -15,14 +15,14 @@ public class RestSnsSearchController {
 	@Autowired
 	SnsSearch snsSearch;
 	
-	@PostMapping(value = "sns/search", produces = "application/json;charset=UTF-8")
+	@PostMapping(value = "/sns/search", produces = "application/json;charset=UTF-8")
 	public String search(@RequestParam("searchData") String data,Principal principal
 			,@RequestParam("postRow") int postRow,
 			@RequestParam("friendRow") int friendRow) {
 		String json=snsSearch.search(data,principal,postRow,friendRow);
 		return json;
 	}
-	@PostMapping(value = "sns/search/post", produces = "application/json;charset=UTF-8")
+	@PostMapping(value = "/sns/search/post", produces = "application/json;charset=UTF-8")
 	public String searchPost(@RequestParam("postNumber") int postNumber) {
 		String json=snsSearch.searchPost(postNumber);
 		return json;
