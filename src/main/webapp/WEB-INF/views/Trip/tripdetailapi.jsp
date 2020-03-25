@@ -50,13 +50,19 @@
 </head>
 <body>
 	<div class="container" id="headerContainer">
-
 		<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 40px;">
 			<a href="/gabom/"> <img id="header_img"
 				src="resources/headerImage/logo3.png">
 			</a>
 		</div>
 	</div>
+	
+	
+	
+	
+	
+	
+	
 	
 <script>
 	var detailcommon = ${detailcommon};

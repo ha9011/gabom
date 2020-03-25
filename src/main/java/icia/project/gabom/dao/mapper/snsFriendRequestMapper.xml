@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icia.project.gabom.dao.SnsFriendRequestDao">
+	<update id="check">
+		UPDATE SNS_FRIEND SET FRIEND_STATUS=1
+		WHERE FRIEND_MY_ID=#{id} AND FRIEND_ID=#{userId}
+	</update>
+	<insert id="insert">
+		INSERT INTO SNS_FRIEND VALUES(#{id},#{userId},1)
+	</insert>
+	<delete id="cancel">
+		DELETE FROM SNS_FRIEND
+		WHERE FRIEND_MY_ID=#{id} AND
+		FRIEND_ID=#{userId}
+	</delete>
+	<select id="sum" resultType="member">
+		SELECT SF.FRIEND_MY_ID MEMBER_ID,
+		MB.MEMBER_PROFILE_PICTURE
+		FROM SNS_FRIEND SF
+		LEFT JOIN MEMBER MB
+		ON SF.FRIEND_MY_ID=MB.MEMBER_ID
+		WHERE FRIEND_ID=#{id} AND SF.FRIEND_STATUS=1
+	</select>
+	<update id="acceptCheck">
+	UPDATE SNS_FRIEND SET FRIEND_STATUS=2 
+	WHERE FRIEND_ID=#{id} AND FRIEND_MY_ID=#{userId}
+	</update>
+	<update id="acceptCheck2">
+	UPDATE SNS_FRIEND SET FRIEND_STATUS=2 
+	WHERE FRIEND_ID=#{userId} AND FRIEND_MY_ID=#{id}
+	</update>
+	<insert id="acceptInsert">
+	INSERT INTO SNS_FRIEND VALUES(#{id},#{userId},2)
+	</insert>
+	<delete id="refusal">
+	DELETE FROM SNS_FRIEND
+	WHERE FRIEND_MY_ID=#{reqId} AND
+	FRIEND_ID=#{id}
+	</delete>
+</mapper>

@@ -107,7 +107,6 @@ section .overlay {
   </div>
 </section>
 
-
 <%-- <div>
 	<jsp:include page="/WEB-INF/views/footer.jsp"/>
 </div> --%>

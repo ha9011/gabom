@@ -193,6 +193,7 @@ public class SomoimManagement {
 		System.out.println("jsonresultMap : " + jsonresultMap);
 		mav.addObject("JsonBoardList", jsonresultMap);
 
+		
 		// 채팅글 가져오기, 오늘 기준으로 전날꺼부터,  나머진 인피니트 스크롤
 		
 		Map<String,List<ChattingSomoim>> mapChatData = new HashMap<String, List<ChattingSomoim>>();

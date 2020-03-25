@@ -14,4 +14,7 @@ public class TripAreaBasedItems {
 	private int numOfRows; 
 	private int pageNo; 
 	private int totalCount;
+	private int line;
+	private int column;
+	
 }

@@ -16,8 +16,6 @@ public class SnsCommentDeleteController {
 	@PostMapping(value = "/sns/comment/delete", produces="text/plain;charset=utf-8")
 	public String commentDelete(@RequestParam("commentNum") int CommentNum
 			,@RequestParam("postNum") int postNum) {
-		System.out.println("삭제 들어옴");
-		System.out.println(CommentNum);
 		String json=snsCommentDelete.delete(CommentNum,postNum);
 		return json;
 	}

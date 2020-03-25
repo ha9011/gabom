@@ -33,16 +33,7 @@ public class AdminjudgeController {
 		mav.setViewName("Apidate");
 		return mav;
 	}
-	@RequestMapping(value = "/apitest", method = RequestMethod.GET)
-	public ModelAndView apitest(String contentid) {
-		System.out.println("apitest");
-		System.out.println("contentid="+contentid);
-		mav = new ModelAndView();
-		String resultJson = ts.getdetailCommon(contentid);
-		mav.addObject("detailcommon", resultJson);  //${qwe}
-		mav.setViewName("apitest");
-		return mav;
-	}
+	
 	
 	
 	

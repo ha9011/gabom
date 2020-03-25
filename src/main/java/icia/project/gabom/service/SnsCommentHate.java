@@ -4,6 +4,7 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -19,6 +20,8 @@ public class SnsCommentHate {
 	@Autowired
 	CommentLikeDao commentLikeDao;
 	
+	
+	@Transactional
 	public String Hate(int commentNumber, Principal principal) {
 		SnsLikeHateCounter commentHate= new SnsLikeHateCounter();
 		commentHate.setCommentNumber(commentNumber).setMemberId(principal.getName());

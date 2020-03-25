@@ -5,10 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <style>
 #footer {
@@ -18,13 +15,14 @@
 	height: 100px;
 }
 
-.toast{
+#alarm{
 	position: fixed;
     top: 0;
     left: 0;
     width: 300px;
     border: 3px solid #73AD21;
 }
+
 </style>
 <script type="text/javascript">
 	
@@ -93,14 +91,16 @@
 		var alarmNum = JsonRespon.somoimNumber; 	
 		console.log("페이지 : " + alarmNum)
 		var toastCont = $("<a href='/gabom/somoim/somoimroom?roomnumber="+alarmNum+"'>가입하신 소모임에 새로운 정모가 등록 되었습니다</a>")
-		$(".toast-body").append(toastCont);
+		$("#toast-body").append(toastCont);
+		
 		if(JsonRespon.type=='jungmo'){
 			console.log("정모 만들어질때 이벤트")
-			 $('.toast').toast('show');
+			 $('#alarm').show();
 			  setTimeout(function() { 
-			   $('.toast').toast('hide');
+			   $('#alarm').hide();
 			  }, 5000);
 		}
+		
 	}	
 		
 		
@@ -116,13 +116,13 @@
 	<div id="footer">여기는 footer 영역입니다.</div>
 	
 	
-	<div class="toast" data-autohide="false">
-    <div class="toast-header">
+	<div style='display: none' id="alarm" >
+    <div id="alarm-header">
       <strong class="mr-auto text-primary">알람이 왔습니다!!</strong>
-      <small class="text-muted">5초 후 꺼짐</small>
+      <small id="alarmtext">5초 후 꺼짐</small>
       <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
     </div>
-    <div class="toast-body">
+    <div id="toast-body">
       
     </div>
   	</div>

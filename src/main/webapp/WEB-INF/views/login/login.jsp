@@ -94,7 +94,15 @@
 	<script type="text/javascript">
 	
 	$(function () {
-		$('#loginBox').fadeIn("slow");			
+		$('#loginBox').fadeIn("slow");
+		$("#member_password").focusin(function(){
+			$(window).keydown(function(key) {
+				console.log(key);
+		        if (key.keyCode == 13) {
+		        	loginFrm.submit();
+		        }
+		        });
+		});
 	});
 	
 	</script>
@@ -106,7 +114,7 @@
 
 <div class="container-fluid" id="loginBox">
 	<div class="jumbotron" id="jumbotronBox">
-	<form action="" method="post">
+	<form action="login" method="post" name="loginFrm">
 	<div id="idText">아이디</div>
 	<input type="text" class="col-md-12 col-sm-12 col-xs-12" id="member_id" name="member_id" class="form-control"><br/>
 	<br/>
@@ -120,10 +128,10 @@
 	<br/>
 	<div class="row" id="findContainer">
 		<div class="col-md-6 col-sm-12 col-xs-12 " >
-			<button type="submit" class="btn btn-info" id="findId" formaction="searchuserid">아이디 찾기</button>
+			<button type="button" class="btn btn-info" id="findId" onclick="searchuserid()">아이디 찾기</button>
 		</div>
 		<div class="col-md-6 col-sm-12 col-xs-12">
-			<button type="submit" class="btn btn-info" id="findPassword" formaction="searchuserpassword">비밀번호 찾기</button>
+			<button type="button" class="btn btn-info" id="findPassword" onclick="searchuserpassword()">비밀번호 찾기</button>
 		</div>
 	</div>
 	<br/>
@@ -132,7 +140,7 @@
 	<input type="submit" class="col-md-12 col-sm-12 col-xs-12 btn btn-info" value="로그인" id="loginButton" formaction="login">
 	<br/>
 	<br/>
-	<input type="submit" class="col-md-12 col-sm-12 col-xs-12 btn btn-outline-info" value="회원가입" id="signUpButton" formaction="signup">
+	<input type="button" class="col-md-12 col-sm-12 col-xs-12 btn btn-outline-info" value="회원가입" id="signUpButton" onclick="signup()">
 	<br/>
 	<br/>
 	<br/>
@@ -143,10 +151,9 @@
 	<br/>
 	</div>
 </div>
-<div>
+<%-- <div>
 	<jsp:include page="/WEB-INF/views/footer.jsp"/>
-</div>
-
+</div> --%>
 	<script type="text/javascript">
 	let result="${message.message}"
 		if(result!=''&&result!=undefined){
@@ -159,6 +166,18 @@
 	if(location.search.substr(6)=="true"){
 		$("#alertBox").css("color","red").css("text-shadow","black 0em 0em 0em").css("font-size","10px").text("아이디 또는 비밀번호가 다릅니다.");
 	}
+	</script>
+	<script type="text/javascript">
+	function searchuserid() {
+		location.href="searchuserid";		
+	}
+	function searchuserpassword(){
+		location.href="searchuserpassword";
+	}
+	function signup(){
+		location.href="joinselecttype";
+	}
+	
 	</script>
 </body>
 </html>
