@@ -304,7 +304,7 @@ $("#apiup").on("click",function(e) {
         			    }
 
         				let td = $('<td></td>');
-        				let img = $("<img width='150px' height='150px' src='"+i.firstimage+"'>");
+        				let img = $("<img width='250px' height='150px' src='"+i.firstimage+"'><p>"+i.title+"</p>");
         				let a = $("<a href='tripdetailapi?contentid="+i.contentid+"', target='_blank'></a>");
         				a.append(img);
         				td.append(a);
@@ -337,6 +337,7 @@ $("#apiup").on("click",function(e) {
 			console.log("지역검색 에러");
 		}
 	}); //ajax End
+	
 }); //api 버튼 클릭 End
 // 		}); //select function End
 
@@ -464,7 +465,7 @@ $(document).on("change","#select_sigunguCode", function (e){
 			    }
 
 				let td = $('<td></td>');
-				let img = $("<img width='150px' height='150px' src='"+i.firstimage+"'>");
+				let img = $("<img width='220px' height='150px' src='"+i.firstimage+"'><p>"+i.title+"</p>");
 				let a = $("<a href='tripdetailapi?contentid="+i.contentid+"', target='_blank'></a>");
 				a.append(img);
 				td.append(a);
@@ -493,8 +494,22 @@ $(document).on("change","#select_sigunguCode", function (e){
 		}
 	}); //ajax End
 	
+	
+	
 });
 
+////////////////////////////////////////
+let arr = new Array(); //받아온 데이터 담는곳
+
+function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
+	
+ 	//$("#area_modal").trigger("click");
+	 arr.push(params);
+	 console.log(arr);
+	
+	
+	
+} 
 
 
 

@@ -708,5 +708,15 @@ public class RestApiController {
 		
 		return resultJson;
 	}
+//	@RequestMapping(value = "/destinationselect", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
+//	public String destinationselect(@RequestParam("mapx") String mapx, @RequestParam("mapy") String mapy, @RequestParam("title") String title){
+//		System.out.println("일정선택완료");
+//		System.out.println("mapx="+mapx);
+//		System.out.println("mapy="+mapy);
+//		System.out.println("title="+title);
+//		
+//		return null;
+//	}
+	
 
 }
