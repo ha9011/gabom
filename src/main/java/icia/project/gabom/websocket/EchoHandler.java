@@ -31,10 +31,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		System.out.println("afterConnectionEstablished : " + session );
 		 Map<String, Object> map = session.getAttributes();   // 인터셉터에서 받아온 놈
 		 String userID = (String)map.get("userID"); //유저아이디
-		 
 		 loginMember.put(userID,session);  //접속중인 친구에게 보내기
-		
-		 
 	}
 
 	@Override //알림

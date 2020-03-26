@@ -130,6 +130,7 @@
 }
 
 #travelPlan {
+	
 }
 
 #writeButton {
@@ -546,10 +547,12 @@ td a {
 	font-weight: bold;
 	margin-bottom: 20px;
 }
-.commentTd{
+
+.commentTd {
 	cursor: pointer;
 }
-.top{
+
+.top {
 	font-family: 'Jua';
 	font-size: 16px;
 	font-weight: bold;
@@ -612,8 +615,7 @@ $(function () {
 								href="trip">여행계획</a></li>
 							<li role="presentation" class="active" id="search"><a
 								href="#snsTimeLineFilterBox">검색</a></li>
-							<li role="presentation" class="active top">
-							<a href="#">TOP</a></li>
+							<li role="presentation" class="active top"><a href="#">TOP</a></li>
 						</ul>
 					</div>
 				</aside>
@@ -654,12 +656,7 @@ $(function () {
 	<div class='info' style='display: none'>설정이 변경되었습니다.</div>
 	<div class="imgBox" style="display: none"></div>
 	<!-- 어사이드 내친구 -->
-	<script type="text/javascript">
-	$("#snsFriendList").click(function() {
-		friendList(userId);
-		makeTimeLineProfile(userId);
-	});
-	</script>
+	<script type="text/javascript" src="resources/snsJS/asideMyFriend.js"></script>
 	<!-- 검색 결과 내 친구 해제 -->
 	<script type="text/javascript">
 	function searchInFriendCancel(id) {
@@ -769,7 +766,6 @@ $(function () {
 	<!-- 타임라인 내 친구 거절 -->
 	<script type="text/javascript">
 	function friendReqCancel(reqId) {
-		console.log(reqId);
 		$.ajaxSetup({
 			beforeSend : function(xhr){
 	 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
@@ -1046,7 +1042,6 @@ $(function () {
 	<!-- 친구 해제 -->
 	<script type="text/javascript">
 	function friendCancel(friendId) {
-		console.log(friendId);
 		if(confirm("친구 상태를 해제 하시겠습니까?")){
 		$.ajaxSetup({
 			beforeSend : function(xhr){
@@ -1096,9 +1091,9 @@ $(function () {
 				if(userJson[k]["max"]==userJson[k]["rowNum"]){
 					userPostRow=1;
 					$("#friendMore").css("display", "none");
+					}
 				}
-			}
-		});
+			});
 	}	
 		$("#friendMore").click(function () {
 		userPostRow++;
@@ -1173,7 +1168,6 @@ $(function () {
 		asideRead();
 	});
 		function asideRead() {
-			console.log(asideRow);
 			$.ajaxSetup({
 				beforeSend : function(xhr){
 		 		xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");}
@@ -1229,8 +1223,6 @@ $(function () {
 					let cnt4=parseInt(cnt3);
 					$(commentCnt).text("댓글 보기("+(cnt4-1)+")");
 				});
-				
-				
 			}
 		}	
 	</script>
@@ -1317,7 +1309,6 @@ $(function () {
 		}
 		
 	});
-
 	}
 	function friendMoreBtn(data){
 		searchFriendRow++;
@@ -1331,7 +1322,6 @@ $(function () {
 	<!-- 검색 결과 출력 -->
 	<script type="text/javascript">
 	function makeSearchList(json,data) {
-		console.log(json);
 		$("#timeLineProfileBoxTot").empty();
 		$("#snsTimeLineMain").empty();
 		$("#more").css("display","none");
@@ -1438,7 +1428,6 @@ $(function () {
     	 }
 		 search(searchData);
 	});
-	
 	</script>
 	<!-- 글삭제 -->
 	<script type="text/javascript">
@@ -1458,22 +1447,18 @@ $(function () {
 			makeTimeLine(delJson);
 			location.href="#snsTimeLineMain";
 		});
-	}else{
-	return false;}
+		}else{return false;}
 	}//end
 	</script>
 	<!-- 타임라인 버튼 -->
 	<script type="text/javascript">
-	$("#timeLine").click(function () {
-	setTimeLine();		
-	$("#more").css("display","block");
-	$("#friendMore").css("display","none");
-	$("#myPostMore").css("display","none");
-	$("#timeLineProfileBoxTot").empty();
-	}
-	);
-	
-	
+		$("#timeLine").click(function () {
+			setTimeLine();		
+			$("#more").css("display","block");
+			$("#friendMore").css("display","none");
+			$("#myPostMore").css("display","none");
+			$("#timeLineProfileBoxTot").empty();
+		});
 	</script>
 	<!-- 댓글 입력후 출력 -->
 	<script type="text/javascript">
@@ -1534,7 +1519,6 @@ $(function () {
 
 		editContents = editContents.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 		
-		
 	$("li").on("click",".editCancelButton",function(){
 		if(confirm("수정을 취소 하시겠습니까?")){
 			$(preContents)[0].value=$(preContents)[0].defaultValue;
@@ -1549,20 +1533,19 @@ $(function () {
 		var editData={
 				"editContents":editContents,
 				"postNumber": editPostNumber
-		}
+			}
 		$.ajax({
 				method:'post',
 				url:"sns/post/edit",
 				data:editData,
 				dataType : "json"
-		}).done((editTimeLineJson)=>{
-			$(editPostBoxId).empty();
-			makeTimeLine(editTimeLineJson);
-		}).fail((s)=>{
-			console.log("실패");
+			}).done((editTimeLineJson)=>{
+				$(editPostBoxId).empty();
+				makeTimeLine(editTimeLineJson);
+			}).fail((s)=>{
+				console.log("실패");
+			});
 		});
-	});
-	
 	}
 	</script>
 	<!-- 댓글 입력 -->
@@ -1573,23 +1556,21 @@ $(function () {
 			postNumber:number,
 			commentContent:$(commentWriteContents).val()
 	}
-	$.ajaxSetup({
-		beforeSend : function(xhr){
- 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-	});//먼저 보냄
-	$.ajax({
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+ 			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
 			method:'post',
 			url:"sns/comment/insert",
 			data:commentData,
 			dataType : "json"
-	}).done((commentJson)=>{
-		commentUnitMake(commentJson,number);
-		$(commentWriteContents).val("");
-	});
-}
-
-
-</script>
+		}).done((commentJson)=>{
+			commentUnitMake(commentJson,number);
+			$(commentWriteContents).val("");
+		});
+	}
+	</script>
 	<!-- 글쓰기 서비스 -->
 	<script type="text/javascript">
 	$("#writeBox").on("click","#writeButton",function(){
@@ -1651,7 +1632,6 @@ $(function () {
 	},function(){
 		$("#snsWirte a").html('글작성');
 	});
-	
 	$("#timeLine a").hover(function () {
 		$("#timeLine a").html('<i class="far fa-clock fa-spin"></i>');
 	},function(){
@@ -1667,7 +1647,6 @@ $(function () {
 	},function(){
 		$("#search a").html('검색');
 	});
-	
 	/* $("#socialClub a").hover(function () {
 		$("#socialClub a").html('<i class="fas fa-users"></i>');
 	},function(){
@@ -1725,78 +1704,63 @@ $(function () {
 		$("#writeBox").hide();
 		$("#writeBox").slideDown();
 	}
-	
-	
 </script>
 	<!-- 이미지 미리보기 스크립트 -->
 	<script type="text/javascript">
-function readURL(input) {
-    if (input.files.length!=0 && input.files!=undefined) {
-    for(let i=0;i<input.files.length;i++){	
+	function readURL(input) {
+   	 if (input.files.length!=0 && input.files!=undefined) {
+    	for(let i=0;i<input.files.length;i++){	
 		let $coverBox=$("<div class='cover'>");
 		let $imageBox=$('<img class="img-thumbnail img-responsive">');
 		$imageBox.appendTo($coverBox);
-    var reader = new FileReader();
-    reader.onload = function (e) {
+    	var reader = new FileReader();
+    	reader.onload = function (e) {
             $imageBox.attr('src', e.target.result);        //cover src로 붙여지고
         }
       reader.readAsDataURL(input.files[i]);
 		$coverBox.appendTo($("#coverBox"));
-    }
-    }
-}
+    	}
+   	 }
+	}
 $("#writeBox").on('change','#ex_file',function(){
     readURL(this);
 });	
-
-
 </script>
 	<!-- 정보공개 변환 -->
 	<script type="text/javascript">
-function infoSecurity(e) {
-	let postNumber=e.id.substr(12);
-	let securityVal;
-	if(e.value=="전체 공개"){
-		securityVal=0;
-	}else if(e.value=="나만 보기"){
-		securityVal=2;
-	}else if(e.value=="친구 공개"){
-		securityVal=1;
-	}
-	let securityData={
+	function infoSecurity(e) {
+		let postNumber=e.id.substr(12);
+		let securityVal;
+		if(e.value=="전체 공개"){
+			securityVal=0;
+		}else if(e.value=="나만 보기"){
+			securityVal=2;
+		}else if(e.value=="친구 공개"){
+			securityVal=1;
+		}
+		let securityData={
 			"postNumber":postNumber,
 			"securityVal":securityVal
+		}
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+ 			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+				method:'post',
+				url:"sns/post/security",
+				data:securityData,
+				dataType : "json"
+		}).done((securityJson)=>{
+   	          $('.info').text(securityJson.message)
+    	         .fadeIn(400).delay(1000).fadeOut(400);
+		});
 	}
-	$.ajaxSetup({
-		beforeSend : function(xhr){
- 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-	});//먼저 보냄
-	$.ajax({
-			method:'post',
-			url:"sns/post/security",
-			data:securityData,
-			dataType : "json"
-	}).done((securityJson)=>{
-		console.log(securityJson);
-		/*  toastr.options = {
-                 closeButton: true,
-                 progressBar: true,
-                 showMethod: 'slideDown',
-                 timeOut: 3000
-             }; */
-		// toastr.info(securityJson.message);
-             $('.info').text(securityJson.message).fadeIn(400).delay(1000).fadeOut(400);
-
-	});
-}
-
-
 </script>
 	<!-- 타임라인 생성 스크립트 -->
 	<script type="text/javascript">
 	//타임 라인 생성 함수
 	function makeTimeLine(timeLineJson){
-			 console.log(timeLineJson);
 		$("#snsTimeLineMain").empty();
 		 for(let j in timeLineJson){
 			let postsContents = timeLineJson[j]["content"];
@@ -1870,22 +1834,19 @@ function infoSecurity(e) {
 		$snsPostsImageBox.appendTo($("#"+j));
 		}
 		 }
-		 
 	}
 </script>
 	<!-- 글작성 취소 스크립트 -->
 	<script type="text/javascript">
 	$("div").on("click","#cancel",function(){
-	if(confirm("입력하신 내용을 잃습니다. 취소 하시겠습니까?")){
-		$("#writeBox").css("border","0 solid white");
-		$("#writeBox").slideUp();
-		$("#writeBox").empty();
-	}else{
-		return false;
-	}
-	
-});
-
+		if(confirm("입력하신 내용을 잃습니다. 취소 하시겠습니까?")){
+			$("#writeBox").css("border","0 solid white");
+			$("#writeBox").slideUp();
+			$("#writeBox").empty();
+		}else{
+			return false;
+		}
+	});
 </script>
 	<!-- 페이지 로딩시 해당 회원 정보 출력 스크립트 -->
 	<script type="text/javascript">
@@ -1909,19 +1870,11 @@ function setProfile(json) {
 	$("#snsProfileImg img").attr("src",json.member_profile_picture);
 	$("#snsProfileName").html("<a href='#timeLineProfileBoxTot'>"+json.member_id+"</a>님");
 	userId=json.member_id;
-	console.log(userId);
 	jsonPicture=json.member_profile_picture;	
 }
-
-{
-	
-}
-
-
 </script>
 	<!-- 좋아요 기능 -->
 	<script type="text/javascript">
-	
 	function likeSend(postNumber,writer) {
 		var snsLikeId="#snsLike"+postNumber;
 		var snsHateId="#snsHate"+postNumber;
@@ -1942,58 +1895,50 @@ function setProfile(json) {
 </script>
 	<!-- 싫어요 기능 -->
 	<script type="text/javascript">
-function hateSend(postNumber,writer) {
-	var snsLikeId="#snsLike"+postNumber;
-	var snsHateId="#snsHate"+postNumber;
-	 $.ajaxSetup({
-	beforeSend : function(xhr){
-	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-});//먼저 보냄
-$.ajax({
-		method:'post',
-		url:"sns/timeline/hate",
-		data:{"postNumber":postNumber},
-		dataType : "json"
-}).done((totalJson)=>{
-	$(snsLikeId).text(totalJson.likeTotal);
-	$(snsHateId).text(totalJson.hateTotal);
-});
-}
-
-
-
+	function hateSend(postNumber,writer) {
+		var snsLikeId="#snsLike"+postNumber;
+		var snsHateId="#snsHate"+postNumber;
+	 	$.ajaxSetup({
+			beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		});//먼저 보냄
+		$.ajax({
+			method:'post',
+			url:"sns/timeline/hate",
+			data:{"postNumber":postNumber},
+			dataType : "json"
+		}).done((totalJson)=>{
+			$(snsLikeId).text(totalJson.likeTotal);
+			$(snsHateId).text(totalJson.hateTotal);
+		});
+	}
 </script>
 	<!-- 더보기 기능 -->
 	<script type="text/javascript">
- var low = 1;
- $("#more").click(function() {
-	 $("#more").html('<i class="fas fa-spinner fa-pulse fa-2x"></i>');
-	  low++;
-	  setTimeLine();
-	  $("#more").html('<a href="#;">더보기</a>');
- });
+ 	var low = 1;
+ 		$("#more").click(function() {
+	 		$("#more").html('<i class="fas fa-spinner fa-pulse fa-2x"></i>');
+	 		low++;
+	  		setTimeLine();
+	  		$("#more").html('<a href="#;">더보기</a>');
+ 		});
 </script>
 	<!-- 타임라인 Ajax -->
 	<script type="text/javascript">
-
-function setTimeLine() {
-	$.ajaxSetup({
-		beforeSend : function(xhr){
- 		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-	});//먼저 보냄
-	$.ajax({
+	function setTimeLine() {
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+ 			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		});//먼저 보냄
+			$.ajax({
 			method:'get',
 			url:"sns/timeline",
 			data:{"low":low},
 			dataType : "json"
-	}).done((timeLineJson)=>{
-		makeTimeLine(timeLineJson);
-	});
-}
-
-
-
-
+			}).done((timeLineJson)=>{
+			makeTimeLine(timeLineJson);
+			});
+	}
 </script>
 	<!-- 댓글출력 Ajax -->
 	<script type="text/javascript">
@@ -2030,7 +1975,6 @@ function setTimeLine() {
 	<script type="text/javascript">
 	function printComment(commentJson,number) {
 	$("."+number).empty();
-	console.log(commentJson);
 		let commentBox="";
 		commentBox+='<div class="container-fluid" id=commentReal>';
 		commentBox+='<table class="table table-hover table-responsive">';
@@ -2086,12 +2030,10 @@ function setTimeLine() {
 			$("."+number).empty();
 		});
 }//서비스 End
-
 </script>
 	<!-- 댓글 좋아요 -->
 	<script type="text/javascript">
 	function commentLike(commentNumber) {
-		
 		var $likeCommentval="#commentLike"+commentNumber;
 		var $hateCommentval="#commentHate"+commentNumber;
 		
@@ -2105,7 +2047,6 @@ function setTimeLine() {
 				data:{"commentNumber":commentNumber},
 				dataType : "json"
 		}).done((commentLikeTotalJson)=>{
-			console.log(commentLikeTotalJson);
 			$($likeCommentval).text(commentLikeTotalJson.commentLikeTotal);
 			$($hateCommentval).text(commentLikeTotalJson.commentHateTotal);
 		});
@@ -2114,7 +2055,6 @@ function setTimeLine() {
 	<!-- 댓글 싫어요 -->
 	<script type="text/javascript">
  	function commentHate(commentNumber) {
-	
 	var $likeCommentval="#commentLike"+commentNumber;
 	var $hateCommentval="#commentHate"+commentNumber;
 	$.ajaxSetup({
