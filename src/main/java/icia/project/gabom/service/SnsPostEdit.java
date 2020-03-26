@@ -5,6 +5,9 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import icia.project.gabom.dao.SnsPostEditDao;
 import icia.project.gabom.dto.Snsposts;
 
@@ -13,26 +16,23 @@ public class SnsPostEdit {
 	
 	@Autowired
 	SnsPostEditDao snsPostEditDao;
-	@Autowired
-	SnsTimeLineService snsTimeLine;
 	
 	public String edit(String editContents, int postNumber, Principal principal) {
-		String json=null;
 		Snsposts snsPost= new Snsposts();
 		snsPost.setSns_posts_number(postNumber).setSns_posts_content(editContents);
-		System.out.println(snsPost.getPostsNumber());
-		System.out.println(snsPost.getSns_posts_content());
+		JsonObject jsonOb= new JsonObject();
+		Snsposts beforeContent=snsPostEditDao.beforeContnets(snsPost);
+		jsonOb.addProperty("beforeContent", beforeContent.getSns_posts_content());
 		int result=snsPostEditDao.editPost(snsPost);
-		System.out.println(result);
 		if(result!=0) {
-			json=snsTimeLine.snsTimeLine(principal, 0);
+			jsonOb.addProperty("message", "수정 되었습니다");
+			Snsposts resultContent=snsPostEditDao.getContent(snsPost);
+			jsonOb.addProperty("editContent", resultContent.getSns_posts_content());
 		}else {
-			json="실패";
+			jsonOb.addProperty("message", "수정 오류");
 		}
-		return json;
+		return new Gson().toJson(jsonOb);
 	}
-
-	
 	
 	
 	
