@@ -52,4 +52,54 @@
 		ORDER BY TPD.TRIP_DAY
 	</select>
 
+
+
+
+
+
+
+	<select id="selectRecentChattingData" parameterType="int" resultType="chattingtrip">
+	<![CDATA[
+	 select tc.chatting_content, to_char(tc.chatting_date,'YYYY-MM-DD') as chatting_date ,tc.chatting_name, tc.trip_number ,m.member_profile_picture chatting_profile 
+	from trip_chatting tc, member m  
+	where tc.chatting_name = m.Member_id 
+	and TRIP_NUMBER = #{trip_number} 
+	and chatting_date between to_CHAR((select min(chatting_date) from (select * from trip_chatting where TRIP_NUMBER = #{trip_number} order by chatting_date desc ) where RowNum <= 10), 'YYYY/MM/DD') 
+	and to_CHAR((select min(chatting_date)+1 from (select * from trip_chatting where TRIP_NUMBER = #{trip_number} order by chatting_date desc ) where RowNum <= 10)+2, 'YYYY/MM/DD')
+	order by chatting_date asc
+	]]>
+</select>
+	
+	
+   
+<select id="selectNextDayInfinityChattingData"  resultType="String">
+<![CDATA[
+WITH t As(
+	select chatting_date 
+	 from trip_chatting tc, member m  
+	 where tc.chatting_name = m.Member_id 
+	 and TRIP_NUMBER = #{trip_number} 
+	 and chatting_date between #{date} 
+	 and TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD'), 'YYYY/MM/DD') 
+	  and rownum = 1       
+)
+select * from(
+select tc.chatting_date from trip_chatting tc, t d
+where tc.chatting_date < d.chatting_date
+order by tc.chatting_date desc 
+) where rownum = 1
+
+]]>
+</select>
+
+<select id="selectInfinityChattingData"  resultType="chattingsomoim">
+	 select tc.*, 
+	 m.member_profile_picture chatting_profile 
+	 from trip_chatting tc, member m  
+	 where tc.chatting_name = m.Member_id 
+	 and TRIP_NUMBER = #{trip_number} 
+	 and chatting_date between #{date} 
+	 and TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')+1, 'YYYY/MM/DD') 
+	 order by chatting_date asc
+</select>
 </mapper>

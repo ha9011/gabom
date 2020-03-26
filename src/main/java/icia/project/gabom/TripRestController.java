@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -87,4 +88,35 @@ public class TripRestController {
       
       return json;
    }
+   
+   @PostMapping(value = "/inserttripchatting" ,produces = "application/json;charset=utf-8")
+   public String inserttripchatting(
+		   @RequestParam("id")String id,
+			@RequestParam("msg")String msg,
+			@RequestParam("tripNum")int tripNum,
+			Principal ppl
+			) {
+      System.out.println("여행 채팅 접근 input-insert");
+      
+      String json = trs.insertchatting(id,msg,tripNum);
+      
+      return json;
+   }
+   
+   
+   //인피니티 채팅
+   @PostMapping(value = "/selectDateChatting" ,produces = "application/json;charset=utf-8")
+   public String selectDateChatting(
+		   @RequestParam("date")String date,
+			@RequestParam("tripNum")int tripNum,
+			Principal ppl
+			) {
+      System.out.println("여행 채팅 접근 input-insert");
+      System.out.println("date  : " + date);
+      String json = trs.selectDateChatting(date,tripNum);
+      
+      return json;
+   }
+   
+   
 }

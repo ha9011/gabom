@@ -30,6 +30,9 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	
 <script src="./resources/js/bootstrap.min.js"></script>
 <script src="./resources/js/owl.carousel.min.js"></script>
 <script src="./resources/js/cbpAnimatedHeader.js"></script>
@@ -77,11 +80,15 @@ header {
 
 
 #day {
-	display: flex;
-	margin: 0 50%;
-	width: 300px;
+	display:flex;
+	justify-content: center;
+	align-items: center; 
+	font-size:50px;
 }
-
+#dayFrame{
+	display: flex;
+	margin : 0 0 0 83px;
+}
 #hc {
 	text-align: center;
 	margin: 20px 40%;
@@ -92,31 +99,80 @@ header {
 	float: right;
 	margin: 10px;
 }
-.icon{
-margin:0 20%;
-}
+/* .icon{ */
+/* margin:0 20%; */
+/* } */
+
 #date{
 width:200px;
 font-size:30px;
-display:inline-flex;
+display:inline;
 list-style:none;
+padding: 0px;
+margin: 23px 0px 0px 0px;
 }
+
 .number:nth-child(n+2){
 display: none;
+font-size : 0px;
 }
 .number:nth-child(1){
 font-size: 50px;
 }
 
+.number {
+	margin : 0 0 0 83px;
+}
+
 /* 채팅영역 */
+.chatFrame {
+	display: flex;
+	flex-direction: column;
+}
 #chatarea {
 	border: 1px solid black;
 	margin: 0 5% 0 2%;
 	margin-top: -50px;
 	width: 28%;
-	overflow: auto;
 	background-color: #99BFE4;
 	height: 700px;
+}
+
+#chatareaCont {
+	overflow: auto;
+	height: 93%;
+	width :100%;
+	display: flex;
+	flex-direction: column;
+	background-color: #99BFE4;
+}
+
+.yourCommnet {
+	margin: 15px 0 15px 10px;
+	padding : 10px;
+	font-size: 15px;
+	align-items: flex-start;
+	align-self:flex-start;
+	text-align: left;
+	background: white;
+	border-radius: 10px;
+	
+	
+}
+/* align-self: flex-end; */
+.myCommnet {
+	margin: 15px 10px 15px 0;
+	padding : 10px;
+	font-size: 15px;
+	align-items: flex-end;
+	align-self:flex-end;
+	text-align: right;
+	background: yellow;
+	border-radius: 10px;
+	
+}
+.media-body{
+	display: inline;
 }
 </style>
 
@@ -140,7 +196,6 @@ font-size: 50px;
 				<img style="width: 200px;" src="./resources/headerImage/logo3.png"
 					alt="logo">
 			</div>
-
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
@@ -170,15 +225,19 @@ font-size: 50px;
 			<div id="map" style="width: 100%; height: 600px;"></div>
 
 
-			<div id="day">
-				<i class="fas fa-caret-left"></i>
-				<div>여행 날(일단위)</div>
-				<i class="fas fa-caret-right"></i>
-			</div>
-
 			<div id="hc">
-				<a>+숙소 선택하기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a>+체크리스트 </a>
-			</div>
+               <a>+숙소 선택하기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <a>+체크리스트 </a>
+            </div>
+            
+            <div id="day">
+            	<div id='dayFrame'>
+               <div class="icon" id="left">◀</div>
+               <ul id="date"></ul>
+               <div class="icon" id="right">▶</div>
+               </div>
+            </div>
+            
 			<div id="t_destination">
 				<button id="apiup" class="addbtn btn-lg btn-primary"
 					data-toggle="modal" data-target="#area_modal" onclick="sigunguChange()">장소추가</button>
@@ -225,7 +284,11 @@ font-size: 50px;
 
 
 		</div>
-		<div id="chatarea">채팅창</div>
+		<div id="chatarea">채팅창
+		<div id="chatareaCont"></div>
+		<input id="chatInput"><button id='chatBtn'>입력</button>
+		</div>
+		
 	</section>
 
 
@@ -235,6 +298,231 @@ font-size: 50px;
 var trip_data = ${detrip};
 var areaCode = trip_data[0].trip_area;
 console.log(areaCode)
+
+var chatData = ${JsonchatData}; // 최근 날자로 채팅 가져오기
+var nextDay= "${nextDay}" // 다음 검색할 날짜
+console.log("chatData")
+console.log(chatData)
+console.log("nextDay")
+console.log(nextDay)
+var sccket ;
+var memberID = ${myinfo}.member_id;
+var myPic = ${myinfo}.member_profile_picture.substring(0);
+var tripNum = ${detrip}[0].trip_number;
+
+//채팅 초기화 하기
+for(let v of chatData ){
+		//var myPic = ${myinfo}.member_profile_picture.substring(0);
+		let cSomoimNumber = v.trip_number;
+		let cId = v.chatting_name;
+		let cCont = v.chatting_content;
+		let cDate = getFormatDate(v.chatting_date);
+		let cTime = getFormatOnlyTime(v.chatting_date)
+		let cProfile =v.chatting_profile.substring(0);;
+		
+			if(cId===memberID){ //내가 보낸 데이터일 경우
+				
+				let media = $("<div class='myCommnet' data-date='"+cDate+"'></div>");
+				let mediabody = $("<div class='media-body'></div>");
+						
+				var bodyName = $("<span><small><i> "+cTime+" </i></small></span><br>");
+				var bodyCont = $("<span>"+cCont+"</span>");
+				
+				mediabody.append(bodyName);
+				mediabody.append(bodyCont);
+						
+				media.append(mediabody);
+				
+				$("#chatareaCont").append(media)
+				
+	 		}else{ //타인이 보낸 데이터 일경우
+	 			let media = $("<div class=' yourCommnet' data-date='"+cDate+"'></div>");
+		 			
+	 			let img = $("<img style='margin:3px;' src='"+cProfile+"'  class='mr-3 mt-3 rounded-circle' width='40px' height='40px' >")
+						
+	 			media.append(img);
+		 		
+	 			let mediabody = $("<div class='media-body'></div>");
+		 		
+	 			var bodyName = $("<span>"+cId+"<small><i> "+cTime+" </i></small></span><br>");
+				var bodyCont = $("<span>"+cCont+"</span>");
+				
+				mediabody.append(bodyName);
+		 		mediabody.append(bodyCont);
+		 		
+		 		media.append(mediabody);
+		 		$("#chatareaCont").append(media)
+	 		}
+			
+		
+	}
+
+$("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
+
+
+//=========================================================================
+	//scroll 이벤트 - 인피니티
+	//스크롤이벤트
+	let selectDay
+	if(nextDay=="없음"){
+		selectDay = "없음";
+	}else{
+		selectDay = new Date(nextDay);
+	}
+	
+	let chatScrollToggle = 0;
+	
+	 $("#chatareaCont").scroll(function(e){
+		 console.log("===")
+        let scrollTop = e.target.scrollTop ;
+		let scrollHeight = e.target.scrollHeight;
+		let clientHeight = e.target.clientHeight;
+		
+        
+        //chatDate.
+        let index = 0 ;
+        for(let v of e.target.children){
+        	console.log("----");
+         	let total = Number(v.offsetTop)+Number(v.offsetHeight) 
+        	if(v.offsetTop < scrollTop && (total) > scrollTop ){
+        		console.log("채팅날짜 이벤트 실행")
+        		
+        		$("#chatDate").text(v.dataset.date);
+        		$("#chatDate").show();
+        		break;
+        	}
+        	index++;
+        }
+        
+        console.log("scrollTop : " +  scrollTop)
+     	console.log("scrollHeight : " +  scrollHeight)
+     	console.log("clientHeight : " +  clientHeight)
+
+		console.log("toggle 이벤트 시작전  : " + chatScrollToggle)
+		
+		// 인피니티 시작이다.
+        if (scrollTop <= (scrollHeight/8) && scrollHeight >= clientHeight && chatScrollToggle==0 && selectDay!='없음') {
+        	console.log("이벤트발생")
+        	console.log("toggle key : " + chatScrollToggle)
+        	console.log("검색날짜 : " + getFormatDate(selectDay) )
+        		
+            	
+        		chatScrollToggle=1;
+        		setTimeout(() => {
+        			console.log("셋타임아웃")
+        			console.log("toggle key : " + chatScrollToggle)
+        			chatScrollToggle=0;
+        			
+        			let chatData = {
+    		    			"date":getFormatDate(selectDay),
+    		    			"tripNum": tripNum,
+    				}
+            	//성공시 날짜변경
+    			
+					let iDate =getFormatDate(selectDay)
+					let iDateChatFrame = $("<div id='yesterday' class='chatFrame' data-date='"+iDate+"'> </div>");
+        		
+        		
+        		
+            	$.ajaxSetup({         
+    			    	  beforeSend : function(xhr){
+    			      	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+    				});//먼저 보냄
+    				
+    				$.ajax({
+    					url:'tprest/selectDateChatting',
+    					type:'post',
+    					data:chatData,
+    					dataType: "json",
+    					success:function(data){
+    						
+    						//alert("success");
+    						//console.log(data)
+    						console.log("채팅 인피니티 성공--")
+    						console.log(data)
+    						
+    						if(data.hasOwnProperty('date')){ // date가 있으면 진행
+    							selectDay = new Date(data.date);
+    						}else{ // 없으면 다음 date가 없다는 거임 
+    							selectDay = '없음';	  // 그러니 ajax 안해도 된다는 걸 의미
+    						}
+    						
+    						console.log(chatData)
+    						console.log("select Day : "+ selectDay)
+    						
+    						
+    						for(let v of data.chattingtripDate ){
+    							
+    							//c chatting
+    							let cSomoimNumber = v.somoim_number;
+    							let cId = v.chatting_name;
+    							let cCont = v.chatting_content;
+    							let cDate = getFormatDate(v.chatting_date);
+    							let cTime = getFormatOnlyTime(v.chatting_date)
+    							let cProfile =v.chatting_profile.substring(0);
+    							
+									 if(cId===memberID){ //내가 보낸 데이터일 경우
+    									
+    									let media = $("<div class='myCommnet' data-date='"+getFormatDate(new Date())+"' ></div>");
+    									let mediabody = $("<div class='media-body'></div>");
+    											
+    									
+    									let bodyName = $("<span><small><i> "+cTime+" </i></small></span><br>");
+    									let bodyCont = $("<span>"+cCont+"</span>");
+    									
+    									mediabody.append(bodyName);
+    									mediabody.append(bodyCont);
+    											
+    									media.append(mediabody);
+    									iDateChatFrame.append(media)
+    									
+    						 		}else{ //타인이 보낸 데이터 일경우
+    						 			let media = $("<div class='  yourCommnet'></div>");
+    							 			
+    						 			let img = $("<img src='"+cProfile+"' alt='John Doe' class='mr-3 mt-3 rounded-circle' style='width:60px;'>")
+    							 		media.append(img);
+    							 		
+    						 			let mediabody = $("<div class='media-body'></div>");
+    							 		
+    						 			
+    						 			let bodyName = $("<span>"+cId+"<small><i> "+cTime+" </i></small></span><br>");
+    						 			let bodyCont = $("<span>"+cCont+"</span>");
+    									
+    							 		mediabody.append(bodyName);
+    							 		mediabody.append(bodyCont);
+    							 		
+    							 		media.append(mediabody);
+    							 		iDateChatFrame.append(media)
+    						 		}
+    							$("#chatareaCont").prepend(iDateChatFrame)
+    							
+    						}
+    						
+    						if(iDateChatFrame[0].clientHeight!=0){
+    							$("#chatareaCont").scrollTop(iDateChatFrame[0].clientHeight);
+        							
+    						}
+    						
+    					},
+    					error:function(error){
+    						alert("fail")
+    						console.log(error);
+    					}
+    				})
+			}, 400);
+        	
+        	
+        } else {
+        	console.log("======아직 인피니티 아님===")
+        	//$("#confirm").attr('disabled', true);
+        }
+	
+	});
+	
+	
+	
+//================================
+
 $("#apiup")[0].dataset.areacode=areaCode;
 //$("#apiup").data("test",areaCode);
 console.log(trip_data);
@@ -606,11 +894,177 @@ function getFormatDate(strdate){
 
 
 
+//=====================================하동원 채팅 시작 건들지 말것, scroll 이벤트
+ //채팅
+ 	
+ 	//console.log("나의 정보")
+ 	console.log(${myinfo})
+ 	//console.log(memberID)
+ 	connect();
+	function connect(){ 
+		
+		var weAddress="ws://localhost:80/gabom/detailplan/ChatTrip?trip_number="+tripNum; // 번호 수정해야함
+		 var ws = new WebSocket(weAddress);
+		 socket = ws;
+		    ws.onopen = function () {   //커넥션이 연결됬을때
+		        console.log('Info: connection opened.');
+		        
+		        ws.onmessage = function (event) {    // 메시지 받을 때 실행함
+		            console.log("receiveMessage : " + event.data+'\n');
+		            
+		            var data = JSON.parse(event.data);
+		            var date = new Date();
+		            var chatTime = 	getFormatOnlyTime(date);
+		            console.log("---------------")
+		            console.log(data);
+		    		//여기서 데이터 쏴주고, 쏴준후 db 저장해야하는데 트랜잭션...어떻게?
+		    				
+		    				
+		    		if(data.id === memberID ){ //내가 보낸 데이터 일경우
+		    			//chattingRoom	
+		    			
+		    			var media = $("<div class='  myCommnet' data-date='"+getFormatDate(new Date())+"' ></div>");
+						var mediabody = $("<div class='media-body'></div>");
+						
+						var bodyName = $("<span><small><i> "+chatTime+" </i></small></span><br>");
+						var bodyCont = $("<span>"+data.msg+"</span>");
+						mediabody.append(bodyName);
+						mediabody.append(bodyCont);
+						
+						media.append(mediabody);
+						$("#chatareaCont").append(media)
+						
+						//$("#chattingRoom").append($("<div class='myCommnet' >"+data.msg+"</div>"))
+		    		}else{ // 내가 보낸 데이터가 아닐경우
 
+						var media = $("<div class='yourCommnet'></div>");
+						
+						var img = $("<img style='margin:3px;' src='"+myPic+"'  class='mr-3 mt-3 rounded-circle' width='40px' height='40px' >")
+						media.append(img);
+						
+						var mediabody = $("<div class='media-body'></div>");
+						
+						
+						var bodyName = $("<span>"+data.id+"<small><i> "+chatTime+" </i></small></span><br>");
+						var bodyCont = $("<span>"+data.msg+"</span>");
+						mediabody.append(bodyName);
+						mediabody.append(bodyCont);
+						
+						media.append(mediabody);
+						$("#chatareaCont").append(media)
+		    		}
+		    		
+		    		console.log($("#chattingRoom"));
+		    		console.dir($("#chattingRoom"));
+		    		$("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
+		        };
+		       
+		    
+		    };
 
+			
+		    ws.onclose = function (event) { 
+		    	console.log('Info: ', event);
+		    	//setTimeout( function(){ connect(); }, 1000); // retry connection!!
+				   
+		    };
+		    
+		    ws.onerror = function (err) { console.log('Error: ', err); };
+	 }
 
+	
+	//chatInput
+	//chatBtn
 
-
+	$('#chatBtn').on('click', function(evt) {
+      console.log("실행되는건가?");
+	  evt.preventDefault();
+	  if (socket.readyState !== 1) return;
+	  		
+    	  let data = {
+  	  			"id" : memberID,
+    			"msg" :  $('#chatInput').val(),
+  	  			"tripNum" : tripNum,
+  	  	  		"profilePicture" : "."+myPic
+    	  }
+  	  	  let resultChatData = JSON.stringify(data);
+    	  console.log("resultChatData : " +resultChatData)
+    	  // 소켓에 보내기
+    	  socket.send(resultChatData);
+    	  
+    	  
+    	  //-------------채팅내용 저장
+	    	//아이디, 내용, 소모임 번호
+	    	var date = new Date();
+    	  
+	    	var chatData = {
+	    			"id" : memberID,
+	    			"msg" :  $('#chatInput').val(),
+	  	  			"tripNum" : tripNum,
+	    			"date" : date
+	    	}
+	    	
+	    	console.log(chatData);
+	    	
+	    	$.ajaxSetup({         
+		    	  beforeSend : function(xhr){
+		      	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+			});//먼저 보냄
+			
+			$.ajax({
+				url:'tprest/inserttripchatting',
+				type:'post',
+				data:chatData,
+				success:function(data){
+					alert("success");
+					console.log(data)
+					 $('#chatInput').val("");
+			    	 $('#chatInput').focus();
+					
+				},
+				error:function(error){
+					alert("fail")
+					console.log(error);
+				}
+			})
+    	  
+    });
+//================================================
+	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+//================================================
+	//온니 시간만 오후/오전 
+	function getFormatOnlyTime(strdate){
+		var date = new Date(strdate);
+		
+		var time = date.getHours();
+		var min = date.getMinutes();
+		var result ;
+		if(time > 12){
+			result = "오후 "+(time-12)+"시 "+min+"분"
+		}else{
+			result = "오전 "+time+"시 "+min+"분"
+		}
+		return result;
+	}
+	
+	function getFormatDate(strdate){
+		var date = new Date(strdate);
+		console.log(date);
+  		 var year = date.getFullYear();              //yyyy
+    	var month = (1 + date.getMonth());          //M
+    	month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+    	var day = date.getDate();                   //d
+    	day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+    	return  year + '/' + month + '/' + day;
+	}
+	
 </script>
 
 </html>

@@ -199,7 +199,6 @@ public class SomoimManagement {
 		
 		//recent chat
 		List<ChattingSomoim> selectRecentChattingData = sDao.selectRecentChattingData(Integer.parseInt(roomnum));
-		
 		String chatData = new Gson().toJson(selectRecentChattingData);
 		System.out.println("jsonchatData : " + chatData);
 		mav.addObject("JsonchatData", chatData);
@@ -210,6 +209,9 @@ public class SomoimManagement {
 		String nextDay = sDao.selectNextDayInfinityChattingData(Integer.parseInt(roomnum),date); // 그 다음 날짜 찾기
 		System.out.println("다음 날짜는 언제인지요?? : " + nextDay );
 		
+		if(nextDay==null) {
+	  		nextDay="없음";
+	  	}
 		mav.addObject("nextDay", nextDay);
 		
 		mav.setViewName("somoim/somoimroom");
@@ -681,6 +683,9 @@ public class SomoimManagement {
 		
 		String nextDay = sDao.selectNextDayInfinityChattingData(somoimNumber,date);
 		System.out.println("다음 날짜는 언제인지요?? : " + nextDay );
+		if(nextDay == null) {
+			nextDay = "없음";
+		}
 		
 		ChattingInfinite ci = new ChattingInfinite();
 		ci.setDate(nextDay).setChattingData(selectInfinityChattingData);

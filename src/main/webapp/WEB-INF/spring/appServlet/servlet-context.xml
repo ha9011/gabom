@@ -85,5 +85,18 @@
  </websocket:handshake-interceptors>
 </websocket:handlers>
 
+<!-- websocket  여행채팅용-->
+<!-- session을 이용하기 위해 websocket:handshake-interceptors를 쓴다. -->
+
+<beans:bean id="TripChattingHandler" class="icia.project.gabom.websocket.TripChattingHandler" />  
+
+<websocket:handlers>
+ <websocket:mapping handler="TripChattingHandler" path="/detailplan/ChatTrip" />
+ <websocket:handshake-interceptors>  
+      <beans:bean
+          class="icia.project.gabom.websocket.TripHandshakeInterceptor"/>
+ </websocket:handshake-interceptors>
+</websocket:handlers>
+
     
 </beans:beans>

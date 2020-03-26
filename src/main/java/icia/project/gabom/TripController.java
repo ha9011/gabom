@@ -62,6 +62,7 @@ public class TripController {
 		System.out.println("tripdetailapi");
 		System.out.println("contentid="+contentid);
 		mav = new ModelAndView();
+		
 		String resultJson = ts.getdetailCommon(contentid);
 		mav.addObject("detailcommon", resultJson);  //${qwe}
 		mav.setViewName("Trip/tripdetailapi");

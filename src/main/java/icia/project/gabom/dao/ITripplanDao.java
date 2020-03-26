@@ -3,10 +3,13 @@ package icia.project.gabom.dao;
 import java.security.Principal;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import icia.project.gabom.dto.ChattingSomoim;
+import icia.project.gabom.dto.ChattingTrip;
 import icia.project.gabom.dto.Member;
 import icia.project.gabom.dto.Sns_friend;
 import icia.project.gabom.dto.Trip_member;
@@ -43,4 +46,19 @@ public interface ITripplanDao {
 
    List<Trip_plan> detailplan(@Param("trip_number")int trip_number);
 
+
+   
+   //하동원 ===================================
+   @Select("SELECT MEMBER_ID,MEMBER_PROFILE_PICTURE FROM MEMBER WHERE MEMBER_ID = #{name} ")
+   Member myInfo(@Param("name")String name);
+
+   @Insert("insert into trip_chatting values(#{tripNum}, #{id},  sysdate, #{msg}) ")
+   int insertchatting(@Param("id")String id, @Param("msg")String msg, @Param("tripNum")int tripNum);
+
+
+   List<ChattingTrip> selectRecentChattingData(@Param("trip_number")int trip_number);
+
+   String selectNextDayInfinityChattingData(@Param("trip_number")int trip_number, @Param("date")String date);
+
+   List<ChattingTrip> selectInfinityChattingData(@Param("trip_number")int tripNum, @Param("date")String date);
 }

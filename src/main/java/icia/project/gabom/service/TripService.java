@@ -18,6 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 
 import icia.project.gabom.dao.ITripplanDao;
+import icia.project.gabom.dto.ChattingInfinite;
+import icia.project.gabom.dto.ChattingSomoim;
+import icia.project.gabom.dto.ChattingTrip;
 import icia.project.gabom.dto.Food;
 import icia.project.gabom.dto.Member;
 import icia.project.gabom.dto.Sns_friend;
@@ -126,11 +129,6 @@ public class TripService {
       
       
       
-      
-      
-      
-      
-      
       //System.out.println("reqlist"+json4);
       //System.out.println("myreqlist"+json5);
       
@@ -210,18 +208,70 @@ public class TripService {
 		mav = new ModelAndView();
 		String json = null;
 	    String view = null;
+	    String myinfo = null;
 	    
-	    
+	   // 여행 날짜 만큼 뽑아오기
 	    List<Trip_plan> detrip = tpDao.detailplan(trip_number);
-	    
-	    view="Trip/detailplan";
-		
 	    json = new Gson().toJson(detrip);
 	    mav.addObject("detrip", json);
 	    System.out.println(json);
+
+	   // 내 정보 뽑아 오기
+	    Member mb = tpDao.myInfo(ppl.getName());
+	    myinfo = new Gson().toJson(mb);
+	    mav.addObject("myinfo", myinfo);
+	    System.out.println(myinfo);
+	    
+	    // 채팅 내용 15줄 가져오기
+	  //recent chat
+	  	List<ChattingTrip> selectRecentChattingData = tpDao.selectRecentChattingData(trip_number);
+	  	String chatData = new Gson().toJson(selectRecentChattingData);
+	  	System.out.println("jsonchatData : " + chatData);
+	  	mav.addObject("JsonchatData", chatData);
+	  		
+	  	//다음 검색할 날짜 축출하기
+	  	String date = selectRecentChattingData.get(0).getChatting_date();  // 검색된 친구들 중 마지막 날짜
+	  	System.out.println("다음 검색 날짜 : " + date);
+	  	
+	  	String nextDay = tpDao.selectNextDayInfinityChattingData(trip_number,date); // 그 다음 날짜 찾기
+	  	System.out.println("다음 날짜는 언제인지요?? : " + nextDay );
+	  	if(nextDay==null) {
+	  		nextDay="없음";
+	  	}
+	  	mav.addObject("nextDay", nextDay);
+	    
+	    
+	    view="Trip/detailplan";
 	    
 	    mav.setViewName(view);
 		return mav;
+	}
+
+
+	public String insertchatting(String id, String msg, int tripNum) {
+		int result = tpDao.insertchatting(id,msg,tripNum);
+		System.out.println("채팅 db 성공여부: " + result);
+		return null;
+	}
+
+
+	public String selectDateChatting(String date, int tripNum) {
+		
+		
+		List<ChattingTrip> selectInfinityChattingData = tpDao.selectInfinityChattingData(tripNum,date);
+		
+		String nextDay = tpDao.selectNextDayInfinityChattingData(tripNum,date);
+		System.out.println("다음 날짜는 언제인지요?? : " + nextDay );
+		
+		
+		
+		ChattingInfinite ci = new ChattingInfinite();
+		ci.setDate(nextDay).setChattingtripDate(selectInfinityChattingData);
+		
+		System.out.println("긁혀짐?:" +ci.toString());
+		
+		String result = new Gson().toJson(ci);
+		return result;
 	}
    
    

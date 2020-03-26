@@ -15,5 +15,6 @@ public class ChattingInfinite {
 	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private String date ;
 	private List<ChattingSomoim> chattingData;
+	private List<ChattingTrip> chattingtripDate; 
 	
 }
