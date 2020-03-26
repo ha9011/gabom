@@ -27,7 +27,7 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor{
 		//이놈은 get으로 가져오는놈  (방번호 가져오기)
 		String somoimNum = req.getParameter("somoim_number");
         System.out.println("param, somoim_number:"+somoimNum);
-        attributes.put("somoimNum", somoimNum);
+       // attributes.put("somoimNum", somoimNum);
 		
        
         	

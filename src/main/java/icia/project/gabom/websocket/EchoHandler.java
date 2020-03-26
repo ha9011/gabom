@@ -30,6 +30,7 @@ public class EchoHandler extends TextWebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("afterConnectionEstablished : " + session );
 		 Map<String, Object> map = session.getAttributes();   // 인터셉터에서 받아온 놈
+
 		 
 		 if(map.containsKey("userID")) {
 			 String userID = (String)map.get("userID"); //유저아이디
@@ -38,7 +39,7 @@ public class EchoHandler extends TextWebSocketHandler{
 			 
 		 }
 		 
-		 
+		
 	}
 
 	@Override //알림
