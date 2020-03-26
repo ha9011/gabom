@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.project.gabom.dao.IfoodDao;
+import icia.project.gabom.dto.Food_reple;
 import icia.project.gabom.dto.Foodreservation;
+import icia.project.gabom.dto.House_reple;
 import icia.project.gabom.service.Foodservice;
 
 @RestController
@@ -49,4 +51,39 @@ private ModelAndView mav;
 	
 	}
 
+	
+	@PostMapping(value = "/insertreple" ,produces = "application/json;charset=utf-8")
+	   public String insertreple(Principal ppl,Food_reple f_reple) {
+		   System.out.println("숙박 댓글 입력 ");
+		   System.out.println("댓글 입력 아이디:"+ppl.getName());
+		   System.out.println("댓글 내용:"+f_reple.getFood_reple_content());
+		   System.out.println("집 번호:"+f_reple.getFood_number());
+		   
+	      String json = fs.insertreple(f_reple,ppl);
+	      
+	      return json;
+	   }
+	
+	@PostMapping(value = "/repledel", produces="text/plain;charset=utf-8")
+	public String repledel(Food_reple f_reple) {
+		System.out.println("댓글삭제 ");
+		
+		System.out.println("댓글번호"+f_reple.getFood_reple_number());
+		System.out.println("집번호"+f_reple.getFood_number());
+		
+		String json = fs.repledel(f_reple);
+		
+		return json;
+	}
+	
+	@PostMapping(value = "/fdreview", produces="text/plain;charset=utf-8")
+	public String fdreview(@RequestParam("food_review_number")int food_review_number) {
+		System.out.println("음식 리뷰 상세보기 ");
+		
+		System.out.println("리뷰번호"+food_review_number);
+		
+		String json = fs.fdreview(food_review_number);
+		
+		return json;
+	}
 }

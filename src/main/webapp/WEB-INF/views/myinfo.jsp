@@ -216,10 +216,10 @@ margin:0 20px;
       <div class="modal-body">
     		<div class="filebox"> 
     			<label for="ex_filename">업로드</label> 
-    			<input type="file" id="ex_filename" class="upload-hidden" name="house_review_orifile"multiple >
-    			<div id="himg">
-    				<img class="image_section" width="100px;" src="" alt="리뷰이미지" />
-    			</div>
+    			<input type="file" id="ex_filename" class="upload-hidden" name="house_review_orifile" multiple >
+    				<div class="detail">
+						<ul class="detailImage_sections"></ul>
+					</div>
     		</div>
     		<input id="hreview_content" style="width:100%;min-height:400px;" type="text" name="house_review_content">
     		<input type="hidden" id="h_number" name="house_number">
@@ -249,9 +249,9 @@ margin:0 20px;
     		<div class="filebox"> 
     			<label for="ex_filename">업로드</label> 
     			<input type="file" id="ex_filename" class="upload-hidden" name="food_review_orifile"multiple >
-    			<div id="fimg">
-    				<img class="image_section" width="100px;" src="" alt="리뷰이미지" />
-    			</div>
+    			<div class="detail">
+						<ul class="detailImage_sections"></ul>
+				</div>
     		</div>
     		<input id="freview_content" style="width:100%;min-height:400px;" type="text" name="food_review_content">
     		<input type="hidden" id="f_number" name="food_number">
@@ -869,36 +869,34 @@ $(document).on('click',".detail", function() {
 
 
 //---------------------------------------------------------------------리뷰 자세히 모달 
-//hreviewbtn 숙박리뷰작성
-//freviewbtn 맛집리뷰작성 
-//ex_filename 파일
-//review_content 리플내용 
 
-
-$("#fimg").hide();//이미지 보여주는거 숨김
-$("#himg").hide();//이미지 보여주는거 숨김
 
 $(".upload-hidden").change(function(e){
-	$(".image_section").empty();  // 변할 때마다 리셋
-	
+	$("#detailImage_sections").empty();  // 변할 때마다 리셋
 	
 	var files = e.target.files;
+	var filesArr = Array.prototype.slice.call(files);
 	
-	console.log(files[0]); // 파일 어떤 내용들었는지 보기 1개니깐 [0]
+	console.log(filesArr); // 파일 어떤 내용들었는지 보기 1개니깐 [0]
 	
-	if(!files[0]["type"].match("image.*")){
-		alert("확장자는 이미지 확장자만 가능함")
-		return 
-	}
-	
-	 var reader = new FileReader();
-     reader.onload = function(e) {
-         $('#image_section').attr('src', e.target.result);
-     }
-     reader.readAsDataURL(files[0]);
-         $("#fimg").show();
-         $("#himg").show();
+	filesArr.forEach(function(f,i){
+		console.log(f)
+		console.log(i)
+		if(!f.type.match("image.*")){
+			alert("확장자는 이미지 확장자만 가능함")
+			return 	
+		}
+		
+		
+		 var reader = new FileReader();
+         reader.onload = function(e) {
+         	var $li = $("<li></li>").attr("class","detailPictures");
+         	var $tt = $li.append($('<img/>').attr('src', e.target.result).css("width", "100px").css("heigh","100px"));
+         	$("#detailImage_sections").append($tt);
+         }
+         reader.readAsDataURL(f);
 	});//end forEach
+})
 //-----------------------------------------------------------------------이미지 
 
  $(document).on('click',".hreview",function(e){
@@ -975,7 +973,7 @@ $(document).on('click',".freview",function(e){
 	  	 	dataType:"json", //rest 컨트롤 이용	
 	  		success:function(data){
 	  			console.log("작성리뷰 업데이트",data);
-	  			$(".hde").empty();
+	  			$(".fde").empty();
 	  			
 	  			for(i of data){ //작성한 리뷰 
 	  				var rd = getFormatDate(i.house_review_date);
