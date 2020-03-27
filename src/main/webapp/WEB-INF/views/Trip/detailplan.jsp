@@ -238,6 +238,13 @@ font-size: 50px;
                </div>
             </div>
             
+            <!-- ---------------------------------여기부터 여행 계획 내역들 나옴--------------------------------- -->
+            <div id="detailTrip" >
+            	
+            </div>
+            <!-- ---------------------------------   ↑↑↑ 여행 계획 ↑↑↑    --------------------------------- -->
+            
+            
 			<div id="t_destination">
 				<button id="apiup" class="addbtn btn-lg btn-primary"
 					data-toggle="modal" data-target="#area_modal" onclick="sigunguChange()">장소추가</button>
@@ -310,6 +317,7 @@ var memberID = ${myinfo}.member_id;
 var myPic = ${myinfo}.member_profile_picture.substring(0);
 var tripNum = ${detrip}[0].trip_number;
 
+
 //채팅 초기화 하기
 for(let v of chatData ){
 		//var myPic = ${myinfo}.member_profile_picture.substring(0);
@@ -362,6 +370,7 @@ $("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
 
 //=========================================================================
 	//scroll 이벤트 - 인피니티
+	
 	//스크롤이벤트
 	let selectDay
 	if(nextDay=="없음"){
@@ -450,7 +459,6 @@ $("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
     						console.log(chatData)
     						console.log("select Day : "+ selectDay)
     						
-    						
     						for(let v of data.chattingtripDate ){
     							
     							//c chatting
@@ -463,7 +471,7 @@ $("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
     							
 									 if(cId===memberID){ //내가 보낸 데이터일 경우
     									
-    									let media = $("<div class='myCommnet' data-date='"+getFormatDate(new Date())+"' ></div>");
+    									let media = $("<div class='myCommnet' data-date='"+cDate+"' ></div>");
     									let mediabody = $("<div class='media-body'></div>");
     											
     									
@@ -477,9 +485,9 @@ $("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
     									iDateChatFrame.append(media)
     									
     						 		}else{ //타인이 보낸 데이터 일경우
-    						 			let media = $("<div class='  yourCommnet'></div>");
+    						 			let media = $("<div class='yourCommnet' data-date='"+cDate+"'></div>");
     							 			
-    						 			let img = $("<img src='"+cProfile+"' alt='John Doe' class='mr-3 mt-3 rounded-circle' style='width:60px;'>")
+    						 			let img = $("<img src='"+cProfile+"' alt='John Doe' class='mr-3 mt-3 rounded-circle' width='40px' height='40px'>")
     							 		media.append(img);
     							 		
     						 			let mediabody = $("<div class='media-body'></div>");
@@ -719,6 +727,7 @@ $(document).on("change","#select_sigunguCode", function (e){
 		}
 	});
 	console.log("지역검색 시작");
+	
 	$.ajax({
 		url : 'sigungusearch',
 		type : 'get',
@@ -786,7 +795,8 @@ $(document).on("change","#select_sigunguCode", function (e){
 	
 });
 
-////////////////////////////////////////
+//////////////////////////////////////// tripha 
+let arrDB = new Array(); // test 진짜 db에서 가져온 데이터
 let arr = new Array(); //받아온 데이터 담는곳
 
 function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
@@ -794,6 +804,30 @@ function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
  	//$("#area_modal").trigger("click");
 	 arr.push(params);
 	 console.log(arr);
+	 console.log("????????")
+	for( v of arr){
+		console.log("포문 도냐?")
+		var planFrame = $("<div class='planFrame'>  </div>");
+		var planNum = $("<div class='planNum'> 1 </div>");
+		var planImg = $("<div class='planImg'><img src='"+myPic+"' width='50px' height='50px' ></div>");
+		
+		planFrame.append(planNum);
+		planFrame.append(planImg);
+		
+		
+		var planContFram = $("<div class='planContFram'> </div>");
+		var contTitle = $("<div class='contTitle'></div>");
+		var contAddr= $("<div class='contAddr'> </div>");
+		planContFram.append(contTitle);
+		planContFram.append(contAddr);
+		
+		planFrame.append(planContFram);
+		
+		$("#detailTrip").append(planFrame);
+	} 
+	 
+	
+	
 	
 	
 	
@@ -969,8 +1003,8 @@ function getFormatDate(strdate){
 						$("#chatareaCont").append(media)
 		    		}
 		    		
-		    		console.log($("#chattingRoom"));
-		    		console.dir($("#chattingRoom"));
+		    		//console.log($("#chattingRoom"));
+		    		//console.dir($("#chattingRoom"));
 		    		$("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
 		        };
 		       
@@ -1079,7 +1113,12 @@ function getFormatDate(strdate){
     	day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
     	return  year + '/' + month + '/' + day;
 	}
+//===================================
 	
+// -------------------------------------------여행 계획 ------------------------------------------------;;
+
+
+
 </script>
 
 </html>

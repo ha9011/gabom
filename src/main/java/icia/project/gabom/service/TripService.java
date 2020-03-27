@@ -230,16 +230,20 @@ public class TripService {
 	  	mav.addObject("JsonchatData", chatData);
 	  		
 	  	//다음 검색할 날짜 축출하기
-	  	String date = selectRecentChattingData.get(0).getChatting_date();  // 검색된 친구들 중 마지막 날짜
-	  	System.out.println("다음 검색 날짜 : " + date);
 	  	
-	  	String nextDay = tpDao.selectNextDayInfinityChattingData(trip_number,date); // 그 다음 날짜 찾기
-	  	System.out.println("다음 날짜는 언제인지요?? : " + nextDay );
-	  	if(nextDay==null) {
-	  		nextDay="없음";
+	  	if(selectRecentChattingData.size() != 0) {
+	  		String date = selectRecentChattingData.get(0).getChatting_date();  // 검색된 친구들 중 마지막 날짜
+		  	System.out.println("다음 검색 날짜 : " + date);
+		  	
+		  	String nextDay = tpDao.selectNextDayInfinityChattingData(trip_number,date); // 그 다음 날짜 찾기
+		  	System.out.println("다음 날짜는 언제인지요?? : " + nextDay );
+		  	if(nextDay==null) {
+		  		nextDay="없음";
+		  	}
+		  	mav.addObject("nextDay", nextDay);
+		    
 	  	}
-	  	mav.addObject("nextDay", nextDay);
-	    
+	  	
 	    
 	    view="Trip/detailplan";
 	    
