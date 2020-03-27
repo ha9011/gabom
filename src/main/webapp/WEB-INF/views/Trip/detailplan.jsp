@@ -698,7 +698,7 @@ $("#apiup").on("click",function(e) {
 			$("#select_sigunguCode").append(option1);
 		}
  	};
- 	//-------------------------------------------------------------시군구코드select ajax----------------------------------
+//-------------------------------------------------------------시군구코드select ajax----------------------------------
 $(document).on("change","#select_sigunguCode", function (e){
 	console.log("클릭되니?");
 	var a =$("#select_sigunguCode option:selected");
