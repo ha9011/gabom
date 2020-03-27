@@ -11,8 +11,11 @@
  			data:{"postNumber":postNumber},
  			dataType : "json"
 		}).done((delJson)=>{
-			makeTimeLine(delJson);
-			location.href="#snsTimeLineMain";
+			let postBoxId=".post"+postNumber;
+			$(postBoxId).fadeOut(function(){
+				$(postBoxId).remove();
+			});
+			$('.info').text(delJson.message).fadeIn(400).delay(1000).fadeOut(400);
 		});
 		}else{return false;}
 	}//end

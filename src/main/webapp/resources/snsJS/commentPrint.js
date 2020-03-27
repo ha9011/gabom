@@ -16,8 +16,8 @@ function printComment(commentJson,number) {
 			commentBox+='<td style="width: 500px" id="commentContents'+commentJson[k]["number"]+'">'+commentJson[k]["content"]+'</a></td>';
 			commentBox+='<td style="background-color: white">';
 			commentBox+='<button type="button" class="btn-default commentLike" onclick="commentLike(\''+commentJson[k]["number"]+'\')">';
-			commentBox+='<i class="far fa-thumbs-up commentLike" id="commentLike'+commentJson[k]["number"]+'">'+commentJson[k]["like"]+'</i></button>';
-			commentBox+='<button type="button" class="btn-default commentHate" onclick="commentHate(\''+commentJson[k]["number"]+'\')"><i class="far fa-thumbs-down commentHate"';
+			commentBox+='<i class="far fa-thumbs-up faa-pulse animated commentLike" id="commentLike'+commentJson[k]["number"]+'">'+commentJson[k]["like"]+'</i></button>';
+			commentBox+='<button type="button" class="btn-default commentHate" onclick="commentHate(\''+commentJson[k]["number"]+'\')"><i class="far fa-thumbs-down faa-pulse animated commentHate"';
 			commentBox+='id="commentHate'+commentJson[k]["number"]+'">'+commentJson[k]["hate"]+'</i></button>';
 			commentBox+='</td>';
 			commentBox+='<td style="background-color: white">'+commentJson[k]["date"]+'</td>';
@@ -34,10 +34,12 @@ function printComment(commentJson,number) {
 				}
 	}
 		commentBox+='</tbody>';
-		commentBox+='</table>';	
+		commentBox+='</table>';
+		if(commentJson.comment!="댓글이 없습니다."){
 		commentBox+='<div class="container">';
 		commentBox+='<div class="pull-left commentMore" id="commentMore'+number+'"><a href="#;" onclick=commentMore(\''+number+'\')>댓글 더보기</a></div>';
 		commentBox+='</div>';
+		}
 		commentBox+='<div class="input-group commentWriteBox" id="commentWriteBox'+number+'">';
 		commentBox+='<input type="text" class="form-control" placeholder="댓글 입력">';
 		commentBox+='<span class="input-group-btn">';

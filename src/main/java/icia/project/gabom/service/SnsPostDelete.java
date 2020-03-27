@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import icia.project.gabom.dao.SnsPostDeleteDao;
 
 @Service
@@ -14,23 +17,20 @@ public class SnsPostDelete {
 	@Autowired
 	SnsPostDeleteDao postdel;
 	
-	@Autowired
-	SnsTimeLineService timeLine;
-	
-	
-	
 	@Transactional
 	public String delete(int postNumber, Principal principal) {
-		String json=null;
 		boolean result=postdel.commentServiceDel(postNumber);
 		result=postdel.commentDel(postNumber);
 		result= postdel.postServiceDel(postNumber);
 		result= postdel.postPhotoDel(postNumber);
 		result= postdel.postDel(postNumber);
+		JsonObject resultOb= new JsonObject();
 		if(result) {
-			json=timeLine.snsTimeLine(principal, 0);
+			resultOb.addProperty("message", "삭제 되었습니다.");
+		}else {
+			resultOb.addProperty("message", "삭제 오류");
 		}
-		return json;
+		return new Gson().toJson(resultOb);
 	}
 	
 	

@@ -79,6 +79,7 @@
 		margin-top: 40px;
 		font-family: 'Jua' ;
 		}
+		*:focus {outline:none;}
 </style>
 </head>
 <body>
