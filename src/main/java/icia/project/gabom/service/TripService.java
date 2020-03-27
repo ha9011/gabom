@@ -244,7 +244,7 @@ public class TripService {
 		    
 	  	}
 	  	
-	    
+	
 	    view="Trip/detailplan";
 	    
 	    mav.setViewName(view);
