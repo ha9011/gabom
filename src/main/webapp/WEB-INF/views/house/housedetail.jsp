@@ -6,6 +6,19 @@
 <meta charset="UTF-8">
 <title>house-detail</title>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- 날짜 시간 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="resources/css/timepicker-addon.css" />
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="resources/js/timepicker-addon.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
+
+<!-- 검색창 부트스트랩 -->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"> 
+
 <!-- Bootstrap core CSS -->
 <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -13,26 +26,6 @@
 <link href="./resources/css/jquery.bxslider.css" rel="stylesheet">
 <link href="./resources/css/style.css" rel="stylesheet">
 <!-- 레이아웃 부트스트랩 영역 -->
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
-<script src="//code.jquery.com/jquery-1.12.4.js"></script>
-<script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<!-- 검색창 부트스트랩 -->
-<link
-	href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-	rel="stylesheet" id="bootstrap-css">
-<!-- <script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
-	integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
-	crossorigin="anonymous">
-
 
 <style>
 body {
@@ -55,11 +48,10 @@ body {
 	border: 1px solid lightgray;
 }
 
-h1 { /*숙소명 */
+h2 { /*숙소명 */
 	text-align: center;
 	margin: 2% 35%;
 	width: 300px;
-	font-size: 50px;
 }
 
 input {
@@ -69,19 +61,18 @@ input {
 }
 
 #reservation {
-	font-size: 20px;
-	margin: 5% 0;
-	border:2px solid lightgray;
-	width:550px;
+	margin: 2% 0;
 }
 
 #reser {
-	height: 100px;
-	
+	font-size: 20px;
+	margin: 5% 0;
+	border:2px solid lightgray;
+	width:600px;
 }
 
 #insertbtn {
-	margin: 50px 20%;
+	margin: 50px 7%;
 }
 
 section {
@@ -107,11 +98,12 @@ border:2px solid lightgray;
 margin:13px;
 }
 #repleinsert_btn{
-width:70px;
+width:100px;
 font-size:20px;
 height:40px;
-margin:5px;
+margin:25px;
 margin-left:200px;
+text-align: center;
 }
 #replylist{
 font-size:20px;
@@ -128,8 +120,17 @@ margin-top:-180px;
 margin-bottom:50px;
 }
 #ma2{
-margin-bottom:50px;
+margin-bottom:20px;
 font-size:20px;
+}
+#rev{
+border-top:1px solid lightgray;
+
+}
+#re{
+border-top:1px solid lightgray;
+margin-top:2%;
+
 }
 
 </style>
@@ -150,7 +151,7 @@ font-size:20px;
 					<div class="card-body row no-gutters align-items-center">
 						<div class="col-auto">
 							<!-- 돋보기 -->
-							<i class="fas fa-search h4 text-body"></i>
+							<i class="fas fa-search h3 text-body"></i>
 						</div>
 						<!--end of col-->
 						<div class="col">
@@ -212,54 +213,11 @@ font-size:20px;
 
 		<section id="ma">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-5">
 					<article class="blog-post">
-						<div class="blog-post-image"></div>
 						<div id="info" class="blog-post-body"></div>
-					</article>
-				</div>
-				<!-- 숙소정보 -->
-
-
-				<div class="col-md-6 sidebar-gutter">
-					<aside>
-						<!-- sidebar-widget -->
-						<div id="reser" class="sidebar-widget">
-							<h2 class="sidebar-title">지금 예약하기</h2>
-							<div class="widget-container widget-about">
-								<form id="reservation" name="reservation" method="post">
-									<input class="date" type="text" name="reservation_checkin"
-										id="datepicker1" autocomplete="off" > -<input class="date" type="text"
-										name="reservation_checkout" id="datepicker2" autocomplete="off" >
-									<button
-										style="font-size: 20px; width: 100px; height: 50px; background-color: #064D84"
-										type="button" id="dtcommit" class="btn btn-primary">날짜확정</button>
-									<br> 총액 : <input name="reservation_totalprice" type="text"
-										id="totalprice" placeholder="">만원<br> 인원 : <input
-										name="reservation_person" type="number" id="person" value="">명
-									<input type="hidden" name="house_hostid" id="hostid">
-									<input type="hidden" name="house_number" id="house_number"><br>
-
-									<button
-										style="font-size: 20px; height: 50px; width: 300px; background-color: #064D84"
-										type="submit" id="insertbtn" class="btn btn-secondary btn-lg">예약하기</button>
-								</form>
-							</div>
-						</div>
-					</aside>
-				</div>
-				<!-- 예약 form -->
-			</div>
-		</section>
-		<!-- middle end -->
-
-		<section id="ma2">
-			<div class="row">
-				<div class="col-md-6">
-					<article class="blog-post">
-						<div class="blog-post-image"></div>
 						<div class="blog-post-body">
-							<h2>주의사항</h2>
+							<h3>주의사항</h3>
 							<p>체크인:오후 4:00 - 오후 10:00</p>
 							<p>체크아웃:오전 11:00</p>
 							<p>예약 취소</p>
@@ -273,16 +231,46 @@ font-size:20px;
 						</div>
 					</article>
 				</div>
+				<!-- 정보 -->
+
+				<div class="rf col-md-7 sidebar-gutter">
+					<aside>
+						<!-- sidebar-widget -->
+						<div style="margin-left:50px;" id="reser" class="sidebar-widget">
+							<h3 class="sidebar-title">지금 예약하기</h3>
+							<div class="widget-container widget-about">
+								<form  id="reservation" name="reservation" method="post">
+									<input class="date" type="text" name="reservation_checkin"
+										id="datepicker1" autocomplete="off" > -<input class="date" type="text"
+										name="reservation_checkout" id="datepicker2" autocomplete="off" >
+									<button
+										style="font-size: 20px; width: 150px; height: 50px; background-color: #064D84"
+										type="button" id="dtcommit" class="btn btn-primary">날짜확정</button>
+									<br> 총액 : <input name="reservation_totalprice" type="text"
+										id="totalprice" placeholder="">만원<br> 인원 : <input
+										name="reservation_person" type="number" id="person" value="">명
+									<input type="hidden" name="house_hostid" id="hostid">
+									<input type="hidden" name="house_number" id="house_number"><br>
+
+									<button
+										style="font-size: 20px; height: 50px; width: 500px; background-color: #064D84"
+										type="submit" id="insertbtn" class="btn btn-lg btn-primary btn-block text-uppercase font-weight-bold mb-2">예약하기</button>
+								</form>
+							</div>
+						</div>
+					</aside>
+				</div>
+				<!-- 예약 form -->
 			</div>
 		</section>
-		<!-- 주의사항 -->
+		<!-- middle end -->
 		
 		<section>
-			<div class="col-md-12">
+			<div class="col-md-12" id="rev">
 				<article class="blog-post">
 					<div class="blog-post-image"></div>
 					<div class="blog-post-body">
-						<h2>후기</h2>
+						<h3 style="margin-top: 20px;">후기</h3>
 						<div id="review">
 						
 						</div>
@@ -291,18 +279,19 @@ font-size:20px;
 			</div>
 		</section>
 		<!-- 후기영역  -->
-
-		<section>
-			<div class="col-md-12">
+<section  >
+			<div class="col-md-12" id="re">
 				<article class="blog-post">
-					<div class="blog-post-image"></div>
-					<div class="blog-post-body">
-						<h2>댓글</h2>
+					<div class="blog-post-body" >
+						<h3 style="margin-top: 20px;">댓글</h3>
+						<form id="rel">
 						<div id="replyinsert">
 							<div id="user_id"></div>
-							<input style="width:700px;" id="reple_content" name="reple_content" type="text">
+							<input style="width:700px; margin:25px 5px;" id="reple_content" name="house_reple_content" type="text">
 							<button id="repleinsert_btn"  class="btn btn-primary">등록</button>
+							<input type="hidden" name="house_number" id="hrnum">
 						</div>
+						</form>
 						<div id="replylist">
 						
 						</div>
@@ -314,8 +303,24 @@ font-size:20px;
 	</div>
 	<!-- /.container -->
 
+<!-- 리뷰상세보기  -->
+<div class="modal" id="detail" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+       <div id="d_img"></div>
+       <div id="d_content"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-	<script src="./resources/js/bootstrap.min.js"></script>
+
+
+	<!-- <script src="./resources/js/bootstrap.min.js"></script> -->
 	<script src="./resources/js/jquery.bxslider.js"></script>
 	<script src="./resources/js/mooz.scripts.min.js"></script>
 </body>
@@ -331,7 +336,7 @@ $(document).ready(function() {
     $('#house_number').val(house[0].house_number);
 });
 
-var title = $('<h1>'+house[0].house_name+'</h1>'); // 집 이름 
+var title = $('<h2 style="font-size:50px">'+house[0].house_name+'</h2>'); // 집 이름 
 $("#title").append(title);
 
 $("#img").attr('src', house[0].house_sysname);
@@ -344,7 +349,7 @@ $("#img4").attr('src', house[4].house_sysname);
 
 //------------------------------------------------------------------------------이미지 영역
 
-var host=$('<h1 style="margin-left:10px;width:500px;">'+house[0].house_hostid+'님의 하우스'+'</h1>');
+var host=$('<h2 style="margin-left:10px;width:500px;">'+house[0].house_hostid+'님의 하우스'+'</h2>');
 var house_info= $('<p class="info">'+'주소:'+house[0].house_address+'  '+'<br>'
         +'1박가격:'+house[0].house_price+'만원'+'<br>'
         +'수용가능인원:'+house[0].house_person+'&nbsp'+'&nbsp'+'&nbsp'
@@ -411,44 +416,38 @@ $("#info").append(house_info);
     console.log("로그인아이디",login_id);
     console.log(login_id[0].member_id)
     
-    var user_id =$('<h2>'+login_id[0].member_id+'</h2>');
+    var user_id =$('<h3>'+login_id[0].member_id+'</h3>');
     	$("#user_id").append(user_id);
     
     
     
     for( i of reple_list){
-		var rpline =$()
 		var reple_id = $('<div>'+i.member_guestid+'님의 댓글:      '+i.house_reple_content+'&nbsp'+'&nbsp'+'&nbsp'+i.house_reple_time+'<div>');
 		$("#replylist").append(reple_id);//아이디 
 		
 		
 		 if(i.member_guestid == login_id[0].member_id){
 			
-     		$("<button data-replenum='"+i.house_reple_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
+     		$("<button data-housenum='"+house[0].house_number+"' data-replenum='"+i.house_reple_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
     		                      .text("삭제").appendTo($("#replylist"));
     	 }
 		
 	}
     
     $("#repleinsert_btn").on('click',function(e){
-    	var houe_reple_content =$("#reple_content").val();
-    	var house_number = house[0].house_number;
     	
-    	var data = {
-    			"house_reple_content":houe_reple_content,
-    			"house_number":house_number
-    	}
-    	console.log("data",data);
+    	$("#hrnum").val(house[0].house_number);
+    	var formData = new FormData(document.getElementById("rel")); 
     	
     	 $.ajaxSetup({         
    	      beforeSend : function(xhr){
    	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
    	      });//먼저 보냄
-       console.log(data);
+   	      
        $.ajax({
            url:'hrest/insertreple',
            type:'post',
-           data:data,
+           data:formData,
            processData:false,
            contentType:false,  //제이슨 아니니깐 까보지마!!
             dataType:"json", //rest 컨트롤 이용   
@@ -471,11 +470,65 @@ $("#info").append(house_info);
     
     
     $("#btnDelete").on('click',function(e){//댓글 삭제
+    	var result = confirm( '댓글을 삭제하시겠습니까?' );
+    	
+    	if(result){
+    		
     	var replenum = e.target.dataset.replenum
+    	var house_number = e.target.dataset.housenum
     	console.log("댓글 번호 ",replenum);
+    
+    	var data ={
+    			"house_reple_number":replenum,
+    			"house_number":house_number
+    	}
+    	$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+		
+		$.ajax({
+	        url: "hrest/repledel",
+	         type: 'post',
+	         data :data,
+	         dataType: "json", //rest 컨트롤 이용   
+	         success:function(data){
+	         console.log(data);
+	         
+	         $("#replylist").empty();
+	         
+	         for( i of data){
+	     		var reple_id = $('<div>'+i.member_guestid+'님의 댓글:      '+i.house_reple_content+'&nbsp'+'&nbsp'+'&nbsp'+i.house_reple_time+'<div>');
+	     		$("#replylist").append(reple_id);//아이디 
+	     		
+	     		
+	     		 if(i.member_guestid == login_id[0].member_id){
+	     			
+	          		$("<button data-replenum='"+i.house_reple_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
+	         		                      .text("삭제").appendTo($("#replylist"));
+	         	 }
+	     		
+	     		}
+	         },
+	         
+	         error:function(error){
+	               console.log(error);
+	            }
+		 });//ajax 끝
+    	  }else{
+    	   		//아니오면 그냥 그대로 
+    	    }
     })
     
+ 
     
+    
+    
+    
+    
+    
+    
+
     
 //-----------------------------------------------------------------------------------댓글영역    
     //review 영역
@@ -483,12 +536,53 @@ $("#info").append(house_info);
   console.log("리뷰리스트 ",review);
    
   for (i of review){
+	 
+	  var out =$('<div class="outl"></div>');
+	  var w_id = $('<h4>'+i.member_guestid+'님'+'</h4>');
+	  var w_cont = $('<p  class="dn">'+i.house_review_content+'</p>');
+	  var w_dt =$('<a style="float:right" class="dn detail" href="#" data-toggle="modal" data-target="#detail" name="'+i.house_review_number+'">자세히보기</a>');
 	  
-	  var reimg = $('<img>');
+	  $("#review").append(out);
+	  out.append(w_id);
+	  out.append(w_cont);
+	  out.append(w_dt);	 
   }
     
     
-    
+  $(document).on('click',".detail", function() {
+		console.log("클릭한 리뷰번호"+$(this).attr("name"));
+		
+		var rnum = $(this).attr("name");
+		
+		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+		
+		$.ajax({
+	        url: "hrest/hdreview",
+	         type: 'post',
+	         data : {"house_review_number":rnum},
+	         dataType: "json", //rest 컨트롤 이용   
+	         success:function(data){
+	         console.log("자세한 리뷰내용",data);
+	         	$("#d_img").empty();
+	         	$("#d_content").empty();
+	         	
+	         	var d_content =$('<p>'+data[0].house_review_content+'</p>');
+	         	$("#d_content").append(d_content);
+	         	
+	         	for(i of data){
+	         		var d_img =$('<img style="width:200px;" src="'+i.house_review_sysfile+'">');
+	         		$("#d_img").append(d_img);
+	         	} 
+	         },
+	         
+	         error:function(error){
+	               console.log(error);
+	            }
+		 });//ajax 끝
+	})  
     
     
     

@@ -3,12 +3,17 @@ package icia.project.gabom.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import icia.project.gabom.dto.Food;
+import icia.project.gabom.dto.Food_reple;
+import icia.project.gabom.dto.Food_review;
 import icia.project.gabom.dto.Foodreservation;
 import icia.project.gabom.dto.Housereservation;
+import icia.project.gabom.dto.Member;
 
 public interface IfoodDao {
 
@@ -30,13 +35,29 @@ public interface IfoodDao {
 	List<Food> foodchangesearch(String food_address);
 
 	@Select("select * from foodshop F, foodfile FF WHERE F.FOOD_NUMBER = FF.FOOD_NUMBER AND F.FOOD_NUMBER=#{food_number}")
-	List<Food> detailfood(String food_number);
+	List<Food> detailfood(int food_number);
 
 	
 	int foodreservation(Foodreservation  freservation);
 
 	@Select("select * from FOODRESERVATION WHERE FOOD_NUMBER=#{food_number} order by FOODRESERVATION_DATE")
-	List<Foodreservation> detailfoodreser(String food_number);
+	List<Foodreservation> detailfoodreser(int food_number);
+	
+	@Select("SELECT * FROM FOODREPLE WHERE FOOD_NUMBER=#{food_number} ORDER BY FOOD_REPLE_TIME DESC" )
+	List<Food_reple> foodreple(@Param("food_number")int food_number);
+
+	@Select("SELECT * FROM FOOD_REVIEW WHERE FOOD_NUMBER=#{food_number}" )
+	List<Food_review> foodreview(@Param("food_number")int food_number);
+	
+	void insertreple(Food_reple freple);
+	
+	@Select("SELECT * FROM MEMBER WHERE MEMBER_ID=#{member_id}")
+	List<Member> memberinfo(String member_id);
+
+	@Delete("DELETE FROM FOODREPLE WHERE FOOD_REPLE_NUMBER=#{food_reple_number}")
+	void repledel(@Param("food_reple_number")int food_reple_number);
+
+	List<Food_review> showfreview(int food_review_number);
 	
 	
 }

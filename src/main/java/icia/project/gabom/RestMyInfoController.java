@@ -108,13 +108,63 @@ public class RestMyInfoController {
 	
 	@PostMapping(value = "/insertfreview", produces="text/plain;charset=utf-8")
 	public String insertfreview(Principal pc,MultipartHttpServletRequest multi) {
-		System.out.println("집 리뷰등록");
+		System.out.println("맛집 리뷰등록");
 		//System.out.println("사진"+multi.getFile("house_review_orifile").getOriginalFilename());
 		
 		List<MultipartFile> files=multi.getFiles("food_review_orifile");
 		System.out.println("files="+files.get(0).getOriginalFilename());
 		
 		String json = MIMM.insertfreview(pc,multi);
+		
+		return json;
+	}
+	
+	//-----------------------------------위에는 리뷰랑 예약 리스트 -----------------------------------------------
+	
+	@PostMapping(value = "/writelist", produces="text/plain;charset=utf-8")
+	public String writelist(Principal pc) {
+		System.out.println("마이페이지 내가 작성한 게시물 가져오기 ");
+		String json = MIMM.writelist(pc);
+		
+		return json;
+	}
+	
+	
+	
+	@PostMapping(value = "/showcontent", produces="text/plain;charset=utf-8")
+	public String showcontent(Principal pc, int qna_number) {
+		System.out.println("마이페이지 내가 작성한 게시물  상세보기  ");
+		System.out.println(qna_number);
+		String json = MIMM.showcontent(qna_number);
+		
+		return json;
+	}
+
+	@PostMapping(value = "/delqna", produces="text/plain;charset=utf-8")
+	public String delqna(Principal pc, int qna_number) {
+		System.out.println("마이페이지 내가 작성한 게시물 삭제   ");
+		System.out.println(qna_number);
+		String json = MIMM.delqna(qna_number,pc);
+		
+		return json;
+	}
+	
+	
+	@PostMapping(value = "/showcontentsomo", produces="text/plain;charset=utf-8")
+	public String showcontentsomo(Principal pc, int board_number) {
+		System.out.println("마이페이지 내가 작성한 게시물  상세보기  ");
+		System.out.println(board_number);
+		String json = MIMM.showcontentsomo(board_number);
+		
+		return json;
+	}
+	
+
+	@PostMapping(value = "/delsomo", produces="text/plain;charset=utf-8")
+	public String delsomo(Principal pc, int board_number) {
+		System.out.println("마이페이지 내가 작성한 게시물 삭제   ");
+		System.out.println(board_number);
+		String json = MIMM.delsomo(board_number,pc);
 		
 		return json;
 	}

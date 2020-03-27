@@ -153,12 +153,12 @@ public class Houseservice {
 	}
 
 
-	public String insertreple(House_reple hr, Principal ppl) {
+	public String insertreple(House_reple h_reple, Principal ppl) {
 		String json = null;
 		
-		int house_number = hr.getHouse_number();
+		int house_number = h_reple.getHouse_number();
 		String member_guestid = ppl.getName();
-		String house_reple_content = hr.getHouse_reple_content();
+		String house_reple_content = h_reple.getHouse_reple_content();
 		
 		House_reple hreple = new House_reple();
 		
@@ -171,5 +171,33 @@ public class Houseservice {
 		return json;
 	}
 
+
+	public String hdreview(int house_review_number) {
+		String json =null;
+		System.out.println(house_review_number);
+		
+		List<House_review> detail = hDao.showhreview(house_review_number);
+		
+		json = new Gson().toJson(detail);
+		return json;
+	}
+
+
+	public String repledel(House_reple h_reple) {
+		String json =null;
+		int house_reple_number =h_reple.getHouse_reple_number();
+		int house_number = h_reple.getHouse_number();
+		hDao.repledel(house_reple_number);
+		
+		List<House_reple> reple_list = hDao.replelist(house_number);//다시 불러옴
+		
+		json = new Gson().toJson(reple_list);
+		return json;
+	}
+
+
+	
+
+	
 
 }

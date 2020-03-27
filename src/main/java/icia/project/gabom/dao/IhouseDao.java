@@ -5,6 +5,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -52,8 +53,12 @@ public interface IhouseDao {
 
 	void insertreple(House_reple hreple);
 	
-	
-	List<House_review> reviewlist(int house_number); 
+	List<House_review> reviewlist(int house_number);
+
+	List<House_review> showhreview(@Param("house_review_number")int house_review_number);
+
+	@Delete("DELETE FROM HOUSEREPLE WHERE HOUSE_REPLE_NUMBER=#{house_reple_number}")
+	void repledel(@Param("house_reple_number")int house_reple_number); 
 	
 	
 	

@@ -226,7 +226,7 @@
 					</div>
                 </div>
 
-                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Upload Now</button>
+                <button class="btn btn-lg btn-primary btn-block text-uppercase font-weight-bold mb-2" type="submit">Upload Now</button>
               </form>
             </div>
           </div>
