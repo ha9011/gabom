@@ -550,6 +550,8 @@ td a {
 *:focus {
 	outline: none;
 }
+#footerM{
+	display: none;}
 @media ( max-width :1200px) {
 	#footerM{
 	display: block;}
