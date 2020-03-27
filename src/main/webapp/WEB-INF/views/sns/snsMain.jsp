@@ -551,6 +551,8 @@ td a {
 	outline: none;
 }
 @media ( max-width :1200px) {
+	#footerM{
+	display: block;}
 	#snsAside {
 		display: none;
 	}
@@ -579,6 +581,7 @@ td a {
 	
 	}
 	#footerM{
+	display: none;
 	position:fixed; 
   	left:0px; 
   	bottom:0px; 
