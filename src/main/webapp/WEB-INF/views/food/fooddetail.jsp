@@ -561,8 +561,11 @@ $(function() {
    });
    $.timepicker.setDefaults({
          // timepicker 설정
-       timeFormat:'HH:mm:ss',
+       timeFormat:'HH:mm',
        controlType:'select',
+       'default': '00:00',
+       minTime: food[0].food_mintime,
+       maxTime: food[0].food_maxtime,
        oneLine:true,      
    });
    

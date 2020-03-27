@@ -24,4 +24,7 @@ public class SnsCommentDto {
 		private Date editDate;
 		private	int postNumber;
 		private	int report;
+		
+		//마이페이지 불러올때 
+		private String sns_posts_content;
 }
