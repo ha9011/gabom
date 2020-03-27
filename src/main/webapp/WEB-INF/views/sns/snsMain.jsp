@@ -6,9 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf" name="_csrf" content="${_csrf.token}" />
 <!-- default header name is X-CSRF-TOKEN -->
-<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+<meta id="_csrf_header" name="_csrf_header"
+	content="${_csrf.headerName}" />
 <title>Gabom SNS</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -25,7 +26,9 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Jua&display=swap&subset=korean"
 	rel="stylesheet">
+<link rel="stylesheet" href="resources/fontCss/fontAni.css">
 <style type="text/css">
+
 #snsMain {
 	background-image: url(resources/snsImage/cl3.jpg);
 	background-size: 100%;
@@ -73,7 +76,6 @@
 #snsTimeLine {
 	background-color: white;
 	margin-top: 40px;
-	border-radius: 0;
 	border-top-right-radius: 20px;
 }
 
@@ -217,8 +219,8 @@ img.myImage {
 }
 
 #snsTimeLineFilterBox {
-	background-image: url(resources/snsImage/cl4.jpg);
-	background-size: cover;
+	background-image: url(resources/snsImage/aaxx.gif);
+	background-size: 100% 470px;
 	height: 150px;
 }
 
@@ -398,7 +400,7 @@ td a {
 	font-weight: bold;
 	font-size: 22px;
 	text-align: center;
-	background-image: url(resources/snsImage/yy.JPG);
+	background-image: url(resources/snsImage/cl4.jpg);
 	background-size: cover;
 	color: white;
 	height: 150px;
@@ -434,9 +436,6 @@ td a {
 
 @media ( max-width :1200px) {
 	.timeLineProfileBoxName {
-		display: none;
-	}
-	.timeLineProfileBoxPost {
 		display: none;
 	}
 }
@@ -479,26 +478,7 @@ td a {
 	padding-right: 170px;
 }
 
-.imgBox {
-	position: fixed;
-	left: 380px;
-	right: 380px;
-	bottom: 100px;
-	z-index: 9999;
-	background-color: #337ab7;
-	color: #F0F0F0;
-	font-family: 'Jua';
-	font-size: 15px;
-	padding: 10px;
-	text-align: center;
-	border-radius: 10px;
-	bottom: 100px;
-}
 
-.imgBox img {
-	width: 100%;
-	height: auto;
-}
 
 #friendMore {
 	text-align: center;
@@ -509,12 +489,14 @@ td a {
 	border-radius: 8px;
 	display: none;
 }
+
 #friendMore a {
 	color: white;
 	font-family: 'Jua';
 	font-size: 20px;
 	font-weight: bold;
 }
+
 #myPostMore {
 	text-align: center;
 	background-color: #337ab7;
@@ -524,26 +506,31 @@ td a {
 	border-radius: 8px;
 	display: none;
 }
+
 #myPostMore a {
 	color: white;
 	font-family: 'Jua';
 	font-size: 20px;
 	font-weight: bold;
 }
+
 .searchTot {
 	font-family: 'Jua';
 	font-size: 16px;
 	font-weight: bold;
 }
+
 .searchD {
 	color: #337ab7;
 }
+
 .commentMore {
 	font-family: 'Jua';
 	font-size: 16px;
 	font-weight: bold;
 	margin-bottom: 20px;
 }
+
 .commentTd {
 	cursor: pointer;
 }
@@ -554,22 +541,83 @@ td a {
 	font-weight: bold;
 	margin-bottom: 30px;
 }
+
+#searchBtn {
+	background-image: url(resources/snsImage/jjh.gif);
+	background-size: 100%;
+}
+
+*:focus {
+	outline: none;
+}
+#footerM{
+	display: none;}
+@media ( max-width :1200px) {
+	#footerM{
+	display: block;}
+	#snsAside {
+		display: none;
+	}
+	#snsTimeLine {
+		width: 100%;
+		border-top-left-radius: 20px;
+	}
+	#more,#friendMore,#myPostMore{
+		position:fixed; 
+  		left:0px; 
+  		bottom:100px; 
+  		height:70px; 
+  		width:10%;
+  		background-color:#337ab7;
+  		color: white;
+  		border-radius: 0;
+  		text-align: right;
+  		border-top-right-radius: 8px;
+  		border-top-left-radius: 10px;
+  		margin-left: 90%;
+  		padding-right: 28px;
+  		padding-top: 20px;
+	}
+	#more a,#friendMore a,#myPostMore a{
+	font-size: 25px;
+	
+	}
+	#footerM{
+	display: none;
+	position:fixed; 
+  	left:0px; 
+  	bottom:0px; 
+  	height:106px; 
+  	width:100%; 
+  	background-color:#337ab7; 
+  	color: white; 
+  	display: flex;
+  	z-index: 9997;
+	}
+	#footerM i{
+	padding-left: 50px;
+  	padding-right: 65px;
+  	padding-top: 20px;
+	}
+}
 </style>
 <script type="text/javascript">
-$(window).scroll(function(){
-	var scrollTop = $(document).scrollTop();
-	if (scrollTop < 224) {
-	 scrollTop = 224;
-	}
-	$("#snsAside").stop();
-	$("#snsAside").animate( { "top" : scrollTop });
+	$(window).scroll(function() {
+		var scrollTop = $(document).scrollTop();
+		if (scrollTop < 224) {
+			scrollTop = 224;
+		}
+		$("#snsAside").stop();
+		$("#snsAside").animate({
+			"top" : scrollTop
+		});
 	});
-//페이지 불러올때 ajax
-$(function () {
-	$('body').fadeIn();
-	getProflie();
-	setTimeLine();
-});//onload End
+	//페이지 불러올때 ajax
+	$(function() {
+		$('body').fadeIn();
+		getProflie();
+		setTimeLine();
+	});//onload End
 </script>
 </head>
 <body>
@@ -592,18 +640,20 @@ $(function () {
 							<!-- <li role="presentation" id="snsProfileNotice" onclick="notice()"><a
 								href="#;">알람</a></li> -->
 							<li role="presentation" id="snsProfileInfo"><a href="myinfo">정보수정</a></li>
-							<li role="presentation" id="snsFriendList"><a href="#">내친구</a></li>
+							<li role="presentation" id="snsFriendList"><a href="#">내친구&nbsp;
+									<i class="fas fa-star faa-tada animated" style="color: gold"></i>
+							</a></li>
 							<!-- <li role="presentation" id="snsProfileMyPosts"><a href="#">내글</a></li> -->
 						</ul>
 						<ul class="nav nav-pills nav-stacked">
 							<li role="presentation" class="active" id="snsWirte"><a
 								href="#writeBox">글작성</a></li>
 							<li role="presentation" class="active" id="timeLine"><a
-								href="#snsTimeLineMain">타임라인</a></li>
+								href="#snsTimeLineMain" onclick="setTimeLine()">타임라인</a></li>
 							<li role="presentation" class="active" id="travelPlan"><a
-								href="trip">여행계획</a></li>
+								href="myplan">여행계획</a></li>
 							<li role="presentation" class="active" id="search"><a
-								href="#snsTimeLineFilterBox">검색</a></li>
+								href="#;">검색</a></li>
 							<li role="presentation" class="active top"><a href="#">TOP</a></li>
 						</ul>
 					</div>
@@ -616,9 +666,10 @@ $(function () {
 								<input type="text" class="form-control serachText"
 									id="searchText" placeholder="검색"
 									style="font-size: 23px; text-align: center; height: 50px;">
-								<button type="button" class="btn btn-default" id="searchBtn"
+								<button type="button" class="btn-default" id="searchBtn"
 									style="width: 70px; background-color: #337ab7;">
-									<i class="fas fa-search fa-2x" style="color: white;"></i>
+									<i class="fas fa-search fa-2x faa-pulse animated-hover"
+										style="color: white;"></i>
 								</button>
 							</div>
 						</div>
@@ -642,107 +693,136 @@ $(function () {
 		</div>
 	</div>
 	<div class='info' style='display: none'>설정이 변경되었습니다.</div>
-	<div class="imgBox" style="display: none"></div>
-<!-- 토큰 전역 설정 -->
-<script type="text/javascript">
-	var header = $("meta[name='_csrf_header']").attr("content");
-	var token = $("meta[name='_csrf']").attr("content");
+	<div id="footerM" class="container">
+	<div onclick="setTimeLine()"><i class="fas fa-home fa-5x"></i></div>
+	<div onclick="makewriteBox()"><i class="fas fa-edit fa-5x"></i></div>
+	<div onclick="location.href='#snsTimeLine';"><i class="fas fa-search fa-5x"></i></div>
+	<div onclick="makeFriendListM()"><i class="fas fa-star faa-tada animated fa-5x" style="color:gold"></i></div>
+	<div onclick="asideRead()"><i class="fas fa-user fa-5x"></i></div>
+	<div onclick="location.href='#';"><i class="fas fa-arrow-circle-up fa-5x faa-float animated "></i></div>
+	</div>
+	<script type="text/javascript">
+	function makeFriendListM() {
+		friendList(userId);	
+	}
 	</script>
-<!-- 검색 결과 ENTER 1 -->
-<script type="text/javascript" src="resources/snsJS/enterSearch.js"></script>
-<!-- 어사이드 내친구1 -->
-<script type="text/javascript" src="resources/snsJS/asideMyFriend.js"></script>
-<!-- 검색 결과 내 친구 해제1 -->
-<script type="text/javascript" src="resources/snsJS/searchInFriendCancel.js?ver=2"></script>
-<!-- 검색 결과 내 친구 요청 취소1 -->
-<script type="text/javascript" src="resources/snsJS/searchInFriendReqCancel.js"></script>
-<!-- 검색결과 내 친구 요청1 -->
-<script type="text/javascript" src="resources/snsJS/searchInfriendReq.js"></script>
-<!-- 친구 요청 내 친구 거절1 -->
-<script type="text/javascript" src="resources/snsJS/friendReqInFriendCancel.js"></script>
-<!-- 타임라인 내 친구 거절 1-->
-<script type="text/javascript" src="resources/snsJS/timeLineFriendCancel.js"></script>
-<!-- 친구 요청 내 친구 수락1 -->
-<script type="text/javascript" src="resources/snsJS/friendReqInAccept.js"></script>
-<!-- 친구 목록 내  친구 해제1 -->
-<script type="text/javascript" src="resources/snsJS/friendListInCancel.js"></script>
-<!-- 이미지 크게 1 -->
-<script type="text/javascript" src="resources/snsJS/resizeImg.js"></script>
-<!-- 게시글 검색 결과 눌렀을때 1 -->
-<script type="text/javascript" src="resources/snsJS/postSelect.js"></script>
-<!-- 친구 목록 출력 1 -->
-<script type="text/javascript" src="resources/snsJS/makeFriendList.js"></script>
-<!-- 친구 리스트 ajax 1-->
-<script type="text/javascript" src="resources/snsJS/friendList.js"></script>
-<!-- 친구 수락 1-->
-<script type="text/javascript" src="resources/snsJS/friendAccept.js"></script>
-<!-- 친구 요청 목록 출력 1-->
-<script type="text/javascript" src="resources/snsJS/friendReqPrint.js"></script>
-<!-- 친구 요청 목록1 -->
-<script type="text/javascript" src="resources/snsJS/friendReqList.js"></script>
-<!-- 친구 요청 취소1 -->
-<script type="text/javascript" src="resources/snsJS/friendReqCancel.js"></script>
-<!-- 친구 요청1 -->
-<script type="text/javascript" src="resources/snsJS/friendReq.js"></script>
-<!-- 친구 해제1 -->
-<script type="text/javascript" src="resources/snsJS/friendCancel.js"></script>
-<!-- 다른사람 글 보기1 -->
-<script type="text/javascript" src="resources/snsJS/userPost.js"></script>
-<!-- 타임라인내 프로필1 -->
-<script type="text/javascript" src="resources/snsJS/timeLineInProfile.js"></script>
-<!-- 어사이드 유저 이름 클릭1 -->
-<script type="text/javascript" src="resources/snsJS/asidePost.js"></script>
-<!-- 댓글삭제 1-->
-<script type="text/javascript" src="resources/snsJS/commentDel.js"></script>
-<!-- 댓글 수정1 -->
-<script type="text/javascript" src="resources/snsJS/commentEdit.js"></script>
-<!-- 검색 서비스 1-->
-<script type="text/javascript" src="resources/snsJS/search.js"></script>
-<!-- 검색 결과 출력 1-->
-<script type="text/javascript" src="resources/snsJS/searchPrint.js"></script>
-<!-- 검색 클릭 이벤트1 -->
-<script type="text/javascript" src="resources/snsJS/searchClick.js"></script>
-<!-- 글삭제 1-->
-<script type="text/javascript" src="resources/snsJS/postDel.js"></script>
-<!-- 타임라인 버튼1 -->
-<script type="text/javascript" src="resources/snsJS/timeLineBtn.js"></script>
-<!-- 댓글 입력후 출력 1-->
-<script type="text/javascript" src="resources/snsJS/commentInsertPrint.js"></script>
-<!-- 글 수정 스크립트1 -->
-<script type="text/javascript" src="resources/snsJS/postEdit.js"></script>
-<!-- 댓글 입력1 -->
-<script type="text/javascript" src="resources/snsJS/commentInsert.js"></script>
-<!-- 글쓰기 1-->
-<script type="text/javascript" src="resources/snsJS/postInsert.js"></script>
-<!-- 호버시 아이콘 변환 스크립트1 -->
-<script type="text/javascript" src="resources/snsJS/snsHover.js"></script>
-<!-- 글쓰기칸 만드는 스크립트1 -->
-<script type="text/javascript" src="resources/snsJS/writeBox.js"></script>
-<!-- 이미지 미리보기 스크립트1 -->
-<script type="text/javascript" src="resources/snsJS/imgView.js"></script>
-<!-- 정보공개 변환1 -->
-<script type="text/javascript" src="resources/snsJS/postSecurity.js"></script>
-<!-- 타임라인 생성 스크립트 1-->
-<script type="text/javascript" src="resources/snsJS/timeLinePrint.js"></script>
-<!-- 글작성 취소 스크립트 1-->
-<script type="text/javascript" src="resources/snsJS/postCancel.js"></script>
-<!-- 페이지 로딩시 해당 회원 정보 출력 스크립트1 -->
-<script type="text/javascript" src="resources/snsJS/asideProfile.js"></script>
-<!-- 좋아요 기능 1-->
-<script type="text/javascript" src="resources/snsJS/postLike.js"></script>
-<!-- 싫어요 기능1 -->
-<script type="text/javascript" src="resources/snsJS/postHate.js"></script>
-<!-- 더보기 기능1 -->
-<script type="text/javascript" src="resources/snsJS/postMore.js"></script>
-<!-- 타임라인 Ajax1 -->
-<script type="text/javascript" src="resources/snsJS/timeLineAjax.js"></script>
-<!-- 댓글출력 Ajax1 -->
-<script type="text/javascript" src="resources/snsJS/commentAjax.js"></script>
-<!-- 댓글 출력 서비스 1-->
-<script type="text/javascript" src="resources/snsJS/commentPrint.js"></script>
-<!-- 댓글 좋아요1 -->
-<script type="text/javascript" src="resources/snsJS/commentLike.js"></script>
-<!-- 댓글 싫어요 1-->
-<script type="text/javascript" src="resources/snsJS/commentHate.js"></script>
+	<script type="text/javascript">
+		$("#search").click(function() {
+			$("#searchText").focus();
+		});
+	</script>
+	<!-- 토큰 전역 설정 -->
+	<script type="text/javascript">
+		var header = $("meta[name='_csrf_header']").attr("content");
+		var token = $("meta[name='_csrf']").attr("content");
+	</script>
+	<!-- 검색 결과 ENTER 1 -->
+	<script type="text/javascript" src="resources/snsJS/enterSearch.js"></script>
+	<!-- 어사이드 내친구1 -->
+	<script type="text/javascript" src="resources/snsJS/asideMyFriend.js"></script>
+	<!-- 검색 결과 내 친구 해제1 -->
+	<script type="text/javascript"
+		src="resources/snsJS/searchInFriendCancel.js?ver=2"></script>
+	<!-- 검색 결과 내 친구 요청 취소1 -->
+	<script type="text/javascript"
+		src="resources/snsJS/searchInFriendReqCancel.js"></script>
+	<!-- 검색결과 내 친구 요청1 -->
+	<script type="text/javascript"
+		src="resources/snsJS/searchInfriendReq.js"></script>
+	<!-- 친구 요청 내 친구 거절1 -->
+	<script type="text/javascript"
+		src="resources/snsJS/friendReqInFriendCancel.js"></script>
+	<!-- 타임라인 내 친구 거절 1-->
+	<script type="text/javascript"
+		src="resources/snsJS/timeLineFriendCancel.js"></script>
+	<!-- 친구 요청 내 친구 수락1 -->
+	<script type="text/javascript"
+		src="resources/snsJS/friendReqInAccept.js"></script>
+	<!-- 친구 목록 내  친구 해제1 -->
+	<script type="text/javascript"
+		src="resources/snsJS/friendListInCancel.js"></script>
+	<!-- 이미지 크게 1 -->
+	<script type="text/javascript" src="resources/snsJS/resizeImg.js?ver=3"></script>
+	<!-- 게시글 검색 결과 눌렀을때 1 -->
+	<script type="text/javascript" src="resources/snsJS/postSelect.js"></script>
+	<!-- 친구 목록 출력 1 -->
+	<script type="text/javascript" src="resources/snsJS/makeFriendList.js"></script>
+	<!-- 친구 리스트 ajax 1-->
+	<script type="text/javascript" src="resources/snsJS/friendList.js"></script>
+	<!-- 친구 수락 1-->
+	<script type="text/javascript" src="resources/snsJS/friendAccept.js"></script>
+	<!-- 친구 요청 목록 출력 1-->
+	<script type="text/javascript" src="resources/snsJS/friendReqPrint.js"></script>
+	<!-- 친구 요청 목록1 -->
+	<script type="text/javascript" src="resources/snsJS/friendReqList.js"></script>
+	<!-- 친구 요청 취소1 -->
+	<script type="text/javascript" src="resources/snsJS/friendReqCancel.js"></script>
+	<!-- 친구 요청1 -->
+	<script type="text/javascript" src="resources/snsJS/friendReq.js"></script>
+	<!-- 친구 해제1 -->
+	<script type="text/javascript" src="resources/snsJS/friendCancel.js"></script>
+	<!-- 다른사람 글 보기1 -->
+	<script type="text/javascript" src="resources/snsJS/userPost.js"></script>
+	<!-- 타임라인내 프로필1 -->
+	<script type="text/javascript"
+		src="resources/snsJS/timeLineInProfile.js?ver=1"></script>
+	<!-- 어사이드 유저 이름 클릭1 -->
+	<script type="text/javascript" src="resources/snsJS/asidePost.js"></script>
+	<!-- 댓글삭제 1-->
+	<script type="text/javascript" src="resources/snsJS/commentDel.js"></script>
+	<!-- 댓글 수정1 -->
+	<script type="text/javascript" src="resources/snsJS/commentEdit.js"></script>
+	<!-- 검색 서비스 1-->
+	<script type="text/javascript" src="resources/snsJS/search.js"></script>
+	<!-- 검색 결과 출력 1-->
+	<script type="text/javascript"
+		src="resources/snsJS/searchPrint.js?ver=1"></script>
+	<!-- 검색 클릭 이벤트1 -->
+	<script type="text/javascript" src="resources/snsJS/searchClick.js"></script>
+	<!-- 글삭제 1-->
+	<script type="text/javascript" src="resources/snsJS/postDel.js?ver=2"></script>
+	<!-- 타임라인 버튼1 -->
+	<script type="text/javascript" src="resources/snsJS/timeLineBtn.js"></script>
+	<!-- 댓글 입력후 출력 1-->
+	<script type="text/javascript"
+		src="resources/snsJS/commentInsertPrint.js"></script>
+	<!-- 글 수정 스크립트1 -->
+	<script type="text/javascript" src="resources/snsJS/postEdit.js"></script>
+	<!-- 댓글 입력1 -->
+	<script type="text/javascript" src="resources/snsJS/commentInsert.js"></script>
+	<!-- 글쓰기 1-->
+	<script type="text/javascript"
+		src="resources/snsJS/postInsert.js?ver=3"></script>
+	<!-- 호버시 아이콘 변환 스크립트1 -->
+	<script type="text/javascript" src="resources/snsJS/snsHover.js?ver=1"></script>
+	<!-- 글쓰기칸 만드는 스크립트1 -->
+	<script type="text/javascript" src="resources/snsJS/writeBox.js"></script>
+	<!-- 이미지 미리보기 스크립트1 -->
+	<script type="text/javascript" src="resources/snsJS/imgView.js"></script>
+	<!-- 정보공개 변환1 -->
+	<script type="text/javascript" src="resources/snsJS/postSecurity.js"></script>
+	<!-- 타임라인 생성 스크립트 1-->
+	<script type="text/javascript" src="resources/snsJS/timeLinePrint.js"></script>
+	<!-- 글작성 취소 스크립트 1-->
+	<script type="text/javascript" src="resources/snsJS/postCancel.js"></script>
+	<!-- 페이지 로딩시 해당 회원 정보 출력 스크립트1 -->
+	<script type="text/javascript" src="resources/snsJS/asideProfile.js"></script>
+	<!-- 좋아요 기능 1-->
+	<script type="text/javascript" src="resources/snsJS/postLike.js"></script>
+	<!-- 싫어요 기능1 -->
+	<script type="text/javascript" src="resources/snsJS/postHate.js"></script>
+	<!-- 더보기 기능1 -->
+	<script type="text/javascript" src="resources/snsJS/postMore.js"></script>
+	<!-- 타임라인 Ajax1 -->
+	<script type="text/javascript" src="resources/snsJS/timeLineAjax.js"></script>
+	<!-- 댓글출력 Ajax1 -->
+	<script type="text/javascript" src="resources/snsJS/commentAjax.js"></script>
+	<!-- 댓글 출력 서비스 1-->
+	<script type="text/javascript"
+		src="resources/snsJS/commentPrint.js?ver=2"></script>
+	<!-- 댓글 좋아요1 -->
+	<script type="text/javascript" src="resources/snsJS/commentLike.js"></script>
+	<!-- 댓글 싫어요 1-->
+	<script type="text/javascript" src="resources/snsJS/commentHate.js"></script>
 </body>
 </html>

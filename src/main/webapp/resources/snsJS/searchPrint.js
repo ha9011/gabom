@@ -59,7 +59,9 @@ function makeSearchList(json,data) {
 		}
 		str+='</tbody>';
 		str+='</table>';
+		if(json["friendList"].length!=0){
 		str+='<div class="pull-right"><a href="#;" id="friendMoreBtn" onclick="friendMoreBtn(\''+data+'\')">친구 더보기</a></div>';
+		}
 		str+='<hr/><br/><br/>';
 		str+='<div style="display:flex; margin-bottom:20px;"><div class=searchD>\"'+data+'\"</div>에 관련된 게시글 검색 결과</div>';
 		str+='<table class="table table-hover table-responsive">';
@@ -79,7 +81,9 @@ function makeSearchList(json,data) {
 			}
 		str+='</tbody>';
 		str+='</table>';
+		if(json["publicPost"].length!=0){
 		str+='<div class="pull-right"><a href="#;" id="postMoreBtn" onclick="postMoreBtn(\''+data+'\')">게시글 더보기</a></div>';
+		}
 		$friend.append(str);
 		$friend.appendTo($tot);
 		$("#snsTimeLineMain").html($tot);
