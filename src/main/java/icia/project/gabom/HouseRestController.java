@@ -52,16 +52,38 @@ public class HouseRestController {
 	}
 	
 	   @PostMapping(value = "/insertreple" ,produces = "application/json;charset=utf-8")
-	   public String insertreple(Principal ppl,House_reple hr) {
+	   public String insertreple(Principal ppl,House_reple h_reple) {
 		   System.out.println("숙박 댓글 입력 ");
 		   System.out.println("댓글 입력 아이디:"+ppl.getName());
-		   System.out.println("댓글 내용:"+hr.getHouse_reple_content());
-		   System.out.println("집 번호:"+hr.getHouse_number());
-		   System.out.println();
+		   System.out.println("댓글 내용:"+h_reple.getHouse_reple_content());
+		   System.out.println("집 번호:"+h_reple.getHouse_number());
 		   
-	      String json = hs.insertreple(hr,ppl);
+	      String json = hs.insertreple(h_reple,ppl);
 	      
 	      return json;
 	   }
 	   
+	   @PostMapping(value = "/hdreview", produces="text/plain;charset=utf-8")
+		public String hdreview(@RequestParam("house_review_number")int house_review_number) {
+			System.out.println("집 리뷰 상세보기 ");
+			
+			System.out.println("리뷰번호"+house_review_number);
+			
+			String json = hs.hdreview(house_review_number);
+			
+			return json;
+		}
+	   
+	   
+	   @PostMapping(value = "/repledel", produces="text/plain;charset=utf-8")
+		public String repledel(House_reple h_reple) {
+			System.out.println("댓글삭제 ");
+			
+			System.out.println("댓글번호"+h_reple.getHouse_reple_number());
+			System.out.println("집번호"+h_reple.getHouse_number());
+			
+			String json = hs.repledel(h_reple);
+			
+			return json;
+		}
 }

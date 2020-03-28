@@ -17,7 +17,7 @@ function makeTimeLineProfile(id) {
 			make+='<img src="'+json.pic+'" class="img-thumbnail img-responsive" onclick=resizeImg(this.src)>';
 			make+='<div class="container timeLineProfileBoxId">아이디';
 				if(json.friendStatus==2&&userId!=json.id){
-					make+='<i class="fas fa-star" style="color:gold"></i>';
+					make+='<i class="fas fa-star faa-tada animated" style="color:gold"></i>';
 				}
 			make+='<br/><br/>'+json.id+'</div>';
 			make+='<div class="container timeLineProfileBoxName">이름<br/><br/>'+json.name+'</div>';
@@ -36,13 +36,13 @@ function makeTimeLineProfile(id) {
 				make+='<div class="container friendRequestBtnBox">';
 				make+='<button type="button" class="btn-default pull-right friendRequestBtn"';
 				make+='onclick="friendRequest(\''+json.id+'\')">';
-				make+='친구 신청</button></div>';
+				make+='친구 신청&nbsp;<i class="fas fa-star faa-tada animated" style="color:gold"></i></button></div>';
 			}
 			else if(json.friendStatus==1&&userId!=json.id){
 				make+='<div class="container friendRequestBtnBox">';
 				make+='<button type="button" class="btn-default pull-right friendRequestBtn"';
 				make+='onclick="friendRequestStatus(\''+json.id+'\')">';
-				make+='요청중</button>';
+				make+='요청중&nbsp;<i class="fa fa-spinner faa-spin animated"></i></button>';
 				make+='</div>';
 			}
 			else if(json.friendStatus==2&&userId!=json.id){

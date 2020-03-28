@@ -15,7 +15,7 @@
 			dataType : "json"
 	}).done((commentJson)=>{
 		printComment(commentJson,number);
-		if(commentJson.length==commentJson[0]["max"]){
+		if(commentJson.length==commentJson[0]["max"]||commentJson[0]["max"]==undefined){
 			let commentM="#commentMore"+number;
 			$(commentM).hide();
 			commentRow=1;

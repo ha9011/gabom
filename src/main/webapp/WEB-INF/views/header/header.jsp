@@ -19,6 +19,7 @@
    href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link href="https://fonts.googleapis.com/css?family=Jua&display=swap&subset=korean" rel="stylesheet"/>
+<link rel="stylesheet" href="resources/fontCss/fontAni.css">
 <style>
 body {
    /* background-image: url(images/tree-247122_1280.jpg);
@@ -85,7 +86,7 @@ background-color: #E6E6E6
             <li><a href="joinselecttype">회원가입</a></li>
          </sec:authorize>
          <sec:authorize access="isAuthenticated()">
-            <li><a href="myinfo">나의 정보</a></li>
+            <li><a href="myinfo" target="_blank">나의 정보</a></li>
             <li>
                <form method="post" action="/gabom/logout">
                   <input type="submit" value="로그아웃" id="logout"> <input type="hidden"
@@ -108,43 +109,46 @@ background-color: #E6E6E6
             <li><a href="foodmain" id="popularRestaurant">맛집</a></li>
             <li><a href="somoim/mainsomoim" id="somoim">소모임</a></li>
             <li><a href="#" id="service">고객센터</a></li>
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
             <li><a href="adminmenu" id="admin">관리자</a></li>
+			</sec:authorize>
+            <!-- <li><a href="dumi">더미</a></li> -->
          </ul>
       </div>
       <script type="text/javascript">
       //호버시 아이콘 변환 스크립트
          $("#travel").hover(function () {
-            $("#travel").html('<i class="fas fa-plane-departure"></i>');
+            $("#travel").html('<i class="fas fa-plane-departure faa-float animated"></i>');
          },function(){
             $("#travel").html('여행');   
          });
          
          $("#sns").hover(function () {
-            $("#sns").html('<i class="far fa-comments"></i>');
+            $("#sns").html('<i class="far fa-comments faa-tada animated"></i>');
          },function(){
             $("#sns").html('SNS');
          });
          
          $("#room").hover(function () {
-            $("#room").html('<i class="fas fa-hotel"></i>');
+            $("#room").html('<i class="fas fa-hotel faa-pulse animated"></i>');
          },function(){
             $("#room").html('숙박');
          });
          
          $("#popularRestaurant").hover(function () {
-            $('#popularRestaurant').html('<i class="fas fa-utensils"></i>');
+            $('#popularRestaurant').html('<i class="fas fa-utensils faa-wrench animated"></i>');
          },function(){
             $('#popularRestaurant').html('맛집');
          });
          
          $("#somoim").hover(function () {
-            $('#somoim').html('<i class="fas fa-users"></i>');
+            $('#somoim').html('<i class="fas fa-users faa-pulse animated"></i>');
          },function(){
             $('#somoim').html('소모임');
          });
          
          $("#service").hover(function () {
-            $('#service').html('<i class="fas fa-headset"></i>');
+            $('#service').html('<i class="fas fa-headset faa-wrench animated"></i>');
          },function(){
             $('#service').html('고객센터');
          });

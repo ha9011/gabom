@@ -88,8 +88,39 @@ section {
 	width: 100%;
 	height: 500px;
 }
-.ma{
-margin-bottom: 120px;
+#ma{
+margin-top:-180px;
+margin-bottom:200px;
+}
+
+#rev{
+border-top:1px solid lightgray;
+
+}
+#re{
+border-top:1px solid lightgray;
+margin-top:2%;
+
+}
+#replyinsert{
+display:flex; 
+border:2px solid lightgray;
+}
+#user_id{
+margin:13px;
+}
+#repleinsert_btn{
+width:100px;
+font-size:20px;
+height:40px;
+margin:25px;
+margin-left:200px;
+text-align: center;
+}
+#replylist{
+font-size:20px;
+float:left;
+text-align:left;
 }
 
 </style>
@@ -164,7 +195,7 @@ margin-bottom: 120px;
 		</section>
 		<!--사진영역 -->
 
-		<section class="ma">
+		<section id="ma">
 			<div class="row">
 				<div class="col-md-5">
 					<article class="blog-post">
@@ -199,37 +230,36 @@ margin-bottom: 120px;
 		</section>
 		
 			<section>
-			<div class="col-md-12">
+			<div class="col-md-12" id="rev">
 				<article class="blog-post">
 					<div class="blog-post-image"></div>
 					<div class="blog-post-body">
-						<h2>후기</h2>
-						<p>ew months ago, we found ridiculously cheap plane tickets
-							for Boston and off we went. It was our first visit to the city
-							and, believe it or not, Stockholm in February was more pleasant
-							than Boston in March. It probably has a lot to do with the fact
-							that we arrived completely unprepared. That I, in my converse and
-							thin jacket, did not end up with pneumonia is honestly not even
-							fair.</p>
+						<h2 style="margin-top: 20px;">후기</h2>
+						<div id="review">
+						
+						</div>
 					</div>
 				</article>
 			</div>
 		</section>
 		<!-- 후기영역  -->
 
-		<section>
-			<div class="col-md-12">
+		<section  >
+			<div class="col-md-12" id="re">
 				<article class="blog-post">
-					<div class="blog-post-image"></div>
-					<div class="blog-post-body">
-						<h2>댓글</h2>
-						<p>ew months ago, we found ridiculously cheap plane tickets
-							for Boston and off we went. It was our first visit to the city
-							and, believe it or not, Stockholm in February was more pleasant
-							than Boston in March. It probably has a lot to do with the fact
-							that we arrived completely unprepared. That I, in my converse and
-							thin jacket, did not end up with pneumonia is honestly not even
-							fair.</p>
+					<div class="blog-post-body" >
+						<h3 style="margin-top: 20px;">댓글</h3>
+						<form id="rel">
+						<div id="replyinsert">
+							<div id="user_id"></div>
+							<input style="width:700px; margin:25px 5px;" id="reple_content" name="food_reple_content" type="text">
+							<button id="repleinsert_btn"  class="btn btn-primary">등록</button>
+							<input type="hidden" name="food_number" id="frnum">
+						</div>
+						</form>
+						<div id="replylist">
+						
+						</div>
 					</div>
 				</article>
 			</div>
@@ -237,6 +267,24 @@ margin-bottom: 120px;
 		<!-- 댓글영역 -->
 	</div>
 	<!-- /.container -->
+	
+	
+	
+<!-- 리뷰상세보기  -->
+<div class="modal" id="detail" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+       <div id="d_img"></div>
+       <div id="d_content"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+	
 
 <!-- 
 	<script src="./resources/js/bootstrap.min.js"></script> -->
@@ -309,8 +357,186 @@ $("#insertbtn").on("click", function (e) {
             
          })
     });
+ //------------------------------------------------------------------------------------------
+ var login_id = ${memberinfo}
+ var user_id =$('<h3>'+login_id[0].member_id+'</h3>');
+    	$("#user_id").append(user_id);
+ 
+ var reple =${freplelist}
+ console.log(reple);
+ 
+ for( i of reple){
+		var reple_id = $('<div class="r">'+i.member_guestid+'님의 댓글:      '+i.food_reple_content+'&nbsp'+'&nbsp'+'&nbsp'+i.food_reple_time+'<div>');
+		$("#replylist").append(reple_id);//아이디 
+		
+		
+		 if(i.member_guestid == login_id[0].member_id){
+			
+  		$("<button data-foodnum='"+food[0].food_number+"' data-replenum='"+i.food_reple_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
+ 		                      .text("삭제").appendTo($("#replylist"));
+ 	 }
+		
+	}
+
+ $("#repleinsert_btn").on('click',function(e){
+ 	
+ 	$("#frnum").val(food[0].food_number);
+ 	var formData = new FormData(document.getElementById("rel")); 
+ 	
+ 	 $.ajaxSetup({         
+	      beforeSend : function(xhr){
+	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	      });//먼저 보냄
+	      
+    $.ajax({
+        url:'frest/insertreple',
+        type:'post',
+        data:formData,
+        processData:false,
+        contentType:false,  //제이슨 아니니깐 까보지마!!
+         dataType:"json", //rest 컨트롤 이용   
+        success:function(data){
+           alert("댓글 입력완료 ");
+           console.log(data)
+           
+           
+        },
+        error:function(error){
+           alert("댓글 입력 실패 ")
+           console.log(error);
+        }
+        
+     })
+ });// 댓글 등록 끝 
+ 
+ 
+ $("#btnDelete").on('click',function(e){//댓글 삭제
+    	var result = confirm( '댓글을 삭제하시겠습니까?' );
+    	
+    	if(result){
+    		
+    	var replenum = e.target.dataset.replenum
+    	var food_number = e.target.dataset.foodnum
+    	console.log("댓글 번호 ",replenum);
+    
+    	var data ={
+    			"food_reple_number":replenum,
+    			"food_number":food_number
+    	}
+    	$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+		
+		$.ajax({
+	        url: "frest/repledel",
+	         type: 'post',
+	         data :data,
+	         dataType: "json", //rest 컨트롤 이용   
+	         success:function(data){
+	         console.log(data);
+	         
+	         $("#replylist").empty();
+	         
+	         for( i of data){
+	     		var reple_id = $('<div>'+i.member_guestid+'님의 댓글:      '+i.food_reple_content+'&nbsp'+'&nbsp'+'&nbsp'+i.food_reple_time+'<div>');
+	     		$("#replylist").append(reple_id);//아이디 
+	     		
+	     		
+	     		 if(i.member_guestid == login_id[0].member_id){
+	     			
+	          		$("<button data-replenum='"+i.food_reple_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
+	         		                      .text("삭제").appendTo($("#replylist"));
+	         	 }
+	     		
+	     		}
+	         },
+	         
+	         error:function(error){
+	               console.log(error);
+	            }
+		 });//ajax 끝
+    	  }else{
+    	   		//아니오면 그냥 그대로 
+    	    }
+    })
+ 
+ 
+ //-------------------------------------------------------------------------------------------
+  var review =${freviewlist}
+ console.log(review);
+ 
+ for (i of review){
+	 
+	  var out =$('<div class="outl"></div>');
+	  var w_id = $('<h4>'+i.member_guestid+'님'+'</h4>');
+	  var w_cont = $('<p  class="dn">'+i.food_review_content+'</p>');
+	  var w_dt =$('<a style="float:right" class="dn detail" href="#" data-toggle="modal" data-target="#detail" name="'+i.food_review_number+'">자세히보기</a>');
+	  
+	  $("#review").append(out);
+	  out.append(w_id);
+	  out.append(w_cont);
+	  out.append(w_dt);	 
+ }
+ 
+ $(document).on('click',".detail", function() {
+		console.log("클릭한 리뷰번호"+$(this).attr("name"));
+		
+		var rnum = $(this).attr("name");
+		
+		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+		
+		$.ajax({
+	        url: "frest/fdreview",
+	         type: 'post',
+	         data : {"food_review_number":rnum},
+	         dataType: "json", //rest 컨트롤 이용   
+	         success:function(data){
+	         console.log("자세한 리뷰내용",data);
+	         	$("#d_img").empty();
+	         	$("#d_content").empty();
+	         	
+	         	var d_content =$('<p>'+data[0].food_review_content+'</p>');
+	         	$("#d_content").append(d_content);
+	         	
+	         	for(i of data){
+	         		var d_img =$('<img style="width:200px;" src="'+i.food_review_sysfile+'">');
+	         		$("#d_img").append(d_img);
+	         	} 
+	         },
+	         
+	         error:function(error){
+	               console.log(error);
+	            }
+		 });//ajax 끝
+	})  
+ 
+ 
+ 
  
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
 
 $(function() {
@@ -335,8 +561,11 @@ $(function() {
    });
    $.timepicker.setDefaults({
          // timepicker 설정
-       timeFormat:'HH:mm:ss',
+       timeFormat:'HH:mm',
        controlType:'select',
+       'default': '00:00',
+       minTime: food[0].food_mintime,
+       maxTime: food[0].food_maxtime,
        oneLine:true,      
    });
    

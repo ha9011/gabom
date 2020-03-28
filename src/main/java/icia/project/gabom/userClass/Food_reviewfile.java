@@ -24,7 +24,7 @@ import icia.project.gabom.dao.IMyInfoDao;
 public class Food_reviewfile {
    //파일 업로드 메소드   
 	
-	String fullPathmain = "E:\\Spring\\gabom\\src\\main\\webapp\\resources\\foodreview";
+	String fullPathmain = "E:\\Spring\\gabom\\src\\main\\webapp\\resources\\foodreview\\";
 
 	@Autowired
 	private IMyInfoDao minfDao;
@@ -75,10 +75,10 @@ public class Food_reviewfile {
 		         fMap.put("food_review_number",Integer.toString(food_review_number));
 		         fMap.put("food_review_orifile", oriFileName);
 		         //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
-		         String sysFileName="food_review_img"+System.currentTimeMillis()+"."
+		         String sysFileName="foodreviewimg"+System.currentTimeMillis()+"."
 		               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
 		         
-		         String sysFileNameDB2="./resources/foodreviewupload/"+sysFileName;
+		         String sysFileNameDB2="./resources/foodreview/upload/"+sysFileName;
 		         fMap.put("food_review_sysfile", sysFileNameDB2);
 		         //5.메모리->실제 파일 업로드
 		         

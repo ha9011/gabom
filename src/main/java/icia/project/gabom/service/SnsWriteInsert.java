@@ -73,7 +73,6 @@ public class SnsWriteInsert {
 				File files = new File( // 경로에 파일 저장
 						real+ System.currentTimeMillis() + file.get(i).getOriginalFilename());
 				try {
-
 					file.get(i).transferTo(files);// 변환해서 저장한다
 					if (writeResult != 0) {// 사진있는 글INSERT가 성공할 경우
 						photoResult = snsWriteInsertDao.snsPhotoInsert(snsPhotoPosts);// 사진테이블에 사진 INSERT

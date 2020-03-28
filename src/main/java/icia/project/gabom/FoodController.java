@@ -52,12 +52,10 @@ public class FoodController { //검색, 메인, 상세보기 컨트롤러
 	}
 	
 	@RequestMapping(value = "/fooddetail", method = RequestMethod.GET)
-	public ModelAndView fooddetail(String food_number,Foodreservation freserlist) {
-		System.out.println("freserlist="+freserlist);
-		//System.out.println("fooddetail");
+	public ModelAndView fooddetail(int food_number,Foodreservation freserlist,Principal ppl) {
 		System.out.println("음식점번호는"+food_number);
 		
-		mav = fs.fooddetail(food_number,freserlist);
+		mav = fs.fooddetail(food_number,freserlist,ppl);
 		return mav;
 	}
 	

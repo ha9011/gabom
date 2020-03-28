@@ -60,7 +60,5 @@ public class SomoimBoard {
 	
 	private String somoim_sys_mainpicture;
 	private String somoim_name;
-	
-	
-	
+
 }

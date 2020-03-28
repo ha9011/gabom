@@ -12,8 +12,8 @@
 		commentBox+='<td style="width: 500px;" id="commentContents'+commentJson["number"]+'">'+commentJson["content"]+'</td>';
 		commentBox+='<td style="background-color: white">';
 		commentBox+='<button type="button" class="btn-default commentLike" onclick="commentLike(\''+commentJson["number"]+'\')">';
-		commentBox+='<i class="far fa-thumbs-up commentLike" id="commentLike'+commentJson["number"]+'">'+commentJson["like"]+'</i></button>';
-		commentBox+='<button type="button" class="btn-default commentHate" onclick="commentHate(\''+commentJson["number"]+'\')"><i class="far fa-thumbs-down commentHate" id="commentHate'+commentJson["number"]+'">'+commentJson["hate"]+'</i></button>';
+		commentBox+='<i class="far fa-thumbs-up faa-pulse animated commentLike" id="commentLike'+commentJson["number"]+'">'+commentJson["like"]+'</i></button>';
+		commentBox+='<button type="button" class="btn-default commentHate" onclick="commentHate(\''+commentJson["number"]+'\')"><i class="far fa-thumbs-down faa-pulse animated commentHate" id="commentHate'+commentJson["number"]+'">'+commentJson["hate"]+'</i></button>';
 		commentBox+='</td>';
 		commentBox+='<td style="background-color: white">'+commentJson["date"]+'</td>';
 		commentBox+='<td style="background-color: white; width: 150px">';

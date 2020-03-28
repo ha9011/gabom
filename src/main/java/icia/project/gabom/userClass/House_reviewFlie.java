@@ -25,7 +25,7 @@ import icia.project.gabom.dto.House_review;
 public class House_reviewFlie {
    //파일 업로드 메소드   
 	
-	String fullPathmain = "E:\\Spring\\gabom\\src\\main\\webapp\\resources\\housereview";
+	String fullPathmain = "E:\\Spring\\gabom\\src\\main\\webapp\\resources\\housereview\\";
 
 	@Autowired
 	private IMyInfoDao minfDao;
@@ -76,10 +76,10 @@ public class House_reviewFlie {
 		         fMap.put("house_review_number",Integer.toString(house_review_number));
 		         fMap.put("house_review_orifile", oriFileName);
 		         //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
-		         String sysFileName="house_review_img"+System.currentTimeMillis()+"."
+		         String sysFileName="housereviewimg"+System.currentTimeMillis()+"."
 		               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
 		         
-		         String sysFileNameDB2="./resources/housereviewupload/"+sysFileName;
+		         String sysFileNameDB2="./resources/housereview/upload/"+sysFileName;
 		         fMap.put("house_review_sysfile", sysFileNameDB2);
 		         //5.메모리->실제 파일 업로드
 		         

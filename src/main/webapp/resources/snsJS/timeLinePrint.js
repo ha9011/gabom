@@ -6,7 +6,7 @@
 	 		let RePostsContents=postsContents.split("<br/>").join("\r\n");
 		let $timeLine = "";
 		if(userId==timeLineJson[j]["posts_writer"]){
-		$timeLine += '<div class="jumbotron" id="posts" style="border: 5px solid #337ab7">';
+		$timeLine += '<div class="jumbotron post'+timeLineJson[j]["posts_number"]+'" id="posts" style="border: 5px solid #337ab7">';
 		}else{
 		$timeLine += '<div class="jumbotron" id="posts">';
 		}
@@ -53,8 +53,8 @@
 		$timeLine += '<div id="postsOptionBox" class="navbar-default navbar-right">';
 		$timeLine += '<div id="snsOption">';
 		/* $timeLine += '<button type="button"><i class="fas fa-share snsOptionSelector"></i> </button>'; */
-		$timeLine += '<button type="button"><i class="far fa-thumbs-up snsOptionSelector like" id="snsLike'+timeLineJson[j]["posts_number"]+'" onclick="likeSend(\''+timeLineJson[j]["posts_number"]+'\',\''+timeLineJson[j]["posts_writer"]+'\')">'+timeLineJson[j]["like"]+'</i></button>';
-		$timeLine += '<button type="button"><i class="far fa-thumbs-down snsOptionSelector hate" id="snsHate'+timeLineJson[j]["posts_number"]+'" onclick="hateSend(\''+timeLineJson[j]["posts_number"]+'\',\''+timeLineJson[j]["posts_writer"]+'\')">'+timeLineJson[j]["hate"]+'</i></button></div>';
+		$timeLine += '<button type="button"><i class="far fa-thumbs-up faa-pulse animated snsOptionSelector like" id="snsLike'+timeLineJson[j]["posts_number"]+'" onclick="likeSend(\''+timeLineJson[j]["posts_number"]+'\',\''+timeLineJson[j]["posts_writer"]+'\')">'+timeLineJson[j]["like"]+'</i></button>';
+		$timeLine += '<button type="button"><i class="far fa-thumbs-down faa-pulse animated snsOptionSelector hate" id="snsHate'+timeLineJson[j]["posts_number"]+'" onclick="hateSend(\''+timeLineJson[j]["posts_number"]+'\',\''+timeLineJson[j]["posts_writer"]+'\')">'+timeLineJson[j]["hate"]+'</i></button></div>';
 		$timeLine += '</div>';
 		$timeLine += '</div>';
 		$timeLine += '<div class="container snsImageContainer" id="'+j+'" >';
