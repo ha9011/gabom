@@ -102,4 +102,12 @@ order by tc.chatting_date desc
 	 and TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')+1, 'YYYY/MM/DD') 
 	 order by chatting_date asc
 </select>
+
+
+
+	<insert id="insertPlanDetail" parameterType="tripplandetail">
+		INSERT INTO TRIP_PLAN_DETAIL VALUES(#{trip_number},#{trip_date},#{trip_destination}, '없음',#{trip_xpoint},#{trip_ypoint},#{trip_title},#{trip_img},#{trip_order})
+	</insert>
+	
+	
 </mapper>
