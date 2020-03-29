@@ -24,15 +24,18 @@
 <link href="./resources/css/animate.css" rel="stylesheet">
 <link href="./resources/css/style.css" rel="stylesheet">
 <!-- 페이징 처리 플러그인 CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>   
-<!-- 페이징 처리 플러그인 -->   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+<!-- 페이징 처리 플러그인 -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 <!-- Placed at the end of the document so the pages load faster -->
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
 <script src="./resources/js/bootstrap.min.js"></script>
 <script src="./resources/js/owl.carousel.min.js"></script>
 <script src="./resources/js/cbpAnimatedHeader.js"></script>
@@ -41,6 +44,32 @@
 <script src="./resources/js/theme-scripts.js"></script>
 
 <style>
+.dot {
+	overflow: hidden;
+	float: left;
+	width: 12px;
+	height: 12px;
+	background:
+		url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');
+}
+
+.dotOverlay {
+	position: relative;
+	top: 40px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	border-bottom: 2px solid #ddd;
+	float: left;
+	font-size: 12px;
+	padding: 5px;
+	background: #fff;
+}
+
+.numberr {
+	font-weight: bold;
+	color: #ee6152;
+}
+
 body {
 	overflow: scroll;
 	background-image: url( "./resources/css/diarybg.jpg" )
@@ -78,17 +107,18 @@ header {
 	border: 2px solid white;
 }
 
-
 #day {
-	display:flex;
-	justify-content: center;
-	align-items: center; 
-	font-size:50px;
-}
-#dayFrame{
 	display: flex;
-	margin : 0 0 0 83px;
+	justify-content: center;
+	align-items: center;
+	font-size: 50px;
 }
+
+#dayFrame {
+	display: flex;
+	margin: 0 0 0 83px;
+}
+
 #hc {
 	text-align: center;
 	margin: 20px 40%;
@@ -102,26 +132,26 @@ header {
 /* .icon{ */
 /* margin:0 20%; */
 /* } */
-
-#date{
-width:200px;
-font-size:30px;
-display:inline;
-list-style:none;
-padding: 0px;
-margin: 23px 0px 0px 0px;
+#date {
+	width: 200px;
+	font-size: 30px;
+	display: inline;
+	list-style: none;
+	padding: 0px;
+	margin: 23px 0px 0px 0px;
 }
 
-.number:nth-child(n+2){
-display: none;
-font-size : 0px;
+.number:nth-child(n+2) {
+	display: none;
+	font-size: 0px;
 }
-.number:nth-child(1){
-font-size: 50px;
+
+.number:nth-child(1) {
+	font-size: 50px;
 }
 
 .number {
-	margin : 0 0 0 83px;
+	margin: 0 0 0 83px;
 }
 
 /* 채팅영역 */
@@ -129,6 +159,7 @@ font-size: 50px;
 	display: flex;
 	flex-direction: column;
 }
+
 #chatarea {
 	border: 1px solid black;
 	margin: 0 5% 0 2%;
@@ -141,7 +172,7 @@ font-size: 50px;
 #chatareaCont {
 	overflow: auto;
 	height: 93%;
-	width :100%;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	background-color: #99BFE4;
@@ -149,31 +180,48 @@ font-size: 50px;
 
 .yourCommnet {
 	margin: 15px 0 15px 10px;
-	padding : 10px;
+	padding: 10px;
 	font-size: 15px;
 	align-items: flex-start;
-	align-self:flex-start;
+	align-self: flex-start;
 	text-align: left;
 	background: white;
 	border-radius: 10px;
-	
-	
 }
 /* align-self: flex-end; */
 .myCommnet {
 	margin: 15px 10px 15px 0;
-	padding : 10px;
+	padding: 10px;
 	font-size: 15px;
 	align-items: flex-end;
-	align-self:flex-end;
+	align-self: flex-end;
 	text-align: right;
 	background: yellow;
 	border-radius: 10px;
-	
 }
-.media-body{
+
+.media-body {
 	display: inline;
 }
+
+/* 여행계획 */
+.planFrame {
+	display: flex;
+}
+
+.idxbtn {
+	border-radius: 10px;
+	padding: 8px;
+}
+.mapbtn{
+
+}
+/* .planNum */
+/* 	 planImg */
+/* 	 planContFram */
+/* 	 contTitle */
+/* 	 contAddr */
+
 </style>
 
 
@@ -226,23 +274,30 @@ font-size: 50px;
 
 
 			<div id="hc">
-               <a>+숙소 선택하기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               <a>+체크리스트 </a>
-            </div>
-            
-            <div id="day">
-            	<div id='dayFrame'>
-               <div class="icon" id="left">◀</div>
-               <ul id="date"></ul>
-               <div class="icon" id="right">▶</div>
-               </div>
-            </div>
-            
+				<a>+숙소 선택하기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a>+체크리스트 </a>
+			</div>
+
+			<div id="day">
+				<div id='dayFrame'>
+					<div class="icon" id="left">◀</div>
+					<ul id="date"></ul>
+					<div class="icon" id="right">▶</div>
+				</div>
+			</div>
+			<hr>
+			<!-- ---------------------------------여기부터 여행 계획 내역들 나옴--------------------------------- -->
+			<div id="detailTrip"></div>
+			<!-- ---------------------------------   ↑↑↑ 여행 계획 ↑↑↑    --------------------------------- -->
+
+			<hr>
 			<div id="t_destination">
 				<button id="apiup" class="addbtn btn-lg btn-primary"
-					data-toggle="modal" data-target="#area_modal" onclick="sigunguChange()">장소추가</button>
+					data-toggle="modal" data-target="#area_modal"
+					onclick="sigunguChange()">장소추가</button>
 				<!-- onclick="modal" -->
 				<button class="addbtn btn-lg btn-primary" onclick="memo()">메모추가</button>
+				
+				<button class="addbtn btn-lg btn-primary" id="savebtn" onclick="saveplan()">저장하기</button>
 			</div>
 
 			<!-- ---------------------------------areaCode기준 검색 모달--------------------------------- -->
@@ -260,13 +315,13 @@ font-size: 50px;
 							</button>
 						</div>
 						<div class="modal-body" id="api_search_body">
-							시군구선택<select id="select_sigunguCode" title="시군구선택" >
+							시군구선택<select id="select_sigunguCode" title="시군구선택">
 
 							</select>
 							<table id="areatable" class="table table-bordered">
 							</table>
 
- 						<div id="pagination"></div> 
+							<div id="pagination"></div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
@@ -284,11 +339,13 @@ font-size: 50px;
 
 
 		</div>
-		<div id="chatarea">채팅창
-		<div id="chatareaCont"></div>
-		<input id="chatInput"><button id='chatBtn'>입력</button>
+		<div id="chatarea">
+			채팅창
+			<div id="chatareaCont"></div>
+			<input id="chatInput">
+			<button id='chatBtn'>입력</button>
 		</div>
-		
+
 	</section>
 
 
@@ -301,14 +358,40 @@ console.log(areaCode)
 
 var chatData = ${JsonchatData}; // 최근 날자로 채팅 가져오기
 var nextDay= "${nextDay}" // 다음 검색할 날짜
-console.log("chatData")
-console.log(chatData)
-console.log("nextDay")
-console.log(nextDay)
+var firstDayPlan = ${firstDayPlan}.tripData;
+// console.log("chatData")
+// console.log(chatData)
+// console.log("nextDay")
+// console.log(nextDay)
 var sccket ;
 var memberID = ${myinfo}.member_id;
 var myPic = ${myinfo}.member_profile_picture.substring(0);
 var tripNum = ${detrip}[0].trip_number;
+
+let customOverlayy = [];
+let distanceOverlayy = [];
+let clickLinee =[];
+let currentPlanDay = 1;
+
+$(document).ready(function(){
+
+	let clickLine ;
+	
+	//첫째날 시작
+	 arr[1] = firstDayPlan
+	 console.log("arr",arr);
+	 console.log("points",points);
+	 console.log("tripDate",arr[1]);
+	 console.log("currentPlanDay",1);
+	 let arrFrame = arr[1];
+	 let pointsFrame = points[1];
+	 createPlanForm(arrFrame,pointsFrame)
+	 
+	 //버튼 비 활성화  저장하기 opacity
+	 $("#savebtn").prop("disabled", true);
+	 $("#savebtn").css('opacity',0.5);
+	 
+})
 
 //채팅 초기화 하기
 for(let v of chatData ){
@@ -362,6 +445,7 @@ $("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
 
 //=========================================================================
 	//scroll 이벤트 - 인피니티
+	
 	//스크롤이벤트
 	let selectDay
 	if(nextDay=="없음"){
@@ -450,7 +534,6 @@ $("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
     						console.log(chatData)
     						console.log("select Day : "+ selectDay)
     						
-    						
     						for(let v of data.chattingtripDate ){
     							
     							//c chatting
@@ -463,7 +546,7 @@ $("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
     							
 									 if(cId===memberID){ //내가 보낸 데이터일 경우
     									
-    									let media = $("<div class='myCommnet' data-date='"+getFormatDate(new Date())+"' ></div>");
+    									let media = $("<div class='myCommnet' data-date='"+cDate+"' ></div>");
     									let mediabody = $("<div class='media-body'></div>");
     											
     									
@@ -477,9 +560,9 @@ $("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
     									iDateChatFrame.append(media)
     									
     						 		}else{ //타인이 보낸 데이터 일경우
-    						 			let media = $("<div class='  yourCommnet'></div>");
+    						 			let media = $("<div class='yourCommnet' data-date='"+cDate+"'></div>");
     							 			
-    						 			let img = $("<img src='"+cProfile+"' alt='John Doe' class='mr-3 mt-3 rounded-circle' style='width:60px;'>")
+    						 			let img = $("<img src='"+cProfile+"' alt='John Doe' class='mr-3 mt-3 rounded-circle' width='40px' height='40px'>")
     							 		media.append(img);
     							 		
     						 			let mediabody = $("<div class='media-body'></div>");
@@ -698,7 +781,7 @@ $("#apiup").on("click",function(e) {
 			$("#select_sigunguCode").append(option1);
 		}
  	};
- 	//-------------------------------------------------------------시군구코드select ajax----------------------------------
+//-------------------------------------------------------------시군구코드select ajax----------------------------------
 $(document).on("change","#select_sigunguCode", function (e){
 	console.log("클릭되니?");
 	var a =$("#select_sigunguCode option:selected");
@@ -719,6 +802,7 @@ $(document).on("change","#select_sigunguCode", function (e){
 		}
 	});
 	console.log("지역검색 시작");
+	
 	$.ajax({
 		url : 'sigungusearch',
 		type : 'get',
@@ -786,17 +870,57 @@ $(document).on("change","#select_sigunguCode", function (e){
 	
 });
 
-////////////////////////////////////////
-let arr = new Array(); //받아온 데이터 담는곳
+
+////test array
+let testarr = {};
+testarr["1"]=[1,2,3]
+console.log("testarr",testarr)
+testarr.hasOwnProperty("1");
+console.log(testarr.hasOwnProperty("1"));
+
+//////////////////////////////////////// tripha 
+let planidx = 1;
+let arr = {}; //처음에 DB 내용을 넣고 추가할때마다 여기다 쌓는다.
+
+for(let v in trip_data ){
+	let k = (parseInt(v)+1);
+	arr[k]=[];
+}
+console.log("arrr")
+console.log(arr)
+
+let points ={} ;
+for(let v in trip_data ){
+	let k = (parseInt(v)+1);
+	points[k]=[];
+}
+
+let tripDate = [];
+for(let v in trip_data ){
+	let k = (parseInt(v)+1);
+	tripDate.push(k);
+}
+
+
+ 
 
 function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
+	$("#savebtn").prop("disabled", false);
+	 $("#savebtn").css('opacity',1);
+	 
+	points[currentPlanDay]=[];  // 초기화
+	$("#detailTrip").empty(); // 여행계획 비워야하고
+	arr[currentPlanDay].push(params); // 계획 날짜에 맞게 추가해줘야함
+	console.log("arr",arr);
+	console.log("points",points);
+	console.log("tripDat",tripDate);
+	console.log("currentPlanDay",currentPlanDay);
 	
- 	//$("#area_modal").trigger("click");
-	 arr.push(params);
-	 console.log(arr);
-	
-	
-	
+	let arrFrame = arr[currentPlanDay];
+	let pointsFrame = points[currentPlanDay];
+	// 해당하는 var에 대해 수정해야함. 그럼 포인트도 해당 번호에 맞게 초기화와 추가가 이루어져야함.
+	 
+	 createPlanForm(arrFrame,pointsFrame);
 } 
 
 
@@ -814,63 +938,222 @@ function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
 
 
  $("#left").on("click",function(e){
-	 ///var trnum =e.target.dataset.trnum
-	 //console.log(trnum);
-		console.log("왼쪽버튼")
-		console.log($(".number"))
-		//console.log($(".number").length)
+	 $("#savebtn").prop("disabled", true);
+	 $("#savebtn").css('opacity',0.5);
+	 
 		var $lastNumber = $(".number").length-1
-		console.log($lastNumber)
 		var $li = $(".number")[$lastNumber];
 		$("#date").prepend($li);
+		var tripNum = $(".number")[0].dataset.trnum;
+		currentPlanDay = $('#date li:nth-child(1)').text();
+		console.log("여행번호 : ", tripNum)
+		console.log("현재페이지 : ", currentPlanDay)
 		
-		console.log($(".number")[0]);
-		console.log($(".number")[0].dataset.trnum);
+		var Data = {
+		"day" : currentPlanDay,
+		"tripNum" : tripNum
+	}
+	
+	$.ajaxSetup({         
+    	beforeSend : function(xhr){
+    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+    });//먼저 보냄
+    				
+    $.ajax({
+    	url:'tprest/movePlanDay',
+    	type:'post',
+    	data:Data,
+    	dataType: "json",
+    	success:function(data){
+    		console.log("success",data)
+    		
+    		var dayy = data.day;;
+    		var tripNumm = data.tripNum;
+    		var dataArr = data.tripData;
 		
+    		points[currentPlanDay]=[];    // 좌표 초기화
+    		initMapKaKao();
+    		$("#detailTrip").empty();
+					
+			//가장 중요한 부분
+			arr[dayy] = data.tripData
+			
+			console.log("arr",arr);
+			console.log("points",points);
+			console.log("tripDate",arr[dayy]);
+			console.log("currentPlanDay",dayy);
+	
+ 		let arrFrame = arr[dayy];
+ 		let pointsFrame = points[dayy];
+	
+ 		createPlanForm(arrFrame,pointsFrame)
+    		
+    	},
+    	error:function(error){
+			alert("fail")
+			console.log(error);
+		}
 	})
+		
+})
 
 
 
  $("#right").on("click",function(e){
-	 var trnum =e.target.dataset.trnum
-	 console.log(trnum);
-		console.log("오른쪽버튼")
-		console.log($(".number"))
-		console.log($(".number").length)
+	 $("#savebtn").prop("disabled", true);
+	 $("#savebtn").css('opacity',0.5);
+	 
+	 	var trnum =e.target.dataset.trnum
 		var $li = $(".number")[0];
 		$("#date").append($li);
+		var tripNum = $(".number")[0].dataset.trnum;
+		currentPlanDay = $('#date li:nth-child(1)').text();
+		console.log("여행번호 : ", tripNum)
+		console.log("현재페이지 : ", currentPlanDay)
+		
+		
+	var Data = {
+		"day" : currentPlanDay,
+		"tripNum" : tripNum
+	}
+	
+	$.ajaxSetup({         
+    	beforeSend : function(xhr){
+    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+    });//먼저 보냄
+    				
+    $.ajax({
+    	url:'tprest/movePlanDay',
+    	type:'post',
+    	data:Data,
+    	dataType: "json",
+    	success:function(data){
+    		console.log("success",data)
+    		
+    		var dayy = data.day;;
+    		var tripNumm = data.tripNum;
+    		var dataArr = data.tripData;
+		
+    		points[currentPlanDay]=[];    // 좌표 초기화
+    		initMapKaKao();
+    		$("#detailTrip").empty();
+					
+			//가장 중요한 부분
+			arr[dayy] = data.tripData
+			
+			console.log("arr",arr);
+			console.log("points",points);
+			console.log("tripDate",arr[dayy]);
+			console.log("currentPlanDay",dayy);
+	
+ 		let arrFrame = arr[dayy];
+ 		let pointsFrame = points[dayy];
+	
+ 		createPlanForm(arrFrame,pointsFrame)
+    		
+    	},
+    	error:function(error){
+			alert("fail")
+			console.log(error);
+		}
 	})
+		
+		
+ })
+
+ $(document).on("click",".upPlan",function(e){
+	 $("#savebtn").prop("disabled", false);
+	 $("#savebtn").css('opacity',1);
+	 
+	 	console.log("up")
+	 	let tripNum = $(".number")[0].dataset.trnum;
+	 	let planidx = e.target.dataset.idx;
+	 	points[currentPlanDay]=[];  //초기화
+		currentPlanDay = $('#date li:nth-child(1)').text();
+		console.log("여행번호 : ", tripNum)
+		console.log("현재페이지 : ", currentPlanDay)
+		console.log("내가 누른 버튼 번호 :",planidx)
+		console.log("-arr-",arr);
+	//	console.log("-0-",arr[currentPlanDay])
+		
+		
+		
+		if(planidx == 0){  // 이렇게 하면 안도는데 뭔가 이상해..........................하.....
+			let arrCopy = arr[currentPlanDay].splice(planidx, 1); //없애버리고	  // 삭제된놈이 담긴다.
+			arr[currentPlanDay].push(arrCopy[0])
+		}else{ // 그냥 1칸씩 위로
+			console.log("plan+ " , planidx-1)
+			let temp = arr[currentPlanDay][planidx];
+			arr[currentPlanDay][planidx] = arr[currentPlanDay][planidx-1];
+			arr[currentPlanDay][planidx-1] = temp; 
+		}
+		
+		//삭제
+		initMapKaKao()
+		//재생성
+		$("#detailTrip").empty(); // 여행계획 비워야하고
+		console.log("arr",arr);
+		console.log("points",points);
+		console.log("tripDat",tripDate);
+		console.log("currentPlanDay",currentPlanDay);
+
+		let arrFrame = arr[currentPlanDay];
+		let pointsFrame = points[currentPlanDay];
+		// 해당하는 var에 대해 수정해야함. 그럼 포인트도 해당 번호에 맞게 초기화와 추가가 이루어져야함.
+		createPlanForm(arrFrame,pointsFrame);
+		
+ })
 
 
+$(document).on("click",".downPlan",function(e){
+	$("#savebtn").prop("disabled", false);
+	 $("#savebtn").css('opacity',1);
+	 	console.log("down")
+	 	let tripNum = $(".number")[0].dataset.trnum;
+	 	let planidx = e.target.dataset.idx;
+	 	points[currentPlanDay]=[];  //초기화
+		currentPlanDay = $('#date li:nth-child(1)').text();
+		console.log("여행번호 : ", tripNum)
+		console.log("현재페이지 : ", currentPlanDay)
+		console.log("내가 누른 버튼 번호 :",planidx)
+		console.log("-arr-",arr);
+	//	console.log("-0-",arr[currentPlanDay])
+		
+		
+		
+		if(planidx == arr[currentPlanDay].length-1){
+			console.log("마지막 버튼 클릭")
+ 			let arrCopy = arr[currentPlanDay].splice(planidx, 1); //없애버리고	  // 삭제된놈이 담긴다.
+ 			arr[currentPlanDay].unshift(arrCopy[0])
+		}else{ // 그냥 1칸씩 밑으로
+			let nextidx = parseInt(planidx)+1
+			let temp = arr[currentPlanDay][planidx];
+			arr[currentPlanDay][planidx] = arr[currentPlanDay][nextidx];
+			arr[currentPlanDay][nextidx] = temp; 
+		}
+	
+		//삭제
+		initMapKaKao()
+		//재생성
+		$("#detailTrip").empty(); // 여행계획 비워야하고
+		console.log("arr",arr);
+		console.log("points",points);
+		console.log("tripDat",tripDate);
+		console.log("currentPlanDay",currentPlanDay);
 
-
+		let arrFrame = arr[currentPlanDay];
+		let pointsFrame = points[currentPlanDay];
+		// 해당하는 var에 대해 수정해야함. 그럼 포인트도 해당 번호에 맞게 초기화와 추가가 이루어져야함.
+		createPlanForm(arrFrame,pointsFrame);
+	
+	
+	
+ })
 
 
 
 
 //------------------------------------------------------------------------------------날짜 변환 클릭
-
-/* function memo() {
-	
-} */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -969,8 +1252,8 @@ function getFormatDate(strdate){
 						$("#chatareaCont").append(media)
 		    		}
 		    		
-		    		console.log($("#chattingRoom"));
-		    		console.dir($("#chattingRoom"));
+		    		//console.log($("#chattingRoom"));
+		    		//console.dir($("#chattingRoom"));
 		    		$("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
 		        };
 		       
@@ -1079,7 +1362,237 @@ function getFormatDate(strdate){
     	day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
     	return  year + '/' + month + '/' + day;
 	}
+//===================================
 	
+// -------------------------------------------여행 계획 ------------------------------------------------;;
+function setBounds(bounds, points) {
+	     // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+	     // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+	     map.setBounds(bounds);
+}
+
+// 길이 구해주는 펑션
+function displayCircleDot(position, distance) {
+	
+    if (distance > 0) {
+        // 클릭한 지점까지의 그려진 선의 총 거리를 표시할 커스텀 오버레이를 생성합니다
+         var distanceOverlay = new kakao.maps.CustomOverlay({
+            content: '<div class="dotOverlay">거리 <span class="numberr">' + distance + '</span>m</div>',
+            position: position,
+            yAnchor: 1,
+            zIndex: 2
+        });
+
+         distanceOverlayy.push(distanceOverlay);
+         
+        // 지도에 표시합니다
+        distanceOverlayy[distanceOverlayy.length-1].setMap(map);
+    }
+
+    // 배열에 추가합니다
+    //dots.push({circle:circleOverlay, distance: distanceOverlay});
+}
+
+//여행 취소.
+$(document).on('click',".cancelPlan",function(e){
+	$("#savebtn").prop("disabled", false);
+	 $("#savebtn").css('opacity',1);
+	//마커 성공
+	initMapKaKao()
+	// 위까진 지도 초기화
+	
+	
+	// 해당하는 var에 대해 수정해야함. 그럼 포인트도 해당 번호에 맞게 초기화와 추가가 이루어져야함.
+	//-------------
+	points[currentPlanDay]=[];    // 좌표 초기화
+	$("#detailTrip").empty();
+	let choiceIdx =e.target.dataset.idx  // 몇번쨰 클릭했는지에 대한 번호
+	arr[currentPlanDay].splice(choiceIdx, 1); // 해당 클릭한 놈 삭제
+
+	console.log("arr",arr);
+	console.log("points",points);
+	console.log("tripDat",tripDate);
+	console.log("currentPlanDay",currentPlanDay);
+	
+	let arrFrame = arr[currentPlanDay];
+	let pointsFrame = points[currentPlanDay];
+	
+	
+	createPlanForm(arrFrame,pointsFrame)
+	
+})
+	
+
+const saveplan= () => {
+	console.log("save")//
+	console.log("현재페이지 : " +currentPlanDay )
+	console.log("arr",arr[currentPlanDay])
+	console.log("현재 여행 페이지 : " + trip_data[0].trip_number);
+	var jsonTripData = JSON.stringify(arr[currentPlanDay])
+	console.log(jsonTripData)
+	
+	var Data = {
+		"day" : currentPlanDay,
+		"tripNum" : trip_data[0].trip_number,
+		"tripData" : jsonTripData
+	}
+	
+	$.ajaxSetup({         
+    	beforeSend : function(xhr){
+    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+    });//먼저 보냄
+    				
+    $.ajax({
+    	url:'tprest/insertPlanDetail',
+    	type:'post',
+    	data:Data,
+    	dataType: "json",
+    	success:function(data){
+    		console.log("success",data)
+    		
+    		var dayy = data.day;;
+    		var tripNumm = data.tripNum;
+    		var dataArr = data.tripData;
+
+    		points[currentPlanDay]=[];    // 좌표 초기화
+	 		$("#detailTrip").empty();
+	 		initMapKaKao();
+					
+			//가장 중요한 부분
+			arr[dayy] = data.tripData
+			
+			console.log("arr",arr);
+			console.log("points",points);
+			console.log("tripDate",arr[dayy]);
+			console.log("currentPlanDay",dayy);
+	
+ 		let arrFrame = arr[dayy];
+ 		let pointsFrame = points[dayy];
+	
+	
+ 		createPlanForm(arrFrame,pointsFrame)
+    		
+    	},
+    	error:function(error){
+			alert("fail")
+			console.log(error);
+		}
+	})
+   
+	
+}
+
+	
+const createPlanForm = (arrFrame,pointsFrame) =>{
+	
+	for( let v of arrFrame){
+		console.log("포문 도냐?")
+		console.log("v",v)
+		
+		let planFrame = $("<div class='planFrame'>  </div>");
+		let planNum = $("<div class='planNum'> <button type='button' class='btn btn-primary idxbtn'> <span class='badge badge-light'>"+planidx+"</span> </button> </div>");
+		let planImg = $("<div class='planImg'><img src='"+v.trip_img+"' width='50px' height='50px' ></div>");
+		
+		planFrame.append(planNum);
+		planFrame.append(planImg);
+		
+		
+		let planContFram = $("<div class='planContFram'> </div>");
+		let contTitle = $("<div class='contTitle'>"+v.trip_title+"</div>");
+		let contAddr= $("<div class='contAddr'>"+v.trip_destination+" </div>");
+		planContFram.append(contTitle);
+		planContFram.append(contAddr);
+		
+		planFrame.append(planContFram);
+		
+		let cancelPlan = $("<div ><button class='cancelPlan' data-idx='"+(planidx-1)+"'>x</button></div>");
+		planFrame.append(cancelPlan);
+		
+		let updownFrame = $("<div ></div>");
+		let upPlan = $("<div ><button class='upPlan' data-idx='"+(planidx-1)+"'>up</button></div>");
+		let downPlan = $("<div ><button class='downPlan' data-idx='"+(planidx-1)+"'>down</button></div>");
+
+		updownFrame.append(upPlan);
+		updownFrame.append(downPlan);
+		planFrame.append(updownFrame);
+		
+		$("#detailTrip").append(planFrame);
+		
+		
+		pointsFrame.push(new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint)); //추가 할 마커 저장하기 arr에...
+		console.log("pointsFrame",pointsFrame);
+	
+		
+		let clickPosition = new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint); // 클릭한 좌표...(가상)
+		
+		if( planidx >= 2){
+			console.log(planidx);
+
+			let clickLine = new kakao.maps.Polyline({
+            	map: map, // 선을 표시할 지도입니다 
+            	path: [pointsFrame[planidx-2] ,pointsFrame[planidx-1]], // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
+            	strokeWeight: 3, // 선의 두께입니다 
+            	strokeColor: '#db4040', // 선의 색깔입니다
+            	strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+            	strokeStyle: 'solid' // 선의 스타일입니다
+        	});
+			
+			clickLinee.push(clickLine);
+			
+			let distance = Math.round(clickLine.getLength());
+			
+			displayCircleDot(pointsFrame[planidx-1], distance)
+		
+		}
+	
+		planidx++;
+	
+	
+	} 
+	 
+	 //-----------지도 마커에 따른 재위치 선정
+	 var bounds = new kakao.maps.LatLngBounds();    
+	 for (i = 0; i < pointsFrame.length; i++) {
+	     // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
+	// 커스텀 오버레이에 표시할 내용입니다     
+	// HTML 문자열 또는 Dom Element 입니다 
+	var content = "<button  type='button' class='btn btn-primary idxbtn mapbtn'> <span class='badge badge-light'>"+(i+1)+"</span> </button> ";
+	// 커스텀 오버레이를 생성합니다
+	var custom = new kakao.maps.CustomOverlay({
+   	 position: pointsFrame[i],
+   	 content: content   
+	});
+	customOverlayy.push(custom);
+	// 커스텀 오버레이를 지도에 표시합니다
+ 	customOverlayy[customOverlayy.length-1].setMap(map);
+	
+	   
+	
+	 bounds.extend(pointsFrame[i]);
+	 }
+	 
+	 setBounds(bounds)    // 재설정매소드
+	 
+ 	
+	planidx=1;
+} 
+	
+const initMapKaKao=()=>{
+	for(v of customOverlayy){
+		v.setMap(null);
+	}
+	customOverlayy=[];
+	for(v of distanceOverlayy){
+		v.setMap(null);
+	}
+	distanceOverlayy=[];
+	for(v of clickLinee){
+		v.setMap(null);
+	}
+	clickLinee=[];
+}	
+	
+
 </script>
 
 </html>

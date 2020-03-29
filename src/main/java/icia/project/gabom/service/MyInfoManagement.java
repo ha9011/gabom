@@ -14,12 +14,18 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 
 import icia.project.gabom.dao.IMyInfoDao;
+import icia.project.gabom.dto.Food_reple;
 import icia.project.gabom.dto.Food_review;
 import icia.project.gabom.dto.Foodreservation;
 import icia.project.gabom.dto.House;
+import icia.project.gabom.dto.House_reple;
 import icia.project.gabom.dto.House_review;
 import icia.project.gabom.dto.Housereservation;
 import icia.project.gabom.dto.Member;
+import icia.project.gabom.dto.Qnaboard;
+import icia.project.gabom.dto.SnsCommentDto;
+import icia.project.gabom.dto.Snsposts;
+import icia.project.gabom.dto.SomoimBoard;
 import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.userClass.Food_reviewfile;
 import icia.project.gabom.userClass.House_reviewFlie;
@@ -222,9 +228,16 @@ public class MyInfoManagement {
 			f1=hrf.fileUpreview(multi,hrv.getHouse_review_number());
 			
 				}
-		List<House_review> hrel = minfDao.getmyhrevie(member_guestid);//작성한 리뷰 다시 불러오고 
 		
-		json = new Gson().toJson(hrel);
+		Map<String,Object> list = new HashMap<String, Object>();//map에 담아서 두개 리턴 
+		List<House_review> hrel = minfDao.getmyhrevie(member_guestid);//작성한 리뷰 다시 불러오고 
+		List<Housereservation> hlist = minfDao.getreviewmyreser(member_guestid);//작성할 리뷰
+		
+		list.put("hrel", hrel);
+		list.put("hlist", hlist);
+		
+		
+		json = new Gson().toJson(list);
 		
 		System.out.println(json);
 		return json;
@@ -275,11 +288,101 @@ public class MyInfoManagement {
 			
 				}
 		
-		List<Food_review> frel = minfDao.getmyfrevie(member_guestid);//작성한 리뷰 다시 불러오고 
+		Map<String,Object> list = new HashMap<String, Object>();//map에 담아서 두개 리턴 
 		
-		json = new Gson().toJson(frel);
+		List<Food_review> frel = minfDao.getmyfrevie(member_guestid);//작성한 리뷰 다시 불러오고 
+		List<Foodreservation> flist = minfDao.getreviewmyfreser(member_guestid);//작성할 리뷰
+		
+		list.put("frel",frel);
+		list.put("flist",flist);
+		
+		
+		json = new Gson().toJson(list);
 		
 		System.out.println(json);
+		return json;
+	}
+
+
+	public String writelist(Principal pc) {//내가 작성한 게시판 게시글 가져오기 
+		String json =null;
+		System.out.println("내가 쓴글 불러오기 ");
+		
+		String member_guestid = pc.getName();
+		
+		Map<String,Object> list = new HashMap<String, Object>(); // 더 늘어날 경우 map에 담아서 리턴 
+		List<Qnaboard> qnal = minfDao.getmywrite(member_guestid);//qna 게시판
+		List<SomoimBoard> soml =minfDao.getmysomowrite(member_guestid);//소모임 게시판
+		List<Snsposts> snslikel = minfDao.getmylike(member_guestid);//sns 좋아요
+		List<SomoimBoard> somolikel = minfDao.getmysomolike(member_guestid);//소모임 좋아요 
+		List<Food_reple> freple = minfDao.getfoodreple(member_guestid);//맛집 댓글 
+		List<House_reple> hreple = minfDao.gethousereple(member_guestid);//집 댓글
+		List<SnsCommentDto> snsreple = minfDao.getsnsreple(member_guestid);//sns 댓글 
+		
+		System.out.println(snsreple);
+		
+		list.put("qnal", qnal);
+		list.put("soml", soml);
+		list.put("snslikel", snslikel);
+		list.put("somolikel", somolikel);
+		list.put("freple", freple);
+		list.put("hreple", hreple);
+		list.put("snsreple", snsreple);
+		
+		json = new Gson().toJson(list);
+		//System.out.println(json);
+		return json;
+	}
+
+
+	public String showcontent(int qna_number) {
+		String json =null;
+		System.out.println("내가 쓴글 상세보기 ");
+		
+		List<Qnaboard> qnal = minfDao.detailqna(qna_number);
+		
+		json = new Gson().toJson(qnal);
+		//System.out.println(json);
+		return json;
+	}
+
+
+	public String delqna(int qna_number, Principal pc) {
+		String json =null;
+		System.out.println("내가 쓴글 삭제 ");
+		String member_guestid = pc.getName();
+		
+		minfDao.delqna(qna_number);
+		
+		List<Qnaboard> qnal = minfDao.getmywrite(member_guestid);
+		
+		json = new Gson().toJson(qnal);
+		return json;
+	}
+
+
+	public String showcontentsomo(int board_number) {
+		String json =null;
+		System.out.println("내가 쓴글 상세보기 ");
+		
+		List<SomoimBoard> somol= minfDao.detailsomow(board_number);
+		
+		json = new Gson().toJson(somol);
+		//System.out.println(json);
+		return json;
+	}
+
+
+	public String delsomo(int board_number, Principal pc) {
+		String json =null;
+		System.out.println("내가 쓴글 삭제 ");
+		String member_guestid = pc.getName();
+		
+		minfDao.delsomo(board_number);
+		
+		List<SomoimBoard> soml =minfDao.getmysomowrite(member_guestid);
+		
+		json = new Gson().toJson(soml);
 		return json;
 	}
 	

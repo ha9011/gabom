@@ -96,6 +96,8 @@
 	title += "<input type='hidden' name='title' value='"+detail.title+"'>";
 	title += "<input type='hidden' name='mapx' value='"+detail.mapx+"'>";
 	title += "<input type='hidden' name='mapy' value='"+detail.mapy+"'>";
+	title += "<input type='hidden' name='img' value='"+detail.firstimage+"'>";
+	title += "<input type='hidden' name='addr' value='"+detail.addr1+"'>";
 	$("#title_h").append(title);
 	let img =  "<img style='width:85%; height: 300px;' src='"+detail.firstimage+"'>";
 	$("#img_div").append(img);
@@ -119,14 +121,22 @@
 	}
  	if(detail.addr1 != undefined){ //주소1이 존재할때
  		li += "<li id='addr1'><strong>주소</strong> :"+  detail.addr1 ; //+ "</li>"
+ 		
+ 		if(detail.addr2 != undefined){ //주소2가 존재할때
+ 			li += " " + detail.addr2 + "</li>";
+ 		}else{
+			li += "</li>"; 			
+ 		}
  	}
- 	if(detail.addr2 != undefined){ //주소2가 존재할때
+ 	
+ 	
+ 	/* if(detail.addr2 != undefined){ //주소2가 존재할때
  		addr2 += "<span>" + detail.addr2 + "</span></li>";
 	 	console.log('addr2',addr2);
  	}else{
  		+ "</li>";
- 	}
- 		$("#addr1").append(addr2);
+ 	} */
+ 		//$("#addr1").append(addr2);
 	 
 	$("#title_ul").append(li);
 	
@@ -136,10 +146,14 @@
 		console.log(formData.get("mapx"));
 		console.log(formData.get("mapy"));
 		console.log(formData.get("title"));
+		console.log(formData.get("addr"));
+		console.log(formData.get("img"));
 		var params = {
-				"mapx" : formData.get("mapx"),
-				"mapy" : formData.get("mapy"),
-				"title" : formData.get("title"),
+				"trip_xpoint" : formData.get("mapx"),
+				"trip_ypoint" : formData.get("mapy"),
+				"trip_title" : formData.get("title"),
+				"trip_destination" : formData.get("addr"),
+				"trip_img" : formData.get("img"),
 		}
 		//시큐리티 ajax Setup
 //  		$.ajaxSetup({         //상세모달 ajax

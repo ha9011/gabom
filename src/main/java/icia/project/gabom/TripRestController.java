@@ -2,6 +2,7 @@ package icia.project.gabom;
 
 import java.security.Principal;
 import java.text.ParseException;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import icia.project.gabom.dao.ITripplanDao;
 import icia.project.gabom.dto.Sns_friend;
+import icia.project.gabom.dto.TripPlanDay;
+import icia.project.gabom.dto.TripPlanDetail;
 import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.dto.Trip_plan;
 import icia.project.gabom.service.TripService;
@@ -118,5 +121,34 @@ public class TripRestController {
       return json;
    }
    
+   //...뭐더라...여행계획 저장하기
+   @PostMapping(value = "/insertPlanDetail" ,produces = "application/json;charset=utf-8")
+   public String insertPlanDetail(
+		    String day,
+		    String tripNum,
+		    String tripData,
+			Principal ppl
+			) {
+      System.out.println("여행계획저장 접근");
+    
+      
+      String json = trs.insertPlanDetail(day,tripNum,tripData,ppl);
+      System.out.println("해당날짜 결과 : " + json);
+      return json;
+   }
    
+   //...오른쪽 , 왼쪽 이동할때
+   @PostMapping(value = "/movePlanDay" ,produces = "application/json;charset=utf-8")
+   public String movePlanDay(
+		    String day,
+		    String tripNum,
+			Principal ppl
+			) {
+      System.out.println("오른쪽/왼쪽 이동");
+    
+      
+      String json = trs.selectMovePlanDay(day,tripNum,ppl);
+      System.out.println("해당날짜 결과 : " + json);
+      return json;
+   }
 }

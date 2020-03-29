@@ -3,6 +3,7 @@ package icia.project.gabom.dao;
 import java.security.Principal;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -12,6 +13,7 @@ import icia.project.gabom.dto.ChattingSomoim;
 import icia.project.gabom.dto.ChattingTrip;
 import icia.project.gabom.dto.Member;
 import icia.project.gabom.dto.Sns_friend;
+import icia.project.gabom.dto.TripPlanDetail;
 import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.dto.Trip_plan;
 
@@ -61,4 +63,13 @@ public interface ITripplanDao {
    String selectNextDayInfinityChattingData(@Param("trip_number")int trip_number, @Param("date")String date);
 
    List<ChattingTrip> selectInfinityChattingData(@Param("trip_number")int tripNum, @Param("date")String date);
+
+
+   int insertPlanDetail(TripPlanDetail tpd);
+   
+   @Select("SELECT * FROM TRIP_PLAN_DETAIL WHERE TRIP_NUMBER = #{tripNum} and TRIP_DATE = #{day} order by TRIP_ORDER asc ")
+   List<TripPlanDetail> selectPlanDetail(@Param("tripNum")String tripNum, @Param("day")String day);
+
+   @Delete("DELETE FROM TRIP_PLAN_DETAIL WHERE TRIP_NUMBER = #{tripNum} and TRIP_DATE = #{day} ")
+   int deletePlanDetail(@Param("tripNum")String tripNum, @Param("day")String day);
 }

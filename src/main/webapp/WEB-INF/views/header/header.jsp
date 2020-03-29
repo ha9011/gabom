@@ -86,7 +86,7 @@ background-color: #E6E6E6
             <li><a href="joinselecttype">회원가입</a></li>
          </sec:authorize>
          <sec:authorize access="isAuthenticated()">
-            <li><a href="myinfo">나의 정보</a></li>
+            <li><a href="myinfo" target="_blank">나의 정보</a></li>
             <li>
                <form method="post" action="/gabom/logout">
                   <input type="submit" value="로그아웃" id="logout"> <input type="hidden"
