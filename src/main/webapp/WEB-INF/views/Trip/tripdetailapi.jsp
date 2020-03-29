@@ -149,11 +149,11 @@
 		console.log(formData.get("addr"));
 		console.log(formData.get("img"));
 		var params = {
-				"mapx" : formData.get("mapx"),
-				"mapy" : formData.get("mapy"),
-				"title" : formData.get("title"),
-				"addr" : formData.get("addr"),
-				"img" : formData.get("img"),
+				"trip_xpoint" : formData.get("mapx"),
+				"trip_ypoint" : formData.get("mapy"),
+				"trip_title" : formData.get("title"),
+				"trip_destination" : formData.get("addr"),
+				"trip_img" : formData.get("img"),
 		}
 		//시큐리티 ajax Setup
 //  		$.ajaxSetup({         //상세모달 ajax

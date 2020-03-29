@@ -18,4 +18,5 @@ public class Food_reple {
 
 	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private String food_reple_time;
+	private String food_name;
 }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import icia.project.gabom.dao.ITripplanDao;
 import icia.project.gabom.dto.ChattingInfinite;
@@ -24,6 +25,8 @@ import icia.project.gabom.dto.ChattingTrip;
 import icia.project.gabom.dto.Food;
 import icia.project.gabom.dto.Member;
 import icia.project.gabom.dto.Sns_friend;
+import icia.project.gabom.dto.TripPlanDay;
+import icia.project.gabom.dto.TripPlanDetail;
 import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.dto.Trip_plan;
 
@@ -230,18 +233,30 @@ public class TripService {
 	  	mav.addObject("JsonchatData", chatData);
 	  		
 	  	//다음 검색할 날짜 축출하기
-	    if(selectRecentChattingData.size() != 0) {
-	           String date = selectRecentChattingData.get(0).getChatting_date();  // 검색된 친구들 중 마지막 날짜
-	           System.out.println("다음 검색 날짜 : " + date);
-	           
-	           String nextDay = tpDao.selectNextDayInfinityChattingData(trip_number,date); // 그 다음 날짜 찾기
-	           System.out.println("다음 날짜는 언제인지요?? : " + nextDay );
-	           if(nextDay==null) {
-	              nextDay="없음";
-	           }
-	           mav.addObject("nextDay", nextDay);
-	          
-	        }
+	  	
+	  	if(selectRecentChattingData.size() != 0) {
+	  		String date = selectRecentChattingData.get(0).getChatting_date();  // 검색된 친구들 중 마지막 날짜
+		  	System.out.println("다음 검색 날짜 : " + date);
+		  	
+		  	String nextDay = tpDao.selectNextDayInfinityChattingData(trip_number,date); // 그 다음 날짜 찾기
+		  	System.out.println("다음 날짜는 언제인지요?? : " + nextDay );
+		  	if(nextDay==null) {
+		  		nextDay="없음";
+		  	}
+		  	mav.addObject("nextDay", nextDay);
+		    
+	  	}
+	  	
+	  	// 첫째날 여행계획 가져오기
+	  	String tripNum = Integer.toString(trip_number);
+	  	List<TripPlanDetail> selectResult = tpDao.selectPlanDetail(tripNum, "1");//해당 여행번호에 , 몇번째 여행일
+	    TripPlanDay tpd = new TripPlanDay();
+	    tpd.setDay("1").setTripNum(tripNum).setTripData(selectResult);
+	    String jsonResult = new Gson().toJson(tpd);
+	  	mav.addObject("firstDayPlan", jsonResult);
+	  	
+	  	
+	  	
 	    view="Trip/detailplan";
 	    
 	    mav.setViewName(view);
@@ -273,6 +288,56 @@ public class TripService {
 		
 		String result = new Gson().toJson(ci);
 		return result;
+	}
+
+
+	public String insertPlanDetail(String day, String tripNum, String tripData, Principal ppl) {
+		 //1 delete 2 insert 3select
+		  System.out.println("day : " +day);
+	      System.out.println("tripNum : " +tripNum);
+	      System.out.println("tripData : " +tripData);
+	      Gson gs = new Gson();
+	      ArrayList<Map<String,String>> mList= new ArrayList<Map<String,String>>();
+	      
+	      mList = gs.fromJson(tripData, new TypeToken<ArrayList<Map<String,String>>>() {}.getType());
+	      
+	      //1 delete
+	      int deletePlanDetail = tpDao.deletePlanDetail(tripNum,day);
+	      
+	      //2 insert
+	      int tripOrder = 0;
+	      for(Map<String,String> v : mList) {
+	    	  TripPlanDetail tpd =  new TripPlanDetail();
+	    	  tpd.setTrip_date(day).setTrip_number(tripNum);
+	    	  tpd.setTrip_destination(v.get("trip_destination"));
+	    	  tpd.setTrip_img(v.get("trip_img"));
+	    	  tpd.setTrip_title(v.get("trip_title"));
+	    	  tpd.setTrip_xpoint(v.get("trip_xpoint"));
+	    	  tpd.setTrip_ypoint(v.get("trip_ypoint"));
+	    	  tpd.setTrip_order(tripOrder);
+	    	  int insertResult = tpDao.insertPlanDetail(tpd);
+	    	  tripOrder++;
+	      }
+	      //3 select
+	      List<TripPlanDetail> selectResult = tpDao.selectPlanDetail(tripNum, day);//해당 여행번호에 , 몇번째 여행일
+		  
+	      TripPlanDay tpd = new TripPlanDay();
+	      tpd.setDay(day).setTripNum(tripNum).setTripData(selectResult);
+	      
+	      String jsonResult = new Gson().toJson(tpd);
+	      
+		return jsonResult;
+	}
+
+
+	public String selectMovePlanDay(String day, String tripNum, Principal ppl) {
+		 List<TripPlanDetail> selectResult = tpDao.selectPlanDetail(tripNum, day);//해당 여행번호에 , 몇번째 여행일
+		  
+	     TripPlanDay tpd = new TripPlanDay();
+	     tpd.setDay(day).setTripNum(tripNum).setTripData(selectResult);
+	      
+	     String jsonResult = new Gson().toJson(tpd);
+		return jsonResult;
 	}
    
    

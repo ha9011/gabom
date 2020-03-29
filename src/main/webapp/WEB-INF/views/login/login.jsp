@@ -90,14 +90,14 @@
 			text-shadow: black 0em 0em 0em;
 			color: #585858;
 		}
+		*:focus {outline:none;}
 	</style>
 	<script type="text/javascript">
 	
 	$(function () {
 		$('#loginBox').fadeIn("slow");
 		$("#member_password").focusin(function(){
-			$(window).keydown(function(key) {
-				console.log(key);
+			$("#member_password").keyUp(function(key) {
 		        if (key.keyCode == 13) {
 		        	loginFrm.submit();
 		        }

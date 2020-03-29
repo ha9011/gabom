@@ -12,9 +12,16 @@
 	
 	<insert id="foodreservation" parameterType="freservation" >
 	INSERT INTO FOODRESERVATION VALUES(SQ_FOODRESERVATION.nextval,#{food_number},#{food_hostid},#{member_guestid},#{foodreservation_date},#{foodreservation_time},#{foodreservation_person},0)
-		<selectKey keyProperty="foodreservation_number" resultType="integer" order="AFTER">
-				SELECT SQ_FOODRESERVATION.CURRVAL FROM DUAL
-			</selectKey>
 	</insert>
 	
+	
+	<insert id="insertreple" parameterType="f_reple">
+		INSERT INTO FOODREPLE VALUES(SEQ_FOOD_REPLE_NUMBER.nextval,#{food_number},#{member_guestid},SYSDATE,#{food_reple_content})
+	</insert>
+	
+	<select id="showfreview" resultType="freview">
+	SELECT FR.FOOD_REVIEW_CONTENT, FR.FOOD_REVIEW_DATE ,FRI.FOOD_REVIEW_SYSFILE
+	FROM FOOD_REVIEW FR, FOOD_REVIEW_IMAGE FRI
+	WHERE FR.FOOD_REVIEW_NUMBER=FRI.FOOD_REVIEW_NUMBER AND FR.FOOD_REVIEW_NUMBER=#{food_review_number}
+	</select>
 </mapper>

@@ -92,4 +92,50 @@
 	WHERE FR.FOOD_NUMBER=FS.FOOD_NUMBER AND FR.MEMBER_GUESTID=#{member_guestid} ORDER BY FR.FOOD_REVIEW_DATE
 </select>
 
+
+
+
+
+
+
+<select id="getmysomowrite" resultType="SomoimBoard">
+	SELECT  SB.BOARD_NUMBER, SM.SOMOIM_NAME,SB.BOARD_TITLE,SB.BOARD_CONTENT
+	FROM SOMOIM_BOARD SB, SOMOIM SM
+	WHERE SB.SOMOIM_NUMBER = SM.SOMOIM_NUMBER AND SB.BOARD_WRITER=#{member_guestid}
+</select>
+
+<select id="getmylike" resultType="snspost">
+	SELECT SP.SNS_POSTS_NUMBER, SP.SNS_POSTS_CONTENT
+	FROM SNS_POSTS SP, SNS_LIKE_HATE_COUNTER SC
+	WHERE SP.SNS_POSTS_NUMBER = SC.SNS_POSTS_NUMBER AND SC.SNS_LIKE_HATE_MEMBER_ID=#{member_guestid}
+</select>
+
+<select id="getmysomolike" resultType="somoimboard">
+	SELECT  SB.BOARD_NUMBER,SM.SOMOIM_NAME,SB.BOARD_TITLE,SB.BOARD_CONTENT,SL.LIKE_NAME
+	FROM SOMOIM_BOARD SB, SOMOIM_BOARD_LIKE SL, SOMOIM SM
+	WHERE SB.BOARD_NUMBER = SL.BOARD_NUMBER AND SB.SOMOIM_NUMBER = SM.SOMOIM_NUMBER  AND LIKE_NAME =#{member_guestid}
+</select>
+
+<select id="gethousereple" resultType="h_reple">
+	SELECT hr.house_reple_content, hr.house_reple_number,rh.house_name
+	FROM REGISTHOUSE RH, HOUSEREPLE HR
+	WHERE RH.HOUSE_NUMBER = HR.HOUSE_NUMBER AND HR.MEMBER_GUESTID=#{member_guestid}
+</select>
+
+<select id="getfoodreple" resultType="f_reple">
+	SELECT FS.FOOD_NAME, FR.FOOD_REPLE_NUMBER, FR.FOOD_REPLE_CONTENT
+	FROM FOODSHOP FS, FOODREPLE FR
+	WHERE FS.FOOD_NUMBER = FR.FOOD_NUMBER AND FR.MEMBER_GUESTID=#{member_guestid}
+</select>
+
+<select id="getsnsreple" resultType="snsCommentDto">
+	SELECT SC.SNS_COMMENT_NUMBER, SC.SNS_COMMENT_CONTENT, SP.SNS_POSTS_CONTENT
+	FROM SNS_COMMENT SC, SNS_POSTS SP
+	WHERE SC.SNS_POSTS_NUMBER = SP.SNS_POSTS_NUMBER AND SC.SNS_COMMENT_MEMBER_ID=#{member_guestid}
+</select>
+
+
+
+
+
 </mapper>
