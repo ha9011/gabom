@@ -22,6 +22,8 @@ public class TripPlanDetail {
 	private String trip_destination;
 	private String trip_img;
 	private int trip_order;
+	private int trip_type;
+	
 	
 	
 }

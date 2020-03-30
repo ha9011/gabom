@@ -106,7 +106,7 @@ order by tc.chatting_date desc
 
 
 	<insert id="insertPlanDetail" parameterType="tripplandetail">
-		INSERT INTO TRIP_PLAN_DETAIL VALUES(#{trip_number},#{trip_date},#{trip_destination}, '없음',#{trip_xpoint},#{trip_ypoint},#{trip_title},#{trip_img},#{trip_order})
+		INSERT INTO TRIP_PLAN_DETAIL VALUES(#{trip_number},#{trip_date},#{trip_destination}, '없음',#{trip_xpoint},#{trip_ypoint},#{trip_title},#{trip_img},#{trip_order},#{trip_type})
 	</insert>
 	
 	
@@ -123,6 +123,24 @@ order by tc.chatting_date desc
 			<selectKey keyProperty="reservation_number" resultType="integer" order="AFTER">
 				SELECT SQ_HOUSERESERVATION.CURRVAL FROM DUAL
 			</selectKey>
+	</insert>
+	
+	
+	<select id="selectReservationHouse" resultType="reservationplanhouse">
+	select rh.HOUSE_NAME, rh.HOUSE_ADDRESS, rh.HOUSE_XPOINT, rh.HOUSE_YPOINT, hf.HOUSE_SYSNAME, hr.RESERVATION_CHECKIN, hr.RESERVATION_CHECKOUT  
+	from TRIP_PLAN_DATE tpd, HOUSERESERVATION hr, RegistHouse rh, housefile hf
+	where tpd.RESERVATION_NUMBER = hr.reservation_number 
+	and hr.HOUSE_NUMBER = rh.HOUSE_NUMBER 
+	and rh.HOUSE_NUMBER = hf.HOUSE_NUMBER 
+	and hf.HOUSE_IMAGETYPE = 1 and tpd.trip_day = #{day} and tpd.trip_number=#{tripNum}
+	</select>
+	
+	
+	
+	<insert id="insertHousePlanDetail"  >
+	INSERT INTO TRIP_PLAN_DETAIL 
+	VALUES(#{tripNum},#{day},#{HouseInfo.house_address},'없음',#{HouseInfo.house_xpoint},#{HouseInfo.house_ypoint},#{HouseInfo.house_name},#{HouseInfo.house_sysname},#{nextplan},1)
+			
 	</insert>
 	
 </mapper>

@@ -154,6 +154,7 @@
 				"trip_title" : formData.get("title"),
 				"trip_destination" : formData.get("addr"),
 				"trip_img" : formData.get("img"),
+				"trip_type" : 0,
 		}
 		//시큐리티 ajax Setup
 //  		$.ajaxSetup({         //상세모달 ajax

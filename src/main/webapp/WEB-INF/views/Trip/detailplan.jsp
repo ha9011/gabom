@@ -369,6 +369,7 @@ var sccket ;
 var memberID = ${myinfo}.member_id;
 var myPic = ${myinfo}.member_profile_picture.substring(0);
 var tripNum = ${detrip}[0].trip_number;
+var ReservationHouse = ${ReservationHouse}
 
 let customOverlayy = [];
 let distanceOverlayy = [];
@@ -392,6 +393,11 @@ $(document).ready(function(){
 	 //버튼 비 활성화  저장하기 opacity
 	 $("#savebtn").prop("disabled", true);
 	 $("#savebtn").css('opacity',0.5);
+	 
+	 
+	 
+	 
+	 
 	 
 })
 
@@ -913,6 +919,7 @@ function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
 	points[currentPlanDay]=[];  // 초기화
 	$("#detailTrip").empty(); // 여행계획 비워야하고
 	arr[currentPlanDay].push(params); // 계획 날짜에 맞게 추가해줘야함
+	
 	console.log("arr",arr);
 	console.log("points",points);
 	console.log("tripDat",tripDate);
@@ -1484,81 +1491,169 @@ const saveplan= () => {
 	
 }
 
-	
+var houseNum = null;
+
 const createPlanForm = (arrFrame,pointsFrame) =>{
-	
+	var checkHouseD = false;
 	for( let v of arrFrame){
-		console.log("포문 도냐?")
-		console.log("v",v)
-		
-		let planFrame = $("<div class='planFrame'>  </div>");
-		let planNum = $("<div class='planNum'> <button type='button' class='btn btn-primary idxbtn'> <span class='badge badge-light'>"+planidx+"</span> </button> </div>");
-		let planImg = $("<div class='planImg'><img src='"+v.trip_img+"' width='50px' height='50px' ></div>");
-		
-		planFrame.append(planNum);
-		planFrame.append(planImg);
-		
-		
-		let planContFram = $("<div class='planContFram'> </div>");
-		let contTitle = $("<div class='contTitle'>"+v.trip_title+"</div>");
-		let contAddr= $("<div class='contAddr'>"+v.trip_destination+" </div>");
-		planContFram.append(contTitle);
-		planContFram.append(contAddr);
-		
-		planFrame.append(planContFram);
-		
-		let cancelPlan = $("<div ><button class='cancelPlan' data-idx='"+(planidx-1)+"'>x</button></div>");
-		planFrame.append(cancelPlan);
-		
-		let updownFrame = $("<div ></div>");
-		let upPlan = $("<div ><button class='upPlan' data-idx='"+(planidx-1)+"'>up</button></div>");
-		let downPlan = $("<div ><button class='downPlan' data-idx='"+(planidx-1)+"'>down</button></div>");
+		if(v.trip_type==1){ //숙소일때
+			console.log("숙소 포문")
+			console.log("v",v)
+			
+			let planFrame = $("<div class='planFrame'>  </div>");
+			let planNum = $("<div class='planNum'> <img style='width:40;height:40px;'src='./resources/tripImage/bookhouse.png'> </div>");
+			let planImg = $("<div class='planImg'><img src='"+v.trip_img+"' width='50px' height='50px' ></div>");
+			
+			planFrame.append(planNum);
+			planFrame.append(planImg);
+			
+			
+			let planContFram = $("<div class='planContFram'> </div>");
+			let contTitle = $("<div class='contTitle'>"+v.trip_title+"</div>");
+			let contAddr= $("<div class='contAddr'>"+v.trip_destination+" </div>");
+			planContFram.append(contTitle);
+			planContFram.append(contAddr);
+			
+			planFrame.append(planContFram);
+			
+			let cancelPlan = $("<div ><button class='cancelPlan' data-idx='"+(planidx-1)+"'>예약취소</button></div>");
+			planFrame.append(cancelPlan);
+			
+			let updownFrame = $("<div ></div>");
+			let upPlan = $("<div ><button class='upPlan' data-idx='"+(planidx-1)+"'>up</button></div>");
+			let downPlan = $("<div ><button class='downPlan' data-idx='"+(planidx-1)+"'>down</button></div>");
 
-		updownFrame.append(upPlan);
-		updownFrame.append(downPlan);
-		planFrame.append(updownFrame);
+			updownFrame.append(upPlan);
+			updownFrame.append(downPlan);
+			planFrame.append(updownFrame);
+			
+			$("#detailTrip").append(planFrame);
+			
+			
+			pointsFrame.push(new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint)); //추가 할 마커 저장하기 arr에...
+			console.log("pointsFrame",pointsFrame);
 		
-		$("#detailTrip").append(planFrame);
-		
-		
-		pointsFrame.push(new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint)); //추가 할 마커 저장하기 arr에...
-		console.log("pointsFrame",pointsFrame);
-	
-		
-		let clickPosition = new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint); // 클릭한 좌표...(가상)
-		
-		if( planidx >= 2){
-			console.log(planidx);
+			
+			let clickPosition = new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint); // 클릭한 좌표...(가상)
+			
+			if( planidx >= 2){
+				console.log(planidx);
 
-			let clickLine = new kakao.maps.Polyline({
-            	map: map, // 선을 표시할 지도입니다 
-            	path: [pointsFrame[planidx-2] ,pointsFrame[planidx-1]], // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
-            	strokeWeight: 3, // 선의 두께입니다 
-            	strokeColor: '#db4040', // 선의 색깔입니다
-            	strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
-            	strokeStyle: 'solid' // 선의 스타일입니다
-        	});
+				let clickLine = new kakao.maps.Polyline({
+	            	map: map, // 선을 표시할 지도입니다 
+	            	path: [pointsFrame[planidx-2] ,pointsFrame[planidx-1]], // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
+	            	strokeWeight: 3, // 선의 두께입니다 
+	            	strokeColor: '#db4040', // 선의 색깔입니다
+	            	strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+	            	strokeStyle: 'solid' // 선의 스타일입니다
+	        	});
+				
+				clickLinee.push(clickLine);
+				
+				let distance = Math.round(clickLine.getLength());
+				
+				displayCircleDot(pointsFrame[planidx-1], distance)
 			
-			clickLinee.push(clickLine);
-			
-			let distance = Math.round(clickLine.getLength());
-			
-			displayCircleDot(pointsFrame[planidx-1], distance)
+			}
+			houseNum = planidx;
+			planidx++;
+			checkHouseD = true;
 		
-		}
-	
-		planidx++;
-	
-	
-	} 
+		}else{ //숙소 아닐때
+			console.log("숙소아닌 포문")
+			console.log("v",v)
+			
+			let planFrame = $("<div class='planFrame'>  </div>");
+		
+			let planNum
+			if(checkHouseD==true){
+				planNum = $("<div class='planNum'> <button type='button' class='btn btn-primary idxbtn'> <span class='badge badge-light'>"+(planidx+1)+"</span> </button> </div>");
+			}else{
+				planNum = $("<div class='planNum'> <button type='button' class='btn btn-primary idxbtn'> <span class='badge badge-light'>"+planidx+"</span> </button> </div>");
+								
+			}
+			
+			let planImg = $("<div class='planImg'><img src='"+v.trip_img+"' width='50px' height='50px' ></div>");
+			
+			planFrame.append(planNum);
+			planFrame.append(planImg);
+			
+			
+			let planContFram = $("<div class='planContFram'> </div>");
+			let contTitle = $("<div class='contTitle'>"+v.trip_title+"</div>");
+			let contAddr= $("<div class='contAddr'>"+v.trip_destination+" </div>");
+			planContFram.append(contTitle);
+			planContFram.append(contAddr);
+			
+			planFrame.append(planContFram);
+			
+			let cancelPlan = $("<div ><button class='cancelPlan' data-idx='"+(planidx-1)+"'>x</button></div>");
+			planFrame.append(cancelPlan);
+			
+			let updownFrame = $("<div ></div>");
+			let upPlan = $("<div ><button class='upPlan' data-idx='"+(planidx-1)+"'>up</button></div>");
+			let downPlan = $("<div ><button class='downPlan' data-idx='"+(planidx-1)+"'>down</button></div>");
+
+			updownFrame.append(upPlan);
+			updownFrame.append(downPlan);
+			planFrame.append(updownFrame);
+			
+			$("#detailTrip").append(planFrame);
+			
+			
+			pointsFrame.push(new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint)); //추가 할 마커 저장하기 arr에...
+			console.log("pointsFrame",pointsFrame);
+		
+			
+			let clickPosition = new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint); // 클릭한 좌표...(가상)
+			
+			if( planidx >= 2){
+				console.log(planidx);
+
+				let clickLine = new kakao.maps.Polyline({
+	            	map: map, // 선을 표시할 지도입니다 
+	            	path: [pointsFrame[planidx-2] ,pointsFrame[planidx-1]], // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
+	            	strokeWeight: 3, // 선의 두께입니다 
+	            	strokeColor: '#db4040', // 선의 색깔입니다
+	            	strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+	            	strokeStyle: 'solid' // 선의 스타일입니다
+	        	});
+				
+				clickLinee.push(clickLine);
+				
+				let distance = Math.round(clickLine.getLength());
+				
+				displayCircleDot(pointsFrame[planidx-1], distance)
+			
+			}
+		
+			planidx++;
+		
+		
+		} 
+	}
+		
 	 
 	 //-----------지도 마커에 따른 재위치 선정
-	 let bounds = new kakao.maps.LatLngBounds();    
+	 let bounds = new kakao.maps.LatLngBounds(); 
+	 var checkHouse = false;
 	 for (i = 0; i < pointsFrame.length; i++) {
 	     // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
 	// 커스텀 오버레이에 표시할 내용입니다     
 	// HTML 문자열 또는 Dom Element 입니다 
-	let content = "<button  type='button' class='btn btn-primary idxbtn mapbtn'> <span class='badge badge-light'>"+(i+1)+"</span> </button> ";
+	let content;
+	if(houseNum-1 == i){
+		content = " <img style='width:40;height:40px;'src='./resources/tripImage/bookhouse.png'>  ";
+		checkHouse = true;
+	}else{
+		if(checkHouse==true){
+			content = "<button  type='button' class='btn btn-primary idxbtn mapbtn'> <span class='badge badge-light'>"+(i)+"</span> </button> ";
+		}else{
+			content = "<button  type='button' class='btn btn-primary idxbtn mapbtn'> <span class='badge badge-light'>"+(i+1)+"</span> </button> ";
+		}
+	}
+	
+	
 	// 커스텀 오버레이를 생성합니다
 	let custom = new kakao.maps.CustomOverlay({
    	 position: pointsFrame[i],

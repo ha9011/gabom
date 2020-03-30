@@ -1,7 +1,9 @@
 package icia.project.gabom.dao;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -16,6 +18,7 @@ import icia.project.gabom.dto.House_reple;
 import icia.project.gabom.dto.House_review;
 import icia.project.gabom.dto.Housereservation;
 import icia.project.gabom.dto.Member;
+import icia.project.gabom.dto.ReservationPlanHouse;
 import icia.project.gabom.dto.Sns_friend;
 import icia.project.gabom.dto.TripPlanDetail;
 import icia.project.gabom.dto.Trip_member;
@@ -100,6 +103,22 @@ public interface ITripplanDao {
    
    @Select("SELECT * from trip_plan_DATE where trip_number=#{trip_number} AND TRIP_DAY=#{currentPlanDay}")
    List<Trip_plan> tripinfo(@Param("trip_number")int trip_number, @Param("currentPlanDay")int currentPlanDay);
+
+   ReservationPlanHouse selectReservationHouse(@Param("tripNum")String tripNum, @Param("day")String day);
+   
+   
+   
+   @Select("select house_address, house_xpoint,house_ypoint, house_name, hf.HOUSE_SYSNAME  from RegistHouse rh , housefile hf where rh.HOUSE_NUMBER = hf.HOUSE_NUMBER  and rh. house_number = #{house_number} and hf.HOUSE_IMAGETYPE = 1")
+   House houseInfo(@Param("house_number")int house_number); 
+
+   @Select("select MAX(TRIP_ORDER) from TRIP_PLAN_DETAIL where trip_date = #{day} and trip_number= #{tripNum}  order by trip_date, trip_order")
+   Integer selecTripNextPlan(@Param("tripNum")int trip_number, @Param("day")int trip_day);
+   
+   int insertHousePlanDetail(@Param("tripNum")int trip_number, @Param("day")int trip_day, @Param("nextplan")Integer tripNextPlan, @Param("HouseInfo")House selectHouseInfo);
+
+   
+
+
 
 
 

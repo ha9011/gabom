@@ -29,6 +29,7 @@ import icia.project.gabom.dto.House_reple;
 import icia.project.gabom.dto.House_review;
 import icia.project.gabom.dto.Housereservation;
 import icia.project.gabom.dto.Member;
+import icia.project.gabom.dto.ReservationPlanHouse;
 import icia.project.gabom.dto.Sns_friend;
 import icia.project.gabom.dto.TripPlanDay;
 import icia.project.gabom.dto.TripPlanDetail;
@@ -261,10 +262,14 @@ public class TripService {
 	    String jsonResult = new Gson().toJson(tpd);
 	  	mav.addObject("firstDayPlan", jsonResult);
 	  	
-	  	
+	  	//첫쨋날 숙소 가져오기
+	  	ReservationPlanHouse selectReservationHouse = tpDao.selectReservationHouse(tripNum, "1");//해당 여행번호에 , 몇번째 여행일
+	    
+	    String jsonReservationHouse = new Gson().toJson(selectReservationHouse);
+	    System.out.println("ReservationHouse : " + jsonReservationHouse);
+	  	mav.addObject("ReservationHouse", jsonReservationHouse);
 	  	
 	    view="Trip/detailplan";
-	    
 	    mav.setViewName(view);
 		return mav;
 	}
@@ -321,6 +326,7 @@ public class TripService {
 	    	  tpd.setTrip_xpoint(v.get("trip_xpoint"));
 	    	  tpd.setTrip_ypoint(v.get("trip_ypoint"));
 	    	  tpd.setTrip_order(tripOrder);
+	    	  tpd.setTrip_type(Integer.parseInt(v.get("trip_type")));
 	    	  int insertResult = tpDao.insertPlanDetail(tpd);
 	    	  tripOrder++;
 	      }
@@ -432,22 +438,38 @@ public class TripService {
 		String reservation_checkin=hreservation.getReservation_checkin();
 		String reservation_checkout=hreservation.getReservation_checkout();		
 		
+//		System.out.println("여행일수 "+td.getTrip_day());
+//		System.out.println("여행번호"+td.getTrip_number());
+		
 		hreservation.setHouse_hostid(house_hostid).setHouse_number(house_number).setMember_guestid(member_guestid);
 		hreservation.setReservation_checkin(reservation_checkin).setReservation_checkout(reservation_checkout);
 		hreservation.setReservation_person(reservation_person).setReservation_totalprice(reservation_totalprice);
 		
-		int reservation_number = tpDao.housereservation(hreservation); // 예약 하고 
+		int reservation_number = tpDao.housereservation(hreservation); // 예약 하고  // 인서트
 		
-		System.out.println("currval값="+hreservation.getReservation_number());//예약번호 받고 
+		System.out.println("currval값="+hreservation.getReservation_number());//예약번호 받고  
 	      
 	    int resernum=hreservation.getReservation_number();
 	    System.out.println("예약번호 :"+resernum);
 	    
-	    int trip_number = td.getTrip_number();
-		int trip_day = td.getTrip_day();
-	    	
-	    tpDao.t_dateup(resernum,trip_number,trip_day);//예약번호 day에 입력 
-
+	    int trip_number = td.getTrip_number();  // 여행 번호
+		int trip_day = td.getTrip_day(); // 몇번째 여행인지.
+	    
+		 
+	    tpDao.t_dateup(resernum,trip_number,trip_day);//예약번호 day에 입력   //업데이트
+	    
+	    
+	    House selectHouseInfo = tpDao.houseInfo(house_number);//집정보가져오고,
+		System.out.println("gg : " + selectHouseInfo.toString());
+	    
+	    Integer TripNextPlan = tpDao.selecTripNextPlan(trip_number,trip_day); // max 값에 +1 하면 됨
+		int HousePlanDetail ;
+		if(TripNextPlan==null) {  // 0
+			HousePlanDetail = tpDao.insertHousePlanDetail(trip_number,trip_day,0,selectHouseInfo); // 여행계획에 넣고 insert
+		}else { // 
+			HousePlanDetail = tpDao.insertHousePlanDetail(trip_number,trip_day,(TripNextPlan+1),selectHouseInfo); // 여행계획에 넣고 insert
+		}
+	    
 		return json;
 	}
    
