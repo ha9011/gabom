@@ -3,6 +3,8 @@ package icia.project.gabom;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,8 @@ public class HouseRegisterController {
 	
 	
 	@PostMapping(value ="/houseregisterupload")
-	public ModelAndView houseRegisterUpload(MultipartHttpServletRequest multi,Principal principal ) {
+	public ModelAndView houseRegisterUpload(MultipartHttpServletRequest multi,
+			Principal principal,HttpServletRequest req) {
 		
 		String member_hostid=principal.getName();
 		System.out.println("호스트 아이디"+principal.getName());
@@ -43,7 +46,7 @@ public class HouseRegisterController {
 		System.out.println(files.size());
 		System.out.println("files="+files.get(0).getOriginalFilename());
 		
-		mav= hrs.houseRegisterUpload(multi,principal);
+		mav= hrs.houseRegisterUpload(multi,principal,req);
 		System.out.println("완료되면 뷰로 보여줘");
 		return mav;
 	}

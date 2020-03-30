@@ -73,7 +73,6 @@ background-color: #E6E6E6
          color: black;
          font-size: 19px;
          margin-left: 20px;
-         
       }
 </style>
 </head>
@@ -84,6 +83,10 @@ background-color: #E6E6E6
          <sec:authorize access="isAnonymous()">
             <li><a href="login" >로그인</a></li>
             <li><a href="joinselecttype">회원가입</a></li>
+         </sec:authorize>
+         <sec:authorize access="hasRole('ROLE_SERVICER')">
+         	<li><a href="houseRegister">집등록</a></li>
+			<li><a href="foodshopRegister">음식점등록</a></li>
          </sec:authorize>
          <sec:authorize access="isAuthenticated()">
             <li><a href="myinfo" target="_blank">나의 정보</a></li>

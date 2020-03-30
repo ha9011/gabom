@@ -82,9 +82,7 @@ section .overlay {
 
 
 
-<a href="serviceinfo">회사정보</a>
-<a href="houseRegister">집등록</a>
-<a href="foodshopRegister">음식점등록</a>
+
 <%-- <div>
 	<jsp:include page="/WEB-INF/views/homesearch.jsp" />
 </div> --%>
