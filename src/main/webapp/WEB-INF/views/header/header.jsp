@@ -17,7 +17,7 @@
    src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.1/css/all.min.css" />
 <link href="https://fonts.googleapis.com/css?family=Jua&display=swap&subset=korean" rel="stylesheet"/>
 <link rel="stylesheet" href="resources/fontCss/fontAni.css">
 <style>
@@ -73,7 +73,6 @@ background-color: #E6E6E6
          color: black;
          font-size: 19px;
          margin-left: 20px;
-         
       }
 </style>
 </head>
@@ -84,6 +83,10 @@ background-color: #E6E6E6
          <sec:authorize access="isAnonymous()">
             <li><a href="login" >로그인</a></li>
             <li><a href="joinselecttype">회원가입</a></li>
+         </sec:authorize>
+         <sec:authorize access="hasRole('ROLE_SERVICER')">
+         	<li><a href="houseRegister">집등록</a></li>
+			<li><a href="foodshopRegister">음식점등록</a></li>
          </sec:authorize>
          <sec:authorize access="isAuthenticated()">
             <li><a href="myinfo" target="_blank">나의 정보</a></li>
@@ -112,7 +115,7 @@ background-color: #E6E6E6
             <sec:authorize access="hasRole('ROLE_ADMIN')">
             <li><a href="adminmenu" id="admin">관리자</a></li>
 			</sec:authorize>
-            <!-- <li><a href="dumi">더미</a></li> -->
+           <!-- <li><a href="dumi">더미</a></li> -->
          </ul>
       </div>
       <script type="text/javascript">

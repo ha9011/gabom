@@ -69,4 +69,16 @@ public class TripController {
 		return mav;
 	}
 
+   
+   @RequestMapping(value = "/triphouse", method = RequestMethod.GET)
+	public ModelAndView triphouse(int trip_number,Principal ppl,String trip_area) {
+			System.out.println(trip_number);
+			System.out.println(trip_area);
+			
+			mav=trs.triphouse(trip_number,trip_area,ppl );
+			
+		return mav;
+	}
+   
+   
 }

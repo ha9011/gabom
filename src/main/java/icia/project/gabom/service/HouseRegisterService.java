@@ -3,6 +3,8 @@ package icia.project.gabom.service;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +29,8 @@ public class HouseRegisterService {
 		private houseUploadFile ul;
 		
 
-		public ModelAndView houseRegisterUpload(MultipartHttpServletRequest multi,Principal principal) {
+		public ModelAndView houseRegisterUpload(MultipartHttpServletRequest multi
+				,Principal principal, HttpServletRequest req) {
 			mav=new ModelAndView();
 			String view=null;
 			
@@ -77,8 +80,8 @@ public class HouseRegisterService {
 			boolean f1= false;
 			boolean f2= false;
 			if(true) { //한번더 파일 있는지 체크 업로드
-				f1=ul.fileUpmain(multi, house.getHouse_number());
-				f2=ul.fileUpdetail(multi,house.getHouse_number());
+				f1=ul.fileUpmain(multi, house.getHouse_number(),req);
+				f2=ul.fileUpdetail(multi,house.getHouse_number(),req);
 				if(f1) {
 					view="home";
 				}else {

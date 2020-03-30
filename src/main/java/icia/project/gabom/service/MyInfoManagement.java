@@ -45,16 +45,27 @@ public class MyInfoManagement {
 	private Food_reviewfile frf;
 
 	public ModelAndView showMyInfo(Principal principal) {
-		mav = new ModelAndView();
-		
-		mb = minfDao.selectshowMyInfo(principal.getName());
-		System.out.println("mb데이터 : " + mb.toString());
-		// TODO Auto-generated method stub
-		mav.addObject("myinfodata", mb);
-		mav.setViewName("myinfo");
-		return mav;
-	}
-	
+		      mav = new ModelAndView();
+		      String view=null;
+		      
+		      mb = minfDao.selectshowMyInfo(principal.getName());
+		      System.out.println("mb데이터 : " + mb.toString());
+		      
+		      System.out.println(mb.getMember_type());
+		      
+		      int mt= mb.getMember_type();
+		      
+		      mav.addObject("myinfodata", mb);
+		      
+		      if(mt == 1) {//여행자면
+		         view="myinfo";
+		      }else{//서비스 업체면 
+		         view="serviceinfo"; 
+		      }
+		      
+		      mav.setViewName(view);
+		      return mav;
+		   }
 	
 	//용돈 충전 AJAX
 	public String restChargeMoney(String chargeMoney, String name) {

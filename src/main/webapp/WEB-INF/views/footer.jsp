@@ -109,10 +109,7 @@
 </script>
 <body>
 
-	<div>
-		<input type="text" id="msg" />
-		<button id="btnSend">전송1</button>
-	</div>
+	
 	<div id="footer">여기는 footer 영역입니다.</div>
 	
 	

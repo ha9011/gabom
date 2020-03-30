@@ -85,9 +85,9 @@ public class JoinMemberManageMent {
 		
 		String securityGrade = null;
 		if(member_type==1) { //여행자일 때
-			securityGrade = "TRAVELER";
+			securityGrade = "ROLE_TRAVELER";
 		}else { //사용자 일 때 
-			securityGrade = "SERVICER";
+			securityGrade = "ROLE_SERVICER";
 			
 		}
 		
