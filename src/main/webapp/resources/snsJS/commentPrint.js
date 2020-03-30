@@ -24,10 +24,10 @@ function printComment(commentJson,number) {
 			commentBox+='<td style="background-color: white; width: 150px">';
 			
 			if(userId==commentJson[k]["id"]){
-				commentBox+='<a onclick=commentEdit("'+number+'","'+commentJson[k]["number"]+'")>';
-				commentBox+='수정</a>/<a onclick=commentDel("'+number+'","'+commentJson[k]["number"]+'")>삭제</a>';	
+				commentBox+='<a href="#;" onclick=commentEdit("'+number+'","'+commentJson[k]["number"]+'")>';
+				commentBox+='수정</a>/<a href="#;" onclick=commentDel("'+number+'","'+commentJson[k]["number"]+'")>삭제</a>';	
 			}else{
-				commentBox+='<a>신고</a>';
+				commentBox+='<a href="#;" onclick="commentReport(\''+commentJson[k]["number"]+'\')" >신고</a>';
 			}
 			commentBox+='</td>';
 			commentBox+='</tr>';

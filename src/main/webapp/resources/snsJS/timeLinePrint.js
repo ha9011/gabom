@@ -43,9 +43,9 @@
 		$timeLine += '</div>';
 		$timeLine += '<div class="container" id="postsContentsBox">';
 		if(timeLineJson[j]["posts_writer"]==userId){
-		$timeLine += '<textarea class="container" cols="93" rows="8" id="postContents'+timeLineJson[j]["posts_number"]+'" onkeyup="editPost(this)">'+RePostsContents+'</textarea>';	
+		$timeLine += '<textarea class="container emo" cols="93" rows="8" id="postContents'+timeLineJson[j]["posts_number"]+'" onkeyup="editPost(this)">'+RePostsContents+'</textarea>';	
 		}else{
-		$timeLine += '<textarea class="container" cols="93" rows="8" readonly id=postContents"'+timeLineJson[j]["posts_number"]+'" onkeyup="editPost(this)" >'+RePostsContents+'</textarea>';
+		$timeLine += '<textarea class="container emo" cols="93" rows="8" readonly id=postContents"'+timeLineJson[j]["posts_number"]+'" onkeyup="editPost(this)" >'+RePostsContents+'</textarea>';
 		}
 		$timeLine += '<div class="container" id="editBox'+timeLineJson[j]["posts_number"]+'"></div>';
 		$timeLine += '<div class="container" id="postsPhotoBox">';
@@ -64,7 +64,6 @@
 		$timeLine += '<div class="'+timeLineJson[j]["posts_number"]+'" id="commentReal"></div>';
 		$timeLine += '</div>';
 		$timeLine += '</div>';
-		$('#snsTimeLineMain').append($timeLine);
 		 for(var k=0;k<timeLineJson[j]["photoList"].length;k++){
 		let $snsPostsImageBox=$("<div class='cover'>");
 		let $postsimageBox=$('<img class="img-thumbnail img-responsive" onclick="resizeImg(this.src)">');
@@ -72,5 +71,6 @@
 		$postsimageBox.appendTo($snsPostsImageBox);
 		$snsPostsImageBox.appendTo($("#"+j));
 		}
+		 $('#snsTimeLineMain').append($timeLine);
 		 }
 	}

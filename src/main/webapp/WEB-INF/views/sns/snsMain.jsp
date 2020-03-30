@@ -28,7 +28,6 @@
 	rel="stylesheet">
 <link rel="stylesheet" href="resources/fontCss/fontAni.css">
 <style type="text/css">
-
 #snsMain {
 	background-image: url(resources/snsImage/cl3.jpg);
 	background-size: 100%;
@@ -478,8 +477,6 @@ td a {
 	padding-right: 170px;
 }
 
-
-
 #friendMore {
 	text-align: center;
 	background-color: #337ab7;
@@ -550,11 +547,15 @@ td a {
 *:focus {
 	outline: none;
 }
-#footerM{
-	display: none;}
+
+#footerM {
+	display: none;
+}
+
 @media ( max-width :1200px) {
-	#footerM{
-	display: block;}
+	#footerM {
+		display: block;
+	}
 	#snsAside {
 		display: none;
 	}
@@ -562,42 +563,41 @@ td a {
 		width: 100%;
 		border-top-left-radius: 20px;
 	}
-	#more,#friendMore,#myPostMore{
-		position:fixed; 
-  		left:0px; 
-  		bottom:100px; 
-  		height:70px; 
-  		width:10%;
-  		background-color:#337ab7;
-  		color: white;
-  		border-radius: 0;
-  		text-align: right;
-  		border-top-right-radius: 8px;
-  		border-top-left-radius: 10px;
-  		margin-left: 90%;
-  		padding-right: 28px;
-  		padding-top: 20px;
+	#more, #friendMore, #myPostMore {
+		position: fixed;
+		left: 0px;
+		bottom: 100px;
+		height: 70px;
+		width: 10%;
+		background-color: #337ab7;
+		color: white;
+		border-radius: 0;
+		text-align: right;
+		border-top-right-radius: 8px;
+		border-top-left-radius: 10px;
+		margin-left: 90%;
+		padding-right: 28px;
+		padding-top: 20px;
 	}
-	#more a,#friendMore a,#myPostMore a{
-	font-size: 25px;
-	
+	#more a, #friendMore a, #myPostMore a {
+		font-size: 25px;
 	}
-	#footerM{
-	display: none;
-	position:fixed; 
-  	left:0px; 
-  	bottom:0px; 
-  	height:106px; 
-  	width:100%; 
-  	background-color:#337ab7; 
-  	color: white; 
-  	display: flex;
-  	z-index: 9997;
+	#footerM {
+		display: none;
+		position: fixed;
+		left: 0px;
+		bottom: 0px;
+		height: 106px;
+		width: 100%;
+		background-color: #337ab7;
+		color: white;
+		display: flex;
+		z-index: 9997;
 	}
-	#footerM i{
-	padding-left: 50px;
-  	padding-right: 65px;
-  	padding-top: 20px;
+	#footerM i {
+		padding-left: 50px;
+		padding-right: 65px;
+		padding-top: 20px;
 	}
 }
 </style>
@@ -694,17 +694,62 @@ td a {
 	</div>
 	<div class='info' style='display: none'>설정이 변경되었습니다.</div>
 	<div id="footerM" class="container">
-	<div onclick="setTimeLine()"><i class="fas fa-home fa-5x"></i></div>
-	<div onclick="makewriteBox()"><i class="fas fa-edit fa-5x"></i></div>
-	<div onclick="location.href='#snsTimeLine';"><i class="fas fa-search fa-5x"></i></div>
-	<div onclick="makeFriendListM()"><i class="fas fa-star faa-tada animated fa-5x" style="color:gold"></i></div>
-	<div onclick="asideRead()"><i class="fas fa-user fa-5x"></i></div>
-	<div onclick="location.href='#';"><i class="fas fa-arrow-circle-up fa-5x faa-float animated "></i></div>
+		<div onclick="setTimeLineM()">
+			<i class="fas fa-home fa-5x"></i>
+		</div>
+		<div onclick="makewriteBoxM()">
+			<i class="fas fa-edit fa-5x"></i>
+		</div>
+		<div onclick="location.href='#snsTimeLine';">
+			<i class="fas fa-search fa-5x"></i>
+		</div>
+		<div onclick="makeFriendListM()">
+			<i class="fas fa-star faa-tada animated fa-5x" style="color: gold"></i>
+		</div>
+		<div onclick="asideRead()">
+			<i class="fas fa-user fa-5x"></i>
+		</div>
+		<div onclick="location.href='#';">
+			<i class="fas fa-arrow-circle-up fa-5x faa-float animated "></i>
+		</div>
 	</div>
+	<!-- 모바일 글쓰기 버튼 -->
+	<script type="text/javascript">
+	function makewriteBoxM() {
+		makewriteBox();
+		location.href="#writeBox";
+	}
+	</script>
+	<!-- 모바일 타임라인 홈 -->
+	<script type="text/javascript">
+	function setTimeLineM(){
+		setTimeLine();
+		location.href="#showImageBox";
+	}
+	</script>
+	<!-- 댓글 신고 -->
+	<script type="text/javascript">
+	function commentReport(commentNumber) {
+			$.ajaxSetup({
+				beforeSend : function(xhr){
+	 			xhr.setRequestHeader(header,token);}
+			});//먼저 보냄
+			$.ajax({
+					method:'post',
+					url:"sns/comment/report",
+					data:{"commentNumber":commentNumber},
+					dataType : "json"
+			}).done((json)=>{
+				$('.info').text(json.message).css("background-color","red").fadeIn(300).delay(800)
+				.fadeOut(300,function(){
+				$('.info').css("background-color","#337ab7");
+				});
+			});			
+		}
+	</script>
 	<!-- 글신고 -->
 	<script type="text/javascript">
 	function reportPost(postNumber) {
-		console.log("신고 글번호 ",postNumber);
 		$.ajaxSetup({
 			beforeSend : function(xhr){
 	 		xhr.setRequestHeader(header,token);}
@@ -720,16 +765,13 @@ td a {
 			$('.info').css("background-color","#337ab7");
 			});
 		});			
-		
-		
-		
-		
 	}
 	</script>
 	<!-- 모바일 친구 리스트 -->
 	<script type="text/javascript">
 	function makeFriendListM() {
 		friendList(userId);	
+		makeTimeLineProfile(userId);
 	}
 	</script>
 	<!-- 검색 클릭시 검색 텍스트바 포커스 -->
@@ -823,13 +865,14 @@ td a {
 	<!-- 호버시 아이콘 변환 스크립트1 -->
 	<script type="text/javascript" src="resources/snsJS/snsHover.js?ver=1"></script>
 	<!-- 글쓰기칸 만드는 스크립트1 -->
-	<script type="text/javascript" src="resources/snsJS/writeBox.js"></script>
+	<script type="text/javascript" src="resources/snsJS/writeBox.js?ver=3"></script>
 	<!-- 이미지 미리보기 스크립트1 -->
 	<script type="text/javascript" src="resources/snsJS/imgView.js"></script>
 	<!-- 정보공개 변환1 -->
 	<script type="text/javascript" src="resources/snsJS/postSecurity.js"></script>
 	<!-- 타임라인 생성 스크립트 1-->
-	<script type="text/javascript" src="resources/snsJS/timeLinePrint.js?ver=1"></script>
+	<script type="text/javascript"
+		src="resources/snsJS/timeLinePrint.js?ver=3"></script>
 	<!-- 글작성 취소 스크립트 1-->
 	<script type="text/javascript" src="resources/snsJS/postCancel.js"></script>
 	<!-- 페이지 로딩시 해당 회원 정보 출력 스크립트1 -->
@@ -843,10 +886,10 @@ td a {
 	<!-- 타임라인 Ajax1 -->
 	<script type="text/javascript" src="resources/snsJS/timeLineAjax.js"></script>
 	<!-- 댓글출력 Ajax1 -->
-	<script type="text/javascript" src="resources/snsJS/commentAjax.js"></script>
+	<script type="text/javascript" src="resources/snsJS/commentAjax.js?ver=1"></script>
 	<!-- 댓글 출력 서비스 1-->
 	<script type="text/javascript"
-		src="resources/snsJS/commentPrint.js?ver=2"></script>
+		src="resources/snsJS/commentPrint.js?ver=3"></script>
 	<!-- 댓글 좋아요1 -->
 	<script type="text/javascript" src="resources/snsJS/commentLike.js"></script>
 	<!-- 댓글 싫어요 1-->

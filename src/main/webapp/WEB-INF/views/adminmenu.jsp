@@ -8,17 +8,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>서비스업체 등록 심사</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <style>
 #headerContainer {
@@ -108,6 +106,9 @@ ul {
 li {
 	float: left;
 }
+.qwe{
+	margin: 0 30px;
+}
 </style>
 
 </head>
@@ -126,53 +127,55 @@ li {
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist"
 			style="background-color: infobackground;">
-			<li class="nav-item"><a class="nav-link active"
-				data-toggle="tab" href="#judge">서비스업체 등록심사</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="tab"
-				href="#service_declaration">서비스업체 신고관리</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="tab"
+			<li class="qwe nav-item"><a class="nav-link active"
+				data-toggle="tab" href="#judge" id="judge_click">서비스업체 등록심사</a></li>
+<!-- 			<li class="nav-item"><a class="nav-link" data-toggle="tab" -->
+<!-- 				href="#service_declaration">서비스업체 신고관리</a></li> -->
+			<li class="qwe nav-item"><a class="nav-link" data-toggle="tab"
 				href="#tourist_judge">여행객계획 등록심사</a></li>  
-			<li class="nav-item"><a class="nav-link" data-toggle="tab"
-				href="#tourist_declaration">여행객 신고관리</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="tab"
+				
+			<li class="qwe nav-item"><a class="nav-link" data-toggle="tab"
+				href="#sns_declaration" >SNS 신고관리</a>
+			</li>
+			
+			<li class="qwe nav-item"><a class="nav-link" data-toggle="tab"
 				href="#all_notices" id="all_notices_click">전체회원 공지사항</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="tab"
+			<li class="qwe nav-item"><a class="nav-link" data-toggle="tab"
 				href="#qna_board" id="qna_board_click">QnA</a></li>
 			<li class="nav-item"><a class="nav-link" href="home">Home</a></li>
 		</ul>
 		<!-- Tab 내용 -->
 		<div class="tab-content">
 			<div id="judge" class="container tab-pane active">
-				<br>
 				<div>
 					<div id="service_main">
 						<div id="housemain_judge">
-							<h3>House심사대기 List</h3>
+							<h3 id="h3_house">House심사대기 List</h3>
 						</div>
 						<div id="foodmain_judge">
-							<h3>Food심사대기 List</h3>
+							<h3 id="h3_food">Food심사대기 List</h3>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div id="service_declaration" class="container tab-pane fade">
-				<br>
 				<h3>서비스업체 신고관리</h3>
 				<p>메 뉴 1</p>
 			</div>
 			<div id="tourist_judge" class="container tab-pane fade">
-				<br>
 				<h3>여행객계획 등록심사</h3>
 				<p>메뉴2</p>
 			</div>
-			<div id="tourist_declaration" class="container tab-pane fade">
-				<br>
-				<h3>여행객 신고관리</h3>
-				<p>메뉴3</p>
+			<div id="sns_declaration" class="container tab-pane fade">
+				<ul class="nav nav-tabs">
+					<li class="nav-item" style="width: 50%">
+						<a class="nav-link" data-toggle="tab" href="#sns_posts" onclick="sns_posts()">sns게시글 신고</a></li>
+					<li class="nav-item" style="width: 50%">
+						<a class="nav-link" data-toggle="tab" href="#sns_posts" onclick="sns_comment()">sns댓글 신고</a></li>
+				</ul>
 			</div>
 			<!----------------------------------------------전체공지 출력---------------------------------------------->
 			<div id="all_notices" class="container tab-pane fade">
-				<br>
 				<h3>전체회원 공지사항</h3>
 				<div>
 					<table id="boards" class="table table-bordered table-hover">
@@ -207,7 +210,6 @@ li {
 			</div>
 			<!----------------------------------------------질문게시판 출력---------------------------------------------->
 			<div id="qna_board" class="container tab-pane fade">
-				<br>
 				<h3>질문 게시판</h3>
 				<div>
 					<table id="qna_boards" class="table table-bordered table-hover">
@@ -341,8 +343,11 @@ li {
 
 	</div>
 	<!-- container End -->
-
-
+	<!----------------------------------------------------------SNS신고관리---------------------------------------------------------->
+	<div id="sns_posts" class="container tab-pane fade">
+		<div id="sns_table">
+		</div>
+	</div>
 
 
 	<div>
@@ -367,10 +372,161 @@ li {
 			mm='0'+mm; //1자리 숫자 앞에 0 붙이기
 		return yyyy+"-"+mm+"-"+dd;
 	}
+	//---------------------------------------------------------sns게시글 신고 출력 ----------------------------------------------------------------
+function sns_posts() {
+	console.log("sns게시글 클릭");
+	$.ajaxSetup({
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");
+		}
+	});
+	console.log("sns게시글신고 시작");
+	$.ajax({
+		url : 'snspostsreport',
+		type : 'post',
+		dataType : 'json',
+		success : function(response) {
+			console.log("게시글출력=",response);
+			$("#sns_table").empty();
+			let table = $("<table class='table table-bordered table-hover'>");
+			let thead = $("<thead>");
+			let tr = $("<tr>");
+			let th = $("<th>게시글번호</th><th>게시글내용</th><th>작성자</th><th>신고횟수</th><th>게시물삭제</th>");
+			table.append(thead);
+		 	thead.append(tr);
+		 	tr.append(th);
+		 	
+		 	
+ 		 	let tbody = $("<tbody>");
+ 		 	/* let td = $("<td>"); */
+ 		 	for(let i = 0; i<response.length; i++){
+  		 	let bodytr = $("<tr>");
+  		 	let td = $("<td>");
+ 		 		console.log("11",response[i]);
+ 		 		//let bodytr = $("<tr>");
+ 		 		td += "<td>"+response[i].sns_posts_number+"</td>";
+ 		 		td += "<td>"+response[i].sns_posts_content+"</td>";
+ 		 		td += "<td>"+response[i].sns_posts_writer+"</td>";
+ 		 		td += "<td>"+response[i].sns_posts_report+"</td>";
+ 		 		td += "<td><button class='sns_delete' data-number='"+response[i].sns_posts_number+"'>삭제</button></td>";
+ 		 		
+ 		 		bodytr.append(td);
+ 		 		tbody.append(bodytr);
+ 		 		td = " ";
+ 		 	}
+		 	table.append(tbody);
+		 	$("#sns_table").append(table);
+		},
+		error : function(jqXHR, status, e) {
+			console.log("신고 게시글 검색 에러");
+		}
+	});
 	
 	
+}; //sns_posts end
+//---------------------------------------------------------sns댓글 신고 출력 ----------------------------------------------------------------
+function sns_comment() {
+	console.log("sns댓글 클릭");
+	$.ajaxSetup({
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");
+		}
+	});
+	$.ajax({
+		url : 'snscommentreport',
+		type : 'post',
+		dataType : 'json',
+		success : function(response) {
+			console.log("댓글출력",response);
+			$("#sns_table").empty();
+			let table = $("<table class='table table-bordered table-hover'>");
+			let thead = $("<thead>");
+			let tr = $("<tr>");
+			let th = $("<th>댓글번호</th><th>댓글내용</th><th>댓글작성자</th><th>신고횟수</th><th>게시물삭제</th>");
+			table.append(thead);
+		 	thead.append(tr);
+		 	tr.append(th);
+		 	$("#sns_table").append(table);
+		 	
+		 	let tbody = $("<tbody>");
+ 		 	/* let td = $("<td>"); */
+ 		 	for(let i = 0; i<response.length; i++){
+  		 	let bodytr = $("<tr>");
+  		 	let td = $("<td>");
+ 		 		
+ 		 		td += "<td>"+response[i].sns_comment_number+"</td>";
+ 		 		td += "<td>"+response[i].sns_comment_content+"</td>";
+ 		 		td += "<td>"+response[i].sns_comment_member_id+"</td>";
+ 		 		td += "<td>"+response[i].sns_comment_report+"</td>";
+ 		 		td += "<td><button class='sns_comment_delete' data-number='"+response[i].sns_comment_number+"'>삭제</button></td>";
+ 		 		
+ 		 		//form.append(td);
+ 		 		bodytr.append(td);
+ 		 		tbody.append(bodytr);
+ 		 		td = " ";
+ 		 		//form = " ";
+ 		 	}
+		 	table.append(tbody);
+		 	$("#sns_table").append(table);
+		},
+		error : function(jqXHR, status, e) {
+			console.log("지역검색 에러");
+		}
+	});
 	
-	//---------------------------------------------------------------------qna 전체 출력---------------------------------------------------------------------
+}; //sns_comment end
+//---------------------------------------------------------sns게시글 신고 삭제 ----------------------------------------------------------------
+$(document).on("click",".sns_delete",function(e) {
+	console.log("삭제버튼 클릭");
+	var params = e.target.dataset.number;
+	console.log("삭제할 게시글",params);
+	$.ajaxSetup({
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");
+		}
+	});
+	console.log("ajax시작");
+	$.ajax({
+		url : 'snspostsdelete',
+		type : 'post',
+		data : {"num":params},
+		dataType : 'json',
+		success : function(response) {
+			sns_posts();
+		},
+		error : function(jqXHR, status, e) {
+			console.log("게시글삭제 에러");
+		}
+	});//ajax end
+});//sns_delete end
+//---------------------------------------------------------sns댓글 신고 삭제 ----------------------------------------------------------------
+$(document).on("click",".sns_comment_delete",function(e) {
+	console.log("삭제버튼 클릭");
+	//var params = $(".snsdelet").val();
+	var params = e.target.dataset.number;
+	console.log("삭제할 댓글",params);
+	$.ajaxSetup({
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader("${_csrf.headerName}","${_csrf.token}");
+		}
+	});
+	console.log("ajax시작");
+	$.ajax({
+		url : 'snscommentdelete',
+		type : 'post',
+		data : {"num":params},
+		dataType : 'json',
+		success : function(response) {
+			sns_comment();
+		},
+		error : function(jqXHR, status, e) {
+			console.log("댓글삭제 에러");
+		}
+	}); //ajax end
+});//sns_comment_delete end
+	
+	
+//---------------------------------------------------------------------qna 전체 출력---------------------------------------------------------------------
 	 $("#qna_board_click").on("click",function(){
 		console.log("qna 클릭");
 		
@@ -388,7 +544,7 @@ li {
 	              
 				
 				console.log("size",response.length);
-				
+				$("#sns_table").empty();
 				$("#qna_body").empty();
 				let strq = " ";
 				for(i=0;i<response.length;i++){
@@ -531,7 +687,7 @@ li {
            success : function(response) {
         	   
         	  
-        	   
+        	   $("#sns_table").empty();
 				console.log('notices불러오기 성공');
 				console.log(response);
 				console.log("전체공지 사이즈",response.length);
@@ -722,8 +878,9 @@ li {
 					}
 					strb += '<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'; //조 회 수
 					strb += '</tr>';
-				}//for문 종료
+				}//for문 종료1
 				$("#notices_body").append(strb);
+				
             	
             }, error : function(jqXHR, status, e) {
                 console.log("글쓰기 에러");
@@ -742,6 +899,7 @@ li {
 	console.log("house",house.length);
 	console.log("food",food.length);
 //	console.log("housemodal",${housemodal});
+
 	let strh=" ";
 	
  	for(let i=0;i<house.length;i++){
@@ -773,7 +931,8 @@ li {
  	
  	console.log("food : ",food);
 	//---------------------------------------------------------------------food 리스트 출력---------------------------------------------------------------------
- 	let strf= " ";
+ 	
+	let strf= " ";
  	for(let i=0;i<food.length;i++){
 
  		if(i>=2){
@@ -799,6 +958,96 @@ li {
 		strf+='</div>';
  	}
  	$("#foodmain_judge").append(strf); //food 리스트 End
+ 	//--------------------------------------------------------------------서비스업체 등록심사 ajax-----------------------------------------------------------
+ 	$("#judge_click").on("click",function(){
+ 		console.log("서비스업체 클릭");
+ 		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+ 		$.ajax({
+ 			url : 'judgelist',
+ 			type : 'post',
+ 			dataType : 'json',
+ 			success : function(response) {
+ 				console.log("select성공");
+ 				console.log("flist",response.flist);
+ 				console.log("hlist",response.hlist);
+ 				$("#sns_table").empty();
+ 				$("#foodmain_judge").empty();
+ 				$("#housemain_judge").empty();
+ 				
+ 				//strh = "";
+ 				strh = "<h3>House심사대기 List</h3>";
+ 				$("#housemain_judge").append(strh);
+ 				strh = "";
+ 				
+ 				for(let i=0;i<response.hlist.length;i++){
+ 			 		if(i>=2){
+ 			 			console.log("house break");
+ 			 			break;
+ 			 		}
+ 			 		strh+='<div style="border: 1px solid black; margin-top: 5px; id="house_judge">';
+ 					strh+='<div id="house_judge">';
+
+ 					strh+='<div id="list_left"><img style="height:200px; width:100%;" src="'+response.hlist[i].house_sysname+'"></div>';
+ 					strh+='<div id="list_right_sec">';
+ 					strh+='<div id="list_right">상 호 명 : '+response.hlist[i].house_name+'<br>';
+
+ 					if(response.hlist[i].house_type == 1){
+ 						strh+='집 유 형 : 아파트 <br>';
+ 					}else if(response.hlist[i].house_type == 2){
+ 						strh+='집 유 형 : 빌라 <br>';
+ 					}else if(response.hlist[i].house_type == 3){
+ 						strh+='집 유 형 : 주택 <br>';
+ 					}
+ 					strh+='집 주 소 : '+response.hlist[i].house_address+'</div>';
+ 					strh+='<div id="list_button" class="house"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-number="'+response.hlist[i].house_number+'">승인/거절</button></div>';
+ 					strh+='</div>';
+ 					strh+='</div>';
+ 					strh+='</div>';
+ 			 	}
+ 			 	$("#housemain_judge").append(strh); //house 리스트 End
+//----------------------------------------------------------------------------------------------------------
+ 				//strf = "";
+ 				strf = "<h3>Food심사대기 List</h3>";
+ 				$("#foodmain_judge").append(strf);
+ 				strf = "";
+ 				
+ 			 	for(let i=0;i<response.flist.length;i++){
+
+ 			 		if(i>=2){
+ 			 			console.log("food break");
+ 			 			break;
+ 			 		}
+ 			 		strf+='<div style="border: 1px solid black; margin-top: 5px; id="food_judge">';
+ 					strf+='<div id="food_judge">';
+ 					strf+='<div id="list_left"><img style="height:200px; width:100%;" src="'+response.flist[i].food_sysname+'"></div>';
+ 					strf+='<div id="list_right_sec">';
+ 					strf+='<div id="list_right">상 호 명 : '+response.flist[i].food_name+'<br>';
+ 					if(response.flist[i].food_type == 1){
+ 						strf+='집 유 형 : 레스토랑 <br>';
+ 					}else if(response.flist[i].food_type == 2){
+ 						strf+='집 유 형 : 카페 <br>';
+ 					}else if(response.flist[i].food_type == 3){
+ 						strf+='집 유 형 : 호프 <br>';
+ 					}
+ 					strf+='음식점 주소 : '+response.flist[i].food_address+'</div>';
+ 					strf+='<div id="list_button" class="food"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-number="'+response.flist[i].food_number+'">승인/거절</button></div>';
+ 					strf+='</div>';
+ 					strf+='</div>';
+ 					strf+='</div>';
+ 			 	}
+ 			 	$("#foodmain_judge").append(strf); //food 리스트 End
+ 				
+ 			},
+ 			error : function(jqXHR, status, e) {
+ 				console.log("서비스업체심사리스트 에러");
+ 			}
+ 		}); //ajax end
+ 	});//judge_click end
+ 	
+ 	
 	
  	//---------------------------------------------------------------------하우스 모달 ajax 시작---------------------------------------------------------------------
  	$('.house').on('click',function(e){ 
