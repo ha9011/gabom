@@ -130,6 +130,11 @@
 </style>
 </head>
 <body>
+	<header>
+		<jsp:include page="/WEB-INF/views/header/somoimheader.jsp" />
+	</header>
+
+
 <div class="container-fluid">
   <div class="row no-gutter">
     <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
@@ -156,7 +161,7 @@
                 <span id="guide" style="color:#999;display:none"></span>
                	<button id="food_address_btn"class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">Map</button>
 				<input type="hidden" id="sample4_extraAddress" placeholder="참고항목">
-				<div id="map" style="width: 80%; height: 300px; "></div>
+				<div id="map" style="width:100%; height: 300px; "></div>
 				
 				<!-- 주소 좌표 hide로 숨김. -->
 				<input type="text" name="food_ypoint"  id="y" />
@@ -166,15 +171,15 @@
                 
               <div class="custom-control custom-checkbox mb-3">
                 Parkable
-               	<label style="margin:0 15px;" ><input type="checkbox" name="food_parkable" value="1">주차가능</label> 
-				<label style="margin:0 15px;" ><input type="checkbox" name="food_parkable" value="2">주차 불가능</label>
+               	<label style="margin:0 15px;" ><input type="radio" name="food_parkable" value="1">주차가능</label> 
+				<label style="margin:0 15px;" ><input type="radio" name="food_parkable" value="2">주차 불가능</label>
                 </div>
                 
                <div class="custom-control custom-checkbox mb-3">
                 Shop Type
-               	<label style="margin:0 15px;" ><input type="checkbox" name="food_type" value="1">레스토랑</label> 
-				<label style="margin:0 15px;" ><input type="checkbox" name="food_type" value="2">카페</label>
-				<label style="margin:0 15px;" ><input type="checkbox" name="food_type" value="3">호프</label> 
+               	<label style="margin:0 15px;" ><input type="radio" name="food_type" value="1">레스토랑</label> 
+				<label style="margin:0 15px;" ><input type="radio" name="food_type" value="2">카페</label>
+				<label style="margin:0 15px;" ><input type="radio" name="food_type" value="3">호프</label> 
                 </div>
                 
                  <div class="form-label-group">
@@ -195,7 +200,7 @@
                   <input name='food_mintime' type="time" class="form-control" placeholder="Password" required>
                 </div>
                 <div class="form-label-group">
-                 Reservation Start time
+                 Reservation End time
                   <input name='food_maxtime' type="time" class="form-control" placeholder="Password" required>
                 </div>
                 

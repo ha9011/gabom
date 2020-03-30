@@ -45,7 +45,7 @@ body {
 	.form-control-borderless:focus {
 	outline: none;
 	box-shadow: none;
-	border: 1px solid lightgray;
+	
 }
 
 h2 { /*숙소명 */
@@ -132,47 +132,53 @@ border-top:1px solid lightgray;
 margin-top:2%;
 
 }
-
+#searchhouse{
+text-align:center;
+margin:0 10px;
+border:none;
+font-size:20px;
+}
+.out{
+width:100%;
+border:1px solid lightgray;
+margin:40px;
+border-radius: 50px;
+}
+#searchbtn{
+border-radius: 40px;
+}
 </style>
 
 </head>
 <body>
 	<header>
-		<jsp:include page="/WEB-INF/views/somoim/somoimheader.jsp" />
+		<jsp:include page="/WEB-INF/views/header/househeader.jsp" />
 	</header>
 
-
-<div>
-	<form action="searchhouse" method="get">
-		<!-- housemain page에서 검색하는 것  -->
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-12 col-md-10 col-lg-8">
-					<div class="card-body row no-gutters align-items-center">
-						<div class="col-auto">
-							<!-- 돋보기 -->
-							<i class="fas fa-search h3 text-body"></i>
-						</div>
-						<!--end of col-->
-						<div class="col">
-							<!-- 검색창 -->
-							<input id="searchhouse" name="house_address"
-								class="form-control form-control-lg form-control-borderless"
-								type="search" placeholder="Search topics or keywords">
-						</div>
-						<!--end of col-->
-						<div class="col-auto">
-							<!-- 검색버튼 -->
-							<button style="background-color: #064D84" id="searchbtn"
-								class="btn btn-lg btn-success" type="submit">Search</button>
-						</div>
-						<!--end of col-->
-					</div>
-				</div>
-				<!--end of col-->
-			</div>
-		</div>
+	<form action="searchhouse" method="get" > <!-- housemain page에서 검색하는 것  -->
+	<div class="container">
+		<div class="row justify-content-center">
+                        <div class="col-12 col-md-5 col-lg-12">
+                                <div  class="out card-body row no-gutters align-items-center">
+                                    <div class="col-auto"> <!-- 돋보기 -->
+                                        <i class="fas fa-search h4 text-body"></i>
+                                    </div>
+                                    <!--end of col-->
+                                    <div class="col"><!-- 검색창 -->
+                                        <input id="searchhouse" name="house_address" class="form-control form-control-borderless" type="search" placeholder="지역을 입력해주세요">
+                                    </div>
+                                    <!--end of col-->
+                                    <div class="col-auto"><!-- 검색버튼 -->
+                                        <button id="searchbtn" class="btn btn-lg btn-primary " type="submit">Search</button>
+                                    </div>
+                                    <!--end of col-->
+                                </div>
+                        </div>
+                        <!--end of col-->
+          </div>
+	</div>
 	</form>
+	
 </div>
 
 	<div class="container">
@@ -272,7 +278,6 @@ margin-top:2%;
 					<div class="blog-post-body">
 						<h3 style="margin-top: 20px;">후기</h3>
 						<div id="review">
-						
 						</div>
 					</div>
 				</article>
@@ -287,7 +292,7 @@ margin-top:2%;
 						<form id="rel">
 						<div id="replyinsert">
 							<div id="user_id"></div>
-							<input style="width:700px; margin:25px 5px;" id="reple_content" name="house_reple_content" type="text">
+							<input style="width:100%; margin:25px 10px;" id="reple_content" name="house_reple_content" type="text">
 							<button id="repleinsert_btn"  class="btn btn-primary">등록</button>
 							<input type="hidden" name="house_number" id="hrnum">
 						</div>
@@ -416,7 +421,7 @@ $("#info").append(house_info);
     console.log("로그인아이디",login_id);
     console.log(login_id[0].member_id)
     
-    var user_id =$('<h3>'+login_id[0].member_id+'</h3>');
+    var user_id =$('<h3 style="width:100px;margin:25px;">'+login_id[0].member_id+'</h3>');
     	$("#user_id").append(user_id);
     
     
@@ -519,22 +524,14 @@ $("#info").append(house_info);
     	   		//아니오면 그냥 그대로 
     	    }
     })
-    
- 
-    
-    
-    
-    
-    
-    
-    
 
     
 //-----------------------------------------------------------------------------------댓글영역    
     //review 영역
   var review =${review_list};
   console.log("리뷰리스트 ",review);
-   
+  $("#review").empty(); 
+  
   for (i of review){
 	 
 	  var out =$('<div class="outl"></div>');
