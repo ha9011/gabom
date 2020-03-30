@@ -694,10 +694,10 @@ td a {
 	</div>
 	<div class='info' style='display: none'>설정이 변경되었습니다.</div>
 	<div id="footerM" class="container">
-		<div onclick="setTimeLine()">
+		<div onclick="setTimeLineM()">
 			<i class="fas fa-home fa-5x"></i>
 		</div>
-		<div onclick="makewriteBox()">
+		<div onclick="makewriteBoxM()">
 			<i class="fas fa-edit fa-5x"></i>
 		</div>
 		<div onclick="location.href='#snsTimeLine';">
@@ -713,6 +713,20 @@ td a {
 			<i class="fas fa-arrow-circle-up fa-5x faa-float animated "></i>
 		</div>
 	</div>
+	<!-- 모바일 글쓰기 버튼 -->
+	<script type="text/javascript">
+	function makewriteBoxM() {
+		makewriteBox();
+		location.href="#writeBox";
+	}
+	</script>
+	<!-- 모바일 타임라인 홈 -->
+	<script type="text/javascript">
+	function setTimeLineM(){
+		setTimeLine();
+		location.href="#showImageBox";
+	}
+	</script>
 	<!-- 댓글 신고 -->
 	<script type="text/javascript">
 	function commentReport(commentNumber) {
@@ -757,6 +771,7 @@ td a {
 	<script type="text/javascript">
 	function makeFriendListM() {
 		friendList(userId);	
+		makeTimeLineProfile(userId);
 	}
 	</script>
 	<!-- 검색 클릭시 검색 텍스트바 포커스 -->
@@ -850,14 +865,14 @@ td a {
 	<!-- 호버시 아이콘 변환 스크립트1 -->
 	<script type="text/javascript" src="resources/snsJS/snsHover.js?ver=1"></script>
 	<!-- 글쓰기칸 만드는 스크립트1 -->
-	<script type="text/javascript" src="resources/snsJS/writeBox.js"></script>
+	<script type="text/javascript" src="resources/snsJS/writeBox.js?ver=3"></script>
 	<!-- 이미지 미리보기 스크립트1 -->
 	<script type="text/javascript" src="resources/snsJS/imgView.js"></script>
 	<!-- 정보공개 변환1 -->
 	<script type="text/javascript" src="resources/snsJS/postSecurity.js"></script>
 	<!-- 타임라인 생성 스크립트 1-->
 	<script type="text/javascript"
-		src="resources/snsJS/timeLinePrint.js?ver=1"></script>
+		src="resources/snsJS/timeLinePrint.js?ver=3"></script>
 	<!-- 글작성 취소 스크립트 1-->
 	<script type="text/javascript" src="resources/snsJS/postCancel.js"></script>
 	<!-- 페이지 로딩시 해당 회원 정보 출력 스크립트1 -->
@@ -871,7 +886,7 @@ td a {
 	<!-- 타임라인 Ajax1 -->
 	<script type="text/javascript" src="resources/snsJS/timeLineAjax.js"></script>
 	<!-- 댓글출력 Ajax1 -->
-	<script type="text/javascript" src="resources/snsJS/commentAjax.js"></script>
+	<script type="text/javascript" src="resources/snsJS/commentAjax.js?ver=1"></script>
 	<!-- 댓글 출력 서비스 1-->
 	<script type="text/javascript"
 		src="resources/snsJS/commentPrint.js?ver=3"></script>
