@@ -30,13 +30,23 @@ public class SomoimAlbumfileUpload {
 	private ISomoimDao sDao;
 	
    public boolean somoalbum(MultipartHttpServletRequest multi, int somo_number ){
-      System.out.println("albumup");
-      //1.이클립스의 물리적 저장경로 찾기
-      String root=fullPathalbum;
-      System.out.println("root="+root);
-      
-      String path=root+"upload\\";
-      System.out.println(path);
+	   System.out.println("fileUp");
+
+	      System.out.println(multi.getServletContext().getRealPath("/"));
+	     
+	      String root_path = multi.getServletContext().getRealPath("/"); // 상대경로
+	      String sysRoot_path=root_path.substring(0, root_path.indexOf("\\.metadata"));
+	      String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\somoalbum\\";
+	      System.out.println("real="+real);
+	      
+	      System.out.println("-----");
+	      
+	      //1.이클립스의 물리적 저장경로 찾기
+	      String root=real;
+	      System.out.println("root="+root);
+	      
+	      String path=root+"upload\\";
+	      
       //2.폴더 생성을 꼭 할것...
       File dir=new File(path);
       if(!dir.isDirectory()){  //upload폴더 없다면

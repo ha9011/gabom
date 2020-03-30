@@ -270,6 +270,7 @@ header {
 	</header>
 	<section class="area">
 		<div id="planarea">
+			<div id="nomap" style="width: 100%; height: 600px; display:none">gg</div>
 			<div id="map" style="width: 100%; height: 600px;"></div>
 
 
@@ -1552,14 +1553,14 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 	} 
 	 
 	 //-----------지도 마커에 따른 재위치 선정
-	 var bounds = new kakao.maps.LatLngBounds();    
+	 let bounds = new kakao.maps.LatLngBounds();    
 	 for (i = 0; i < pointsFrame.length; i++) {
 	     // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
 	// 커스텀 오버레이에 표시할 내용입니다     
 	// HTML 문자열 또는 Dom Element 입니다 
-	var content = "<button  type='button' class='btn btn-primary idxbtn mapbtn'> <span class='badge badge-light'>"+(i+1)+"</span> </button> ";
+	let content = "<button  type='button' class='btn btn-primary idxbtn mapbtn'> <span class='badge badge-light'>"+(i+1)+"</span> </button> ";
 	// 커스텀 오버레이를 생성합니다
-	var custom = new kakao.maps.CustomOverlay({
+	let custom = new kakao.maps.CustomOverlay({
    	 position: pointsFrame[i],
    	 content: content   
 	});
@@ -1572,7 +1573,10 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 	 bounds.extend(pointsFrame[i]);
 	 }
 	 
-	 setBounds(bounds)    // 재설정매소드
+	 setTimeout(function() {
+		 setBounds(bounds)
+		}, 500);
+	     // 재설정매소드
 	 
  	
 	planidx=1;
