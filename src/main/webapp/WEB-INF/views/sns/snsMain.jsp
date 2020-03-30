@@ -701,11 +701,38 @@ td a {
 	<div onclick="asideRead()"><i class="fas fa-user fa-5x"></i></div>
 	<div onclick="location.href='#';"><i class="fas fa-arrow-circle-up fa-5x faa-float animated "></i></div>
 	</div>
+	<!-- 글신고 -->
+	<script type="text/javascript">
+	function reportPost(postNumber) {
+		console.log("신고 글번호 ",postNumber);
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+	 		xhr.setRequestHeader(header,token);}
+		});//먼저 보냄
+		$.ajax({
+				method:'post',
+				url:"sns/post/report",
+				data:{"postNumber":postNumber},
+				dataType : "json"
+		}).done((json)=>{
+			$('.info').text(json.message).css("background-color","red").fadeIn(300).delay(800)
+			.fadeOut(300,function(){
+			$('.info').css("background-color","#337ab7");
+			});
+		});			
+		
+		
+		
+		
+	}
+	</script>
+	<!-- 모바일 친구 리스트 -->
 	<script type="text/javascript">
 	function makeFriendListM() {
 		friendList(userId);	
 	}
 	</script>
+	<!-- 검색 클릭시 검색 텍스트바 포커스 -->
 	<script type="text/javascript">
 		$("#search").click(function() {
 			$("#searchText").focus();
