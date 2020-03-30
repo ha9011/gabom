@@ -128,7 +128,7 @@ li {
 		<ul class="nav nav-tabs" role="tablist"
 			style="background-color: infobackground;">
 			<li class="qwe nav-item"><a class="nav-link active"
-				data-toggle="tab" href="#judge">서비스업체 등록심사</a></li>
+				data-toggle="tab" href="#judge" id="judge_click">서비스업체 등록심사</a></li>
 <!-- 			<li class="nav-item"><a class="nav-link" data-toggle="tab" -->
 <!-- 				href="#service_declaration">서비스업체 신고관리</a></li> -->
 			<li class="qwe nav-item"><a class="nav-link" data-toggle="tab"
@@ -150,10 +150,10 @@ li {
 				<div>
 					<div id="service_main">
 						<div id="housemain_judge">
-							<h3>House심사대기 List</h3>
+							<h3 id="h3_house">House심사대기 List</h3>
 						</div>
 						<div id="foodmain_judge">
-							<h3>Food심사대기 List</h3>
+							<h3 id="h3_food">Food심사대기 List</h3>
 						</div>
 					</div>
 				</div>
@@ -958,6 +958,96 @@ $(document).on("click",".sns_comment_delete",function(e) {
 		strf+='</div>';
  	}
  	$("#foodmain_judge").append(strf); //food 리스트 End
+ 	//--------------------------------------------------------------------서비스업체 등록심사 ajax-----------------------------------------------------------
+ 	$("#judge_click").on("click",function(){
+ 		console.log("서비스업체 클릭");
+ 		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+ 		$.ajax({
+ 			url : 'judgelist',
+ 			type : 'post',
+ 			dataType : 'json',
+ 			success : function(response) {
+ 				console.log("select성공");
+ 				console.log("flist",response.flist);
+ 				console.log("hlist",response.hlist);
+ 				$("#sns_table").empty();
+ 				$("#foodmain_judge").empty();
+ 				$("#housemain_judge").empty();
+ 				
+ 				//strh = "";
+ 				strh = "<h3>House심사대기 List</h3>";
+ 				$("#housemain_judge").append(strh);
+ 				strh = "";
+ 				
+ 				for(let i=0;i<response.hlist.length;i++){
+ 			 		if(i>=2){
+ 			 			console.log("house break");
+ 			 			break;
+ 			 		}
+ 			 		strh+='<div style="border: 1px solid black; margin-top: 5px; id="house_judge">';
+ 					strh+='<div id="house_judge">';
+
+ 					strh+='<div id="list_left"><img style="height:200px; width:100%;" src="'+response.hlist[i].house_sysname+'"></div>';
+ 					strh+='<div id="list_right_sec">';
+ 					strh+='<div id="list_right">상 호 명 : '+response.hlist[i].house_name+'<br>';
+
+ 					if(response.hlist[i].house_type == 1){
+ 						strh+='집 유 형 : 아파트 <br>';
+ 					}else if(response.hlist[i].house_type == 2){
+ 						strh+='집 유 형 : 빌라 <br>';
+ 					}else if(response.hlist[i].house_type == 3){
+ 						strh+='집 유 형 : 주택 <br>';
+ 					}
+ 					strh+='집 주 소 : '+response.hlist[i].house_address+'</div>';
+ 					strh+='<div id="list_button" class="house"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-number="'+response.hlist[i].house_number+'">승인/거절</button></div>';
+ 					strh+='</div>';
+ 					strh+='</div>';
+ 					strh+='</div>';
+ 			 	}
+ 			 	$("#housemain_judge").append(strh); //house 리스트 End
+//----------------------------------------------------------------------------------------------------------
+ 				//strf = "";
+ 				strf = "<h3>Food심사대기 List</h3>";
+ 				$("#foodmain_judge").append(strf);
+ 				strf = "";
+ 				
+ 			 	for(let i=0;i<response.flist.length;i++){
+
+ 			 		if(i>=2){
+ 			 			console.log("food break");
+ 			 			break;
+ 			 		}
+ 			 		strf+='<div style="border: 1px solid black; margin-top: 5px; id="food_judge">';
+ 					strf+='<div id="food_judge">';
+ 					strf+='<div id="list_left"><img style="height:200px; width:100%;" src="'+response.flist[i].food_sysname+'"></div>';
+ 					strf+='<div id="list_right_sec">';
+ 					strf+='<div id="list_right">상 호 명 : '+response.flist[i].food_name+'<br>';
+ 					if(response.flist[i].food_type == 1){
+ 						strf+='집 유 형 : 레스토랑 <br>';
+ 					}else if(response.flist[i].food_type == 2){
+ 						strf+='집 유 형 : 카페 <br>';
+ 					}else if(response.flist[i].food_type == 3){
+ 						strf+='집 유 형 : 호프 <br>';
+ 					}
+ 					strf+='음식점 주소 : '+response.flist[i].food_address+'</div>';
+ 					strf+='<div id="list_button" class="food"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-number="'+response.flist[i].food_number+'">승인/거절</button></div>';
+ 					strf+='</div>';
+ 					strf+='</div>';
+ 					strf+='</div>';
+ 			 	}
+ 			 	$("#foodmain_judge").append(strf); //food 리스트 End
+ 				
+ 			},
+ 			error : function(jqXHR, status, e) {
+ 				console.log("서비스업체심사리스트 에러");
+ 			}
+ 		}); //ajax end
+ 	});//judge_click end
+ 	
+ 	
 	
  	//---------------------------------------------------------------------하우스 모달 ajax 시작---------------------------------------------------------------------
  	$('.house').on('click',function(e){ 

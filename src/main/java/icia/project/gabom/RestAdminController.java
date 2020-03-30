@@ -65,7 +65,23 @@ public class RestAdminController {
 
 		return json;
 	}
+	// 서비스업체 등록심사 출력
+	@PostMapping(value = "/judgelist", produces = "text/plain;charset=UTF-8")
+	public String judgelist() {
+		System.out.println("judgelist 컨트롤러");
+		Map<String, Object> list = new HashMap<String, Object>();
+		List<Adminhouse> hlist = aDao.getHouseList(); // house 등록타입0번인 리스트 담아오기
+		List<Adminfood> flist = aDao.getFoodList(); // food 등록타입 0번인 리스트 담아오기
+		
+		list.put("hlist", hlist);
+		list.put("flist", flist);
 
+		String json = new Gson().toJson(list);
+		System.out.println(json);
+
+		
+		return json;
+		}
 	// 심사 승인 컨트롤러
 	@PostMapping(value = "/approved", produces = "text/plain;charset=UTF-8")
 	public String judgeApproved(@RequestParam(value = "number", required = false) String number,
