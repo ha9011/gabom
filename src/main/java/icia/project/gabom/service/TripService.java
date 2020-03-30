@@ -19,17 +19,22 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import icia.project.gabom.dao.ITripplanDao;
+import icia.project.gabom.dao.IhouseDao;
 import icia.project.gabom.dto.ChattingInfinite;
 import icia.project.gabom.dto.ChattingSomoim;
 import icia.project.gabom.dto.ChattingTrip;
 import icia.project.gabom.dto.Food;
 import icia.project.gabom.dto.House;
+import icia.project.gabom.dto.House_reple;
+import icia.project.gabom.dto.House_review;
+import icia.project.gabom.dto.Housereservation;
 import icia.project.gabom.dto.Member;
 import icia.project.gabom.dto.Sns_friend;
 import icia.project.gabom.dto.TripPlanDay;
 import icia.project.gabom.dto.TripPlanDetail;
 import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.dto.Trip_plan;
+import icia.project.gabom.dto.Trip_plan_date;
 
 @Service
 public class TripService {
@@ -37,7 +42,7 @@ public class TripService {
    
    @Autowired
    private ITripplanDao tpDao;
-   
+   private IhouseDao hDao;
    
    //여행 플랜 1단계
    public String savetripplan(Trip_plan tp, Principal ppl) throws ParseException {
@@ -342,16 +347,108 @@ public class TripService {
 	}
 
 
-	public ModelAndView triphouse(int trip_number, String trip_area, Principal ppl) {
+	public ModelAndView triphouse(int trip_number, String areaCode, Principal ppl, int currentPlanDay) {
 		mav = new ModelAndView();
 		String json = null;
+		String json2 = null;
 	    String view = null;
 	    
-	   // List<House> trip_houselist = tpDao.triphouse(trip_area);// 여행지역만 가지고 검색 가능 
-	    //json = new Gson().toJson(trip_houselist);
+	    System.out.println("여행지역"+areaCode);
 	    
-		
+	    List<House> trip_houselist = tpDao.triphouse(areaCode);// 여행지역만 가지고 검색 가능 
+	    
+	    List<Trip_plan> tripinfo = tpDao.tripinfo(trip_number,currentPlanDay);
+	    
+	    json = new Gson().toJson(trip_houselist);
+	    json2 = new Gson().toJson(tripinfo);
+	    System.out.println(json);
+	    mav.addObject("trip_houselist", json);
+	    mav.addObject("tripinfo", json2);
+	    
+	    view="Trip/trip_houseSearchDetail";
+	    
+	    mav.setViewName(view);
 		return mav;
+	}
+
+
+	public ModelAndView triphousedetail(int house_number, Housereservation reserlist, Principal ppl, Trip_plan_date td) {
+		mav = new ModelAndView();
+		String view = null;
+		String json = null;
+		String json2 = null;
+		String json3= null;
+		String json4= null;
+		String json5= null;
+		String json6= null;// 맵으로 했다가 까기 힘들어서 그냥 따로함
+		
+		String member_id=ppl.getName();
+		int trip_number = td.getTrip_number();
+		int trip_day = td.getTrip_day();
+		
+		List<House> detailhouse = tpDao.detailhouse(house_number);
+		
+		List<Housereservation> detailreser = tpDao.detailreser(house_number);
+		
+		List<House_reple> reple_list = tpDao.replelist(house_number);
+		
+		List<House_review> review_list =tpDao.reviewlist(house_number);
+		
+		List<Member> memberinfo=tpDao.memberinfo(member_id);
+		
+		List<Trip_plan> tripinfo = tpDao.tripinfo(trip_number,trip_day);
+		
+		
+		json = new Gson().toJson(detailhouse);
+		json2 = new Gson().toJson(detailreser);
+		json3 = new Gson().toJson(reple_list);
+		json4 = new Gson().toJson(review_list);
+		json5 = new Gson().toJson(memberinfo);
+		json6 = new Gson().toJson(tripinfo);
+		
+		mav.addObject("detailhouse",json);
+		mav.addObject("detailreser",json2);
+		mav.addObject("reple_list",json3);
+		mav.addObject("review_list",json4);
+		mav.addObject("memberinfo",json5);
+		mav.addObject("tripinfo",json6);
+
+		
+		view="Trip/trip_housedetail";
+
+	    mav.setViewName(view);
+		return mav;
+	}
+
+
+	public String tripreservation(Principal principal, Housereservation hreservation, Trip_plan_date td) {
+		String json = null;
+	    
+	    String member_guestid=principal.getName();
+		int house_number= hreservation.getHouse_number();
+		String house_hostid= hreservation.getHouse_hostid();
+		int reservation_totalprice=hreservation.getReservation_totalprice();
+		int reservation_person=hreservation.getReservation_person();
+		String reservation_checkin=hreservation.getReservation_checkin();
+		String reservation_checkout=hreservation.getReservation_checkout();		
+		
+		hreservation.setHouse_hostid(house_hostid).setHouse_number(house_number).setMember_guestid(member_guestid);
+		hreservation.setReservation_checkin(reservation_checkin).setReservation_checkout(reservation_checkout);
+		hreservation.setReservation_person(reservation_person).setReservation_totalprice(reservation_totalprice);
+		
+		int reservation_number = tpDao.housereservation(hreservation); // 예약 하고 
+		
+		System.out.println("currval값="+hreservation.getReservation_number());//예약번호 받고 
+	      
+	    int resernum=hreservation.getReservation_number();
+	    System.out.println("예약번호 :"+resernum);
+	    
+	    int trip_number = td.getTrip_number();
+		int trip_day = td.getTrip_day();
+	    	
+	    tpDao.t_dateup(resernum,trip_number,trip_day);//예약번호 day에 입력 
+
+		return json;
 	}
    
    

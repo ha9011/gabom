@@ -13,17 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.project.gabom.dao.ITripplanDao;
+import icia.project.gabom.dto.Housereservation;
 import icia.project.gabom.dto.Sns_friend;
 import icia.project.gabom.dto.TripPlanDay;
 import icia.project.gabom.dto.TripPlanDetail;
 import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.dto.Trip_plan;
+import icia.project.gabom.dto.Trip_plan_date;
 import icia.project.gabom.service.TripService;
 
 @RestController
 @RequestMapping(value = "/tprest")
 public class TripRestController {
    
+	private ModelAndView mav;
+	
    @Autowired
    private ITripplanDao tpDao;
    
@@ -151,4 +155,20 @@ public class TripRestController {
       System.out.println("해당날짜 결과 : " + json);
       return json;
    }
+   @PostMapping(value = "/tripreservation",produces = "application/json;charset=utf-8")//ajax로 insert
+	public String tripreservation(Principal principal, Housereservation hreservation,Trip_plan_date td) {
+//		System.out.println("예약하러 컨트롤러 오니?");
+//		System.out.println(hreservation.toString());
+//		System.out.println("여행일수 "+td.getTrip_day());
+//		System.out.println("여행번호"+td.getTrip_number());
+		
+		String json = trs.tripreservation(principal,hreservation,td);
+		System.out.println("test");
+		return json;
+	
+	}
+   
+   
+   
+   
 }

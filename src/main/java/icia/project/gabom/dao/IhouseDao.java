@@ -9,12 +9,14 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import icia.project.gabom.dto.House;
 import icia.project.gabom.dto.House_reple;
 import icia.project.gabom.dto.House_review;
 import icia.project.gabom.dto.Housereservation;
 import icia.project.gabom.dto.Member;
+import icia.project.gabom.dto.Trip_plan_date;
 
 
 public interface IhouseDao {
@@ -37,7 +39,7 @@ public interface IhouseDao {
 	List<House> changesearch(String house_address);
 
 	@Select("select * from registhouse r, housefile HF WHERE R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND R.HOUSE_NUMBER=#{house_number}")
-	List<House> detailhouse(int house_number);
+	List<House> detailhouse(@Param("house_number")int house_number);
 	
 	//----------------------------------------------------------------------------------------------------------예약
 	int housereservation(Housereservation hreservation);
@@ -46,19 +48,21 @@ public interface IhouseDao {
 	List<Housereservation> detailreser(@Param("house_number") int house_number);
 	
 	@Select("SELECT * FROM HOUSEREPLE WHERE HOUSE_NUMBER=#{house_number} ORDER BY HOUSE_REPLE_TIME DESC" )
-	List<House_reple> replelist(int house_number);
+	List<House_reple> replelist(@Param("house_number")int house_number);
 	
 	@Select("SELECT * FROM MEMBER WHERE MEMBER_ID=#{member_id}")
 	List<Member> memberinfo(String member_id);
 
 	void insertreple(House_reple hreple);
 	
-	List<House_review> reviewlist(int house_number);
+	List<House_review> reviewlist(@Param("house_number")int house_number);
 
 	List<House_review> showhreview(@Param("house_review_number")int house_review_number);
 
 	@Delete("DELETE FROM HOUSEREPLE WHERE HOUSE_REPLE_NUMBER=#{house_reple_number}")
-	void repledel(@Param("house_reple_number")int house_reple_number); 
+	void repledel(@Param("house_reple_number")int house_reple_number);
+	
+	
 	
 	
 	
