@@ -23,6 +23,7 @@ import icia.project.gabom.dto.ChattingInfinite;
 import icia.project.gabom.dto.ChattingSomoim;
 import icia.project.gabom.dto.ChattingTrip;
 import icia.project.gabom.dto.Food;
+import icia.project.gabom.dto.House;
 import icia.project.gabom.dto.Member;
 import icia.project.gabom.dto.Sns_friend;
 import icia.project.gabom.dto.TripPlanDay;
@@ -338,6 +339,19 @@ public class TripService {
 	      
 	     String jsonResult = new Gson().toJson(tpd);
 		return jsonResult;
+	}
+
+
+	public ModelAndView triphouse(int trip_number, String trip_area, Principal ppl) {
+		mav = new ModelAndView();
+		String json = null;
+	    String view = null;
+	    
+	   // List<House> trip_houselist = tpDao.triphouse(trip_area);// 여행지역만 가지고 검색 가능 
+	    //json = new Gson().toJson(trip_houselist);
+	    
+		
+		return mav;
 	}
    
    
