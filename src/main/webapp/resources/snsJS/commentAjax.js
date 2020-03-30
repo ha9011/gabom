@@ -15,7 +15,7 @@
 			dataType : "json"
 	}).done((commentJson)=>{
 		printComment(commentJson,number);
-		if(commentJson.length==commentJson[0]["max"]||commentJson[0]["max"]==undefined){
+		if(commentJson.length==commentJson[0]["max"]||commentJson.comment=="댓글이 없습니다."){
 			let commentM="#commentMore"+number;
 			$(commentM).hide();
 			commentRow=1;
