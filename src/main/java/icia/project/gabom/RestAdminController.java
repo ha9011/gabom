@@ -1,5 +1,6 @@
 package icia.project.gabom;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,11 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import icia.project.gabom.dao.IAdminDao;
+import icia.project.gabom.dto.AdminSns;
 import icia.project.gabom.dto.Adminfood;
 import icia.project.gabom.dto.Adminhouse;
 import icia.project.gabom.dto.Adminnotices;
 import icia.project.gabom.dto.Qnaboard;
 import icia.project.gabom.service.AdminjudgeManagement;
+import icia.project.gabom.service.SnsCommentDelete;
+import icia.project.gabom.service.SnsPostDelete;
 
 @RestController
 public class RestAdminController {
@@ -27,6 +31,10 @@ public class RestAdminController {
 	private IAdminDao aDao;
 	@Autowired
 	private AdminjudgeManagement am; // 관리자
+	@Autowired
+	SnsPostDelete snsDel;
+	@Autowired
+	SnsCommentDelete snsCommentDelete;
 
 	// house 모달창 출력 ajax
 	@GetMapping(value = "/housemodal", produces = "text/plain;charset=UTF-8")
@@ -134,17 +142,18 @@ public class RestAdminController {
 
 		return json;
 	}
-	//공지사항 삭제
+
+	// 공지사항 삭제
 	@PostMapping(value = "/noticedelete", produces = "text/plain;charset=UTF-8")
 	public String noticedelete(@RequestParam("num") String num) {
 		System.out.println("레스트컨트룰러 delete");
-		System.out.println("삭제="+num);
-		
+		System.out.println("삭제=" + num);
+
 		boolean result = aDao.getnoticedelete(num);
-		System.out.println("삭제 성공했니??"+result);
+		System.out.println("삭제 성공했니??" + result);
 		List<Adminnotices> nlist = aDao.getadnotices(); // 전체공지 정보 출력
 		String json = new Gson().toJson(nlist);
-		
+
 		return json;
 	}
 
@@ -166,31 +175,31 @@ public class RestAdminController {
 	@PostMapping(value = "/qnamodal", produces = "text/plain;charset=UTF-8")
 	public String qnamodal(@RequestParam("num") String num) {
 		System.out.println("레스트컨트룰러 qna");
-		
-		Map<String,Object> list = new HashMap<String, Object>();
-	      
-	      List<Qnaboard> nlist = aDao.getqnamodal(num); // 선택질문,답글 정보 출력
-	      System.out.println("qnamodal=" + nlist);
-	      
-	      List<Qnaboard> alist = aDao.getanswermodal(num); //질문 답글 출력
-	      //System.out.println("qnaanswer="+alist);
-	      //String ason = new Gson().toJson(alist);
-	      //System.out.println(ason);
-	      
-	      list.put("nlist", nlist);
-	      list.put("alist", alist);
-	      
-	      
-	      String json = new Gson().toJson(list);
-	      System.out.println(json);
-	      
-	      return json;
+
+		Map<String, Object> list = new HashMap<String, Object>();
+
+		List<Qnaboard> nlist = aDao.getqnamodal(num); // 선택질문,답글 정보 출력
+		System.out.println("qnamodal=" + nlist);
+
+		List<Qnaboard> alist = aDao.getanswermodal(num); // 질문 답글 출력
+		// System.out.println("qnaanswer="+alist);
+		// String ason = new Gson().toJson(alist);
+		// System.out.println(ason);
+
+		list.put("nlist", nlist);
+		list.put("alist", alist);
+
+		String json = new Gson().toJson(list);
+		System.out.println(json);
+
+		return json;
 	}
+
 	// qna답글 작성 출력
 	@PostMapping(value = "/qnaanswer", produces = "text/plain;charset=UTF-8")
 	public String qnaanswer(@RequestParam("num") String num, @RequestParam("qnaanswer") String qnaanswer) {
 		System.out.println("레스트컨트룰러 qna답글");
-		
+
 		System.out.println("글작성 번호 : " + num);
 		System.out.println("댓글작성 내용 : " + qnaanswer);
 		boolean result = aDao.getqnaanswer(num, qnaanswer);
@@ -198,11 +207,50 @@ public class RestAdminController {
 		List<Qnaboard> nlist = aDao.getqnaanswermodal(num); // 선택질문,답글 정보 출력
 		System.out.println("댓글작성후 dao=" + nlist);
 		String json = new Gson().toJson(nlist);
-		System.out.println("댓글작성후 dao="+json);
+		System.out.println("댓글작성후 dao=" + json);
+
+		return null;
+	}
+
+	// sns게시글 신고 출력
+	@PostMapping(value = "/snspostsreport", produces = "text/plain;charset=UTF-8")
+	public String snspostsreport() {
+		System.out.println("레스트컨트룰러 sns게시글");
+
+		List<AdminSns> slist = aDao.getsnspostsreport(); // sns게시글 신고 출력
+		System.out.println("신고게시글 출력 =" + slist);
+		String json = new Gson().toJson(slist);
+		System.out.println("파싱"+json);
+
+		return json;
+	}
+
+	// sns댓글 신고 출력
+	@PostMapping(value = "/snscommentreport", produces = "text/plain;charset=UTF-8")
+	public String snscommentreport() {
+		System.out.println("레스트컨트룰러 sns댓글");
+
+		List<AdminSns> slist = aDao.getsnscommentreport(); // sns댓글 신고 출력
+		System.out.println("댓글신고 출력=" + slist);
+		String json = new Gson().toJson(slist);
+		System.out.println("파싱"+json);
+
+		return json;
+	}
+	@PostMapping(value = "/snspostsdelete", produces = "text/plain;charset=UTF-8")
+	public String snspostsdelete(@RequestParam("num")int num,Principal principal) {
+		System.out.println("레스트컨트룰러 sns게시글 삭제");
+		System.out.println("게시글번호는="+num);
+		String json=snsDel.delete(num, principal);
+		return json;
+	}
+	@PostMapping(value = "/snscommentdelete", produces = "text/plain;charset=UTF-8")
+	public String snscommentdelete(@RequestParam("num")int num) {
+		System.out.println("레스트컨트룰러 sns댓글 삭제");
+		System.out.println("댓글번호는="+num);
+		String json=snsCommentDelete.delete(num, 0);
 		
 		return json;
 	}
-	
-	
 
 }

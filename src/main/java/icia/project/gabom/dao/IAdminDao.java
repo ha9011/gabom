@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import icia.project.gabom.dto.AdminSns;
 import icia.project.gabom.dto.Adminfood;
 import icia.project.gabom.dto.Adminhouse;
 import icia.project.gabom.dto.Adminnotices;
@@ -46,5 +47,9 @@ public interface IAdminDao {
 	List<Qnaboard> getqnaanswermodal(String num);
 	//공지사항 삭제
 	boolean getnoticedelete(String num);
+	//sns신고 게시글 출력
+	List<AdminSns> getsnspostsreport();
+	//sns신고 댓글 출력
+	List<AdminSns> getsnscommentreport();
 	
 }
