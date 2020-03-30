@@ -3,6 +3,8 @@ package icia.project.gabom;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,8 @@ public class FoodRegisterController {
 	}	
 	
 	@PostMapping(value = "/foodRegisterUpload") //아이디 받아야함 
-	public ModelAndView foodRegisterUpload(MultipartHttpServletRequest multi,Principal principal) {
+	public ModelAndView foodRegisterUpload(MultipartHttpServletRequest multi,Principal principal
+			,HttpServletRequest req) {
 		System.out.println("음식점 등록 컨트롤러");
 		
 		String member_hostid=principal.getName();
@@ -51,7 +54,7 @@ public class FoodRegisterController {
 		System.out.println(files.size());
 		System.out.println("files="+files.get(0).getOriginalFilename());
 		
-		mav= frs.foodRegisterUpload(multi,principal);
+		mav= frs.foodRegisterUpload(multi,principal,req);
 		System.out.println("완료되면 뷰로 보여줘");
 		return mav;
 	}
