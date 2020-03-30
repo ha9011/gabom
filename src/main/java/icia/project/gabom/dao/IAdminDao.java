@@ -38,8 +38,12 @@ public interface IAdminDao {
 	List<Qnaboard> getqnaboard();
 	//질문 디테일 모달출력
 	List<Qnaboard> getqnamodal(String num);
+	//질문 답글 모달출력
+	List<Qnaboard> getanswermodal(String num);
 	//질문 답글등록
 	boolean getqnaanswer(@Param("number")String number,@Param("qnaanswer") String qnaanswer);
+	//QNA답글 작성 후 디테일 모달 띄우기
+	List<Qnaboard> getqnaanswermodal(String num);
 	//공지사항 삭제
 	boolean getnoticedelete(String num);
 	

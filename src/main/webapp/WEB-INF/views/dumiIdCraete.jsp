@@ -19,13 +19,10 @@
 .image {
   min-height: 100vh;
 }
-
 .bg-image {
   background-image: url('./resources/houseimg/joinfrm.JPG');
-  background-size: cover;
   background-position: center;
 }
-
 .login-heading {
   font-weight: 300;
 }

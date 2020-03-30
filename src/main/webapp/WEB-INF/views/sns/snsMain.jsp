@@ -22,7 +22,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.1/css/all.min.css" />
 <link
 	href="https://fonts.googleapis.com/css?family=Jua&display=swap&subset=korean"
 	rel="stylesheet">
@@ -802,7 +802,7 @@ td a {
 	<!-- 정보공개 변환1 -->
 	<script type="text/javascript" src="resources/snsJS/postSecurity.js"></script>
 	<!-- 타임라인 생성 스크립트 1-->
-	<script type="text/javascript" src="resources/snsJS/timeLinePrint.js"></script>
+	<script type="text/javascript" src="resources/snsJS/timeLinePrint.js?ver=1"></script>
 	<!-- 글작성 취소 스크립트 1-->
 	<script type="text/javascript" src="resources/snsJS/postCancel.js"></script>
 	<!-- 페이지 로딩시 해당 회원 정보 출력 스크립트1 -->

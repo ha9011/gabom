@@ -1,6 +1,8 @@
 package icia.project.gabom;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -165,18 +167,24 @@ public class RestAdminController {
 	public String qnamodal(@RequestParam("num") String num) {
 		System.out.println("레스트컨트룰러 qna");
 		
-		List<Qnaboard> nlist = aDao.getqnamodal(num); // 선택질문,답글 정보 출력
-		System.out.println("qnamodal=" + nlist);
-		
-		//List<Qnaboard> alist = aDao.getqnaanswer(num); //질문 답글 출력
-		//System.out.println("qnaanswer="+alist);
-		//String ason = new Gson().toJson(alist);
-		//System.out.println(ason);
-		
-		String json = new Gson().toJson(nlist);
-		System.out.println(json);
-		
-		return json;
+		Map<String,Object> list = new HashMap<String, Object>();
+	      
+	      List<Qnaboard> nlist = aDao.getqnamodal(num); // 선택질문,답글 정보 출력
+	      System.out.println("qnamodal=" + nlist);
+	      
+	      List<Qnaboard> alist = aDao.getanswermodal(num); //질문 답글 출력
+	      //System.out.println("qnaanswer="+alist);
+	      //String ason = new Gson().toJson(alist);
+	      //System.out.println(ason);
+	      
+	      list.put("nlist", nlist);
+	      list.put("alist", alist);
+	      
+	      
+	      String json = new Gson().toJson(list);
+	      System.out.println(json);
+	      
+	      return json;
 	}
 	// qna답글 작성 출력
 	@PostMapping(value = "/qnaanswer", produces = "text/plain;charset=UTF-8")
@@ -184,13 +192,13 @@ public class RestAdminController {
 		System.out.println("레스트컨트룰러 qna답글");
 		
 		System.out.println("글작성 번호 : " + num);
-		System.out.println("글작성 내용 : " + qnaanswer);
+		System.out.println("댓글작성 내용 : " + qnaanswer);
 		boolean result = aDao.getqnaanswer(num, qnaanswer);
-		System.out.println("글작성 성공?" + result);
-		List<Qnaboard> nlist = aDao.getqnamodal(num); // 선택질문,답글 정보 출력
-		System.out.println("글작성후 dao=" + nlist);
+		System.out.println("댓글작성 성공?" + result);
+		List<Qnaboard> nlist = aDao.getqnaanswermodal(num); // 선택질문,답글 정보 출력
+		System.out.println("댓글작성후 dao=" + nlist);
 		String json = new Gson().toJson(nlist);
-		System.out.println("글작성후 dao="+json);
+		System.out.println("댓글작성후 dao="+json);
 		
 		return json;
 	}

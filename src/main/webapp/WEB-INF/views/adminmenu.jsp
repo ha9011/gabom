@@ -8,25 +8,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>서비스업체 등록 심사</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
+<!-- <script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
-
-
-<!-- <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
-<!-- 제이쿼리 -->
-<!-- <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-부트스트랩 -->
 
 <style>
 #headerContainer {
@@ -147,7 +139,6 @@ li {
 			<li class="nav-item"><a class="nav-link" data-toggle="tab"
 				href="#qna_board" id="qna_board_click">QnA</a></li>
 			<li class="nav-item"><a class="nav-link" href="home">Home</a></li>
-			<li class="nav-item"><a class="nav-link" href="Apidate">Api</a></li>
 		</ul>
 		<!-- Tab 내용 -->
 		<div class="tab-content">
@@ -184,7 +175,7 @@ li {
 				<br>
 				<h3>전체회원 공지사항</h3>
 				<div>
-					<table id="boards" class="table table-hover">
+					<table id="boards" class="table table-bordered table-hover">
 						<colgroup>
 							<!-- 열너비 지정 -->
 							<col width="15%">
@@ -203,18 +194,9 @@ li {
 						<tbody id="notices_body">
 						</tbody>
 					</table>
+					<div id="pagination"></div> 
 				</div>
-				<!-- 	<nav aria-label="Page navigation example" style="text-align: center;">
-						<ul class="pagination">
-							<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-							<li class="page-item active"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">4</a></li>
-							<li class="page-item"><a class="page-link" href="#">5</a></li>
-							<li class="page-item"><a class="page-link" href="#">Next</a></li>
-						</ul>
-					</nav> -->
+				
 				<!-- pagination 영역 -->
 				<!-- <div style="text-align: center;">
 					<ul id="pagination" class="pagination"></ul>
@@ -228,7 +210,7 @@ li {
 				<br>
 				<h3>질문 게시판</h3>
 				<div>
-					<table id="qna_boards" class="table table-hover">
+					<table id="qna_boards" class="table table-bordered table-hover">
 						<colgroup>
 							<!-- 열너비 지정 -->
 							<col width="15%">
@@ -247,6 +229,7 @@ li {
 						<tbody id="qna_body">
 						</tbody>
 					</table>
+					<div id="paginationqna"></div> 
 				</div>
 			</div>
 		</div>
@@ -365,9 +348,12 @@ li {
 	<div>
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
 	</div>
-
+	<script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
+   
+	
+	
 	<script>
-
+	
 	
 	
 	function getToday() {
@@ -398,6 +384,8 @@ li {
              dataType : 'json',
              success : function(response) {
 				console.log('qna불러오기 성공');
+				 let container = $('#paginationqna');
+	              
 				
 				console.log("size",response.length);
 				
@@ -424,6 +412,7 @@ li {
 						
 				}
 				$("#qna_body").append(strq);
+				
 				
              }, error : function(jqXHR, status, e) {
                  console.error("qna출력 에러");
@@ -453,18 +442,20 @@ li {
 					$("#qna_modal_header").empty();
 					$("#qna_modal_body").empty();
 					response = JSON.parse(response);
+					console.log(response);
+					console.log(response.nlist);
 
 					let strn = " ";
-					strn += '<div>'+response[0].qna_title+'</div>';
+					strn += '<div>'+response.nlist[0].qna_title+'</div>';
 					$("#qna_modal_header").append(strn);
 					strn = " ";
-					strn += '<div>작 성 자 : '+ response[0].qna_member_id + '<span> 글 번 호 : '+ response[0].qna_number+'<br>';
-					strn += '<input type="hidden" name="number" id="number" value="'+response[0].qna_number+'">';
-					strn += '작성일 : '+response[0].qna_date  +'</div>';
-					strn += '<div>'+response[0].qna_body+'</div>';
+					strn += '<div>작 성 자 : '+ response.nlist[0].qna_member_id + '<span> 글 번 호 : '+ response.nlist[0].qna_number+'<br>';
+					strn += '<input type="hidden" name="number" id="number" value="'+response.nlist[0].qna_number+'">';
+					strn += '작성일 : '+response.nlist[0].qna_date  +'</div>';
+					strn += '<div>'+response.nlist[0].qna_body+'</div>';
 					strn += '<div id="qna_reply_div" style="border-top: 1px solid #D8D8D8">댓글</div>';
-						for(i=0;i<response.length;i++){
-							strn += '<div class="qna_reply_div" style="border-top: 1px solid #D8D8D8">'+response[i].qna_reply+'</div>';
+						for(i=0;i<response.alist.length;i++){
+							strn += '<div class="qna_reply_div" style="border-top: 1px solid #D8D8D8">'+response.alist[i].qna_reply+'</div>';
 						}
 					strn += '<textarea class="form-control" rows="5" id="qnaanswer" name="qnaanswer"></textarea>';
 					$("#qna_modal_body").append(strn);
@@ -528,6 +519,7 @@ li {
 	//----------------------------------------------전체공지 출력---------------------------------------------------------------------
 	$("#all_notices_click").on("click",function(){
 		console.log("notices 클릭");
+		
 		$.ajaxSetup({         
 		      beforeSend : function(xhr){
 		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
@@ -537,6 +529,9 @@ li {
            type : "Post",
            dataType : 'json',
            success : function(response) {
+        	   
+        	  
+        	   
 				console.log('notices불러오기 성공');
 				console.log(response);
 				console.log("전체공지 사이즈",response.length);
@@ -552,7 +547,6 @@ li {
 					const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
 					//console.log(writeDate[0]); //년 월 일
 					//console.log(writeDate[1]); //시 분 초
-					
 					const today = getToday(); //오늘 날짜를 직접 정의
 					
 					if(today==writeDate[0]){ //날 짜
@@ -564,12 +558,28 @@ li {
 					strb += '</tr>';
 				}//for문 종료
 				$("#notices_body").append(strb);
-				
+				 $("#boards").DataTable({
+					 "order": [[0, 'desc']], // asc 또는 desc
+
+					 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+
+		             	// 검색 기능 숨기기
+		             	searching: false,
+//		             	// 정렬 기능 숨기기
+//		             	ordering: false,
+//		             	// 정보 표시 숨기기
+		             	info: false,
+//		             	// 페이징 기능 숨기기
+//		             	paging: false
+		            	
+		             	});
+                  
            }, error : function(jqXHR, status, e) {
                console.error("게시판출력 에러");
            }
-       });
-	});//notices function End
+       		}); //ajax end
+		//}); //datatable end
+	}); //notices function End
 	
 	//---------------------------------------------------------------------전체공지 상세 modal 생성---------------------------------------------------------------------
 	$(document).on("click", "#notices_detail",function(e){
