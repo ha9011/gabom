@@ -274,7 +274,7 @@ header {
 
 
 			<div id="hc">
-				<a>+숙소 선택하기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a>+체크리스트 </a>
+				<button id="houseReservate">숙소 선택하기</button>
 			</div>
 
 			<div id="day">
@@ -353,9 +353,10 @@ header {
 </body>
 <script>
 var trip_data = ${detrip};
+
 var areaCode = trip_data[0].trip_area;
 console.log(areaCode)
-
+console.log(trip_data)
 var chatData = ${JsonchatData}; // 최근 날자로 채팅 가져오기
 var nextDay= "${nextDay}" // 다음 검색할 날짜
 var firstDayPlan = ${firstDayPlan}.tripData;
@@ -1591,8 +1592,20 @@ const initMapKaKao=()=>{
 	}
 	clickLinee=[];
 }	
-	
 
+
+// 숙소 선택하기 버튼 누를 경우
+$("#houseReservate").on('click', function(){
+	console.log('하우스예약')
+	saveplan(); //플렌에 저장된놈 저장됨
+	var tripNum = trip_data[0].trip_number;
+	console.log("몇번째",currentPlanDay)
+	console.log("여행번호",tripNum)
+	console.log("지역코드",areaCode)
+	
+	location.href = "triphouse?trip_number="+tripNum+"&currentPlanDay="+currentPlanDay+"&areaCode="+areaCode;  // 여행번호, 제주도, 몇번째 날
+		
+})
 </script>
 
 </html>
