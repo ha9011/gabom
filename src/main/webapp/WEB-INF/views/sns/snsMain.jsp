@@ -720,10 +720,6 @@ td a {
 			$('.info').css("background-color","#337ab7");
 			});
 		});			
-		
-		
-		
-		
 	}
 	</script>
 	<!-- 모바일 친구 리스트 -->
