@@ -12,7 +12,7 @@
 		}
 		$timeLine += '<div class="row" onclick="moveThisNamePost(\''+timeLineJson[j]["posts_writer"]+'\')">';
 		$timeLine += '<a href="#;"><img src='+timeLineJson[j]["profilePicture"]+' class="img-responsive col-xs-4 col-md-2 col-sm-4 myImage" id="timeLineProfile"></a>';
-		$timeLine += '<div id="snsMember_id"><a href="#;">'+timeLineJson[j]["posts_writer"]+'</a> 님의 글</div>';
+		$timeLine += '<div id="snsMember_id"><a href="#;">'+timeLineJson[j]["posts_writer"]+'</a> 님의 글<i class="fas fa-fan faa-spin animated" style="color: #337ab7;"></i></div>';
 		$timeLine += '<input type="hidden" value='+timeLineJson[j]["posts_number"]+' id="posts_number">';
 		$timeLine += '</div>';
 		$timeLine += '<div class="nav-tabs" id="postHead">';
