@@ -117,7 +117,7 @@
 <body>
 
 	<header>
-		<jsp:include page="/WEB-INF/views/somoim/somoimheader.jsp" />
+		<jsp:include page="/WEB-INF/views/header/somoimheader.jsp" />
 	</header>
 
 

@@ -34,11 +34,10 @@ body {
 
 img {
    float: none;
-   margin: 0 auto;
+   margin: 0 35%;
    display: flex;
    align-items: center;
-   width: 250px;
-   height: 75px;
+   width: 40%;
    margin-bottom: 40px;
 }
 

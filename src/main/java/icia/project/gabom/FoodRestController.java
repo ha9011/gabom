@@ -30,12 +30,12 @@ private ModelAndView mav;
 	@Autowired
 	private IfoodDao fDao;
 
-	@GetMapping(value = "/foodchangesearch" ,produces = "application/json;charset=utf-8")// ajax로 재검색 
-	public String foodchangesearch(@RequestParam("data")String house_address) {
-		System.out.println(house_address);
+	@PostMapping(value = "/foodchangesearch" ,produces = "application/json;charset=utf-8")// ajax로 재검색 
+	public String foodchangesearch(@RequestParam("data")String food_address) {
+		System.out.println(food_address);
 		System.out.println("재검색화면 가줘 ");
 		
-		String json = fs.foodchangesearch(house_address);
+		String json = fs.foodchangesearch(food_address);
 		
 		return json;
 	}
