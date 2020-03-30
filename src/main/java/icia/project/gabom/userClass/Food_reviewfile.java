@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +30,18 @@ public class Food_reviewfile {
 	@Autowired
 	private IMyInfoDao minfDao;
 	
-   public boolean fileUpfreview(MultipartHttpServletRequest multi, int food_review_number){
+   public boolean fileUpfreview(MultipartHttpServletRequest multi, int food_review_number, HttpServletRequest req){
 	   System.out.println("fileUp");
 	      //1.이클립스의 물리적 저장경로 찾기
-	      String root=fullPathmain;
-	      System.out.println("root="+root);
 	      
-	      String path=root+"upload\\";
+	      String root_path = req.getSession().getServletContext().getRealPath("/"); // 상대경로
+	      String sysRoot_path=root_path.substring(0, root_path.indexOf("\\.metadata"));
+	      String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\foodreview\\upload\\";
+	      System.out.println("real="+real);
+	      
 	      
 	      //2.폴더 생성을 꼭 할것...
-	      File dir=new File(path);
+	      File dir=new File(real);
 	      if(!dir.isDirectory()){  //upload폴더 없다면
 	         dir.mkdir();  //upload폴더 생성
 	      }
@@ -83,7 +86,7 @@ public class Food_reviewfile {
 		         //5.메모리->실제 파일 업로드
 		         
 		         try {
-		            mf.transferTo(new File(path+sysFileName)); // 서버upload에 파일 저장
+		            mf.transferTo(new File(real+sysFileName)); // 서버upload에 파일 저장
 		            f1=minfDao.foodreviewimage(fMap); // db에 올림
 		         }catch (IOException e) {
 		            // TODO Auto-generated catch block

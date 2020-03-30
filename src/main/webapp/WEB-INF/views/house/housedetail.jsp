@@ -137,10 +137,10 @@ margin-top:2%;
 
 </head>
 <body>
-<%-- 
-<header>
-<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
-</header> --%>
+	<header>
+		<jsp:include page="/WEB-INF/views/somoim/somoimheader.jsp" />
+	</header>
+
 
 <div>
 	<form action="searchhouse" method="get">

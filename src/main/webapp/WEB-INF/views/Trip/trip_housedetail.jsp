@@ -251,6 +251,8 @@ margin-top:2%;
 										name="reservation_person" type="number" id="person" value="">명
 									<input type="hidden" name="house_hostid" id="hostid">
 									<input type="hidden" name="house_number" id="house_number"><br>
+									<input type="hidden" name="trip_number" id ="trip_number">
+									<input type="hidden" name="trip_day" id ="trip_day">
 
 									<button
 										style="font-size: 20px; height: 50px; width: 500px; background-color: #064D84"
@@ -328,8 +330,10 @@ margin-top:2%;
 <script>
 var house =${detailhouse};
 var test =${detailreser};
+var tripinfo= ${tripinfo};
 console.log("house=",house);
 console.log(test);
+console.log("여행정보",tripinfo)
 
 $(document).ready(function() {
     $('#hostid').val(house[0].house_hostid);
@@ -381,26 +385,29 @@ $("#info").append(house_info);
   $("#insertbtn").on("click", function (e) {
 	  	e.preventDefault();
 	 	console.log("ajax 예약");
-       var formData = new FormData(document.getElementById("reservation")); 
-        	
-       console.log(formData.get("reservation_checkin"));
+	 	 $("#trip_number").val(tripinfo[0].trip_number);
+	      $("#trip_day").val(tripinfo[0].trip_day);
+       var formData = new FormData(document.getElementById("reservation"));
+       var trip_number=tripinfo[0].trip_number;
+       
+       console.log("여행번호",formData.get("trip_number"));
+       console.log("여행일수 ",formData.get("trip_day"));
        $.ajaxSetup({         
     	      beforeSend : function(xhr){
     	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
     	      });//먼저 보냄
         
         $.ajax({
-            url:'hrest/housereservation',
+            url:'tprest/tripreservation',
             type:'post',
             data:formData,
             processData:false,
             contentType:false,  //제이슨 아니니깐 까보지마!!
-             dataType:"json", //rest 컨트롤 이용   
             success:function(data){
                alert("예약완료");
                console.log(data)
                $("#reservation")[0].reset();
-               
+               location.href="detailplan?trip_number="+trip_number;
             },
             error:function(error){
                alert("예약실패")

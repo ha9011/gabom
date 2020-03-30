@@ -35,14 +35,11 @@ public class SnsWriteInsert {
 			String security, HttpServletRequest req, int low) {
 		String json = null; // 리턴할 json
 		String root_path = req.getSession().getServletContext().getRealPath("/"); // 상대경로
-		String sysRoot_path=root_path.substring(0, root_path.indexOf("g")+1);
-		System.out.println(sysRoot_path);
+		 String sysRoot_path=root_path.substring(0, root_path.indexOf("\\.metadata"));
 		String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\snsPostsImage\\";
 		//String attach_path = "resources/snsPostsImage/"; // 파일 경로
 		File dir = new File(real); // 디렉토리가 없을경우 만든다.
 		String id = principal.getName(); // 시큐리티 아이디 정보
-		System.out.println("아이디" + id);
-		System.out.println("글 내용" + snsWriteContents);
 		int photoResult = 0;
 		if (!dir.isDirectory()) { // upload폴더 없다면
 			dir.mkdir(); // upload폴더 생성

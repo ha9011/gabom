@@ -25,24 +25,29 @@ public class SomoimUploadFile {
    //파일 업로드 메소드   
 	//String fullPath = "D:\\springWork\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\SpringMVCBoard\\upload\\";
 	
+	
+	
 	String fullPathmain = "D:\\springWork\\gabom\\src\\main\\webapp\\resources\\somoimimage\\";
-
+	
+	
+	
 	@Autowired
 	private IhouseDao hDao;
 	
    public boolean fileUpProfilePic(MultipartHttpServletRequest multi, String sysfile){
       System.out.println("fileUp");
-      //System.out.println(multi.getContextPath());
-      //System.out.println(multi.getPathInfo());
-      //System.out.println(multi.getPathTranslated());
-      //System.out.println(multi.getServletPath());
-      //System.out.println(multi.getSession().getServletContext().getResourcePaths("/"));
-      //System.out.println(multi.getServletContext().getRealPath("/"));
+
+      System.out.println(multi.getServletContext().getRealPath("/"));
+     
+      String root_path = multi.getServletContext().getRealPath("/"); // 상대경로
+      String sysRoot_path=root_path.substring(0, root_path.indexOf("\\.metadata"));
+      String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\somoimimage\\";
+      System.out.println("real="+real);
       
       System.out.println("-----");
       
       //1.이클립스의 물리적 저장경로 찾기
-      String root=fullPathmain;
+      String root=real;
       System.out.println("root="+root);
       
       String path=root+"upload\\";

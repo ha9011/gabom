@@ -110,4 +110,19 @@ order by tc.chatting_date desc
 	</insert>
 	
 	
+	
+	
+	
+	<select id="triphouse" resultType="house">
+	SELECT * FROM REGISTHOUSE R, HOUSEFILE HF 
+	WHERE R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND HOUSE_ADDRESS LIKE '%'||#{areaCode}||'%' AND HOUSE_IMAGETYPE=1 AND HOUSE_GRANTTYPE=1
+	</select>
+	
+	<insert id="housereservation" parameterType="hreservation" >
+	INSERT INTO HOUSERESERVATION VALUES(SQ_HOUSERESERVATION.nextval,#{house_number},#{house_hostid},#{member_guestid},#{reservation_checkin},#{reservation_checkout},#{reservation_person},#{reservation_totalprice},0)
+			<selectKey keyProperty="reservation_number" resultType="integer" order="AFTER">
+				SELECT SQ_HOUSERESERVATION.CURRVAL FROM DUAL
+			</selectKey>
+	</insert>
+	
 </mapper>

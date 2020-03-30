@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.project.gabom.dao.ITripplanDao;
+import icia.project.gabom.dto.Housereservation;
 import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.dto.Trip_plan;
+import icia.project.gabom.dto.Trip_plan_date;
 import icia.project.gabom.service.TripApiService;
 import icia.project.gabom.service.TripService;
 
@@ -71,14 +73,26 @@ public class TripController {
 
    
    @RequestMapping(value = "/triphouse", method = RequestMethod.GET)
-	public ModelAndView triphouse(int trip_number,Principal ppl,String trip_area) {
-			System.out.println(trip_number);
-			System.out.println(trip_area);
+	public ModelAndView triphouse(int trip_number,Principal ppl,String areaCode,int currentPlanDay) {
+			System.out.println("여행번호"+trip_number);
+			System.out.println("여행지역"+areaCode);
+			System.out.println("여행일수 "+currentPlanDay);
 			
-			mav=trs.triphouse(trip_number,trip_area,ppl );
+			mav=trs.triphouse(trip_number,areaCode,ppl,currentPlanDay );
 			
 		return mav;
 	}
+  
+   @RequestMapping(value = "/triphousedetail", method = RequestMethod.GET)
+	public ModelAndView triphousedetail(int house_number,Housereservation reserlist,Principal ppl,Trip_plan_date td) {
+		System.out.println("여행숙박선택");
+		System.out.println(house_number);
+		System.out.println(td.getTrip_day());
+		System.out.println(td.getTrip_number());
+		mav = trs.triphousedetail(house_number,reserlist,ppl,td);
+		return mav;
+	}
+   
    
    
 }
