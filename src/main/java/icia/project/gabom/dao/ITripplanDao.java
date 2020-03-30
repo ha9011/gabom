@@ -11,11 +11,16 @@ import org.apache.ibatis.annotations.Update;
 
 import icia.project.gabom.dto.ChattingSomoim;
 import icia.project.gabom.dto.ChattingTrip;
+import icia.project.gabom.dto.House;
+import icia.project.gabom.dto.House_reple;
+import icia.project.gabom.dto.House_review;
+import icia.project.gabom.dto.Housereservation;
 import icia.project.gabom.dto.Member;
 import icia.project.gabom.dto.Sns_friend;
 import icia.project.gabom.dto.TripPlanDetail;
 import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.dto.Trip_plan;
+import icia.project.gabom.dto.Trip_plan_date;
 
 public interface ITripplanDao {
    
@@ -48,7 +53,27 @@ public interface ITripplanDao {
 
    List<Trip_plan> detailplan(@Param("trip_number")int trip_number);
 
+   List<House> triphouse(@Param("areaCode")String areaCode);
 
+   @Select("select * from registhouse r, housefile HF WHERE R.HOUSE_NUMBER = HF.HOUSE_NUMBER AND R.HOUSE_NUMBER=#{house_number}")
+   List<House> detailhouse(int house_number);
+
+   @Select("select * from HOUSERESERVATION WHERE HOUSE_NUMBER=#{house_number} order by RESERVATION_CHECKIN")
+   List<Housereservation> detailreser(int house_number);
+   
+   @Select("SELECT * FROM HOUSEREPLE WHERE HOUSE_NUMBER=#{house_number} ORDER BY HOUSE_REPLE_TIME DESC" )
+   List<House_reple> replelist(int house_number);
+   
+   @Select("SELECT * FROM HOUSE_REVIEW HR WHERE HOUSE_NUMBER=#{house_number}")
+   List<House_review> reviewlist(int house_number);
+   
+   @Select("SELECT * FROM MEMBER WHERE MEMBER_ID=#{member_id}")
+   List<Member> memberinfo(@Param("member_id")String member_id);
+
+   int housereservation(Housereservation hreservation);
+   
+   @Update("update trip_plan_DATE set reservation_number =#{resernum} where trip_number =#{trip_number} and TRIP_DAY=#{trip_day}")
+   void t_dateup(@Param("resernum")int resernum,@Param("trip_number")int trip_number,@Param("trip_day")int trip_day); 
    
    //하동원 ===================================
    @Select("SELECT MEMBER_ID,MEMBER_PROFILE_PICTURE FROM MEMBER WHERE MEMBER_ID = #{name} ")
@@ -72,4 +97,11 @@ public interface ITripplanDao {
 
    @Delete("DELETE FROM TRIP_PLAN_DETAIL WHERE TRIP_NUMBER = #{tripNum} and TRIP_DATE = #{day} ")
    int deletePlanDetail(@Param("tripNum")String tripNum, @Param("day")String day);
+   
+   @Select("SELECT * from trip_plan_DATE where trip_number=#{trip_number} AND TRIP_DAY=#{currentPlanDay}")
+   List<Trip_plan> tripinfo(@Param("trip_number")int trip_number, @Param("currentPlanDay")int currentPlanDay);
+
+
+
+
 }

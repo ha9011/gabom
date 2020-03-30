@@ -1596,6 +1596,43 @@ const initMapKaKao=()=>{
 
 // 숙소 선택하기 버튼 누를 경우
 $("#houseReservate").on('click', function(){
+	 
+	if(areaCode == 1){
+		areaCode = "서울"		  
+	 	  }else if(areaCode == 2){
+	 		 areaCode = "인천"		  
+	 	  }else if(areaCode== 3){
+	 		 areaCode = "대전"		  
+	 	  }else if(areaCode == 4){
+	 		 areaCode = "대구"		  
+	 	  }else if(areaCode == 5){
+	 		 areaCode= "광주"		  
+	 	  }else if(areaCode == 6){
+	 		 areaCode= "부산"		  
+	 	  }else if(areaCode == 7){
+	 		 areaCode= "울산"		  
+	 	  }else if(areaCode == 8){
+	 		 areaCode = "세종특별자치시"		  
+	 	  }else if(areaCode == 31){
+	 		 areaCode = "경기도"		  
+	 	  }else if(areaCode == 32){
+	 		 areaCode = "강원도"		  
+	 	  }else if(areaCode == 33){
+	 		 areaCode= "충청북도"		  
+	 	  }else if(areaCode == 34){
+	 		 areaCode = "충청남도"		  
+	 	  }else if(areaCode== 35){
+	 		 areaCode = "경상북도"		  
+	 	  }else if(areaCode == 36){
+	 		 areaCode= "경상남도"		  
+	 	  }else if(areaCode == 37){
+	 		 areaCode = "전라북도"		  
+	 	  }else if(areaCode == 38){
+	 		 areaCode = "전라남도"		  
+	 	  }else if(areaCode == 39){
+	 		 areaCode = "제주특별자치도"		  
+	 	  }
+	
 	console.log('하우스예약')
 	saveplan(); //플렌에 저장된놈 저장됨
 	var tripNum = trip_data[0].trip_number;
