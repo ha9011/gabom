@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -36,7 +38,7 @@ public class FoodRegisterService {
 	private FoodUploadFile ful;
 	
 
-	public ModelAndView foodRegisterUpload(MultipartHttpServletRequest multi,Principal principal) {
+	public ModelAndView foodRegisterUpload(MultipartHttpServletRequest multi,Principal principal, HttpServletRequest req) {
 		mav=new ModelAndView();
 		String view=null;
 		
@@ -91,8 +93,8 @@ public class FoodRegisterService {
 		boolean f1= false;
 		boolean f2= false;
 		if(true) { //한번더 파일 있는지 체크 업로드
-			f1=ful.fileUpmain(multi, food.getFood_number());
-			f2=ful.fileUpdetail(multi,food.getFood_number());
+			f1=ful.fileUpmain(multi, food.getFood_number(),req);
+			f2=ful.fileUpdetail(multi,food.getFood_number(),req);
 			if(f1) {
 				view="home";
 			}else {

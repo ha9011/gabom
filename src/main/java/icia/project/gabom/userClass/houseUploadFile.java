@@ -36,7 +36,7 @@ public class houseUploadFile {
       System.out.println("fileUp");
       //1.이클립스의 물리적 저장경로 찾기
       String root_path = req.getSession().getServletContext().getRealPath("/"); // 상대경로
-      String sysRoot_path=root_path.substring(0, root_path.indexOf("g")+1);
+      String sysRoot_path=root_path.substring(0, root_path.indexOf("\\.metadata"));
       String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\housemainImage\\upload\\";
       System.out.println("real="+real);
       
@@ -106,12 +106,11 @@ public class houseUploadFile {
 	      System.out.println("fileUpdetail");
 	      //1.이클립스의 물리적 저장경로 찾기
 	      
-	      
 	      String root_path = req.getSession().getServletContext().getRealPath("/"); // 상대경로
-	      String sysRoot_path=root_path.substring(0, root_path.indexOf("g")+1);
+	      System.out.println("상대경로 풀"+root_path);
+	      String sysRoot_path=root_path.substring(0, root_path.indexOf("\\.metadata"));
 	      String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\housedetailImage\\upload\\";
 	      System.out.println("real="+real);
-	      
 	      
 	      System.out.println(real);
 	      //2.폴더 생성을 꼭 할것...

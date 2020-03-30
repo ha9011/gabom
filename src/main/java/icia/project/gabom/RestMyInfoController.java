@@ -3,6 +3,8 @@ package icia.project.gabom;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -81,14 +83,15 @@ public class RestMyInfoController {
 	
 	
 	@PostMapping(value = "/inserthreview", produces="text/plain;charset=utf-8")
-	public String inserthreview(Principal pc,MultipartHttpServletRequest multi) {
+	public String inserthreview(Principal pc,MultipartHttpServletRequest multi
+			,HttpServletRequest req) {
 		System.out.println("집 리뷰등록");
 		//System.out.println("사진"+multi.getFile("house_review_orifile").getOriginalFilename());
 		
 		List<MultipartFile> files=multi.getFiles("house_review_orifile");
 		System.out.println("files="+files.get(0).getOriginalFilename());
 		
-		String json = MIMM.inserthreview(pc,multi);
+		String json = MIMM.inserthreview(pc,multi,req);
 		
 		return json;
 	}
@@ -107,14 +110,15 @@ public class RestMyInfoController {
 	
 	
 	@PostMapping(value = "/insertfreview", produces="text/plain;charset=utf-8")
-	public String insertfreview(Principal pc,MultipartHttpServletRequest multi) {
+	public String insertfreview(Principal pc,MultipartHttpServletRequest multi,
+			HttpServletRequest req) {
 		System.out.println("맛집 리뷰등록");
 		//System.out.println("사진"+multi.getFile("house_review_orifile").getOriginalFilename());
 		
 		List<MultipartFile> files=multi.getFiles("food_review_orifile");
 		System.out.println("files="+files.get(0).getOriginalFilename());
 		
-		String json = MIMM.insertfreview(pc,multi);
+		String json = MIMM.insertfreview(pc,multi,req);
 		
 		return json;
 	}

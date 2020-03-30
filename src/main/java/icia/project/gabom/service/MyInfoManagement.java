@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -209,7 +211,7 @@ public class MyInfoManagement {
 	}
 
 
-	public String inserthreview(Principal pc, MultipartHttpServletRequest multi) {//집 리뷰등록 
+	public String inserthreview(Principal pc, MultipartHttpServletRequest multi, HttpServletRequest req) {//집 리뷰등록 
 		String json =null;
 		
 		int house_number = Integer.parseInt(multi.getParameter("house_number"));
@@ -236,7 +238,7 @@ public class MyInfoManagement {
 		
 		//파일 따로 없로드
 		if(true) { //한번더 파일 있는지 체크 업로드
-			f1=hrf.fileUpreview(multi,hrv.getHouse_review_number());
+			f1=hrf.fileUpreview(multi,hrv.getHouse_review_number(),req);
 			
 				}
 		
@@ -265,7 +267,7 @@ public class MyInfoManagement {
 		return json;
 	}
 	
-	public String insertfreview(Principal pc, MultipartHttpServletRequest multi) {// 맛집 리뷰등록
+	public String insertfreview(Principal pc, MultipartHttpServletRequest multi, HttpServletRequest req) {// 맛집 리뷰등록
 		String json =null;
 		
 		int food_number = Integer.parseInt(multi.getParameter("food_number"));
@@ -295,7 +297,7 @@ public class MyInfoManagement {
 		
 		//파일 따로 없로드
 		if(true) { //한번더 파일 있는지 체크 업로드
-			f1=frf.fileUpfreview(multi,frv.getFood_review_number());
+			f1=frf.fileUpfreview(multi,frv.getFood_review_number(),req);
 			
 				}
 		
