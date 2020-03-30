@@ -38,7 +38,7 @@ public class SnsWriteInsert {
 		String sysRoot_path=root_path.substring(0, root_path.indexOf("g")+1);
 		System.out.println(sysRoot_path);
 		String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\snsPostsImage\\";
-		String attach_path = "resources/snsPostsImage/"; // 파일 경로
+		//String attach_path = "resources/snsPostsImage/"; // 파일 경로
 		File dir = new File(real); // 디렉토리가 없을경우 만든다.
 		String id = principal.getName(); // 시큐리티 아이디 정보
 		System.out.println("아이디" + id);
