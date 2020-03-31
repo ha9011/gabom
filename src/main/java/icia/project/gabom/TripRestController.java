@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 import icia.project.gabom.dao.ITripplanDao;
 import icia.project.gabom.dto.Housereservation;
 import icia.project.gabom.dto.Sns_friend;
@@ -171,6 +173,22 @@ public class TripRestController {
 		return json;
 	
 	}
+	@PostMapping(value = "/tripmemoselect",produces = "application/json;charset=utf-8") //ajax로 update
+	public String tripmemoselect(Tripmemoupdate tripup){
+		System.out.println("메모찾으러 오니?");
+		System.out.println("trip_number"+tripup.getTrip_number());
+		System.out.println("trip_date"+tripup.getTrip_date());
+		System.out.println("trip_order"+tripup.getTrip_order());
+		System.out.println("trip_title"+tripup.getTrip_title());
+		System.out.println("trip_memo"+tripup.getTrip_memo());
+		
+		String selectmemo = trs.selecttripmemo(tripup);
+		String json = new Gson().toJson(selectmemo);
+		System.out.println("메모컨트롤러 셀렉후="+json);
+		
+		return json;
+	
+	}
 	@PostMapping(value = "/tripmemoupdate",produces = "application/json;charset=utf-8") //ajax로 update
 	public String tripmemoupdate(Tripmemoupdate tripup){
 		System.out.println("메모추가하러 오니?");
@@ -183,14 +201,7 @@ public class TripRestController {
 		String json = trs.updatetripmemo(tripup);
 		
 		
-//		System.out.println("trip_date"+trip_date);
-//		System.out.println("trip_order"+trip_order);
-//		System.out.println("trip_title"+trip_title);
-//		System.out.println("trip_memo"+trip_memo);
-		
-		
-		
-		return null;
+		return json;
 	
 	}
    

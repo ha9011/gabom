@@ -473,17 +473,34 @@ public class TripService {
 	    
 		return json;
 	}
-
+	public String selecttripmemo(Tripmemoupdate tripup) {
+		System.out.println("메모셀렉 서비스");
+		String json = tpDao.selecttripmemo(tripup); 
+		System.out.println("셀렉한 메모="+json);
+		return json;
+	}
 
 	public String updatetripmemo(Tripmemoupdate tripup) {
+		
 		String trip_number = tripup.getTrip_number();
 		String trip_date = tripup.getTrip_date();
 		String trip_order = tripup.getTrip_order();
 		String trip_title = tripup.getTrip_title();
 		String trip_memo = tripup.getTrip_memo();
 		
+		System.out.println("서비스="+trip_number);
+		System.out.println("서비스="+trip_date);
+		System.out.println("서비스="+trip_order);
+		System.out.println("서비스="+trip_title);
+		System.out.println("서비스="+trip_memo);
+		System.out.println("서비스에서 dao로 이동");
+		int memoupdate = tpDao.updatetripmemo(tripup);
+		System.out.println("메모 업데이트 성공");
 		return null;
 	}
+
+
+	
    
    
 
