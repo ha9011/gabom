@@ -34,7 +34,7 @@ letter-spacing:10px;
 </head>
 <body>
 <header>
-	<jsp:include page="/WEB-INF/views/header/househeader.jsp" />
+	<jsp:include page="/WEB-INF/views/header/choicehouseheader.jsp" />
 </header>
 <header style="background-color:#064D84" class="text-center py-5 mb-4">
   <div class="container">
