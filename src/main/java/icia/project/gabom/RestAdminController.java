@@ -35,6 +35,7 @@ public class RestAdminController {
 	SnsPostDelete snsDel;
 	@Autowired
 	SnsCommentDelete snsCommentDelete;
+	
 
 	// house 모달창 출력 ajax
 	@GetMapping(value = "/housemodal", produces = "text/plain;charset=UTF-8")

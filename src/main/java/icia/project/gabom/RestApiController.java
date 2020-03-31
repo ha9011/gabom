@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,8 +29,6 @@ import icia.project.gabom.service.AdminjudgeManagement;
 @RestController
 public class RestApiController {
 
-	@Autowired
-	private AdminjudgeManagement am; //관리자
 
 	
 	@RequestMapping(value = "/apisearch", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
@@ -658,7 +655,6 @@ public class RestApiController {
 				in.close();
 				bos1.close();
 			    //System.out.println("bos1"+bos1.to());
-			    
 			    
 //				String mbos = bos1.toString("UTF-8");
 				json = bos1.toString();

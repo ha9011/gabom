@@ -156,27 +156,6 @@
 				"trip_img" : formData.get("img"),
 				"trip_type" : 0,
 		}
-		//시큐리티 ajax Setup
-//  		$.ajaxSetup({         //상세모달 ajax
-//  		      beforeSend : function(xhr){
-//  		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-//  		      });//먼저 보냄
-
-//             	console.log("일정추가 ajax시작");
-//             	console.log(params);
-//             $.ajax({
-//                 url : "destinationselect",
-//                 type : "get",
-//                 data : params ,
-//                 success : function(response) {
-                	
- 					
-                    
-//                 }, error : function(jqXHR, status, e) {
-//                     //console.error(status + " :asdasd " + e);
-//                 }
-//             });	 
-            //$(opener.document).getElementById("")
             window.opener.destinationselect(params);
 		window.close();
 	})

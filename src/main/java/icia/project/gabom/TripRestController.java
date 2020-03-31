@@ -3,9 +3,11 @@ package icia.project.gabom;
 import java.security.Principal;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +22,7 @@ import icia.project.gabom.dto.TripPlanDetail;
 import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.dto.Trip_plan;
 import icia.project.gabom.dto.Trip_plan_date;
+import icia.project.gabom.dto.Tripmemoupdate;
 import icia.project.gabom.service.TripService;
 
 @RestController
@@ -34,6 +37,7 @@ public class TripRestController {
    @Autowired
    private TripService trs;
    
+     
    //여행1단계 저장
    @PostMapping(value = "/savetripplan" ,produces = "application/json;charset=utf-8")
    public String savetripplan(Trip_plan tp, Principal ppl ) throws ParseException {
@@ -167,7 +171,28 @@ public class TripRestController {
 		return json;
 	
 	}
-   
+	@PostMapping(value = "/tripmemoupdate",produces = "application/json;charset=utf-8") //ajax로 update
+	public String tripmemoupdate(Tripmemoupdate tripup){
+		System.out.println("메모추가하러 오니?");
+		System.out.println("trip_number"+tripup.getTrip_number());
+		System.out.println("trip_date"+tripup.getTrip_date());
+		System.out.println("trip_order"+tripup.getTrip_order());
+		System.out.println("trip_title"+tripup.getTrip_title());
+		System.out.println("trip_memo"+tripup.getTrip_memo());
+		
+		String json = trs.updatetripmemo(tripup);
+		
+		
+//		System.out.println("trip_date"+trip_date);
+//		System.out.println("trip_order"+trip_order);
+//		System.out.println("trip_title"+trip_title);
+//		System.out.println("trip_memo"+trip_memo);
+		
+		
+		
+		return null;
+	
+	}
    
    
    
