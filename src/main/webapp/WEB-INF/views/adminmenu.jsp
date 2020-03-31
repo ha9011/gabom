@@ -12,9 +12,13 @@
 <!-- <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
 <link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
+   
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- <script
+
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
@@ -135,7 +139,7 @@ li {
 				href="#tourist_judge">여행객계획 등록심사</a></li>  
 				
 			<li class="qwe nav-item"><a class="nav-link" data-toggle="tab"
-				href="#sns_declaration" >SNS 신고관리</a>
+				href="#sns_declaration" id="snsmanage" >SNS 신고관리</a>
 			</li>
 			
 			<li class="qwe nav-item"><a class="nav-link" data-toggle="tab"
@@ -177,27 +181,9 @@ li {
 			<!----------------------------------------------전체공지 출력---------------------------------------------->
 			<div id="all_notices" class="container tab-pane fade">
 				<h3>전체회원 공지사항</h3>
-				<div>
-					<table id="boards" class="table table-bordered table-hover">
-						<colgroup>
-							<!-- 열너비 지정 -->
-							<col width="15%">
-							<col width="45%">
-							<col width="20%">
-							<col width="20%">
-						</colgroup>
-						<thead>
-							<tr>
-								<th>글번호</th>
-								<th>제목</th>
-								<th>날짜</th>
-								<th>조회수</th>
-							</tr>
-						</thead>
-						<tbody id="notices_body">
-						</tbody>
-					</table>
-					<div id="pagination"></div> 
+				<div id="boardstable">
+				
+				
 				</div>
 				
 				<!-- pagination 영역 -->
@@ -211,7 +197,7 @@ li {
 			<!----------------------------------------------질문게시판 출력---------------------------------------------->
 			<div id="qna_board" class="container tab-pane fade">
 				<h3>질문 게시판</h3>
-				<div>
+				<div id="qnadatatable">
 					<table id="qna_boards" class="table table-bordered table-hover">
 						<colgroup>
 							<!-- 열너비 지정 -->
@@ -231,7 +217,6 @@ li {
 						<tbody id="qna_body">
 						</tbody>
 					</table>
-					<div id="paginationqna"></div> 
 				</div>
 			</div>
 		</div>
@@ -358,7 +343,7 @@ li {
 	
 	
 	<script>
-	
+	var socketalarm =null;  // 소켓 지박령!!
 	
 	
 	function getToday() {
@@ -529,6 +514,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
 //---------------------------------------------------------------------qna 전체 출력---------------------------------------------------------------------
 	 $("#qna_board_click").on("click",function(){
 		console.log("qna 클릭");
+		dtable.destroy();
 		
 		$.ajaxSetup({         
 		      beforeSend : function(xhr){
@@ -541,33 +527,67 @@ $(document).on("click",".sns_comment_delete",function(e) {
              success : function(response) {
 				console.log('qna불러오기 성공');
 				 let container = $('#paginationqna');
-	              
-				
 				console.log("size",response.length);
 				$("#sns_table").empty();
-				$("#qna_body").empty();
-				let strq = " ";
+				$("#qnadatatable").empty();
+				
+				let boards = $("<table id='qna_boards' class='table table-bordered table-hover'> </table>")
+				let colgroup =$("<colgroup><col width='15%'><col width='45%'><col width='20%'><col width='20%'></colgroup>")
+				let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>글쓴이</th><th>날짜</th></tr></thead>")
+		        
+				let tbody = $("<tbody ></tbody>")	
+				
+				
+				
+				
 				for(i=0;i<response.length;i++){
-					strq += '<tr>';
-					strq += '<td>'+response[i].qna_number+'</td>'; //질문번호
-					strq += '<td><a id="qna_detail" class="qna_detail" href="#;" data-toggle="modal" data-target="#qnaModal" data-number="'+response[i].qna_number+'">'+response[i].qna_title+'</a>';
-					strq += '</td>'; //제목
-					strq += '<td>'+response[i].qna_member_id+'</td>';
+					
+					let tr = $("<tr></tr>")
+ 					let td1 =$('<td>'+response[i].qna_number+'</td><td><a id="qna_detail" class="qna_detail" href="#;" data-toggle="modal" data-target="#qnaModal" data-number="'+response[i].qna_number+'">'+response[i].qna_title+'</a></td><td>'+response[i].qna_member_id+'</td>');
+ 					
 					const writeDate=response[i].qna_date.split(" ");  //split(쪼개다)
-					//console.log(writeDate[0]); //년 월 일
-					//console.log(writeDate[1]); //시 분 초
 					
 					const today = getToday(); //오늘 날짜를 직접 정의
 					
-					if(today==writeDate[0]){ //날 짜
-					strq += '<td>'+writeDate[1]+'</td>';
-					}else{
-						strq += '<td>'+writeDate[0]+'</td>';
-					}
-					strq += '</tr>';
-						
+					
+					let td2 ;
+ 					if(today==writeDate[0]){ //날 짜
+ 						td2 = $('<td>'+writeDate[1]+'</td>')
+ 					}else{
+ 						td2= $('<td>'+writeDate[0]+'</td>');
+ 					}
+ 					
+ 					tr.append(td1);
+ 					tr.append(td2);
+ 					tbody.append(tr);		
 				}
-				$("#qna_body").append(strq);
+				
+				boards.append(colgroup);
+ 				boards.append(thead); 
+ 				boards.append(tbody);
+ 				
+ 				$("#qnadatatable").append(boards);
+				
+					
+					setTimeout(() => {
+						dtable =$("#qna_boards").DataTable({
+							 "order": [[0, 'desc']], // asc 또는 desc
+
+							 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+
+				             	// 검색 기능 숨기기
+				             	searching: false,
+//				             	// 정렬 기능 숨기기
+//				             	ordering: false,
+//				             	// 정보 표시 숨기기
+				             	info: false,
+//				             	// 페이징 기능 숨기기
+//				             	paging: false
+				            	
+				            });
+					}, 100);
+					
+				
 				
 				
              }, error : function(jqXHR, status, e) {
@@ -665,6 +685,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
                   	
                   }, error : function(jqXHR, status, e) {
                       console.log("답글쓰기 에러");
+                      
                   }
                   
       		});
@@ -673,6 +694,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	
 	
 	//----------------------------------------------전체공지 출력---------------------------------------------------------------------
+	var dtable ;
 	$("#all_notices_click").on("click",function(){
 		console.log("notices 클릭");
 		
@@ -686,50 +708,74 @@ $(document).on("click",".sns_comment_delete",function(e) {
            dataType : 'json',
            success : function(response) {
         	   
-        	  
         	   $("#sns_table").empty();
 				console.log('notices불러오기 성공');
 				console.log(response);
 				console.log("전체공지 사이즈",response.length);
-				var pagesize = response.length;
+				let pagesize = response.length;
 				console.log("페이지사이즈",pagesize);
-				$("#notices_body").empty();
-				let strb = " ";
-				for(var i = 0;i<response.length;i++){
-					strb += '<tr>';
-					strb += '<td>'+response[i].all_notices_number+'</td>'; //글번호
-					strb += '<td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a>';
-					strb += '</td>'; //제목
+				$("#boardstable").empty();
+				
+
+				
+				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
+				let colgroup =$("<colgroup><col width='15%'><col width='45%'><col width='20%'><col width='20%'></colgroup>")
+				let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>날짜</th><th>조회수</th></tr></thead>")
+		        
+				let tbody = $("<tbody ></tbody>")		
+				
+				
+		        
+		        
+				for(let i = 0;i<response.length;i++){
+					
+					let tr = $("<tr></tr>")
+					let td1 =$('<td>'+response[i].all_notices_number+'</td><td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a></td>');
+					
 					const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
 					//console.log(writeDate[0]); //년 월 일
 					//console.log(writeDate[1]); //시 분 초
 					const today = getToday(); //오늘 날짜를 직접 정의
 					
+					let td2 ;
 					if(today==writeDate[0]){ //날 짜
-					strb += '<td>'+writeDate[1]+'</td>';
+						td2 = $('<td>'+writeDate[1]+'</td>')
 					}else{
-						strb += '<td>'+writeDate[0]+'</td>';
+						td2= $('<td>'+writeDate[0]+'</td>');
 					}
-					strb += '<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'; //조 회 수
-					strb += '</tr>';
+					let td3 = $('<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'); //조 회 수
+
+					tr.append(td1)
+					tr.append(td2)
+					tr.append(td3)
+					
+					tbody.append(tr);	
 				}//for문 종료
-				$("#notices_body").append(strb);
-				 $("#boards").DataTable({
-					 "order": [[0, 'desc']], // asc 또는 desc
+				
+				boards.append(colgroup);
+				boards.append(thead); 
+				boards.append(tbody);
+				console.dir(boards);
+				$("#boardstable").append(boards);
+				
+				setTimeout(() => {
+					dtable =$("#boards").DataTable({
+						 "order": [[0, 'desc']], // asc 또는 desc
 
-					 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
 
-		             	// 검색 기능 숨기기
-		             	searching: false,
-//		             	// 정렬 기능 숨기기
-//		             	ordering: false,
-//		             	// 정보 표시 숨기기
-		             	info: false,
-//		             	// 페이징 기능 숨기기
-//		             	paging: false
-		            	
-		             	});
-                  
+			             	// 검색 기능 숨기기
+			             	searching: false,
+//			             	// 정렬 기능 숨기기
+//			             	ordering: false,
+//			             	// 정보 표시 숨기기
+			             	info: false,
+//			             	// 페이징 기능 숨기기
+//			             	paging: false
+			            	
+			            });
+				}, 100);
+				
            }, error : function(jqXHR, status, e) {
                console.error("게시판출력 에러");
            }
@@ -778,6 +824,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	
 	//----------------------------------------------공지사항 삭제---------------------------------------------------------------------
 	$(".delete").on("click",function(){
+		dtable.destroy();
 		console.log("삭제버튼 클릭");
 		var params = $("#notices_delete").val();
 		console.log("params",params);
@@ -793,29 +840,77 @@ $(document).on("click",".sns_comment_delete",function(e) {
                  data : {"num":params}, 
                  dataType : 'json',
                  success : function(response) {
-                	 console.log("공지사항 삭제성공");
-                	 $("#notices_body").empty();
+                	 
+                	 $("#sns_table").empty();
+     				console.log('notices불러오기 성공');
+     				console.log(response);
+     				console.log("전체공지 사이즈",response.length);
+     				let pagesize = response.length;
+     				console.log("페이지사이즈",pagesize);
+     				$("#boardstable").empty();
+     				
      				let strb = " ";
-     				for(var i = 0;i<response.length;i++){
-     					strb += '<tr>';
-     					strb += '<td>'+response[i].all_notices_number+'</td>'; //글번호
-     					strb += '<td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a>';
-     					strb += '</td>'; //제목
+
+     				
+     				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
+     				let colgroup =$("<colgroup><col width='15%'><col width='45%'><col width='20%'><col width='20%'></colgroup>")
+     				let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>날짜</th><th>조회수</th></tr></thead>")
+     		        
+     				let tbody = $("<tbody ></tbody>")		
+     				
+     				
+     		        
+     		        
+     				for(let i = 0;i<response.length;i++){
+     					
+     					let tr = $("<tr></tr>")
+     					let td1 =$('<td>'+response[i].all_notices_number+'</td><td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a></td>');
+     					
      					const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
      					//console.log(writeDate[0]); //년 월 일
      					//console.log(writeDate[1]); //시 분 초
-     					
      					const today = getToday(); //오늘 날짜를 직접 정의
      					
+     					let td2 ;
      					if(today==writeDate[0]){ //날 짜
-     					strb += '<td>'+writeDate[1]+'</td>';
+     						td2 = $('<td>'+writeDate[1]+'</td>')
      					}else{
-     						strb += '<td>'+writeDate[0]+'</td>';
+     						td2= $('<td>'+writeDate[0]+'</td>');
      					}
-     					strb += '<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'; //조 회 수
-     					strb += '</tr>';
+     					let td3 = $('<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'); //조 회 수
+
+     					tr.append(td1)
+     					tr.append(td2)
+     					tr.append(td3)
+     					
+     					tbody.append(tr);	
      				}//for문 종료
-     				$("#notices_body").append(strb);
+     				
+     				boards.append(colgroup);
+     				boards.append(thead); 
+     				boards.append(tbody);
+     				console.dir(boards);
+     				$("#boardstable").append(boards);
+     				
+     				setTimeout(() => {
+     					dtable =$("#boards").DataTable({
+     						 "order": [[0, 'desc']], // asc 또는 desc
+
+     						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+
+     			             	// 검색 기능 숨기기
+     			             	searching: false,
+//     			             	// 정렬 기능 숨기기
+//     			             	ordering: false,
+//     			             	// 정보 표시 숨기기
+     			             	info: false,
+//     			             	// 페이징 기능 숨기기
+//     			             	paging: false
+     			            	
+     			            });
+     				}, 100);
+     				
+     				
      				
                 }, error : function(jqXHR, status, e) {
                      console.error("공지사항 삭제 에러");
@@ -829,6 +924,9 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	//---------------------------------------------------------------------글쓰기 모달 생성---------------------------------------------------------------------
 	$("#write_modal_button").on("click",function(){
 		console.log("글쓰기 클릭");
+		
+		$("#boardstable").empty();
+		dtable.destroy();
 		
 		var formData = new FormData();
 		formData.append("title",document.getElementById("title").value);
@@ -854,34 +952,98 @@ $(document).on("click",".sns_comment_delete",function(e) {
             contentType:false,//multipart의 경우 contentType을 false로
             
             success : function(response) {
+            	
             	console.log("글쓰기 성공",response);
             	document.getElementById("title").value = " ";
             	document.getElementById("content").value = " ";
             	
-            	$("#notices_body").empty();
-				let strb = " ";
-				for(var i = 0;i<response.length;i++){
-					strb += '<tr>';
-					strb += '<td>'+response[i].all_notices_number+'</td>'; //글번호
-					strb += '<td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a>';
-					strb += '</td>'; //제목
-					const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
-					//console.log(writeDate[0]); //년 월 일
-					//console.log(writeDate[1]); //시 분 초
-					
-					const today = getToday(); //오늘 날짜를 직접 정의
-					
-					if(today==writeDate[0]){ //날 짜
-					strb += '<td>'+writeDate[1]+'</td>';
-					}else{
-						strb += '<td>'+writeDate[0]+'</td>';
-					}
-					strb += '<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'; //조 회 수
-					strb += '</tr>';
-				}//for문 종료1
-				$("#notices_body").append(strb);
-				
-            	
+            	$("#sns_table").empty();
+ 				console.log('notices불러오기 성공');
+ 				console.log(response);
+ 				console.log("전체공지 사이즈",response.length);
+ 				let pagesize = response.length;
+ 				console.log("페이지사이즈",pagesize);
+ 				
+ 				
+ 				let strb = " ";
+
+ 				
+ 				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
+ 				let colgroup =$("<colgroup><col width='15%'><col width='45%'><col width='20%'><col width='20%'></colgroup>")
+ 				let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>날짜</th><th>조회수</th></tr></thead>")
+ 		        
+ 				let tbody = $("<tbody ></tbody>")		
+ 				
+ 				
+ 		        
+ 		        
+ 				for(let i = 0;i<response.length;i++){
+ 					
+ 					let tr = $("<tr></tr>")
+ 					let td1 =$('<td>'+response[i].all_notices_number+'</td><td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a></td>');
+ 					
+ 					const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
+ 					//console.log(writeDate[0]); //년 월 일
+ 					//console.log(writeDate[1]); //시 분 초
+ 					const today = getToday(); //오늘 날짜를 직접 정의
+ 					
+ 					let td2 ;
+ 					if(today==writeDate[0]){ //날 짜
+ 						td2 = $('<td>'+writeDate[1]+'</td>')
+ 					}else{
+ 						td2= $('<td>'+writeDate[0]+'</td>');
+ 					}
+ 					let td3 = $('<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'); //조 회 수
+
+ 					tr.append(td1)
+ 					tr.append(td2)
+ 					tr.append(td3)
+ 					
+ 					tbody.append(tr);	
+ 				}//for문 종료
+ 				
+ 				boards.append(colgroup);
+ 				boards.append(thead); 
+ 				boards.append(tbody);
+ 				console.dir(boards);
+ 				
+ 				$("#boardstable").append(boards);
+ 				
+ 		setTimeout(() => {
+ 					dtable =boards.DataTable({
+ 						 "order": [[0, 'desc']], // asc 또는 desc
+
+ 						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+
+ 			             	// 검색 기능 숨기기
+ 			             	searching: false,
+// 			             	// 정렬 기능 숨기기
+// 			             	ordering: false,
+// 			             	// 정보 표시 숨기기
+ 			             	info: false,
+// 			             	// 페이징 기능 숨기기
+// 			             	paging: false
+ 			            	
+ 			            });
+ 		}, 100);
+ 			
+ 				console.log("qweqwe")
+ 				
+ 				
+ //--- 전체 공지 알람 
+ 
+//  	let somoimAllMemberObj ={
+// 			"type" : "noti",
+// 			"somoimNumber" : somoimnumber,
+// 			"members" : somoimAllMember
+			
+// 				};
+	
+	
+// 		let resultMemberData = JSON.stringify(somoimAllMemberObj);
+//  				socketalarm.send(resultMemberData); 
+ 				
+ //--
             }, error : function(jqXHR, status, e) {
                 console.log("글쓰기 에러");
             }
@@ -1221,7 +1383,11 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	         });//승인거절 ajax End
 	})//on click함수 End
 	
-	
+	//----------
+	$("#snsmanage").on("click",function(){
+		console.log("??");
+		dtable.destroy();
+	})
  	
 </script>
 </body>
