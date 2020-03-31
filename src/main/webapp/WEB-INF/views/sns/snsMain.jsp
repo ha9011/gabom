@@ -20,8 +20,6 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-<link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.1/css/all.min.css" />
 <link
 	href="https://fonts.googleapis.com/css?family=Jua&display=swap&subset=korean"
@@ -568,16 +566,15 @@ td a {
 		left: 0px;
 		bottom: 100px;
 		height: 70px;
-		width: 10%;
+		width: 40%;
 		background-color: #337ab7;
 		color: white;
 		border-radius: 0;
-		text-align: right;
+		text-align: center;
 		border-top-right-radius: 8px;
 		border-top-left-radius: 10px;
-		margin-left: 90%;
-		padding-right: 28px;
 		padding-top: 20px;
+    	margin-left: 30%;
 	}
 	#more a, #friendMore a, #myPostMore a {
 		font-size: 25px;
@@ -599,6 +596,17 @@ td a {
 		padding-right: 65px;
 		padding-top: 20px;
 	}
+}
+.emoreal {
+			font-size: 20px;
+			display: flex;
+			margin-bottom: 50px;
+			cursor: pointer;
+		}
+.writeEmo{
+margin-right: 15px;
+margin-top: 2px;
+ 
 }
 </style>
 <script type="text/javascript">
@@ -700,7 +708,7 @@ td a {
 		<div onclick="makewriteBoxM()">
 			<i class="fas fa-edit fa-5x"></i>
 		</div>
-		<div onclick="location.href='#snsTimeLine';">
+		<div onclick="location.href='#snsTimeLine;'">
 			<i class="fas fa-search fa-5x"></i>
 		</div>
 		<div onclick="makeFriendListM()">
@@ -713,6 +721,85 @@ td a {
 			<i class="fas fa-arrow-circle-up fa-5x faa-float animated "></i>
 		</div>
 	</div>
+	<!-- 이모티콘 -->
+	<script type="text/javascript">
+	var emotype=undefined;
+	function emogi(number,type) {
+		emotype=type;
+		var cVal="."+number+" .emoBox";
+		var make='';
+		make+='';
+		make+='<div class="container emoreal">';
+		make+='<div class="emoRow">';
+		make+='	<div>😀</div>';
+		make+='	<div>😁</div>';
+		make+='	<div>😂</div>';
+		make+='	<div>😎</div>';
+		make+='	<div>😘</div>';
+		make+='</div>';
+		make+='<div class="emoRow">';
+		make+='	<div>😱</div>';
+		make+='	<div>💩</div>';
+		make+='	<div>❤️</div>';
+		make+='	<div>💛</div>';
+		make+='	<div>🙏</div>';
+		make+='</div>';
+		make+='<div class="emoRow">';
+		make+='<div>💜</div>';
+		make+='	<div>💓</div>';
+		make+='	<div>🐸</div>';
+		make+='	<div>🐵</div>';
+		make+='	<div>🙈</div>';
+		make+='</div>'; 
+		make+='<div class="emoRow">';
+		make+='	<div>🙉</div>';
+		make+='	<div>🙊</div>';
+		make+='	<div>🐒</div>';
+		make+='	<div>🐔</div>';
+		make+='	<div>🐧</div>';
+		make+='</div>';
+		make+='<div class="emoRow">';
+		make+='	<div>🐦</div>';
+		make+='	<div>🐤</div>';
+		make+='	<div>🐣</div>';
+		make+='	<div>👍</div>';
+		make+='	<div>😶</div>';
+		make+='</div>';
+		make+='<div class="emoRow">';
+		make+='	<div>🙄</div>';
+		make+='	<div>😏</div>';
+		make+='	<div>😣</div>';
+		make+='	<div>😥</div>';
+		make+='	<div>😮</div>';
+		make+='</div>';
+		make+='<div class="emoRow">';
+		make+='<div>😯</div>';
+		make+='	<div>😫</div>';
+		make+='	<div>😌</div>';
+		make+='	</div>';
+		make+='</div>';
+		if(emotype=="comment"){
+		$(cVal).html(make);
+		$(".emoBox").hide();
+		$(".emoBox").slideDown();
+		}else if(emotype=="write"){
+			$("#writeBoxEmo").html(make);
+			$("#writeBoxEmo").hide();
+			$("#writeBoxEmo").slideDown();
+		}
+		console.log(emotype);
+		$('.emoreal .emoRow div').click(function (e) {
+			if(emotype=="comment"){
+			var commentWriteContents="#commentWriteBox"+number+" input";
+			$(commentWriteContents)[0].value=
+				$(commentWriteContents)[0].value+e.target.innerHTML;
+			}else if(emotype=="write"){
+				let writBoxContent="#writeContents textarea";
+				$(writBoxContent).val($(writBoxContent).val()+e.target.innerHTML);
+			}
+		});
+	}
+	</script>
 	<!-- 모바일 글쓰기 버튼 -->
 	<script type="text/javascript">
 	function makewriteBoxM() {
@@ -724,6 +811,10 @@ td a {
 	<script type="text/javascript">
 	function setTimeLineM(){
 		setTimeLine();
+		$("#more").css("display","block");
+		$("#friendMore").css("display","none");
+		$("#myPostMore").css("display","none");
+		$("#timeLineProfileBoxTot").empty();
 		location.href="#showImageBox";
 	}
 	</script>
@@ -865,14 +956,14 @@ td a {
 	<!-- 호버시 아이콘 변환 스크립트1 -->
 	<script type="text/javascript" src="resources/snsJS/snsHover.js?ver=1"></script>
 	<!-- 글쓰기칸 만드는 스크립트1 -->
-	<script type="text/javascript" src="resources/snsJS/writeBox.js?ver=3"></script>
+	<script type="text/javascript" src="resources/snsJS/writeBox.js?ver=5"></script>
 	<!-- 이미지 미리보기 스크립트1 -->
 	<script type="text/javascript" src="resources/snsJS/imgView.js"></script>
 	<!-- 정보공개 변환1 -->
 	<script type="text/javascript" src="resources/snsJS/postSecurity.js"></script>
 	<!-- 타임라인 생성 스크립트 1-->
 	<script type="text/javascript"
-		src="resources/snsJS/timeLinePrint.js?ver=3"></script>
+		src="resources/snsJS/timeLinePrint.js?ver=5"></script>
 	<!-- 글작성 취소 스크립트 1-->
 	<script type="text/javascript" src="resources/snsJS/postCancel.js"></script>
 	<!-- 페이지 로딩시 해당 회원 정보 출력 스크립트1 -->
@@ -886,10 +977,11 @@ td a {
 	<!-- 타임라인 Ajax1 -->
 	<script type="text/javascript" src="resources/snsJS/timeLineAjax.js"></script>
 	<!-- 댓글출력 Ajax1 -->
-	<script type="text/javascript" src="resources/snsJS/commentAjax.js?ver=1"></script>
+	<script type="text/javascript"
+		src="resources/snsJS/commentAjax.js?ver=2"></script>
 	<!-- 댓글 출력 서비스 1-->
 	<script type="text/javascript"
-		src="resources/snsJS/commentPrint.js?ver=3"></script>
+		src="resources/snsJS/commentPrint.js?ver=6"></script>
 	<!-- 댓글 좋아요1 -->
 	<script type="text/javascript" src="resources/snsJS/commentLike.js"></script>
 	<!-- 댓글 싫어요 1-->
