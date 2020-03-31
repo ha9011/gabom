@@ -122,42 +122,54 @@ font-size:20px;
 float:left;
 text-align:left;
 }
+#searchhouse{
+text-align:center;
+margin:0 10px;
+border:none;
+font-size:20px;
+}
+.out{
+width:100%;
+border:1px solid lightgray;
+margin:40px;
+border-radius: 50px;
+}
+#searchbtn{
+border-radius: 40px;
+}
 
 </style>
 
 </head>
 <body>
 		
+		<header>
+			<jsp:include page="/WEB-INF/views/header/househeader.jsp" />
+		</header>
+		
 <div>
 	<form action="searchfood" method="get">
-		<!-- foodmain page에서 검색하는 것  -->
 		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-12 col-md-10 col-lg-8">
-					<div class="card-body row no-gutters align-items-center">
-						<div class="col-auto">
-							<!-- 돋보기 -->
-							<i class="fas fa-search h4 text-body"></i>
-						</div>
-						<!--end of col-->
-						<div class="col">
-							<!-- 검색창 -->
-							<input id="searchfood" name="food_address"
-								class="form-control form-control-lg form-control-borderless"
-								type="search" placeholder="Search topics or keywords">
-						</div>
-						<!--end of col-->
-						<div class="col-auto">
-							<!-- 검색버튼 -->
-							<button style="background-color: #064D84" id="searchbtn"
-								class="btn btn-lg btn-success" type="submit">Search</button>
-						</div>
-						<!--end of col-->
-					</div>
-				</div>
-				<!--end of col-->
-			</div>
-		</div>
+		<div class="row justify-content-center">
+                        <div class="col-12 col-md-5 col-lg-12">
+                                <div  class="out card-body row no-gutters align-items-center">
+                                    <div class="col-auto"> <!-- 돋보기 -->
+                                        <i class="fas fa-search h4 text-body"></i>
+                                    </div>
+                                    <!--end of col-->
+                                    <div class="col"><!-- 검색창 -->
+                                        <input id="searchhouse" name="food_address" class="form-control form-control-borderless" type="search" placeholder="지역을 입력해주세요">
+                                    </div>
+                                    <!--end of col-->
+                                    <div class="col-auto"><!-- 검색버튼 -->
+                                        <button id="searchbtn" class="btn btn-lg btn-primary " type="submit">Search</button>
+                                    </div>
+                                    <!--end of col-->
+                                </div>
+                        </div>
+                        <!--end of col-->
+          </div>
+	</div>
 	</form>
 </div>
 		<div class="container">

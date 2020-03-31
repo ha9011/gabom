@@ -61,7 +61,7 @@ section .overlay {
 
 @media (pointer: coarse) and (hover: none) {
   section {
-    background: url('./resources/css/Bgv.mp4') no-repeat center center scroll;
+    background: url('./resources/css/background.mp4') no-repeat center center scroll;
   }
   section video {
     display: none;
@@ -90,7 +90,7 @@ section .overlay {
 <section>
 <div class="overlay"></div>
   <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
-    <source src="./resources/css/Bgv.mp4" type="video/mp4">
+    <source src="./resources/css/background.mp4" type="video/mp4">
   </video>
   <div class="container h-100">
     <div class="d-flex h-100 text-center align-items-center">

@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import icia.project.gabom.exception.IdCheckException;
+import icia.project.gabom.exception.NoTouristSpotException;
 
 
 
@@ -26,9 +26,11 @@ public HttpHeaders getHeaders() {
 //   }
   
 
-   @ExceptionHandler(IdCheckException.class )
-   public ResponseEntity<String> idDupExceptionHandler(IdCheckException ex) {
-	   System.out.println("익셉션 도착함");
+  //IdCheckException
+   
+   @ExceptionHandler(NoTouristSpotException.class )
+   public ResponseEntity<String> NoTourisExceptionHandler(NoTouristSpotException ex) {
+	   System.out.println("익셉션 도착함요 NoTouristSpotException");
       return new ResponseEntity<String>(ex.getMessage(), getHeaders(),HttpStatus.EXPECTATION_FAILED);
    }
    

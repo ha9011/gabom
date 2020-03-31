@@ -24,18 +24,18 @@
     border:1px solid lightgray;
 }
 #house_list{
-	width:100%;
+	width:95%;
+	margin:0 10%;
 
 }
 .house{
-
 	width:20%;
 	display:inline-block;
 	margin:20px;
 	box-shadow:5px 5px 3px lightgray;
 	text-align:center;
 }
-img{
+#img{
 	width:100%;
 	height:200px;
 	margin:5px 0;
@@ -46,25 +46,43 @@ img{
 h4{
 margin:0;
 }
+#searchhouse{
+text-align:center;
+margin:0 10px;
+border:none;
+}
+.out{
+width:100%;
+border:1px solid lightgray;
+margin-top:40px;
+border-radius: 50px;
+}
+#searchbtn{
+border-radius: 40px;
+}
 </style>
 
 </head>
 <body>
+	<header id="hea">
+		<jsp:include page="/WEB-INF/views/header/househeader.jsp" />
+	</header>
+
 	<form action="searchhouse" method="get" > <!-- housemain page에서 검색하는 것  -->
 	<div class="container">
 		<div class="row justify-content-center">
-                        <div class="col-12 col-md-10 col-lg-8">
-                                <div class="card-body row no-gutters align-items-center">
+                        <div class="col-12 col-md-5 col-lg-12">
+                                <div  class="out card-body row no-gutters align-items-center">
                                     <div class="col-auto"> <!-- 돋보기 -->
                                         <i class="fas fa-search h4 text-body"></i>
                                     </div>
                                     <!--end of col-->
                                     <div class="col"><!-- 검색창 -->
-                                        <input id="searchhouse" name="house_address" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
+                                        <input id="searchhouse" name="house_address" class="form-control form-control-borderless" type="search" placeholder="지역을 입력해주세요">
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto"><!-- 검색버튼 -->
-                                        <button style="background-color:#064D84" id="searchbtn" class="btn btn-lg btn-success" type="submit">Search</button>
+                                        <button id="searchbtn" class="btn btn-lg btn-primary " type="submit">Search</button>
                                     </div>
                                     <!--end of col-->
                                 </div>
@@ -92,7 +110,7 @@ var houselist=${houselist};
  		} 
  		 
  		 var out = $('<div class="house" name ='+[i.house_number]+'></div>');
- 		 var img = $('<div id="mainimg" name ='+[i.house_number]+'><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>');
+ 		 var img = $('<div id="mainimg" name ='+[i.house_number]+'><img id="img" alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>');
  		 var title=$('<h4>'+[i.house_name]+'</h4>');
  		 var info = $('<div id="info">'+"<br>"+"가격    "+[i.house_price]+"만원"+"<br>"+[i.house_address]+'</div>');
 

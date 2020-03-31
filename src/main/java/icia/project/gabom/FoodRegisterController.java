@@ -50,7 +50,7 @@ public class FoodRegisterController {
 		System.out.println("시간민 : " + multi.getParameter("food_mintime"));
 		System.out.println("시간맥스: " + multi.getParameter("food_maxtime"));
 		
-		List<MultipartFile> files=multi.getFiles("food_menuImages");
+		List<MultipartFile> files=multi.getFiles("food_detailImage");
 		System.out.println(files.size());
 		System.out.println("files="+files.get(0).getOriginalFilename());
 		

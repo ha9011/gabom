@@ -47,28 +47,43 @@ img{
 	height:100px;
 	margin:5px;
 }
-
+.out{
+width:100%;
+border:1px solid lightgray;
+margin:40px 0;
+border-radius: 50px;
+}
+#searchbtn{
+border-radius: 40px;
+}
+#foodchangesearch{
+text-align:center;
+margin:0 10px;
+border:none;
+}
 
 </style>
 </head>
 <body>
+	<header>
+		<jsp:include page="/WEB-INF/views/header/househeader.jsp" />
+	</header>
 
- <!-- searchdetail page에서 재검색하는 것  -->
  
 		<div class="container">
 	<div class="row justify-content-center">
-                        <div class="col-12 col-md-10 col-lg-8">
-                                <div class="card-body row no-gutters align-items-center">
+                        <div class="col-12 col-md-5 col-lg-12">
+                                <div  class="out card-body row no-gutters align-items-center">
                                     <div class="col-auto"> <!-- 돋보기 -->
                                         <i class="fas fa-search h4 text-body"></i>
                                     </div>
                                     <!--end of col-->
                                     <div class="col"><!-- 검색창 -->
-                                        <input id="foodchangesearch" name="food_address" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
+                                        <input id="foodchangesearch" name="food_address" class="form-control form-control-lg form-control-borderless" type="search" placeholder="지역을 입력해주세요">
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto"><!-- 검색버튼 -->
-                                        <button style="background-color:#064D84" id="searchbtn" class="btn btn-lg btn-success" type="submit">Search</button>
+                                        <button id="searchbtn" class="btn btn-lg btn-primary " type="submit">Search</button>
                                     </div>
                                     <!--end of col-->
                                 </div>
@@ -169,13 +184,18 @@ for (var i = 0; i < positions.length; i ++) {
 //---------------------------------------------------------------------------------------------------------
  $("#searchbtn").on("click", function() {
 	 	console.log("ajax 재검색")
-		var changesearch=$("#foodchangesearch").val();
-		console.log(changesearch);
+		var food_address=$("#foodchangesearch").val();
 	 	
+		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+	  
+		
 		$.ajax({
-		       type:'get',
-		        url:'rest/foodchangesearch',
-		        data:{"data":foodchangesearch},
+		       type:'post',
+		        url:'frest/foodchangesearch',
+		        data:{"data":food_address},
 		        dataType:"json",
 		        
 		        success:function(data){
