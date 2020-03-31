@@ -204,15 +204,17 @@ public class SomoimManagement {
 		mav.addObject("JsonchatData", chatData);
 		
 		//다음 검색할 날짜 축출하기
-		String date = selectRecentChattingData.get(0).getChatting_date();  // 검색된 친구들 중 마지막 날짜
-		System.out.println("다음 검색 날짜 : " + date);
-		String nextDay = sDao.selectNextDayInfinityChattingData(Integer.parseInt(roomnum),date); // 그 다음 날짜 찾기
-		System.out.println("다음 날짜는 언제인지요?? : " + nextDay );
+		if(selectRecentChattingData.size() != 0 ) {
+			String date = selectRecentChattingData.get(0).getChatting_date();  // 검색된 친구들 중 마지막 날짜
+			System.out.println("다음 검색 날짜 : " + date);
+			String nextDay = sDao.selectNextDayInfinityChattingData(Integer.parseInt(roomnum),date); // 그 다음 날짜 찾기
+			System.out.println("다음 날짜는 언제인지요?? : " + nextDay );
+			if(nextDay==null) {
+		  		nextDay="없음";
+		  	}
+			mav.addObject("nextDay", nextDay);
+		}
 		
-		if(nextDay==null) {
-	  		nextDay="없음";
-	  	}
-		mav.addObject("nextDay", nextDay);
 		
 		mav.setViewName("somoim/somoimroom");
 		return mav;
@@ -527,7 +529,7 @@ public class SomoimManagement {
 	//게시글 수정, 파일 저장하고, update해주기
 	public String updateSomoimBoard(MultipartHttpServletRequest multi, String name) {
 		smb = new SomoimBoard();
-
+		
 		
 		int somoim_number = Integer.parseInt(multi.getParameter("somoim_number"));
 		int board_number = Integer.parseInt(multi.getParameter("board_number"));
@@ -542,11 +544,13 @@ public class SomoimManagement {
 		} else {
 			board_fix = "비고정";
 		}
+		
 		smb.setSomoim_number(somoim_number).setBoard_writer(board_writer).setBoard_type(board_type);
 		smb.setBoard_title(board_title).setBoard_content(board_content).setBoard_fix(board_fix);
 		smb.setBoard_number(board_number);
 //	member_profile_picture = "./resources/userprofileimage/upload/"+member_id+System.currentTimeMillis()+"."
 //	+member_profile_original.substring(member_profile_original.lastIndexOf(".")+1);
+		
 //	
 
 		System.out.println("firstPic : " + multi.getFile("firstPic").getOriginalFilename());
@@ -557,7 +561,12 @@ public class SomoimManagement {
 		System.out.println("thirdPic t : " + multi.getFile("thirdPic").isEmpty());
 		
 		
-		System.out.println("test pch1 : " + multi.getParameter("picChange1") );
+		System.out.println("test????1 : " + multi.getParameterMap().containsKey("origin1")); 
+		System.out.println("test????2 : " + multi.getParameterMap().containsKey("origin2"));
+		System.out.println("test????3 : " + multi.getParameter("origin1"));
+		System.out.println("test????4 : " + multi.getParameter("origin2"));
+		
+		
 		String board_first_pic = "";
 		String board_first_syspic = "";
 		if (!multi.getFile("firstPic").isEmpty()) {
@@ -565,10 +574,11 @@ public class SomoimManagement {
 			String sysfile = System.currentTimeMillis() + "."
 					+ board_first_pic.substring(board_first_pic.lastIndexOf(".") + 1);
 			board_first_syspic = "./resources/somoimboard/upload/" + sysfile;
-
 			sbf.fileUpProfilePic(multi, "firstPic", sysfile);
-
 			smb.setBoard_first_pic(board_first_pic).setBoard_first_syspic(board_first_syspic);
+		}else if(multi.getParameterMap().containsKey("oripic1")) {
+			smb.setBoard_first_pic(multi.getParameter("oripic1")).setBoard_first_syspic(multi.getParameter("syspic1"));
+
 		}
 		
 		
@@ -585,8 +595,10 @@ public class SomoimManagement {
 			sbf.fileUpProfilePic(multi, "secondPic", sysfile);
 
 			smb.setBoard_second_pic(board_second_pic).setBoard_second_syspic(board_second_syspic);
+		}else if(multi.getParameterMap().containsKey("oripic2")) {
+			smb.setBoard_first_pic(multi.getParameter("oripic2")).setBoard_first_syspic(multi.getParameter("syspic2"));
 		}
-
+		
 		String board_third_pic = "";
 		String board_third_syspic = "";
 		if (!multi.getFile("thirdPic").isEmpty()) {
@@ -599,13 +611,15 @@ public class SomoimManagement {
 			sbf.fileUpProfilePic(multi, "thirdPic", sysfile);
 
 			smb.setBoard_third_pic(board_third_pic).setBoard_third_syspic(board_third_syspic);
+		}else if(multi.getParameterMap().containsKey("oripic3")) {
+			smb.setBoard_first_pic(multi.getParameter("oripic3")).setBoard_first_syspic(multi.getParameter("syspic3"));
 		}
 
 		System.out.println("smb : " + smb.toString());
 
 		
 		//파일 업로드하기
-		int result = sDao.updateSomoimBoard(smb); // 성공
+		int result = sDao.updateSomoimBoard(smb); // 성공 // 수정하기
 
 		// 파일 없음이면 그냥 바로 넘기기. 없음이 아니면 파일 업로드 하기
 

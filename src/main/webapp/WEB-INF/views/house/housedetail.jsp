@@ -151,9 +151,9 @@ border-radius: 40px;
 
 </head>
 <body>
-	<header>
-		<jsp:include page="/WEB-INF/views/header/househeader.jsp" />
-	</header>
+<!-- 	<header> -->
+<%-- 		<jsp:include page="/WEB-INF/views/header/househeader.jsp" /> --%>
+<!-- 	</header> -->
 
 	<form action="searchhouse" method="get" > <!-- housemain page에서 검색하는 것  -->
 	<div class="container">

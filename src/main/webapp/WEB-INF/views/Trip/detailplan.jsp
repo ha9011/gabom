@@ -871,6 +871,11 @@ $(document).on("change","#select_sigunguCode", function (e){
 		},
 		error : function(jqXHR, status, e) {
 			console.log("지역검색 에러");
+			console.log(e);
+			console.log(status);
+			console.log(jqXHR);
+			
+			alert("검색 결과가 없습니다.")
 		}
 	}); //ajax End
 	

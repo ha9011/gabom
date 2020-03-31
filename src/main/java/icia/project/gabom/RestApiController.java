@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.google.gson.Gson;
 
 import icia.project.gabom.dto.TripAreaBasedList;
 import icia.project.gabom.dto.TripAreaBasedresponse;
+import icia.project.gabom.exception.NoTouristSpotException;
 import icia.project.gabom.service.AdminjudgeManagement;
 
 @RestController
@@ -680,33 +682,40 @@ public class RestApiController {
 			e.printStackTrace();
 		}
 
-//		
-//		ObjectMapper mapper = new ObjectMapper();
-//		TripAreaBasedList[] areabasedlist = mapper.readValue(json, TripAreaBasedList[].class);
-		ObjectMapper mapper =new ObjectMapper();
-		TripAreaBasedresponse areabasedlist = mapper.readValue(json, TripAreaBasedresponse.class);
-		List<TripAreaBasedList> result = areabasedlist.getResponse().getBody().getItems().getItem();
-//		json.put("data", data);
 		
-		List<TripAreaBasedList> result1 = new ArrayList<TripAreaBasedList>();
-		TripAreaBasedList innerDto = new TripAreaBasedList();
 		
-		for( TripAreaBasedList field : result) {
-			if(field.getFirstimage().equals("없음")==false) {
-				innerDto = field;
-				result1.add(innerDto);
-				innerDto=new TripAreaBasedList();
+		String resultJson;
+		try {
+			ObjectMapper mapper =new ObjectMapper();
+			
+			TripAreaBasedresponse areabasedlist = mapper.readValue(json, TripAreaBasedresponse.class);
+			
+			List<TripAreaBasedList> result = areabasedlist.getResponse().getBody().getItems().getItem();
+//			json.put("data", data);
+			
+			List<TripAreaBasedList> result1 = new ArrayList<TripAreaBasedList>();
+			TripAreaBasedList innerDto = new TripAreaBasedList();
+			
+			for( TripAreaBasedList field : result) {
+				if(field.getFirstimage().equals("없음")==false) {
+					innerDto = field;
+					result1.add(innerDto);
+					innerDto=new TripAreaBasedList();
+				}
 			}
+			
+			resultJson = new Gson().toJson(result1);
+			System.out.println("resultJson : " + resultJson);
+			System.out.println("areaCode는 잘 들고왓니??"+areaCode);
+			System.out.println("sigunguCode는 잘 들고왓니??"+sigunguCode);
+			System.out.println(addr);
+			
+			return resultJson;     // 이놈이 최종값임
+		} catch (MismatchedInputException e) {
+			System.out.println("어어어어랏 에러?");
+			throw new NoTouristSpotException("검색결과가 없습니다..");
 		}
 		
-		String resultJson = new Gson().toJson(result1);
-		
-		System.out.println("resultJson : " + resultJson);
-		System.out.println("areaCode는 잘 들고왓니??"+areaCode);
-		System.out.println("sigunguCode는 잘 들고왓니??"+sigunguCode);
-		System.out.println(addr);
-		
-		return resultJson;
 	}
 //	@RequestMapping(value = "/destinationselect", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 //	public String destinationselect(@RequestParam("mapx") String mapx, @RequestParam("mapy") String mapy, @RequestParam("title") String title){

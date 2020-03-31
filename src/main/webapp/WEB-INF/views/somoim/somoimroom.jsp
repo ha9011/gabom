@@ -182,8 +182,8 @@
 
 /* 게시글 */
 .boardCamera {
-	width: 20%;
-	height: 20%
+	width: 96%;
+	height: 96%
 }
 
 .boardFrame {
@@ -209,6 +209,14 @@
 .picSection {
 	width: 20%;
 	height: 20%;
+}
+.pics{
+	position: relative;
+}
+.deletepic{
+	position: absolute;
+	left: 76%;
+	top: 3%;
 }
 
 .titleSection {
@@ -286,6 +294,10 @@
 
 .panel {
 	margin: 5px 0;
+}
+
+#photoframe{
+display : flex;
 }
 </style>
 
@@ -518,13 +530,20 @@
 
 
 						<div>
-							<label for="title">사진 </label><br> <img id="imgfirstPic"
-								data-input="firstPic" class="boardCamera"
-								src="../resources/somoimimage/camera.PNG" /> <img
-								id="imgsecondPic" data-input="secondPic" class="boardCamera"
-								src="../resources/somoimimage/camera.PNG" /> <img
-								id="imgthirdPic" data-input="thirdPic" class="boardCamera"
-								src="../resources/somoimimage/camera.PNG" />
+							<label for="title">사진 </label><br> 
+							<div id="photoframe">
+								<div id="firstPicFrame" class="pics" ><img id="imgfirstPic"
+									data-input="firstPic" class="boardCamera"
+									src="../resources/somoimimage/camera.PNG" /></div>
+								 
+								<div id="secondPicFrame" class="pics"><img
+									id="imgsecondPic" data-input="secondPic" class="boardCamera"
+									src="../resources/somoimimage/camera.PNG" /></div>
+							
+								<div id="thirdPicFrame" class="pics"><img
+									id="imgthirdPic" data-input="thirdPic" class="boardCamera"
+									src="../resources/somoimimage/camera.PNG" /></div>
+							</div>
 						</div>
 
 						<input type="file" id="firstPic" name="firstPic"
@@ -581,13 +600,11 @@
 					<div>
 
 						<div id="showBoardContent">내용</div>
-
 						<hr>
 						<div id="showfirstPic">사진1</div>
-						<hr>
 						<div id="showsecondPic">사진2</div>
-						<hr>
 						<div id="showthirdPic">사진3</div>
+						
 					</div>
 					<hr>
 
@@ -632,7 +649,8 @@
 	<button style='display: none' id='boardTrigger' data-toggle="modal"
 		data-target='#myBoardModal'></button>
 
-	<div style="display:none;" id="chatDate"></div>
+<!-- 	//style="display:none;"  -->
+	<div id="chatDate"></div> 
 
 	<footer>
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
@@ -1011,7 +1029,8 @@ $(document).on("click","#rejectSomoim",function(e){
 		
 	 console.log("---------시작")
 	 //게시글 사진 변경
-		
+	
+	 $("#chatDate").text(getFormatDate("${nextDay}"));
 	 
 	 
 	 //스크롤이벤트
@@ -1492,8 +1511,12 @@ $(document).on("click","#rejectSomoim",function(e){
 	 $(document).on("click","#boardTrigger",function(e){
 		 $("#makeBoardBtn").hide();
 		 $("#modiBoardBtn").show();
-		
+		 $(".deletepic").remove();
+		 //이미지, 버튼 초기화
 						
+		 
+		 
+		 
 		 console.log("게시글 : " )
 		 console.log(boardinfo);
 		 $(".modal-title").text("게시글 수정하기");
@@ -1502,24 +1525,28 @@ $(document).on("click","#rejectSomoim",function(e){
 		 $("#boardCont").val(boardinfo.board_content);
 		 
 		 if(boardinfo.board_first_syspic !== ""){
-			 
-			 console.log("첫번쨰 사진!!!!!!!!!!!!!!!")
 			 console.log(boardinfo.board_first_syspic)
 			 console.log($("#firstPic"))
 			 $("#imgfirstPic").attr('src',"."+boardinfo.board_first_syspic );
-			 $("<button>×</button>")
-			 //$("#imgfirstPic").removeAttr('src');
+			 $("#firstPicFrame").append($("<button data-pic='1' type='button' class='btn btn-dark deletepic'>×</button>"))
 				 
+		 }else{
+			 $("#imgfirstPic").attr("src","../resources/somoimimage/camera.PNG");
 		 }
 		
 		 if(boardinfo.board_second_syspic !== ""){
 			 $("#imgsecondPic").attr('src',"."+boardinfo.board_second_syspic);
+			 $("#secondPicFrame").append($("<button data-pic='2' type='button' class='btn btn-dark deletepic'>×</button>"))
+		 }else{
+			 $("#imgsecondPic").attr("src","../resources/somoimimage/camera.PNG");
 		 }
 	
 		 if(boardinfo.board_third_syspic !== ""){
 			 $("#imgthirdPic").attr('src',"."+boardinfo.board_third_syspic);
+			 $("#thirdPicFrame").append($("<button data-pic='3' type='button' class='btn btn-dark deletepic'>×</button>"))
+		 }else{
+			 $("#imgthirdPic").attr("src","../resources/somoimimage/camera.PNG");
 		 }
-
 	
 		if(boardinfo.board_fix === '고정'){
 			$("#mainboard").prop("checked", true);
@@ -2385,7 +2412,7 @@ let somoimnumber = String(${JsonBasicInfo}.somoim_number);
 	 $("#boardWriteBtn").on("click", function(){
 		 $("#makeBoardBtn").show();
 		 $("#modiBoardBtn").hide();
-		 
+		 $(".deletepic").remove();
 		 $(".modal-title").text("게시글 작성하기")
 		 
 		 $("#boardtitle").val("");
@@ -2637,49 +2664,48 @@ $("#joinsomoim").on("click",function(e){
 		console.log(formdata.get('firstPic').name)
 		console.log(boardinfo.board_first_pic)
 		
+ 		console.log("첫번쨰 사진!!!!!!!!!!!!!!!")
 		
- 		 console.log("첫번쨰 사진!!!!!!!!!!!!!!!")
+ 		if($("#imgfirstPic").attr('src') =="."+boardinfo.board_first_syspic && formdata.get('firstPic').name.length == 0){ //암것도 안할때
+ 			 console.log("그대로1")
+ 			 formdata.append("oripic1", boardinfo.board_first_pic)
+ 			 formdata.append("syspic1", boardinfo.board_first_syspic)
+ 		}else if(formdata.get('firstPic').name.length != 0){ //사진변경할때
+ 			 console.log("사진변경1");
+ 			 
+ 		}else if($("#imgfirstPic").attr('src') == "../resources/somoimimage/camera.PNG" ){ //기본사진으로 변경할때(사진x 버튼)
+ 			 console.log("기본사진변경1")
+ 		 
+ 		}
+
 		
- 		 if($("#imgfirstPic").attr('src') === "."+boardinfo.board_first_syspic && formdata.get('firstPic').name.length === 0){
- 			 console.log("그대로")
- 		 }else if($("#imgfirstPic").attr('src') !== "."+boardinfo.board_first_syspic && formdata.get('firstPic').name.length === 0){
- 			 console.log("삭제")
- 		 }else if(formdata.get('firstPic').name.length !== 0){
- 			 console.log("변경")
- 		 }else{
- 			 console.log("다시 고민")
- 		 }
- 		 // 			 console.log(boardinfo.board_first_syspic)
-		// 			 console.log($("#firstPic"))
+		 if($("#imgsecondPic").attr('src') =="."+boardinfo.board_first_syspic && formdata.get('secondPic').name.length == 0){ //암것도 안할때
+			 console.log("그대로2")
+			 formdata.append("oripic2", boardinfo.board_second_pic)
+ 			 formdata.append("syspic2", boardinfo.board_second_syspic)
+		 }else if(formdata.get('secondPic').name.length != 0){ // 사진변경할때
+			 console.log("사진변경2");
+		 }else if($("#imgsecondPic").attr('src') == "../resources/somoimimage/camera.PNG" ){ //기본사진으로 변경할때(사진x 버튼)
+			 console.log("기본사진변경2")
+		 }
 		
-		if(formdata.get('firstPic').name === boardinfo.board_first_pic){ // 다르므로 
-			
-		}else{
-			console.log("사진 변경 1")
-			formdata.append("picChange1", "t")
-		}
 		
-		if(formdata.get('secondPic').name === boardinfo.board_first_pic){
-			
-		}else{
-			console.log("사진 변경 2")
-			formdata.append("picChange2", "t")
-		}
+		if($("#imgthirdPic").attr('src') =="."+boardinfo.board_first_syspic && formdata.get('thirdPic').name.length == 0){ //암것도 안할때
+			 console.log("그대로3")
+			  formdata.append("oripic3", boardinfo.board_third_pic)
+ 			  formdata.append("syspic3", boardinfo.board_third_syspic)
+		 }else if(formdata.get('thirdPic').name.length != 0){ // 사진변경할때
+			 console.log("사진변경3");
+		 }else if($("#imgthirdPic").attr('src') == "../resources/somoimimage/camera.PNG" ){ //기본사진으로 변경할때(사진x 버튼)
+			 console.log("기본사진변경3")
+		 }
+
 		
-		if(formdata.get('thirdPic').name === boardinfo.board_first_pic){
-			
-		}else{
-			console.log("사진 변경 3")
-			formdata.append("picChange2", "t")
-		}
-			
-			
 		formdata.append("somoim_number", boardinfo.somoim_number)
 		formdata.append("board_number", boardinfo.board_number)
 		console.log("==")
 		for(var k of formdata.keys()){
 			console.log(k+ " : ",formdata.get(k))
-			
 		}
 		
 		$.ajaxSetup({         
@@ -2708,9 +2734,6 @@ $("#joinsomoim").on("click",function(e){
 				
 				
 				showAllList(boardData);
-				
-				
-				
 			},
 			error:function(error){
 				alert("fail")
@@ -3095,8 +3118,20 @@ $("#joinsomoim").on("click",function(e){
 	}
 	//아코디언 메뉴
 	
-	
-	
+	$(document).on("click",".deletepic", function(e){
+		var picNum = e.target.dataset.pic;
+		console.log(picNum)
+		//$(this).remove();
+		
+		if(picNum==1){
+			$("#imgfirstPic").attr("src","../resources/somoimimage/camera.PNG");
+		}else if(picNum==2){
+			$("#imgsecondPic").attr("src","../resources/somoimimage/camera.PNG");
+		}else if(picNum==3){
+			$("#imgthirdPic").attr("src","../resources/somoimimage/camera.PNG");
+		}
+		$(this).remove();
+	})
 </script>
 </body>
 
