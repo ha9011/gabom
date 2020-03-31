@@ -33,7 +33,10 @@
 		photo+='<div class="col-xs-8 col-md-10 col-sm-8" id="writeButtonBox" >';
 		photo+='<button class="btn btn-Default pull-right" id="cancel">취소</button>';
 		photo+='<button type="button" class="btn btn-info pull-right" id="writeButton">작성</button>';
+		photo+='<i class="fas fa-smile fa-2x pull-right writeEmo" style="color:gold; background-color:black; border-radius:50%;" onclick="emogi(\'1\',\'write\')"></i>';
 		photo+='</div>';
+		photo+='</div>';
+		photo+='<div id="writeBoxEmo">';
 		photo+='</div>';
 		photo+='<div id="coverBox">';
 		photo+='</div>';
