@@ -37,7 +37,7 @@ public class JoinmemberUploadFile {
 	     
 	      String root_path = multi.getServletContext().getRealPath("/"); // 상대경로
 	      String sysRoot_path=root_path.substring(0, root_path.indexOf("\\.metadata"));
-	      String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\somoalbum\\";
+	      String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\userprofileimage\\";
 	      System.out.println("real="+real);
 	      
 	      System.out.println("-----");
@@ -83,7 +83,7 @@ public class JoinmemberUploadFile {
     
           //파일 메모리에 저장
          MultipartFile mf=member_profile_picture; //실제파일
-         String oriFileName=mf.getOriginalFilename();  //a.txt
+        // String oriFileName=mf.getOriginalFilename();  //a.txt
         
          //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
          String sysFileName=sysfile;

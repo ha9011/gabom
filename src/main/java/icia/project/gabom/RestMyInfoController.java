@@ -238,4 +238,16 @@ public class RestMyInfoController {
 		
 		return json;
 	}
+	
+	
+	@PostMapping(value = "/mychangeProfile", produces="text/plain;charset=utf-8")
+	public String mychangeProfile(Principal pc, MultipartHttpServletRequest multi) {
+		System.out.println("프로필변경");
+		System.out.println("pic : " + multi.getFile("member_profile_picture").getOriginalFilename() );
+		System.out.println("id : " + pc.getName() );
+		
+		String json = MIMM.mychangeProfile(pc.getName(), multi);
+		
+		return null;
+	}
 }

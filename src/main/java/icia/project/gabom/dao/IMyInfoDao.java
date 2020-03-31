@@ -120,6 +120,10 @@ public interface IMyInfoDao {
 	
 	@Select("SELECT * FROM MEMBER WHERE MEMBER_ID=#{member_id}")
 	List<Member> getmyinfo(@Param("member_id")String member_id);
+	
+	
+	@Update("UPDATE MEMBER SET MEMBER_PROFILE_PICTURE = #{mpp} WHERE MEMBER_ID=#{name}")
+	int updateJoinMember(@Param("name")String name, @Param("mpp")String member_profile_picture);
 
 	
 	

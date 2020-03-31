@@ -104,12 +104,15 @@ margin:0 20px;
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav">
+      
        <li class="nav-item filebox">
          		<div class="card-body">
 					<h4 style="color:white;" class="card-title"></h4>
 				</div>
-         		<input id="changeProfile" type="file" name="changeProfile">
+         		<input id="changeProfile" type="file" name="changeProfile" >
         </li>
+        
+        
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="myinfo">내 정보</a>
         </li>
@@ -243,6 +246,7 @@ margin:0 20px;
     		<div class="filebox"> 
     			<label for="ex_filename">업로드</label> 
     			<input type="file" id="ex_filename" class="upload-hidden" name="house_review_orifile" multiple >
+    				<div class="showPics"></div>
     				<div class="detail">
 						<ul class="detailImage_sections"></ul>
 					</div>
@@ -386,7 +390,7 @@ $(document).on("click","#changePicWant",function(){
 		$('#meddelanden').attr('src', ""); // 변할 때마다 리셋
 		var files = e.target.files;
 		
-		console.log(files[0]); // 파일 어떤 내용들었는지 보기 1개니깐 [0]
+		console.log("file",files[0]); // 파일 어떤 내용들었는지 보기 1개니깐 [0]
 		
 		if(!files[0]["type"].match("image.*")){
 			alert("확장자는 이미지 확장자만 가능함")
@@ -398,6 +402,40 @@ $(document).on("click","#changePicWant",function(){
              $('#meddelanden').attr('src', e.target.result);
          }
          reader.readAsDataURL(files[0]);
+         
+         // 사진 서버에 전송
+         //<input id="changeProfile" type="file" name="changeProfile">
+        
+         let formData = new FormData(); //ajax로 넘길 data
+			
+		//let fileInput = document.getElementById("changeProfile"); //id로 파일 태그를 호출
+		
+		console.log("fileInput1",files[0]);
+		console.dir("fileInput1",files[0]);
+		formData.append("member_profile_picture", files[0]);
+
+     	$.ajaxSetup({         
+           beforeSend : function(xhr){
+              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+           });//먼저 보냄
+
+           $.ajax({
+       		url:'myinfo/mychangeProfile',
+       		type:'post',
+       		data: formData,
+	      	processData: false,
+	      	contentType: false,
+       		success:function(data){
+       			console.log(data);
+       		
+       		},
+       		error:function(error){
+       			alert("fail")
+       			console.log(error);
+       		}
+       		
+       	})//ajax end
+         
 	})
 	
 })
@@ -414,7 +452,8 @@ var date = getFormatDate(new Date());//오늘날짜
 
 $("#myreser").on('click', function(e) {
 	e.preventDefault;
-$.ajaxSetup({         
+	
+	$.ajaxSetup({         
       beforeSend : function(xhr){
          xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
       });//먼저 보냄
@@ -1416,7 +1455,34 @@ $(document).on('click','.delbtnsomo',function(e){// 게시글 삭제
 
 
 
-
+$("#ex_filename").change(function(e){
+		$("#showPics").empty();  // 변할 때마다 리셋
+		console.log("???")
+		
+		var files = e.target.files;
+		var filesArr = Array.prototype.slice.call(files);
+		
+		console.log(filesArr); // 파일 어떤 내용들었는지 보기 1개니깐 [0]
+		
+		filesArr.forEach(function(f,i){
+			console.log(f)
+			console.log(i)
+			if(!f.type.match("image.*")){
+				alert("확장자는 이미지 확장자만 가능함")
+				return 	
+			}
+			
+			
+			 var reader = new FileReader();
+	         reader.onload = function(e) {
+	         	var $li = $("<span></span>").attr("class","detailPictures");
+	         	var $tt = $li.append($('<img/>').attr('src', e.target.result).css("width", "100px").css("heigh","100px"));
+	         	$(".showPics").append($tt);
+	         }
+	         reader.readAsDataURL(f);
+	         //$("#detail").show();
+		});//end forEach
+	})
 
 
 

@@ -32,6 +32,7 @@ import icia.project.gabom.dto.SomoimBoard;
 import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.userClass.Food_reviewfile;
 import icia.project.gabom.userClass.House_reviewFlie;
+import icia.project.gabom.userClass.JoinmemberUploadFile;
 
 @Service
 public class MyInfoManagement {
@@ -46,6 +47,9 @@ public class MyInfoManagement {
 	
 	@Autowired
 	private Food_reviewfile frf;
+	
+	@Autowired 
+	private JoinmemberUploadFile JULF ;
 
 	public ModelAndView showMyInfo(Principal principal) {
 		      mav = new ModelAndView();
@@ -500,6 +504,34 @@ public class MyInfoManagement {
 		json = new Gson().toJson(minfo);
 		System.out.println("변경완료");
 		return json;
+	}
+
+	public String mychangeProfile(String name, MultipartHttpServletRequest multi) {
+		System.out.println("pic : " + multi.getFile("member_profile_picture").getOriginalFilename() );
+		System.out.println("id : " + name );
+		
+		String member_profile_original =null;
+		String member_profile_picture = null;
+		String filepath = "./resources/userprofileimage/upload/";
+		long fileTimeStamp = System.currentTimeMillis();
+		
+		member_profile_original = multi.getFile("member_profile_picture").getOriginalFilename();
+		
+		System.out.println("원래 사진이름 : "+member_profile_original); //member_profile_picture : loginpic.jpg
+		
+		member_profile_picture = filepath+name+fileTimeStamp+"."
+	               +member_profile_original.substring(member_profile_original.lastIndexOf(".")+1);
+	
+		//업데이트하고
+		int resultJoinMember = minfDao.updateJoinMember(name,member_profile_picture);
+		
+		//파일에 업로드
+		member_profile_picture = name+fileTimeStamp+"."
+	               +member_profile_original.substring(member_profile_original.lastIndexOf(".")+1);
+		
+		JULF.fileUpProfilePic(multi,member_profile_picture);
+		
+		return null;
 	}
 	
 }
