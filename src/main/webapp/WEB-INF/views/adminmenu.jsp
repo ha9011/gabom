@@ -311,7 +311,7 @@ li {
 				</div>
 			</div>
 		</div>
-		<!-- noticesModal End -->
+		<!-- qna디테일 modal End -->
 
 		<!----------------------------------------------글쓰기 Modal---------------------------------------------->
 		<div class="modal" id="write_modal">
