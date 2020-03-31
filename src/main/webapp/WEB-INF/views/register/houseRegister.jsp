@@ -150,7 +150,7 @@
                  
                  <div class="form-label-group">
                   House Name
-                  <input name="house_name"  type="text" class="form-control" placeholder="Password" >
+                  <input name="house_name"  type="text" class="form-control" >
                 </div>
                 
                  <div class="form-label-group">
@@ -169,7 +169,7 @@
                 
                  <div class="form-label-group">
                   House price
-                  <input name="house_price" type="text" class="form-control" placeholder="Password" >
+                  <input name="house_price" type="text" class="form-control"  >
                 </div>
                 
               <div class="custom-control custom-checkbox mb-3">
@@ -187,31 +187,31 @@
                 
                  <div class="form-label-group">
                  Person
-                  <input name="house_person" name="house_rooms" type="text" class="form-control" placeholder="Password" required>
+                  <input name="house_person" name="house_rooms" type="text" class="form-control"  required>
                 </div>
                 
                  <div class="form-label-group">
                  Rooms
-                  <input name="house_rooms" name="house_rooms" type="text" class="form-control" placeholder="Password" required>
+                  <input name="house_rooms" name="house_rooms" type="text" class="form-control" required>
                 </div>
                 
                  <div class="form-label-group">
                  Bathrooms
-                  <input name="house_bathrooms" type="text" class="form-control" placeholder="Password" required>
+                  <input name="house_bathrooms" type="text" class="form-control"  required>
                 </div>
                 
                  <div class="form-label-group">
                  Beds
-                  <input  name="house_beds" type="text" class="form-control" placeholder="Password" required>
+                  <input  name="house_beds" type="text" class="form-control"required>
                 </div>
                 
                  <div class="form-label-group">
                  Reservation Start Date
-                  <input name='house_mindate' type="date" class="form-control" placeholder="Password" required>
+                  <input name='house_mindate' type="date" class="form-control"required>
                 </div>
                 <div class="form-label-group">
                  Reservation End Date
-                  <input name='house_maxdate' type="date" class="form-control" placeholder="Password" required>
+                  <input name='house_maxdate' type="date" class="form-control" required>
                 </div>
                 
                  <div class="form-label-group">

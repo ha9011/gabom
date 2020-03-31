@@ -106,7 +106,7 @@ margin:0 20px;
       <ul class="navbar-nav">
        <li class="nav-item filebox">
          		<div class="card-body">
-					<h4 class="card-title">John Doe</h4>
+					<h4 style="color:white;" class="card-title"></h4>
 				</div>
          		<input id="changeProfile" type="file" name="changeProfile">
         </li>
@@ -137,31 +137,54 @@ margin:0 20px;
 			<h2>내 정보</h2>
 			</div>
 			<div id="Content">
-				<div class="info form-label-group">
-                <h4 class="ttl">ID:</h4> <h4>${myinfodata.member_id}</h4>
-                </div>
+				<div class="form-label-group">
+                  	ID
+                  	<input type="text" disabled  class="form-control" placeholder="${myinfodata.member_id}" >
+                	</div>
+                	<div class="form-label-group">
+                  	PW
+                  	<input type="text" disabled  class="form-control" placeholder="변경불가">
+                	</div>
+                	
+                <form id="meminfo">	
                 
-                <div class="info form-label-group">
-                <h4 class="ttl">NAME:</h4> <h4>${myinfodata.member_name}</h4>
-                </div>
-                <div class="info form-label-group">
-                <h4 class="ttl">PHONE:</h4> <h4>${myinfodata.member_phone}</h4>
-                </div>
-                <div class="info form-label-group">
-                <h4 class="ttl">EMAIL:</h4> <h4>${myinfodata.member_email}</h4>
-                </div>
-                <div id="ty" class="info form-label-group">
-                <h4 class="ttl">TYPE:</h4> 
-                </div>
-                <div class="info form-label-group">
-                <h4 class="ttl">ADDRESS:</h4> <h4>${myinfodata.member_address}</h4>
-                </div>
-                <div class="info form-label-group">
-                <h4 class="ttl">HOBBY:</h4> <h4>${myinfodata.member_hobby}</h4>
-                </div>
-                <div class="info form-label-group">
-                <h4 class="ttl">MY PROFILE CONTENT</h4> <h4>${myinfodata.member_profile_contents}</h4>
-                </div>
+                	<div class="form-label-group">
+                  	NAME
+                  	<input name="member_name" type="text" class="form-control" placeholder="${myinfodata.member_name}" 
+                  			value="${myinfodata.member_name}">
+                	</div>
+                	<div class="form-label-group">
+                  	BIRTH
+                  	<input name="member_birth" type="text" class="form-control" placeholder="${myinfodata.member_birth}" 
+                  		value="${myinfodata.member_birth}">
+                	</div>
+                	<div class="form-label-group">
+                  	PHONE
+                  	<input name="member_phone" type="text" class="form-control" placeholder="${myinfodata.member_phone}" 
+                  		value="${myinfodata.member_phone}">
+                	</div>
+                	<div class="form-label-group">
+                  	EMAIL
+                  	<input name="member_email" type="text" class="form-control" placeholder="${myinfodata.member_email}" 
+                  		value="${myinfodata.member_email}">
+                	</div>
+                	<div class="form-label-group">
+                  	ADDRESS
+                  	<input name="member_address" type="text" class="form-control" placeholder="${myinfodata.member_address}" 
+                  		value="${myinfodata.member_address}">
+                	</div>
+                	<div class="form-label-group">
+                  	HOBBY
+                  	<input name="member_hobby" type="text" class="form-control" placeholder="${myinfodata.member_hobby}" 
+                  		value="${myinfodata.member_hobby}">
+                	</div>
+                	<div class="form-label-group">
+                  	MY PROFILE
+                  	<input name="member_profile_contents" type="text" class="form-control" placeholder="${myinfodata.member_profile_contents}" 
+                  		value="${myinfodata.member_profile_contents}" style="height:300px;">
+                	</div>
+					<button class="save btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">수정하기</button>
+                </form>
 			</div>
 		</div>
 		
@@ -290,6 +313,44 @@ margin:0 20px;
 
 
 <script>
+
+$(".save").on('click',function(e){
+	 var formData = new FormData(document.getElementById("meminfo")); 
+	 
+    console.log(formData.get("member_name"));
+    console.log(formData.get("member_birth"));
+    console.log(formData.get("member_phone"));
+    console.log(formData.get("member_email"));
+    console.log(formData.get("member_address"));
+    console.log(formData.get("member_hobby"));
+    console.log(formData.get("member_profile_contents"));
+    
+   $.ajaxSetup({         
+ 	      beforeSend : function(xhr){
+ 	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+ 	      });//먼저 보냄
+     
+     $.ajax({
+         url:'myinfo/changememinfo',
+         type:'post',
+         data:formData,
+         processData:false,
+         contentType:false,  //제이슨 아니니깐 까보지마!!
+          dataType:"json", //rest 컨트롤 이용   
+         success:function(data){
+            alert("변경완료");
+            console.log(data);
+            window.location.reload();
+         },
+         error:function(error){
+       	  alert("실패");
+            console.log(error);
+         }
+ }); 
+	
+})
+
+
 var mty = "${myinfodata.member_type}";
 
 
@@ -313,6 +374,7 @@ $('#meddelanden').popover({animation:true, content:elem, html:true});
 	var a = "${myinfodata.member_name}";
 	var b = "${myinfodata.member_id}";
 	console.log(a);
+	$(".card-title").append(a);
 
 $(document).on("click","#changePicWant",function(){
 	console.log("원하는 사진 변경")
@@ -413,11 +475,8 @@ $.ajaxSetup({
   				var t_td6 =$('<td>'+i.reservation_person+'명'+'</td>');//
   				var t_td7 =$('<td>'+i.reservation_totalprice+'원'+'</td>');//
   				
-  				//if(){
-  					var t_td8 =$('<td><button class="cbtn btn btn-warning" data-resernum="'+i.reservation_number+'">예약취소</button></td>');//
-  				//}else{
-  					//"지난예약"
-  				//}
+  				var t_td8 =$('<td><button class="cbtn btn btn-warning" data-resernum="'+i.reservation_number+'">예약취소</button></td>');//
+  				
   				subtr.append(t_td1);
   				subtr.append(t_td2);
   				subtr.append(t_td3);

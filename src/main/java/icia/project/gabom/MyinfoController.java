@@ -41,5 +41,7 @@ public class MyinfoController {
 
 		return "serviceinfo";
 	}
+	
+	
 
 }
