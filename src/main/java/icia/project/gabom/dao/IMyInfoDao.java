@@ -9,9 +9,11 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import icia.project.gabom.dto.Food;
 import icia.project.gabom.dto.Food_reple;
 import icia.project.gabom.dto.Food_review;
 import icia.project.gabom.dto.Foodreservation;
+import icia.project.gabom.dto.House;
 import icia.project.gabom.dto.House_reple;
 import icia.project.gabom.dto.House_review;
 import icia.project.gabom.dto.Housereservation;
@@ -92,6 +94,32 @@ public interface IMyInfoDao {
 
 	@Delete("DELETE FROM SOMOIM_BOARD WHERE BOARD_NUMBER=#{board_number}")
 	void delsomo(int board_number);
+
+	List<Housereservation> gethreserlist(@Param("house_hostid")String house_hostid);
+
+	List<Foodreservation> getfreserlist(@Param("house_hostid")String house_hostid);
+
+	List<Food> getfood(@Param("house_hostid")String house_hostid);
+
+	List<House> gethouse(@Param("house_hostid")String house_hostid);
+
+	List<House_review> gethrlist(String house_hostid);
+
+	List<Food_review> getfrlist(String house_hostid);
+
+	@Delete("DELETE REGISTHOUSE WHERE HOUSE_NUMBER=#{house_number}")
+	void deletehouse(@Param("house_number")int house_number);
+	
+	@Delete("DELETE FOODSHOP WHERE FOOD_NUMBER=#{food_number}")
+	void deletefood(@Param("food_number")int food_number);
+
+	void changememinfo(@Param("member_id")String member_id, @Param("member_name")String member_name, @Param("member_phone")String member_phone, 
+			@Param("member_email")String member_email,@Param("member_birth")String member_birth, 
+			@Param("member_address")String member_address, @Param("member_hobby")String member_hobby, 
+			@Param("member_profile_contents")String member_profile_contents);
+	
+	@Select("SELECT * FROM MEMBER WHERE MEMBER_ID=#{member_id}")
+	List<Member> getmyinfo(@Param("member_id")String member_id);
 
 	
 	

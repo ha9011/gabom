@@ -151,7 +151,7 @@
                  
                  <div class="form-label-group">
                   Shop Name
-                  <input name="food_name"  type="text" class="form-control" placeholder="Password" >
+                  <input name="food_name"  type="text" class="form-control" >
                 </div>
                 
                  <div class="form-label-group">
@@ -184,24 +184,24 @@
                 
                  <div class="form-label-group">
                  Person
-                  <input name="food_person"type="text" class="form-control" placeholder="Password" required>
+                  <input name="food_person"type="text" class="form-control"required>
                 </div>
                 
                  <div class="form-label-group">
                  Reservation Start Date
-                  <input name='food_mindate' type="date" class="form-control" placeholder="Password" required>
+                  <input name='food_mindate' type="date" class="form-control" required>
                 </div>
                 <div class="form-label-group">
                  Reservation End Date
-                  <input name='food_maxdate' type="date" class="form-control" placeholder="Password" required>
+                  <input name='food_maxdate' type="date" class="form-control" required>
                 </div>
                 <div class="form-label-group">
                  Reservation Start time
-                  <input name='food_mintime' type="time" class="form-control" placeholder="Password" required>
+                  <input name='food_mintime' type="time" class="form-control"  required>
                 </div>
                 <div class="form-label-group">
                  Reservation End time
-                  <input name='food_maxtime' type="time" class="form-control" placeholder="Password" required>
+                  <input name='food_maxtime' type="time" class="form-control"required>
                 </div>
                 
                  <div class="form-label-group">

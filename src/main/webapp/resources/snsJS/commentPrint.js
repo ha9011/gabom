@@ -41,11 +41,15 @@ function printComment(commentJson,number) {
 		commentBox+='</div>';
 		}
 		commentBox+='<div class="input-group commentWriteBox" id="commentWriteBox'+number+'">';
-		commentBox+='<input type="text" class="form-control" placeholder="댓글 입력">';
+		commentBox+='<input type="text" class="form-control" placeholder="댓글 입력" style="border-right:0;">';
+		commentBox+='<span class="input-group-addon" style="background-color:#FFFFFF;border-left:0;">';
+		commentBox+='<i class="fas fa-smile" style="color:gold;" onclick="emogi(\''+number+'\',\'comment\')"></i>';
+		commentBox+='</span>';
 		commentBox+='<span class="input-group-btn">';
 		commentBox+='<button type="button" class="btn btn-primary commentWrite" onclick="commentInsert('+number+')">확인</button>';
 		commentBox+='</span>';
 		commentBox+='</div>';
+		commentBox+='<div class="container emoBox"></div>'; 
 		commentBox+='<div class="commentCancelBtn" id="commentCancelBtn'+number+'">닫기</div>';
 		commentBox+='</div>';	
 		$("."+number).html(commentBox);
