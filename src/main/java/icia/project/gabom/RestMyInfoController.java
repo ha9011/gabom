@@ -19,6 +19,7 @@ import com.sun.mail.handlers.multipart_mixed;
 import icia.project.gabom.dto.Foodreservation;
 import icia.project.gabom.dto.House_review;
 import icia.project.gabom.dto.Housereservation;
+import icia.project.gabom.dto.Member;
 import icia.project.gabom.service.MyInfoManagement;
 
 @RestController
@@ -29,6 +30,16 @@ public class RestMyInfoController {
 	private MyInfoManagement MIMM ; 
 	
 	ModelAndView mav ;
+	
+	
+	
+	@PostMapping(value = "/changememinfo", produces="text/plain;charset=utf-8")
+	public String changememinfo(Principal pc,Member mb ) {// 개인정보 변경
+		System.out.println("개인정보 변경");
+		String json = MIMM.changememinfo(mb, pc);
+		
+		return json;
+	}
 	
 	@PostMapping(value = "/chargemoney", produces="text/plain;charset=utf-8")
 	public String chargemoney(String ChargeMoney, Principal pc) {
@@ -169,6 +180,61 @@ public class RestMyInfoController {
 		System.out.println("마이페이지 내가 작성한 게시물 삭제   ");
 		System.out.println(board_number);
 		String json = MIMM.delsomo(board_number,pc);
+		
+		return json;
+	}
+	
+	
+	//----------------------------------------서비스 업체 인포 ----------------------------------------
+	
+	
+	@PostMapping(value = "/reserlist", produces="text/plain;charset=utf-8")
+	public String reserlist(Principal pc) {
+		System.out.println("내가 받은 예약 리스트 불러오기 ");
+		String json = MIMM.reserlist(pc);
+		
+		return json;
+	}
+	
+	
+	@PostMapping(value = "/myfoodlist", produces="text/plain;charset=utf-8")
+	public String myfoodlist(Principal pc) {
+		System.out.println("내 맛집목록 가져오기");
+		String json = MIMM.myfoodlist(pc);
+		
+		return json;
+	}
+	
+	
+	@PostMapping(value = "/myhouselist", produces="text/plain;charset=utf-8")
+	public String myhouselist(Principal pc) {
+		System.out.println("내 집목록 가져오기");
+		String json = MIMM.myhouselist(pc);
+		
+		return json;
+	}
+	
+	@PostMapping(value = "/reviewlist", produces="text/plain;charset=utf-8")
+	public String reviewlist(Principal pc) {
+		System.out.println("등록된 리뷰 가져오기");
+		String json = MIMM.reviewlist(pc);
+		
+		return json;
+	}
+	
+	
+	@PostMapping(value = "/delhouse", produces="text/plain;charset=utf-8")
+	public String delhouse(Principal pc,int house_number) {
+		System.out.println("집 삭제");
+		String json = MIMM.delete1(pc,house_number);
+		
+		return json;
+	}
+	
+	@PostMapping(value = "/delfood", produces="text/plain;charset=utf-8")
+	public String delfood(Principal pc,int food_number) {
+		System.out.println("음식점 삭제");
+		String json = MIMM.delete2(pc,food_number);
 		
 		return json;
 	}

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 
 import icia.project.gabom.dao.IMyInfoDao;
+import icia.project.gabom.dto.Food;
 import icia.project.gabom.dto.Food_reple;
 import icia.project.gabom.dto.Food_review;
 import icia.project.gabom.dto.Foodreservation;
@@ -396,6 +397,108 @@ public class MyInfoManagement {
 		List<SomoimBoard> soml =minfDao.getmysomowrite(member_guestid);
 		
 		json = new Gson().toJson(soml);
+		return json;
+	}
+//-------------------------------서비스 업체 인포 ---------------------------------------------
+	
+	public String reserlist(Principal pc) {
+		String json =null;
+		String house_hostid = pc.getName();
+		System.out.println(house_hostid);
+		
+		Map<String,Object> list = new HashMap<String, Object>(); // 맵에 두종류를 담음 
+		
+		List<Housereservation> hreserlist = minfDao.gethreserlist(house_hostid);//집 예약목록 
+		List<Foodreservation> freserlist = minfDao.getfreserlist(house_hostid);//음식 예약목록
+		
+		
+		list.put("hreserlist", hreserlist);
+		list.put("freserlist", freserlist);
+		
+		
+		json = new Gson().toJson(list);
+		return json;
+	}
+	
+	
+
+	public String myfoodlist(Principal pc) {
+		String json =null;
+		String house_hostid = pc.getName();
+		
+		List<Food> foodlist = minfDao.getfood(house_hostid);
+		
+		json = new Gson().toJson(foodlist);
+		return json;
+	}
+
+	public String myhouselist(Principal pc) {
+		String json =null;
+		String house_hostid = pc.getName();
+		
+		List<House> houselist = minfDao.gethouse(house_hostid);
+		
+		json = new Gson().toJson(houselist);
+		return json;
+	}
+
+	public String reviewlist(Principal pc) {
+		String json =null;
+		String house_hostid = pc.getName();
+		
+		Map<String,Object> list = new HashMap<String, Object>(); // 맵에 두종류를 담음 
+		
+		List<House_review> hrlist = minfDao.gethrlist(house_hostid);//집 예약목록 
+		List<Food_review> frlist = minfDao.getfrlist(house_hostid);//음식 예약목록
+		
+		list.put("hrlist", hrlist);
+		list.put("frlist", frlist);
+		
+		json = new Gson().toJson(list);
+		return json;
+	}
+
+	public String delete1(Principal pc, int house_number) {//집
+		String json =null;
+		String house_hostid = pc.getName();
+		
+		minfDao.deletehouse(house_number);
+		List<House> houselist = minfDao.gethouse(house_hostid);
+		
+		json = new Gson().toJson(houselist);
+		return json;
+	}
+
+	public String delete2(Principal pc, int food_number) {//음식
+		String json =null;
+		String house_hostid = pc.getName();
+		
+		minfDao.deletefood(food_number);
+		List<Food> foodlist = minfDao.getfood(house_hostid);//다시 불러옴
+		
+		json = new Gson().toJson(foodlist);
+		return json;
+	}
+
+	public String changememinfo(Member mb2, Principal pc) {
+		String json =null;
+		
+		String member_id = pc.getName();
+		String member_name = mb2.getMember_name();
+		String member_phone = mb2.getMember_phone();
+		String member_email =mb2.getMember_email();
+		String member_birth = mb2.getMember_birth();
+		String member_address = mb2.getMember_address();
+		String member_hobby = mb2.getMember_hobby();
+		String member_profile_contents = mb2.getMember_profile_contents();
+		
+		System.out.println(member_id+member_name+member_phone+member_email+member_birth+member_address+member_hobby+member_profile_contents);
+		
+		minfDao.changememinfo(member_id,member_name,member_phone,member_email,member_birth,member_address,member_hobby,member_profile_contents);
+		
+		List<Member> minfo =minfDao.getmyinfo(member_id);
+		json = new Gson().toJson(minfo);
+		System.out.println("변경완료");
 		return json;
 	}
 	
