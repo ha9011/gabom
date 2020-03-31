@@ -143,4 +143,11 @@ order by tc.chatting_date desc
 			
 	</insert>
 	
+	
+	<update id="updatetripmemo" parameterType="tripmemoupdate">
+	UPDATE TRIP_PLAN_DETAIL SET TRIP_MEMO = #{trip_memo} WHERE TRIP_NUMBER = #{trip_number} AND TRIP_DATE = #{trip_date} AND TRIP_ORDER = #{trip_order} AND TRIP_TITLE = #{trip_title}
+	</update>
+	
+	
+	
 </mapper>

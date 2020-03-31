@@ -24,6 +24,7 @@ import icia.project.gabom.dto.TripPlanDetail;
 import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.dto.Trip_plan;
 import icia.project.gabom.dto.Trip_plan_date;
+import icia.project.gabom.dto.Tripmemoupdate;
 
 public interface ITripplanDao {
    
@@ -115,6 +116,15 @@ public interface ITripplanDao {
    Integer selecTripNextPlan(@Param("tripNum")int trip_number, @Param("day")int trip_day);
    
    int insertHousePlanDetail(@Param("tripNum")int trip_number, @Param("day")int trip_day, @Param("nextplan")Integer tripNextPlan, @Param("HouseInfo")House selectHouseInfo);
+
+
+   int updatetripmemo(Tripmemoupdate tripup);
+
+   @Select("select trip_memo from trip_plan_detail where trip_number = #{trip_number} and trip_date = #{trip_date} and trip_order = #{trip_order}")
+   String selecttripmemo(Tripmemoupdate tripup);
+
+//   @Select("select trip_number,trip_date,trip_destination,trip_memo,trip_title,trip_order from trip_plan_detail where trip_number = #{trip_number} and trip_date = #{trip_date} and trip_order = #{trip_order} and trip_title = #{trip_title}")
+//   String selecttripmemo(Tripmemoupdate tripup);
 
    
 

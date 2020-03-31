@@ -353,7 +353,7 @@ header {
 						<!-- Modal footer -->
 						<div class="modal-footer">
 							<button type="button" id="memo_answer_button"
-								class="btn btn-info answer">메모추가</button>
+								class="btn btn-info answer" data-dismiss="modal">메모수정/저장</button>
 							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 						</div>
 					</form>
@@ -1635,7 +1635,7 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 			planFrame.append(updownFrame);
 			
 			let memoFrame = $("<div ></div>");
-			let memoPlan = $("<div ><button class='memoPlan' data-toggle='modal' data-target='#memoModal' data-number='"+v.trip_order+"' data-title='"+v.trip_title+"' data-idx='"+(planidx-1)+"'>memo</button></div>");
+			let memoPlan = $("<div ><button class='memoPlan' data-toggle='modal' data-target='#memoModal' data-date='"+v.trip_date+"'data-order='"+v.trip_order+"' data-title='"+v.trip_title+"' data-idx='"+(planidx-1)+"'>memo</button></div>");
 
 			memoFrame.append(memoPlan);
 			planFrame.append(memoFrame);
@@ -1674,79 +1674,115 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 		
 		} 
 	}
-	//------------------------메모추가------------------------------
+	//------------------------메모 모달생성------------------------------
 	$(document).on("click",".memoPlan",function(e) { //메모버튼
 		console.log("메모버튼 클릭");
 		var tripnumber = trip_data[0].trip_number; //여행번호
 		var tripdate = currentPlanDay; //여행날짜
-		var triporder = e.target.dataset.number //여행순서
+		var triporder = e.target.dataset.order //여행순서
 		var triptitle = e.target.dataset.title; //여행지
-		console.log("date",tripnumber);
-		console.log("몇번쨰",tripdate); //몇일날
-		console.log("number=",triporder); //순서
+		
+		console.log("number=",tripnumber);
+		console.log("date=",tripdate); //몇일날
+		console.log("order=",triporder); //순서
 		console.log("title=",triptitle); //타이틀
-		$("#memotitle").empty();
+		var params = {
+			"trip_number" : tripnumber,
+			"trip_date" : tripdate,
+			"trip_order" : triporder,
+			"trip_title" : triptitle
+		}
 		
-		let title = " ";
-		title += " "+triptitle;
-		title += "<input type='hidden' name='triptitle' value='"+triptitle+"'>";
-		title += "<input type='hidden' name='tripnumber' value='"+tripnumber+"'>";
-		title += "<input type='hidden' name='triporder' value='"+triporder+"'>";
-		title += "<input type='hidden' name='tripdate' value='"+tripdate+"'>";
-		
-		$("#memotitle").append(title);
-		
-		$(document).on("click","#memo_answer_button",function(){ //메모추가
-			//console.log(document.getElementById("memotitle").value);
-			var formData = new FormData(document.getElementById("mfrm"));
-			//formData.append("memotitle",document.getElementById("memotitle").value);
-			console.log(formData.get("tripnumber"));
-			console.log(formData.get("tripdate"));
-			console.log(formData.get("triporder"));
-			console.log(formData.get("triptitle"));
-			
-			var str = $('#memocontent').val();
-			str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-			document.getElementById("memocontent").value=str;
-			
-			formData.append("memocontent",document.getElementById("memocontent").value);
-			console.log("title",formData.get("triptitle"));
-			console.log("memocontent",formData.get("memocontent"));
-			
-			var params = {
-					"trip_number" : formData.get("tripnumber"),
-					"trip_date" : formData.get("tripdate"),
-					"trip_order" : formData.get("triporder"),
-					"trip_title" : formData.get("triptitle"),
-					"trip_memo" : formData.get("memocontent")
-			}
-			console.log("params",params);
- 			//시큐리티 ajax Setup
- 		$.ajaxSetup({         //상세모달 ajax
- 		      beforeSend : function(xhr){
- 		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
- 		      });//먼저 보냄
-            	console.log("메모추가 ajax시작");
-            $.ajax({
-                url : "tprest/tripmemoupdate",
-                type : "post",
-                data :  params ,
-                dataType : "json",
-                //processData:false,//application/x-www-form-urlencoded(쿼리스트링)
-                //contentType:false,//multipart의 경우 contentType을 false로
-                success : function(response) {
-                	console.log("response",response);
- 					
-                    
-                }, error : function(jqXHR, status, e) {
-                    //console.error(status + " :asdasd " + e);
-                }
-            });	
-			
-		})//메모추가 클릭 end
-		
+		$.ajaxSetup({         //상세모달 ajax
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+      	console.log("메모셀렉 ajax시작");
+      $.ajax({
+          url : "tprest/tripmemoselect",
+          type : "post",
+          data :  params ,
+          dataType : "json",
+          //processData:false,//application/x-www-form-urlencoded(쿼리스트링)
+          //contentType:false,//multipart의 경우 contentType을 false로
+          success : function(response) {
+          	console.log("response",response);
+          	$("#memotitle").empty();
+    		$("#memocontent").empty();
+    		
+    		let title = " ";
+    		let textbox = "";
+    		title += " "+triptitle;
+    		title += "<input type='hidden' name='triptitle' value='"+triptitle+"'>";
+    		title += "<input type='hidden' name='tripnumber' value='"+tripnumber+"'>";
+    		title += "<input type='hidden' name='triporder' value='"+triporder+"'>";
+    		title += "<input type='hidden' name='tripdate' value='"+tripdate+"'>";
+    		textbox += " "+response+" ";
+    		$("#memotitle").append(title);
+    		$("#memocontent").append(textbox);
+              
+           	var str = $('#memocontent').val();
+
+           	str = str.split('<br/>').join("\r\n");
+
+           	$('#memocontent').val(str);
+           	
+          }, error : function(jqXHR, status, e) {
+              console.log("메모찾기 실패");
+          }
+      });	//ajax End
 		
 	}); //메모버튼 클릭 end
+	
+	//-------------------------메모 저장----------------------------------
+	$(document).on("click","#memo_answer_button",function(){ //메모저장
+		//console.log(document.getElementById("memotitle").value);
+		var formData = new FormData(document.getElementById("mfrm"));
+		//formData.append("memotitle",document.getElementById("memotitle").value);
+		console.log(formData.get("tripnumber"));
+		console.log(formData.get("tripdate"));
+		console.log(formData.get("triporder"));
+		console.log(formData.get("triptitle"));
+		
+		var str = $('#memocontent').val();
+		str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+		document.getElementById("memocontent").value=str;
+		
+		formData.append("memocontent",document.getElementById("memocontent").value);
+		console.log("title",formData.get("triptitle"));
+		console.log("memocontent",formData.get("memocontent"));
+		
+		var params = {
+				"trip_number" : formData.get("tripnumber"),
+				"trip_date" : formData.get("tripdate"),
+				"trip_order" : formData.get("triporder"),
+				"trip_title" : formData.get("triptitle"),
+				"trip_memo" : formData.get("memocontent")
+		}
+		console.log("params",params);
+			//시큐리티 ajax Setup
+		$.ajaxSetup({         //상세모달 ajax
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+        	console.log("메모저장 ajax시작");
+        $.ajax({
+            url : "tprest/tripmemoupdate",
+            type : "post",
+            data :  params ,
+            dataType : "json",
+            //processData:false,//application/x-www-form-urlencoded(쿼리스트링)
+            //contentType:false,//multipart의 경우 contentType을 false로
+            success : function(response) {
+            	console.log("response",response);
+					
+                
+            }, error : function(jqXHR, status, e) {
+                console.log("메모저장 실패");
+            }
+        });	
+		
+	})//메모추가 클릭 end
 		
 	 
 	 //-----------지도 마커에 따른 재위치 선정
