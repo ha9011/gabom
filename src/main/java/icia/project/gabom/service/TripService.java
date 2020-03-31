@@ -36,6 +36,7 @@ import icia.project.gabom.dto.TripPlanDetail;
 import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.dto.Trip_plan;
 import icia.project.gabom.dto.Trip_plan_date;
+import icia.project.gabom.dto.Tripmemoupdate;
 
 @Service
 public class TripService {
@@ -471,6 +472,17 @@ public class TripService {
 		}
 	    
 		return json;
+	}
+
+
+	public String updatetripmemo(Tripmemoupdate tripup) {
+		String trip_number = tripup.getTrip_number();
+		String trip_date = tripup.getTrip_date();
+		String trip_order = tripup.getTrip_order();
+		String trip_title = tripup.getTrip_title();
+		String trip_memo = tripup.getTrip_memo();
+		
+		return null;
 	}
    
    
