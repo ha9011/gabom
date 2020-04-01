@@ -33,12 +33,13 @@ body {
 }
 
 img {
-   float: none;
-   margin: 0 35%;
-   display: flex;
-   align-items: center;
-   width: 40%;
-   margin-bottom: 40px;
+  float: none;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	width: 250px;
+	height: 75px;
+	margin-bottom: 40px;
 }
 
 li {
@@ -99,7 +100,7 @@ background-color: #E6E6E6
       </ul>
       </div>
       <div class="col-md-12 col-sm-12 col-xs-12"><a href="/gabom/">
-         <img src="resources/headerImage/logo3.png">
+         <img src="resources/headerImage/logo.png">
          </a>
       </div>
       </div>
