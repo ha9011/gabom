@@ -96,7 +96,7 @@ margin:0 20px;
         <div id="profileArea">
 			<div id="picArea" class="card" >
 				<img id="meddelanden" class="card-img-top " src="${myinfodata.member_profile_picture}"  alt="Card image"
-					style="width: 100%" >
+					style="width: 200px; height:200px" >
 				</div>
 			</div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

@@ -17,8 +17,8 @@
 
 #alarm{
 	position: fixed;
-    top: 0;
-    left: 0;
+    top: 100px;
+    left: 100px;
     width: 300px;
     border: 3px solid #73AD21;
 }
@@ -88,14 +88,29 @@
 		console.log("alarmEvent 실행");
 		console.log(JsonRespon);
 		//gabom/somoim/somoimroom?roomnumber=24  절대 경로로 해야함
-		var alarmNum = JsonRespon.somoimNumber; 	
-		console.log("페이지 : " + alarmNum)
-		var toastCont = $("<a href='/gabom/somoim/somoimroom?roomnumber="+alarmNum+"'>가입하신 소모임에 새로운 정모가 등록 되었습니다</a>")
-		$("#toast-body").append(toastCont);
 		
 		if(JsonRespon.type=='jungmo'){
 			console.log("정모 만들어질때 이벤트")
-			 $('#alarm').show();
+			
+			var alarmNum = JsonRespon.somoimNumber; 	
+			console.log("페이지 : " + alarmNum)
+			var toastCont = $("<a href='/gabom/somoim/somoimroom?roomnumber="+alarmNum+"'>가입하신 소모임에 새로운 정모가 등록 되었습니다</a>")
+			$("#toast-body").append(toastCont);
+		
+			$('#alarm').show();
+			  setTimeout(function() { 
+			   $('#alarm').hide();
+			}, 5000);
+		}else if(JsonRespon.type=='tripShare'){
+			console.log("여행 계획 공유 이벤트")
+			console.log("JsonRespon",JsonRespon)
+			var alarmName = JsonRespon.my_id;
+			//var alarmNum = JsonRespon.somoimNumber; 	
+			//console.log("페이지 : " + alarmNum)
+			var toastCont = $("<a href='/gabom/myplan'>"+alarmName+"님 께서 여행계획을 공유하셨습니다.</a>")
+			$("#toast-body").append(toastCont);
+		
+			$('#alarm').show();
 			  setTimeout(function() { 
 			   $('#alarm').hide();
 			  }, 5000);

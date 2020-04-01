@@ -24,4 +24,6 @@ public class Trip_member {
 	private String trip_end_date;
 	
 	private Trip_plan trip;
+	
+	private int trip_plan_appry_status = 0;
 }

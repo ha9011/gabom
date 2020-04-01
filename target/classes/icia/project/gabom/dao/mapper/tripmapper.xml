@@ -35,13 +35,15 @@
 	</select>
 
 	<select id="getmyplan" resultType="trfriend">
+		
 		SELECT TP.TRIP_NUMBER,TP.TRIP_ID,TP.TRIP_TITLE, TP.TRIP_AREA,
-		TP.TRIP_START_DATE, tp.trip_end_date
-		FROM TRIP_PLAN TP, TRIP_MEMBER TM
-		WHERE TP.TRIP_NUMBER=TM.TRIP_NUMBER AND share_id=#{trip_id} and
+		TP.TRIP_START_DATE, tp.trip_end_date,  nvl(tpr.trip_plan_apply,0) trip_plan_appry_status
+		FROM TRIP_PLAN TP, TRIP_MEMBER TM,  trip_plan_recommand tpr
+		WHERE tp.TRIP_NUMBER = tpr.TRIP_NUMBER(+) and TP.TRIP_NUMBER=TM.TRIP_NUMBER AND share_id=#{trip_id} and
 		trip_type=1
 		UNION
-		select * from TRIP_PLAN where trip_id=#{trip_id}
+		 select tp.*, nvl(tpr.trip_plan_apply,0) trip_plan_appry_status from TRIP_PLAN tp, trip_plan_recommand tpr  where tp.TRIP_NUMBER = tpr.TRIP_NUMBER(+) and trip_id=#{trip_id}
+        
 	</select>
 
 	<select id="detailplan" resultType="trip">

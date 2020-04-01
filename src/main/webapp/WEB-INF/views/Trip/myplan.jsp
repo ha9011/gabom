@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,263 +8,265 @@
 <link rel="icon" href="favicon.ico">
 <!-- Bootstrap core CSS -->
 <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <!-- Custom styles for this template -->
 <link href="./resources/css/owl.carousel.css" rel="stylesheet">
-<link href="./resources/css/owl.theme.default.min.css"  rel="stylesheet">
+<link href="./resources/css/owl.theme.default.min.css" rel="stylesheet">
 <link href="./resources/css/animate.css" rel="stylesheet">
 <link href="./resources/css/style.css" rel="stylesheet">
 <!-- nav영역  -->
 
 
 <!-- Custom fonts for this template -->
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i,900,900i"
+	rel="stylesheet">
 <!-- Custom styles for this template -->
 <link href="./resources/css/coming-soon.min.css" rel="stylesheet">
 
 
 <style>
-body{overflow:hidden; }
-#out{
-   display: flex;
-   
-      
-}
-#trp{
-   width: 100%;
-   height: 1200px;
-   background-color: rgba(255, 255, 255, 0.7);
-   margin-top:80px;
-   text-align: center;
+body {
+	overflow: hidden;
 }
 
-#mylist{
-   font-size:20px;
-   font-weight:bold;
-   width:100%;
+#out {
+	display: flex;
 }
 
-.bar{
-     text-align:center;
-     font-size:30px;
+#trp {
+	width: 100%;
+	height: 1200px;
+	background-color: rgba(255, 255, 255, 0.7);
+	margin-top: 80px;
+	text-align: center;
 }
-#table{
-    margin:20px 10px; 
+
+#mylist {
+	font-size: 20px;
+	font-weight: bold;
+	width: 100%;
 }
-tr{
-text-align:center;
-margin:15px 0; 
+
+.bar {
+	text-align: center;
+	font-size: 30px;
+}
+
+#table {
+	margin: 20px 10px;
+}
+
+tr {
+	text-align: center;
+	margin: 15px 0;
 }
 
 /* 프로필영역 */
-#main{
-
-width:100%;
-margin-top:10%;
-color:white;
+#main {
+	width: 100%;
+	margin-top: 10%;
+	color: white;
 }
-#ct{
-   width: 600px;
-   height: 1200px;
-   background-color: rgba(0, 46, 102, 0.8);
-   margin-top:80px;
-   text-align: center;
-   }
-#reauest{
-background-color:white;
-height:680px;
+
+#ct {
+	width: 600px;
+	height: 1200px;
+	background-color: rgba(0, 46, 102, 0.8);
+	margin-top: 80px;
+	text-align: center;
 }
-#mql{
-width:100%;
-display:none;
 
-}  
-#fql{
-width:100%;
-display:none;
+#reauest {
+	background-color: white;
+	height: 680px;
+}
 
-}      
+#mql {
+	width: 100%;
+	display: none;
+}
+
+#fql {
+	width: 100%;
+	display: none;
+}
 
 /* 버튼 */
-#jbtn{
-float:right;
-margin:10px 200px;
-font-size:15px;
-}
-#t_title{
-cursor: pointer;
-text-decoration:none;
-}
-#rqmbtn{
- width:100%;
- color:black;
-}
-#rqbtn{
-width:100%;
-color:black;
+#jbtn {
+	float: right;
+	margin: 10px 200px;
+	font-size: 15px;
 }
 
+#t_title {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+#rqmbtn {
+	width: 100%;
+	color: black;
+}
+
+#rqbtn {
+	width: 100%;
+	color: black;
+}
 
 /* modal */
-#f{
-width:400px;
-margin:10px;
-display:flex;
+#f {
+	width: 400px;
+	margin: 10px;
+	display: flex;
 }
-#fbtn{
-float:right;
-border-radius: 10px;
+
+#fbtn {
+	float: right;
+	border-radius: 10px;
 }
 </style>
 
 </head>
 <body>
 
-<!-- Navigation -->
-      <nav class="navbar navbar-default navbar-fixed-top">
-         <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-               <span class="sr-only">Toggle navigation</span>
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-               </button>
-               
-               <!--로고 자리 -->
-               <img style="width:200px;" src="./resources/headerImage/logo3.png" alt="logo">
-            </div>
-            
-            
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-               <ul class="nav navbar-nav navbar-right">
-                  <li class="hidden">
-                     <a href="#page-top"></a>
-                  </li>
-                  
-                  <li>
-                     <a class="page-scroll" href="/gabom/">Home</a>
-                  </li>
-                  <li>
-                     <a class="page-scroll" href="snsmain">SNS</a>
-                  </li>
-                  <li>
-                     <a class="page-scroll" href="myplan">내여행</a>
-                  </li>
-                  <li>
-                     <a class="page-scroll" href="housechoice">숙박</a>
-                  </li>
-                  <li>
-                     <a class="page-scroll" href="foodmain">맛집</a>
-                  </li>
-                  <li>
-                     <a class="page-scroll" href="#team">VIP</a>
-                  </li>
-                  <li>
-                     <a class="page-scroll" href="#contact">고객센터</a>
-                  </li>
-               </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-         </div>
-         <!-- /.container-fluid -->
-      </nav>
-  
-  
-  
+	<!-- Navigation -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header page-scroll">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
 
-  <div class="overlay"></div>
-  <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
-    <source src="./resources/css/bg.mp4" type="video/mp4">
-  </video>
- 
- 
-    <div id="out">
-     
-     <div class="masthead" id="ct">
-     		
-            <div id="main">
-            	<div id="propic"></div>
-            	<div id="title"></div>
-            	<div id="reauest">
-            		<div id="rqm">
-            			<button id="rqmbtn" class=" btn-lg btn-primary" onclick="myreq()">여행 요청리스트</button>
-            			<div id="mql"></div>
-            		</div>
-            		<div id="rql">
-            			<button id="rqbtn" class=" btn-lg btn-primary" onclick="freq()">요청 상황</button>
-            			<div id="fql"></div>
-            		</div>
-            	</div>
-            </div>
-         </div>
-         
-         
-        <div class="masthead" id="trp">
-           <div id="table">
-           <table id="mylist">
-              <tr>
-                 <th class="bar">여행 제목</th>
-                 <th class="bar">여행지</th>
-                 <th class="bar">여행 날짜</th>
-                 <th style="width:500px" class="bar">친구와 함께하기 </th>
-              </tr>
-           </table>
-           </div>
-         </div>
-   </div>
-   
-   <%-- <div>
+				<!--로고 자리 -->
+				<img style="width: 200px;" src="./resources/headerImage/logo3.png"
+					alt="logo">
+			</div>
+
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="hidden"><a href="#page-top"></a></li>
+
+					<li><a class="page-scroll" href="/gabom/">Home</a></li>
+					<li><a class="page-scroll" href="snsmain">SNS</a></li>
+					<li><a class="page-scroll" href="myplan">내여행</a></li>
+					<li><a class="page-scroll" href="housechoice">숙박</a></li>
+					<li><a class="page-scroll" href="foodmain">맛집</a></li>
+					<li><a class="page-scroll" href="#team">VIP</a></li>
+					<li><a class="page-scroll" href="#contact">고객센터</a></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+
+
+
+
+	<div class="overlay"></div>
+	<video playsinline="playsinline" autoplay="autoplay" muted="muted"
+		loop="loop">
+		<source src="./resources/css/bg.mp4" type="video/mp4">
+	</video>
+
+
+	<div id="out">
+
+		<div class="masthead" id="ct">
+
+			<div id="main">
+				<div id="propic"></div>
+				<div id="title"></div>
+				<div id="reauest">
+					<div id="rqm">
+						<button id="rqmbtn" class=" btn-lg btn-primary" onclick="myreq()">여행
+							요청리스트</button>
+						<div id="mql"></div>
+					</div>
+					<div id="rql">
+						<button id="rqbtn" class=" btn-lg btn-primary" onclick="freq()">요청
+							상황</button>
+						<div id="fql"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="masthead" id="trp">
+			<div id="table">
+				<table id="mylist">
+					
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<%-- <div>
       <jsp:include page="/WEB-INF/views/footer.jsp"/>
    </div>  --%>
-   
-   
-   
- 
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <div id="trip_friend">
-      
-      </div>
-       <div id="flist">
-       
-       </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-lg" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-   
-   
-<!-- Custom scripts for this template -->
-<script src="./resources/js/coming-soon.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-<script src="./resources/js/bootstrap.min.js"></script>
-<script src="./resources/js/owl.carousel.min.js"></script>
-<script src="./resources/js/cbpAnimatedHeader.js"></script>
-<script src="./resources/js/jquery.appear.js"></script>
-<script src="./resources/js/SmoothScroll.min.js"></script>
-<script src="./resources/js/theme-scripts.js"></script>
+
+
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="trip_friend"></div>
+					<div id="flist"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-lg" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<jsp:include page="/WEB-INF/views/footer.jsp" />
+	</footer>
+	
+	<!-- Custom scripts for this template -->
+	<script src="./resources/js/coming-soon.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script
+		src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+	<script src="./resources/js/bootstrap.min.js"></script>
+	<script src="./resources/js/owl.carousel.min.js"></script>
+	<script src="./resources/js/cbpAnimatedHeader.js"></script>
+	<script src="./resources/js/jquery.appear.js"></script>
+	<script src="./resources/js/SmoothScroll.min.js"></script>
+	<script src="./resources/js/theme-scripts.js"></script>
 
 </body>
 
 <script>
+ var socketalarm; // 소켓 시작
+ 
  var mylist =${myplanlist};
  console.log("내 여행 목록",mylist);
  console.log(mylist.trip_area);
@@ -277,7 +279,7 @@ border-radius: 10px;
  
  
  var myinfo =${memberinfo};
- console.log(myinfo);
+ console.log("myinfo",myinfo);
  var friend =${friendlist};
  console.log(friend);
  var friend =${friendlist};
@@ -340,7 +342,9 @@ border-radius: 10px;
 	}
  
  //-------------------------------------------------------------------유저 정보 영역
- 
+ 	var thead = $("<tr><th class='bar'>여행 제목</th><th class='bar'>여행지</th><th class='bar'>여행 날짜</th><th style='width: 500px' class='bar'>친구와 함께하기</th></tr>")
+	$("#mylist").append(thead) 
+  
   for(i of mylist) { //게시글
 	  
 	  console.log(i.trip_area);
@@ -382,10 +386,30 @@ border-radius: 10px;
 	  
  	var sd = getFormatDate(i.trip_start_date);
  	var ed = getFormatDate(i.trip_end_date);	  
-	  
+ 	
     var tr = $('<tr></tr>'); 
     
-    var title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a></td>');
+    // 추천에 승인 추가 if문
+    console.log("tripendday2",new Date(i.trip_end_date));
+    console.log("today1",new Date());
+    console.log(new Date(i.trip_end_date) < new Date());
+
+    var title;
+    if(new Date(i.trip_end_date) < new Date()){  // 날짜 지났으니 버튼 추가
+    	
+    	if(i.trip_plan_appry_status == 2){
+    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><button data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" >추천취소</button></td>');
+    	}else if(i.trip_plan_appry_status == 1){
+    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><button data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" >대기취소</button></td>');
+    	}else if(i.trip_plan_appry_status == 0){
+    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><button data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" >신청</button></td>');
+    	}
+    	
+    
+    
+    }else{
+        title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a></td>');    	
+    }
    
     var area =$('<td>'+i.trip_area+'</td>');
     var date =$('<td>'+sd+' - '+ed+'</td>');
@@ -481,7 +505,20 @@ $(document).on('click',".fbtn", function(e) {
            	 
            	 $("#fql").append(sh_id);
             }  
+           //---------------소켓
+           console.log("알람 소켓 전송 - shareTrip")
            
+				let tripPlanShare ={
+					"type" : "tripShare",
+					"trip_number" : ftrip_number,
+			        "share_id" : friend_id,
+			        "my_id" : ${memberinfo}[0].member_id
+				};
+           console.log("tripPlanShare",tripPlanShare)
+			let resultMemberData = JSON.stringify(tripPlanShare);
+            socketalarm.send(resultMemberData);
+           
+           //-------------------
          },
          
          error:function(error){
@@ -609,8 +646,135 @@ $(".sbtn").on('click', function(e) {//승인 버튼
 
 })// 클릭이벤트 종료 
  
+//--------------------------------------------------------------------------------------------- (오늘 기준) 지난 날짜 여행 계획 신청
+$(document).on("click",".applybtn",function(e){
+	var tripPlanNum = e.target.dataset.name;
+	var tripPlanStatus = e.target.dataset.status;
+	console.log("tripPlanNum",tripPlanNum)
+	console.log("tripPlanStatus",tripPlanStatus)
+	
+	
+	var data = {
+		"tripPlanNum" : tripPlanNum,
+		"tripPlanStatus":	tripPlanStatus
+	}
+	
+	$.ajaxSetup({         
+	      beforeSend : function(xhr){
+	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	      });//먼저 보냄
+   
+   
+   $.ajax({
+        url: "tprest/tripplanapply",
+         type: 'post',
+         data :data,
+         dataType: "json", //rest 컨트롤 이용   
+         success:function(data){
+        	 $("#mylist").empty();
+            console.log("data",data)
+            
+    var thead = $("<tr><th class='bar'>여행 제목</th><th class='bar'>여행지</th><th class='bar'>여행 날짜</th><th style='width: 500px' class='bar'>친구와 함께하기</th></tr>")
+	$("#mylist").append(thead) 
+            for(i of data) { //게시글
+	  
+	  console.log(i.trip_area);
+		 	  if(i.trip_area == 1){
+				i.trip_area = "서울"		  
+		 	  }else if(i.trip_area == 2){
+				i.trip_area = "인천"		  
+		 	  }else if(i.trip_area == 3){
+				i.trip_area = "대전"		  
+		 	  }else if(i.trip_area == 4){
+				i.trip_area = "대구"		  
+		 	  }else if(i.trip_area == 5){
+				i.trip_area = "광주"		  
+		 	  }else if(i.trip_area == 6){
+				i.trip_area = "부산"		  
+		 	  }else if(i.trip_area == 7){
+				i.trip_area = "울산"		  
+		 	  }else if(i.trip_area == 8){
+				i.trip_area = "세종특별자치시"		  
+		 	  }else if(i.trip_area == 31){
+				i.trip_area = "경기도"		  
+		 	  }else if(i.trip_area == 32){
+				i.trip_area = "강원도"		  
+		 	  }else if(i.trip_area == 33){
+				i.trip_area = "충청북도"		  
+		 	  }else if(i.trip_area == 34){
+				i.trip_area = "충청남도"		  
+		 	  }else if(i.trip_area == 35){
+				i.trip_area = "경상북도"		  
+		 	  }else if(i.trip_area == 36){
+				i.trip_area = "경상남도"		  
+		 	  }else if(i.trip_area == 37){
+				i.trip_area = "전라북도"		  
+		 	  }else if(i.trip_area == 38){
+				i.trip_area = "전라남도"		  
+		 	  }else if(i.trip_area == 39){
+				i.trip_area = "제주도"		  
+		 	  }
+	  
+ 	var sd = getFormatDate(i.trip_start_date);
+ 	var ed = getFormatDate(i.trip_end_date);	  
+	  
+ 	
+//  	<tr>
+// 	<th class="bar">여행 제목</th>
+// 	<th class="bar">여행지</th>
+// 	<th class="bar">여행 날짜</th>
+// 	<th style="width: 500px" class="bar">친구와 함께하기</th>
+// </tr>
 
+    var tr = $('<tr></tr>'); 
+    
+    // 추천에 승인 추가 if문
+//     console.log("tripendday2",new Date(i.trip_end_date));
+//     console.log("today1",new Date());
+//     console.log(new Date(i.trip_end_date) < new Date());
 
+    var title;
+    if(new Date(i.trip_end_date) < new Date()){  // 날짜 지났으니 버튼 추가
+    	
+    	if(i.trip_plan_appry_status == 2){
+    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><button data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" >추천취소</button></td>');
+    	}else if(i.trip_plan_appry_status == 1){
+    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><button data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" >대기취소</button></td>');
+    	}else if(i.trip_plan_appry_status == 0){
+    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><button data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" >신청</button></td>');
+    	}
+    	
+    
+    
+    }else{
+        title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a></td>');    	
+    }
+   
+    var area =$('<td>'+i.trip_area+'</td>');
+    var date =$('<td>'+sd+' - '+ed+'</td>');
+    var btn =$('<td><button id="jbtn" class="joinbtn btn" data-toggle="modal" data-target="#exampleModal"  data-tripnum ="'+i.trip_number+'">친구 초대</button></td>');
+    
+    $("#mylist").append(tr);
+    $(tr).append(title);
+    $(tr).append(area);
+    $(tr).append(date);
+    $(tr).append(btn);
+    
+
+    
+ }
+            
+            
+            
+         },
+         error:function(error){
+            alert("여행 거절 실패.");
+               console.log(error);
+            }
+      
+      
+   });//ajax 끝
+})
 
 //--------------------------------------------------------------------------------------------- 승인 거절이벤트 
 

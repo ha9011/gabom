@@ -27,5 +27,7 @@ public class Trip_plan {
 	
 	private int trip_day;
 	
+	private int trip_plan_appry_status = 0;
+	
 	
 }

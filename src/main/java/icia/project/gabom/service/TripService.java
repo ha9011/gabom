@@ -500,6 +500,26 @@ public class TripService {
 	}
 
 
+	public String TripPlanApply(int tripPlanNum, int tripPlanStatus, String name) {
+		if(tripPlanStatus==0) {  // 신청하기
+			int memoupdate = tpDao.insertTripPlanApply(tripPlanNum);
+			System.out.println("신청 성공했는가? : " +  memoupdate);
+		}else if(tripPlanStatus==1) { //신청한거 취소하기
+			int memoupdate = tpDao.deleteTripPlanApply(tripPlanNum);
+			System.out.println("신청한거 취소했는가? : " +  memoupdate);
+		}else if(tripPlanStatus==2) { // 신청성공한거 취소하기
+			int memoupdate = tpDao.deleteTripPlanApply(tripPlanNum);
+			System.out.println("신청성공한거 취소했는가? : " +  memoupdate);
+		}
+		
+		//int memoupdate = tpDao.insertTripPlanApply(tripPlanNum);
+		List<Trip_plan> myplanlist = tpDao.getmyplan(name);//내 여행목록
+		
+		String json = new Gson().toJson(myplanlist);
+		return json;
+	}
+
+
 	
    
    

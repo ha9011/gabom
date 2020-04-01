@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import icia.project.gabom.dto.AlarmJungmo;
+import icia.project.gabom.dto.AlarmSharePlan;
 
 @Service
 public class EchoHandler extends TextWebSocketHandler{
@@ -30,7 +31,6 @@ public class EchoHandler extends TextWebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("afterConnectionEstablished : " + session );
 		 Map<String, Object> map = session.getAttributes();   // 인터셉터에서 받아온 놈
-
 		 
 		 if(map.containsKey("userID")) {
 			 String userID = (String)map.get("userID"); //유저아이디
@@ -73,16 +73,33 @@ public class EchoHandler extends TextWebSocketHandler{
 				}
 				
 			}
-		}
+		}else if(memberList.get("type").equals("tripShare")) {
+			AlarmSharePlan asp = new AlarmSharePlan(); 
+			ObjectMapper mapper =new ObjectMapper();
+			asp = mapper.readValue(message.getPayload(), AlarmSharePlan.class);
+			System.out.println(asp.toString());
 
-		
-		
-		
-		System.out.println("??");
+			System.out.println("나의 아이디 : " +asp.getMy_id());
+			System.out.println("너의 아이디 : " +asp.getShare_id());
+				
+				if(loginMember.containsKey(asp.getShare_id())) {
+					System.out.println("로그인 중입니다 : " +asp.getShare_id() );
+					loginMember.get(asp.getShare_id()).sendMessage(new TextMessage(message.getPayload()));
+					//loginMember.get(somoimMember).sendMessage(message);
+				}else {
+					System.out.println("접속중이 아닙니다. : " +asp.getShare_id() );
+				}
+				
+		}
 		
 		
 		
 	}
+
+		
+		
+		
+		
 
 	@Override//연결 끈어졌을때
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {

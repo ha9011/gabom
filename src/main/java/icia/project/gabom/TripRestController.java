@@ -205,6 +205,21 @@ public class TripRestController {
 	
 	}
    
+	@PostMapping(value = "/tripplanapply",produces = "application/json;charset=utf-8") //ajax로 update
+	public String tripplanapply(
+			@RequestParam("tripPlanNum") int tripPlanNum,
+			Principal pr,
+			@RequestParam("tripPlanStatus") int tripPlanStatus
+	){
+		System.out.println("여헹계획승인");
+		System.out.println("tripPlanNum : " +tripPlanNum);
+		
+		String result = trs.TripPlanApply(tripPlanNum, tripPlanStatus,pr.getName());
+		System.out.println("result : " + result);
+
+		return result;
+	
+	}
    
    
 }

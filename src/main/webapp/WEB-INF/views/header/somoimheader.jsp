@@ -140,7 +140,7 @@ background-color: #E6E6E6
 				<li class='testli nav-item travel'><a href="../trip" id="travel">여행</a></li>
 				<li class='testli nav-item sns'><a href="../snsmain" id="sns" >SNS</a></li>
 				<li class='testli nav-item room'><a href="../housechoice" id="room" >숙박</a></li>
-				<li class='testli nav-item popularRestaurant'><a href="foodmain" id="popularRestaurant">맛집</a></li>
+				<li class='testli nav-item popularRestaurant'><a href="../foodmain" id="popularRestaurant">맛집</a></li>
 				<li class='testli nav-item somoim'><a href="../somoim/mainsomoim" id="somoimm" >소모임</a></li>
 <!-- 				//<li class='testli nav-item somoim'><a href="somoim/mainsomoim" id="somoim">소모임</a></li> -->
 				<li class='testli nav-item service'><a href="#" id="service">고객센터</a></li>
@@ -155,7 +155,7 @@ background-color: #E6E6E6
 		<script type="text/javascript">
 		//나의 정보 클릭시 
 		$("#myinfo").on("click", function(){
-			location.href="myinfo";
+			location.href="../myinfo";
 		})
 		
 		//호버시 아이콘 변환 스크립트

@@ -123,6 +123,14 @@ public interface ITripplanDao {
    @Select("select trip_memo from trip_plan_detail where trip_number = #{trip_number} and trip_date = #{trip_date} and trip_order = #{trip_order}")
    String selecttripmemo(Tripmemoupdate tripup);
 
+   @Insert("insert into trip_plan_recommand values(#{tripPlanNum}, 1)") //1번은 대기
+   int insertTripPlanApply(@Param("tripPlanNum")int tripPlanNum);
+
+   
+   @Delete("DELETE FROM trip_plan_recommand WHERE TRIP_NUMBER = #{tripPlanNum} ")
+   int deleteTripPlanApply(@Param("tripPlanNum")int tripPlanNum);
+
+   
 //   @Select("select trip_number,trip_date,trip_destination,trip_memo,trip_title,trip_order from trip_plan_detail where trip_number = #{trip_number} and trip_date = #{trip_date} and trip_order = #{trip_order} and trip_title = #{trip_title}")
 //   String selecttripmemo(Tripmemoupdate tripup);
 
