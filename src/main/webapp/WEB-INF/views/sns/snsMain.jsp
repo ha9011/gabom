@@ -608,6 +608,13 @@ margin-right: 15px;
 margin-top: 2px;
  
 }
+.messageBox{
+	width: 100px;
+	border-radius: 10px;
+}
+.messageBox i{
+color: #337ab7;
+}
 </style>
 <script type="text/javascript">
 	$(window).scroll(function() {
@@ -776,18 +783,115 @@ margin-top: 2px;
 		make+='<div>😯</div>';
 		make+='	<div>😫</div>';
 		make+='	<div>😌</div>';
+		make+='	<div>💋</div>';
+		make+='	<div>💑</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>🐶</div>';
+		make+='	<div>🐱</div>';
+		make+='	<div>🐭</div>';
+		make+='	<div>🐹</div>';
+		make+='	<div>🐰</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>🐴</div>';
+		make+='	<div>🦄</div>';
+		make+='	<div>🐝</div>';
+		make+='	<div>🐳</div>';
+		make+='	<div>🌞</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>🌷</div>';
+		make+='	<div>🌹</div>';
+		make+='	<div>🥀</div>';
+		make+='	<div>🌞</div>';
+		make+='	<div>🌝</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>⭐️</div>';
+		make+='	<div>🌟</div>';
+		make+='	<div>✨</div>';
+		make+='	<div>🌈</div>';
+		make+='	<div>🌎</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>🍩</div>';
+		make+='	<div>🥜</div>';
+		make+='	<div>🍗</div>';
+		make+='	<div>🍺</div>';
+		make+='	<div>🎂</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>🍽</div>';
+		make+='	<div>🍻</div>';
+		make+='	<div>⚽️</div>';
+		make+='	<div>🏆</div>';
+		make+='	<div>🏀</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>🎹</div>';
+		make+='	<div>🎼</div>';
+		make+='	<div>🎤</div>';
+		make+='	<div>🎲</div>';
+		make+='	<div>🚗</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>⌚️</div>';
+		make+='	<div>🔑</div>';
+		make+='	<div>🎁</div>';
+		make+='	<div>💟</div>';
+		make+='	<div>❣️</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>🏳️</div>';
+		make+='	<div>🚩</div>';
+		make+='	<div>🏳️‍🌈</div>';
+		make+='	<div>🤕</div>';
+		make+='	<div>🤢</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>🤖</div>';
+		make+='	<div>💩</div>';
+		make+='	<div>👩‍💻</div>';
+		make+='	<div>👨‍💻</div>';
+		make+='	<div>🤘</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>👀</div>';
+		make+='	<div>💏</div>';
+		make+='	<div>👑</div>';
+		make+='	<div>👜</div>';
+		make+='	<div>🕶</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>👩‍🚀</div>';
+		make+='	<div>👨‍🚀</div>';
+		make+='	<div>👨‍⚖️</div>';
+		make+='	<div>👩‍⚖️</div>';
+		make+='	<div>👰</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>👸</div>';
+		make+='	<div>🤴</div>';
+		make+='	<div>🎅</div>';
+		make+='	<div>🍀</div>';
+		make+='	<div>🐉</div>';
+		make+='	</div>';
+		make+='<div style="margin-left:24px;" onclick="emoCancel()">';
+		make+='<i class="fas fa-times"></i>'
 		make+='	</div>';
 		make+='</div>';
 		if(emotype=="comment"){
+		$("#writeBoxEmo").hide();
 		$(cVal).html(make);
 		$(".emoBox").hide();
 		$(".emoBox").slideDown();
 		}else if(emotype=="write"){
+			$(".emoBox").hide();
 			$("#writeBoxEmo").html(make);
 			$("#writeBoxEmo").hide();
 			$("#writeBoxEmo").slideDown();
 		}
-		console.log(emotype);
 		$('.emoreal .emoRow div').click(function (e) {
 			if(emotype=="comment"){
 			var commentWriteContents="#commentWriteBox"+number+" input";
@@ -798,6 +902,16 @@ margin-top: 2px;
 				$(writBoxContent).val($(writBoxContent).val()+e.target.innerHTML);
 			}
 		});
+	}
+	function emoCancel() {
+		if(emotype=="comment"){
+			$(".emoBox").slideUp(function () {
+			$(".emoBox").empty();
+			});
+		}else if(emotype=="write"){
+			$("#writeBoxEmo").slideUp();
+			$("#writeBoxEmo").empty();
+		}
 	}
 	</script>
 	<!-- 모바일 글쓰기 버튼 -->
@@ -925,7 +1039,7 @@ margin-top: 2px;
 	<script type="text/javascript" src="resources/snsJS/userPost.js"></script>
 	<!-- 타임라인내 프로필1 -->
 	<script type="text/javascript"
-		src="resources/snsJS/timeLineInProfile.js?ver=1"></script>
+		src="resources/snsJS/timeLineInProfile.js?ver=2"></script>
 	<!-- 어사이드 유저 이름 클릭1 -->
 	<script type="text/javascript" src="resources/snsJS/asidePost.js"></script>
 	<!-- 댓글삭제 1-->
