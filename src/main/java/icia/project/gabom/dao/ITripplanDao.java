@@ -129,8 +129,10 @@ public interface ITripplanDao {
    
    @Delete("DELETE FROM trip_plan_recommand WHERE TRIP_NUMBER = #{tripPlanNum} ")
    int deleteTripPlanApply(@Param("tripPlanNum")int tripPlanNum);
-
    
+   
+   List<Trip_plan> searchtrippaln(@Param("trip_area")String trip_area);//여행검색
+
 //   @Select("select trip_number,trip_date,trip_destination,trip_memo,trip_title,trip_order from trip_plan_detail where trip_number = #{trip_number} and trip_date = #{trip_date} and trip_order = #{trip_order} and trip_title = #{trip_title}")
 //   String selecttripmemo(Tripmemoupdate tripup);
 

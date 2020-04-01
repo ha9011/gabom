@@ -221,5 +221,21 @@ public class TripRestController {
 	
 	}
    
+	//여행 만들기에서 여행플랜 추천 지역검색
+	@PostMapping(value = "/searchtrippaln",produces = "application/json;charset=utf-8")
+	public String searchtrippaln(@RequestParam("data")String trip_area ){
+		System.out.println("여행지역 검색"+trip_area);
+		String json = trs.searchtrippaln(trip_area);
+		return json;
+	}
+	
+	//모달 클릭시 나오는 여행정보 
+	@PostMapping(value = "/getplan",produces = "application/json;charset=utf-8")
+	public String getplan(@RequestParam("trip_number")int trip_number ){
+		System.out.println("여행번호"+trip_number);
+		String json = trs.getplan(trip_number);
+		return json;
+	}
+	
    
 }

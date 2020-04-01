@@ -516,6 +516,32 @@ public class TripService {
 		List<Trip_plan> myplanlist = tpDao.getmyplan(name);//내 여행목록
 		
 		String json = new Gson().toJson(myplanlist);
+		
+		return json;
+	}
+	
+	public String searchtrippaln(String trip_area) {//여행지역 검색
+		String json =null;
+			
+		System.out.println(trip_area);
+		List<Trip_plan> trlist = tpDao.searchtrippaln(trip_area);
+		
+		json = new Gson().toJson(trlist);
+		return json;
+	}
+
+
+
+
+
+
+	public String getplan(int trip_number) {
+		String json = null;
+		
+		List<Trip_plan> detrip = tpDao.detailplan(trip_number);// 여행관련 정보 다 퍼옴  1일,2일,3일,4일
+	    json = new Gson().toJson(detrip);
+		
+	    System.out.println(json);
 		return json;
 	}
 
