@@ -14,11 +14,26 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- 추가한 css -->
+<!-- <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+<link href="../resources/css/landing-page.min.css" rel="stylesheet">
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <style>
+#icon{
+		margin-right: 10%;
+	}
+header.masthead{
+background:url(../resources/css/somobg.jpg) no-repeat center center;
+}
+#searchSomoimBtn{
+margin-top:-5px;
+}
+/* 추가한 css */
+
+
 .searchinput{
 	width : 33%;
 	margin-right: 10px;
@@ -119,21 +134,59 @@
 	<header>
 		<jsp:include page="/WEB-INF/views/header/somoimheader.jsp" />
 	</header>
+	
+	
+	<!-- 검색창 -->
+  <header class="masthead text-white text-center">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <h1 class="mb-5">당신에게 맞는 소모임을 찾아보세요!</h1>
+        </div>
+        <div class="col-md-12 col-lg-8 col-xl-7 mx-auto">
+		<form class="form-inline" id="searchFrm">
+            <div style="width:800px;" class="form-row">
+              <div style="display:flex;" class="col-12 col-md-8 mb-2 mb-md-0">
+                <input type="text" class="searchinput form-control" name="address" placeholder="address">
+                 <input type="text" class="searchinput form-control" name="hobby" placeholder="hobby">
+              </div>
+              <div class="col-12 col-md-3">
+                <button type="button" id="searchSomoimBtn" class="btn btn-block btn-lg btn-primary">Search</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
 
-
-	<div id="menunav">
-		<button id='somoimMenu' type="button"
-			class="btn btn-primary btn-lg menu">소모임</button>
-		<button id='mySomoimMenu' type="button"
-			class="btn btn-primary btn-lg menu">내 모임</button>
-	</div>
+	 <!-- 소모임 내모임 -->
+  <section class="text-center">
+    <div class="container" id="icon">
+      <div class="row" >
+        <div class="col-lg-4">
+          <div id="somoimMenu" class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+          <img src="../resources/css/ourso.JPG" style="margin-top:10px;width:200px;height:150px;">
+            <h3 style="width:200px;margin-left:21%;border-radius:10px;" class="btn-primary">소모임</h3>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div id="mySomoimMenu" class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+              <img src="../resources/css/myso.JPG"style="margin-top:10px;width:150px;height:150px;">
+            <h3 style="width:200px;margin-left:21%;border-radius:10px;" class="btn-primary">내모임</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+	<!-- <br>
 	<br>
 	<br>
 	<br>
 	<br>
 	<br>
-	<br>
-	<hr>
+	<hr> -->
 	<!-- 	mymoim	 -->
 	<div id="mainMymoim">
 		<div id="content">
@@ -174,18 +227,6 @@
 			</div>
 
 			<div id="myNoti" class="section">
-				<div class="title">
-					<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-						<form class="form-inline" id="searchFrm">
-							<input class="searchinput" type="text" name="address"
-								placeholder="address">
-							<input class="searchinput" type="text" name="hobby"
-								placeholder="hobby">	
-							<button class="btn btn-success" type="button" id="searchSomoimBtn">Search</button>
-						</form>
-					</nav>
-				</div>
-
 				<div class="showlist" id="searchList"></div>
 			</div>
 		</div>
@@ -251,7 +292,7 @@
 					contentType:false,  //제이슨 아니니깐 까보지마!!
 				 	dataType:"json", //rest 컨트롤 이용	
 					success:function(data){
-						alert("success");
+						//alert("success");
 						console.log(data)
 						$("#searchList").empty();
 						for( v of data ){

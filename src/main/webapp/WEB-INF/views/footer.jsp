@@ -128,13 +128,13 @@
 	<div id="footer">여기는 footer 영역입니다.</div>
 	
 	
-	<div style='display: none' id="alarm" >
+	<div style='display: none' id="alarm" class="masthead">
     <div id="alarm-header">
       <strong class="mr-auto text-primary">알람이 왔습니다!!</strong>
       <small id="alarmtext">5초 후 꺼짐</small>
       <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
     </div>
-    <div id="toast-body">
+    <div id="toast-body" >
       
     </div>
   	</div>
