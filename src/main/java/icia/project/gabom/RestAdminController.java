@@ -29,10 +29,13 @@ public class RestAdminController {
 
 	@Autowired
 	private IAdminDao aDao;
+	
 	@Autowired
 	private AdminjudgeManagement am; // 관리자
+	
 	@Autowired
 	SnsPostDelete snsDel;
+	
 	@Autowired
 	SnsCommentDelete snsCommentDelete;
 	
@@ -269,5 +272,16 @@ public class RestAdminController {
 		
 		return json;
 	}
+	
+	@PostMapping(value = "/tripshareplanlist", produces = "text/plain;charset=UTF-8")
+	public String tripshareplanlist() {
+		System.out.println("여행계획 승인 리스트");
+		String json=am.selectTripSharePlanList();
+		
+		return json;
+	}
 
+	
+	
+	
 }

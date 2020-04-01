@@ -12,6 +12,7 @@ import icia.project.gabom.dao.IAdminDao;
 import icia.project.gabom.dto.Adminfood;
 import icia.project.gabom.dto.Adminhouse;
 //import icia.project.gabom.dto.Adminnotices;
+import icia.project.gabom.dto.Trip_plan;
 
 @Service
 public class AdminjudgeManagement {
@@ -100,6 +101,14 @@ public class AdminjudgeManagement {
 		System.out.println("view="+views);
 		
 		return views;
+	}
+
+	public String selectTripSharePlanList() {
+		
+		List<Trip_plan> myplanlist = aDao.getmyplan();//내 여행목록
+		
+		
+		return new Gson().toJson(myplanlist);
 	}
 
 }// class End

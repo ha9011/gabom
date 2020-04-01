@@ -9,6 +9,7 @@ import icia.project.gabom.dto.Adminfood;
 import icia.project.gabom.dto.Adminhouse;
 import icia.project.gabom.dto.Adminnotices;
 import icia.project.gabom.dto.Qnaboard;
+import icia.project.gabom.dto.Trip_plan;
 
 public interface IAdminDao {
 	//하우스 0번타입 리스트 출력
@@ -51,5 +52,7 @@ public interface IAdminDao {
 	List<AdminSns> getsnspostsreport();
 	//sns신고 댓글 출력
 	List<AdminSns> getsnscommentreport();
+	
+	List<Trip_plan> getmyplan();
 	
 }

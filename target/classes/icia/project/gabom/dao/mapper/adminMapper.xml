@@ -111,7 +111,9 @@
 		SELECT SNS_COMMENT_NUMBER,SNS_COMMENT_CONTENT,SNS_POSTS_NUMBER,SNS_COMMENT_REPORT,SNS_COMMENT_MEMBER_ID FROM SNS_COMMENT WHERE SNS_COMMENT_REPORT >=1
 	</select>
 	
-	
+	<select id="getmyplan" resultType="trfriend">
+		select * from trip_plan_recommand tpr, TRIP_PLAN tp where tpr.TRIP_NUMBER = tp.TRIP_NUMBER and tpr.trip_plan_apply = 1 
+	</select>
 	
 	
 <!-- 	<select id="getjudgedetail" > -->

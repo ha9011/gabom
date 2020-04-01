@@ -15,7 +15,8 @@
 
 <link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
    
-
+<script type="text/javascript"
+   src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a7e29fa39462f45fc2138a8307dbe830&libraries=services"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- <script
 
@@ -113,6 +114,37 @@ li {
 .qwe{
 	margin: 0 30px;
 }
+/* 여기부터 날짜 및 모달내 데이터 영역 */
+.number:nth-child(n+2) {
+   display: none;
+   font-size: 0px;
+}
+
+.number:nth-child(1) {
+   font-size: 20px;
+}
+
+.number {
+   margin: 0 0 0 83px;
+}
+#day {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 50px;
+}
+#date {
+   width: 200px;
+   font-size: 30px;
+   display: inline;
+   list-style: none;
+   padding: 0px;
+   margin: 23px 0px 0px 0px;
+}
+#dayFrame {
+   display: flex;
+   margin: 0 0 0 8px;
+}
 </style>
 
 </head>
@@ -135,7 +167,7 @@ li {
 <!-- 			<li class="nav-item"><a class="nav-link" data-toggle="tab" -->
 <!-- 				href="#service_declaration">서비스업체 신고관리</a></li> -->
 			<li class="qwe nav-item"><a class="nav-link" data-toggle="tab"
-				href="#tourist_judge">여행객계획 등록심사</a></li>  
+				href="#tourist_judge" id="judgeTripPlan">여행객계획 등록심사</a></li>  
 				
 			<li class="qwe nav-item"><a class="nav-link" data-toggle="tab"
 				href="#sns_declaration" id="snsmanage" >SNS 신고관리</a>
@@ -167,7 +199,7 @@ li {
 			</div>
 			<div id="tourist_judge" class="container tab-pane fade">
 				<h3>여행객계획 등록심사</h3>
-				<p>메뉴2</p>
+				<div id="TripSharePlanList"></div>
 			</div>
 			<div id="sns_declaration" class="container tab-pane fade">
 				<ul class="nav nav-tabs">
@@ -333,7 +365,30 @@ li {
 		</div>
 	</div>
 
-
+	   <!-- 상세보기 모달 -->
+<div class="modal" id="detail" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+       <div id="map" style="width:100%; height:300px;"></div>
+       <div class="plan">
+          <!-- 여행계획 및 날짜  -->
+       <div id="day">
+            <div id='dayFrame'>
+               <div class="icon" id="left">◀</div>
+               <ul id="date"></ul>
+               <div class="icon" id="right">▶</div>
+            </div>
+         </div>
+       </div>
+      </div>
+      <div style="display:flex;" class="modal-footer">
+         <!-- <button type="button" class="dsbtn btn btn-primary" >내 여행등록</button> -->
+        <button type="button" class="dsbtn btn btn-secondary">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>      
 	<div>
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
 	</div>
@@ -513,7 +568,10 @@ $(document).on("click",".sns_comment_delete",function(e) {
 //---------------------------------------------------------------------qna 전체 출력---------------------------------------------------------------------
 	 $("#qna_board_click").on("click",function(){
 		console.log("qna 클릭");
-		dtable.destroy();
+		
+		if(dtable!=null){
+			dtable.destroy();
+		}
 		
 		$.ajaxSetup({         
 		      beforeSend : function(xhr){
@@ -697,6 +755,9 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	$("#all_notices_click").on("click",function(){
 		console.log("notices 클릭");
 		
+		if(dtable!=null){
+			dtable.destroy();  // 일단 초기화
+		}
 		$.ajaxSetup({         
 		      beforeSend : function(xhr){
 		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
@@ -1121,6 +1182,11 @@ $(document).on("click",".sns_comment_delete",function(e) {
  	$("#foodmain_judge").append(strf); //food 리스트 End
  	//--------------------------------------------------------------------서비스업체 등록심사 ajax-----------------------------------------------------------
  	$("#judge_click").on("click",function(){
+ 		
+ 		if(dtable!=null){
+			dtable.destroy();  // datatable 초기화
+		}
+ 		
  		console.log("서비스업체 클릭");
  		$.ajaxSetup({         
 		      beforeSend : function(xhr){
@@ -1384,10 +1450,254 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	
 	//----------
 	$("#snsmanage").on("click",function(){
-		console.log("??");
-		dtable.destroy();
+		console.log("SNS관리");
+		console.log(dtable);
+		if(dtable!=null){
+			dtable.destroy();
+		}
 	})
+
+	$("#judgeTripPlan").on("click",function(){
+		console.log("여행관리계획");
+		console.log(dtable);
+		$("#TripSharePlanList").empty();
+		if(dtable!=null){
+			dtable.destroy();
+		}
+		//TripSharePlanList
+		
+		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+		      
+		$.ajax({
+			url : 'tripshareplanlist',
+			type : 'post',
+			dataType : 'json',
+			success : function(response) {
+				console.log("승인대기 목록 : " , response);
+				
+				
+				 $("#sns_table").empty();
+  				console.log(response);
+  				console.log("전체공지 사이즈",response.length);
+  				let pagesize = response.length;
+  				console.log("페이지사이즈",pagesize);
+  				$("#TripSharePlanList").empty();
+  				
+  				
+
+  				
+  				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
+  				let colgroup =$("<colgroup><col width='25%'><col width='30%'><col width='45%'></colgroup>")
+  				let thead = $("<thead><tr><th>지역</th><th>이름</th><th>날짜</th></tr></thead>")
+  		        
+  				let tbody = $("<tbody ></tbody>")		
+  				
+  				
+  		        
+  		        console.log("포문직전")
+  				for(  i of response){
+  					
+  					let sd = getFormatDate(i.trip_start_date);
+  				 	let ed = getFormatDate(i.trip_end_date);
+  				 	let areaStr = getTripAreaStr(i.all_notices_number)
+  					let tr = $("<tr></tr>")
+  					
+  					let td1 =$('<td>'+areaStr+'</td>');  //지역
+  					
+  					//<a data-name="'+i.trip_number+'" class="modalplan">
+  					let td2 = $('<td><a data-name="'+i.trip_number+'" class="modalplan">'+i.trip_title+'</a></td>');   // 이름
+  					let td3 = $('<td>'+sd+' - '+ed+'</td>'); // 날짜
+
+  					tr.append(td1)
+  					tr.append(td2)
+  					tr.append(td3)
+  					
+  					tbody.append(tr);	
+  				}//for문 종료
+  				
+  				boards.append(colgroup);
+  				boards.append(thead); 
+  				boards.append(tbody);
+  				console.dir(boards);
+  				$("#TripSharePlanList").append(boards);
+  				
+//   				setTimeout(() => {
+//   					dtable =$("#boards").DataTable({
+//   						 "order": [[0, 'desc']], // asc 또는 desc
+
+//   						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+
+//   			             	// 검색 기능 숨기기
+//   			             	searching: false,
+// //  			             	// 정렬 기능 숨기기
+// //  			             	ordering: false,
+// //  			             	// 정보 표시 숨기기
+//   			             	info: false,
+// //  			             	// 페이징 기능 숨기기
+// //  			             	paging: false
+  			            	
+//   			            });
+//   				}, 100);
+				
+				
+				
+			},
+			error : function(jqXHR, status, e) {
+				console.log("서비스업체심사리스트 에러");
+			}
+		}); //ajax end
+		
+		
+		
+	})
+	
+	//----------------날짜 바꾸기
+	function getFormatDate(strdate){
+      var date = new Date(strdate);
+      console.log(date);
+       var year = date.getFullYear();              //yyyy
+    var month = (1 + date.getMonth());          //M
+    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+    var day = date.getDate();                   //d
+    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+    return  year + '년  ' + month + '월  ' + day+'일   ';
+   }
  	
+ 	const getTripAreaStr = (areanum)=>{
+ 		let number = areanum;
+ 		let result 
+ 		if(areanum == 1){
+ 			result = "서울"		  
+ 	 	  }else if(i.trip_area == 2){
+ 	 		result = "인천"		  
+ 	 	  }else if(i.trip_area == 3){
+ 	 		result = "대전"		  
+ 	 	  }else if(i.trip_area == 4){
+ 	 		result = "대구"		  
+ 	 	  }else if(i.trip_area == 5){
+ 	 		result = "광주"		  
+ 	 	  }else if(i.trip_area == 6){
+ 	 		result = "부산"		  
+ 	 	  }else if(i.trip_area == 7){
+ 	 		result = "울산"		  
+ 	 	  }else if(i.trip_area == 8){
+ 	 		result = "세종특별자치시"		  
+ 	 	  }else if(i.trip_area == 31){
+ 	 		result = "경기도"		  
+ 	 	  }else if(i.trip_area == 32){
+ 	 		result = "강원도"		  
+ 	 	  }else if(i.trip_area == 33){
+ 	 		result = "충청북도"		  
+ 	 	  }else if(i.trip_area == 34){
+ 	 		result = "충청남도"		  
+ 	 	  }else if(i.trip_area == 35){
+ 	 		result = "경상북도"		  
+ 	 	  }else if(i.trip_area == 36){
+ 	 		result = "경상남도"		  
+ 	 	  }else if(i.trip_area == 37){
+ 	 		result = "전라북도"		  
+ 	 	  }else if(i.trip_area == 38){
+ 	 		result = "전라남도"		  
+ 	 	  }else if(i.trip_area == 39){
+ 	 		result = "제주도"		  
+ 	 	  }
+ 	
+ 		return result;
+ 	}
+ 	
+ 	//------------------------------
+ 	$(document).on('click','.dsbtn',function(){//모달 닫음
+   $("#detail").hide();
+})
+
+$(document).on('click','.modalplan',function(e){//모달 열고 지도 및 정보 표시
+   $("#detail").show();
+   var tnum = e.target.dataset.name //여행번호
+   console.log(tnum);
+
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+
+	mapOption = { 
+      
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+
+setTimeout(() => {
+
+   var map = new kakao.maps.Map(mapContainer, mapOption); 
+      }, 100);
+      
+ $.ajaxSetup({         
+    beforeSend : function(xhr){
+       xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+    });//먼저 보냄
+
+   $.ajax({
+   url:'tprest/getplan',
+   type:'post',
+   data:{"trip_number":tnum},
+   dataType:"json", //rest 컨트롤 이용   
+   success:function(data){
+      console.log(data);
+      
+      for(i of data){
+         var li =$('<li data-trnum="'+i.trip_number+'" class="number">'+i.trip_day+'일차'+'</li>');
+         $("#date").append(li);
+      } 
+      
+   },
+   error:function(error){
+      alert("실패")
+      console.log(error);
+   }
+   
+   })//ajax 끝       
+})
+
+$("#left").on("click",function(e){
+    $("#savebtn").prop("disabled", true);
+    $("#savebtn").css('opacity',0.5);
+    
+      var $lastNumber = $(".number").length-1
+      var $li = $(".number")[$lastNumber];
+      $("#date").prepend($li);
+      var tripNum = $(".number")[0].dataset.trnum;
+      currentPlanDay = $('#date li:nth-child(1)').text();
+      console.log("여행번호 : ", tripNum)
+      console.log("현재페이지 : ", currentPlanDay)
+      
+      var Data = {
+      "day" : currentPlanDay,
+      "tripNum" : tripNum
+   }
+});   
+      
+      
+      
+$("#right").on("click",function(e){
+      $("#savebtn").prop("disabled", true);
+      $("#savebtn").css('opacity',0.5);
+          
+          var trnum =e.target.dataset.trnum
+         var $li = $(".number")[0];
+         $("#date").append($li);
+         var tripNum = $(".number")[0].dataset.trnum;
+         currentPlanDay = $('#date li:nth-child(1)').text();
+         console.log("여행번호 : ", tripNum)
+         console.log("현재페이지 : ", currentPlanDay)
+
+         var Data = {
+            "day" : currentPlanDay,
+            "tripNum" : tripNum
+         }
+      });
+
 </script>
 </body>
 
