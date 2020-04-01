@@ -719,19 +719,11 @@ $(document).on("click",".applybtn",function(e){
  	var ed = getFormatDate(i.trip_end_date);	  
 	  
  	
-//  	<tr>
-// 	<th class="bar">여행 제목</th>
-// 	<th class="bar">여행지</th>
-// 	<th class="bar">여행 날짜</th>
-// 	<th style="width: 500px" class="bar">친구와 함께하기</th>
-// </tr>
+
 
     var tr = $('<tr></tr>'); 
     
-    // 추천에 승인 추가 if문
-//     console.log("tripendday2",new Date(i.trip_end_date));
-//     console.log("today1",new Date());
-//     console.log(new Date(i.trip_end_date) < new Date());
+ 
 
     var title;
     if(new Date(i.trip_end_date) < new Date()){  // 날짜 지났으니 버튼 추가

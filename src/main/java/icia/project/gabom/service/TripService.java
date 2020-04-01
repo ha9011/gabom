@@ -538,10 +538,20 @@ public class TripService {
 	public String getplan(int trip_number) {
 		String json = null;
 		
-		List<Trip_plan> detrip = tpDao.detailplan(trip_number);// 여행관련 정보 다 퍼옴  1일,2일,3일,4일
-	    json = new Gson().toJson(detrip);
-		
-	    System.out.println(json);
+		//List<Trip_plan> detrip = tpDao.detailplan(trip_number);// 여행관련 정보 다 퍼옴  1일,2일,3일,4일
+	    
+	    // for문 몇번 돌려야하는지 카운터 찾아야함.
+	    int countTripDay = tpDao.selectCountTripDay(trip_number);
+	    System.out.println("countTripDay : " + countTripDay);  // 제대로 나옴
+	    
+	    Map<Integer, List<TripPlanDetail>> resultMap = new HashMap<Integer, List<TripPlanDetail>>();
+	    for(int i = 1; i <= countTripDay; i++) {
+	    	List<TripPlanDetail> selectResult = tpDao.selectPlanDetail(Integer.toString(trip_number), Integer.toString(i));
+	    	resultMap.put(i, selectResult);
+	    }
+	    
+	    json = new Gson().toJson(resultMap);
+	    System.out.println("resultMap : "+json);
 		return json;
 	}
 

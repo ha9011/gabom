@@ -281,7 +281,17 @@ public class RestAdminController {
 		return json;
 	}
 
-	
+	//관리자 여행 승인 거절
+	@PostMapping(value = "/judgeplanshare",produces = "application/json;charset=utf-8")
+	public String judgeplanshare(@RequestParam("judge")String judge,@RequestParam("tnum")int tnum ){
+		System.out.println("관리자 여행 승인 거절");
+		System.out.println(judge);
+		System.out.println(tnum);
+		
+		String json=am.judgeplanshare(judge,tnum);
+		
+		return json;
+	}
 	
 	
 }

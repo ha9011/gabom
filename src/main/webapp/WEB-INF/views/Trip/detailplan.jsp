@@ -1674,7 +1674,118 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 		
 		} 
 	}
-	//------------------------메모 모달생성------------------------------
+	
+	 //-----------지도 마커에 따른 재위치 선정
+	 let bounds = new kakao.maps.LatLngBounds(); 
+	 var checkHouse = false;
+	 for (i = 0; i < pointsFrame.length; i++) {
+	     // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
+	// 커스텀 오버레이에 표시할 내용입니다     
+	// HTML 문자열 또는 Dom Element 입니다 
+	let content;
+	if(houseNum-1 == i){
+		content = " <img style='width:40;height:40px;'src='./resources/tripImage/bookhouse.png'>  ";
+		checkHouse = true;
+	}else{
+		if(checkHouse==true){
+			content = "<button  type='button' class='btn btn-primary idxbtn mapbtn'> <span class='badge badge-light'>"+(i)+"</span> </button> ";
+		}else{
+			content = "<button  type='button' class='btn btn-primary idxbtn mapbtn'> <span class='badge badge-light'>"+(i+1)+"</span> </button> ";
+		}
+	}
+	
+	
+	// 커스텀 오버레이를 생성합니다
+	let custom = new kakao.maps.CustomOverlay({
+   	 position: pointsFrame[i],
+   	 content: content   
+	});
+	customOverlayy.push(custom);
+	// 커스텀 오버레이를 지도에 표시합니다
+ 	customOverlayy[customOverlayy.length-1].setMap(map);
+	
+	   
+	
+	 bounds.extend(pointsFrame[i]);
+	 }
+	 
+	 setTimeout(function() {
+		 setBounds(bounds)
+		}, 500);
+	     // 재설정매소드
+	 
+ 	
+	planidx=1;
+} 
+	
+const initMapKaKao=()=>{
+	for(v of customOverlayy){
+		v.setMap(null);
+	}
+	customOverlayy=[];
+	for(v of distanceOverlayy){
+		v.setMap(null);
+	}
+	distanceOverlayy=[];
+	for(v of clickLinee){
+		v.setMap(null);
+	}
+	clickLinee=[];
+}	
+
+
+// 숙소 선택하기 버튼 누를 경우
+$("#houseReservate").on('click', function(){
+	 
+	if(areaCode == 1){
+		areaCode = "서울"		  
+	 	  }else if(areaCode == 2){
+	 		 areaCode = "인천"		  
+	 	  }else if(areaCode== 3){
+	 		 areaCode = "대전"		  
+	 	  }else if(areaCode == 4){
+	 		 areaCode = "대구"		  
+	 	  }else if(areaCode == 5){
+	 		 areaCode= "광주"		  
+	 	  }else if(areaCode == 6){
+	 		 areaCode= "부산"		  
+	 	  }else if(areaCode == 7){
+	 		 areaCode= "울산"		  
+	 	  }else if(areaCode == 8){
+	 		 areaCode = "세종특별자치시"		  
+	 	  }else if(areaCode == 31){
+	 		 areaCode = "경기도"		  
+	 	  }else if(areaCode == 32){
+	 		 areaCode = "강원도"		  
+	 	  }else if(areaCode == 33){
+	 		 areaCode= "충청북도"		  
+	 	  }else if(areaCode == 34){
+	 		 areaCode = "충청남도"		  
+	 	  }else if(areaCode== 35){
+	 		 areaCode = "경상북도"		  
+	 	  }else if(areaCode == 36){
+	 		 areaCode= "경상남도"		  
+	 	  }else if(areaCode == 37){
+	 		 areaCode = "전라북도"		  
+	 	  }else if(areaCode == 38){
+	 		 areaCode = "전라남도"		  
+	 	  }else if(areaCode == 39){
+	 		 areaCode = "제주특별자치도"		  
+	 	  }
+	
+	console.log('하우스예약')
+	saveplan(); //플렌에 저장된놈 저장됨
+	var tripNum = trip_data[0].trip_number;
+	console.log("몇번째",currentPlanDay)
+	console.log("여행번호",tripNum)
+	console.log("지역코드",areaCode)
+	
+	location.href = "triphouse?trip_number="+tripNum+"&currentPlanDay="+currentPlanDay+"&areaCode="+areaCode;  // 여행번호, 제주도, 몇번째 날
+		
+})
+
+
+//------------------------메모 모달생성------------------------------
 	$(document).on("click",".memoPlan",function(e) { //메모버튼
 		console.log("메모버튼 클릭");
 		var tripnumber = trip_data[0].trip_number; //여행번호
@@ -1785,114 +1896,6 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 	})//메모추가 클릭 end
 		
 	 
-	 //-----------지도 마커에 따른 재위치 선정
-	 let bounds = new kakao.maps.LatLngBounds(); 
-	 var checkHouse = false;
-	 for (i = 0; i < pointsFrame.length; i++) {
-	     // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
-	// 커스텀 오버레이에 표시할 내용입니다     
-	// HTML 문자열 또는 Dom Element 입니다 
-	let content;
-	if(houseNum-1 == i){
-		content = " <img style='width:40;height:40px;'src='./resources/tripImage/bookhouse.png'>  ";
-		checkHouse = true;
-	}else{
-		if(checkHouse==true){
-			content = "<button  type='button' class='btn btn-primary idxbtn mapbtn'> <span class='badge badge-light'>"+(i)+"</span> </button> ";
-		}else{
-			content = "<button  type='button' class='btn btn-primary idxbtn mapbtn'> <span class='badge badge-light'>"+(i+1)+"</span> </button> ";
-		}
-	}
-	
-	
-	// 커스텀 오버레이를 생성합니다
-	let custom = new kakao.maps.CustomOverlay({
-   	 position: pointsFrame[i],
-   	 content: content   
-	});
-	customOverlayy.push(custom);
-	// 커스텀 오버레이를 지도에 표시합니다
- 	customOverlayy[customOverlayy.length-1].setMap(map);
-	
-	   
-	
-	 bounds.extend(pointsFrame[i]);
-	 }
-	 
-	 setTimeout(function() {
-		 setBounds(bounds)
-		}, 500);
-	     // 재설정매소드
-	 
- 	
-	planidx=1;
-} 
-	
-const initMapKaKao=()=>{
-	for(v of customOverlayy){
-		v.setMap(null);
-	}
-	customOverlayy=[];
-	for(v of distanceOverlayy){
-		v.setMap(null);
-	}
-	distanceOverlayy=[];
-	for(v of clickLinee){
-		v.setMap(null);
-	}
-	clickLinee=[];
-}	
-
-
-// 숙소 선택하기 버튼 누를 경우
-$("#houseReservate").on('click', function(){
-	 
-	if(areaCode == 1){
-		areaCode = "서울"		  
-	 	  }else if(areaCode == 2){
-	 		 areaCode = "인천"		  
-	 	  }else if(areaCode== 3){
-	 		 areaCode = "대전"		  
-	 	  }else if(areaCode == 4){
-	 		 areaCode = "대구"		  
-	 	  }else if(areaCode == 5){
-	 		 areaCode= "광주"		  
-	 	  }else if(areaCode == 6){
-	 		 areaCode= "부산"		  
-	 	  }else if(areaCode == 7){
-	 		 areaCode= "울산"		  
-	 	  }else if(areaCode == 8){
-	 		 areaCode = "세종특별자치시"		  
-	 	  }else if(areaCode == 31){
-	 		 areaCode = "경기도"		  
-	 	  }else if(areaCode == 32){
-	 		 areaCode = "강원도"		  
-	 	  }else if(areaCode == 33){
-	 		 areaCode= "충청북도"		  
-	 	  }else if(areaCode == 34){
-	 		 areaCode = "충청남도"		  
-	 	  }else if(areaCode== 35){
-	 		 areaCode = "경상북도"		  
-	 	  }else if(areaCode == 36){
-	 		 areaCode= "경상남도"		  
-	 	  }else if(areaCode == 37){
-	 		 areaCode = "전라북도"		  
-	 	  }else if(areaCode == 38){
-	 		 areaCode = "전라남도"		  
-	 	  }else if(areaCode == 39){
-	 		 areaCode = "제주특별자치도"		  
-	 	  }
-	
-	console.log('하우스예약')
-	saveplan(); //플렌에 저장된놈 저장됨
-	var tripNum = trip_data[0].trip_number;
-	console.log("몇번째",currentPlanDay)
-	console.log("여행번호",tripNum)
-	console.log("지역코드",areaCode)
-	
-	location.href = "triphouse?trip_number="+tripNum+"&currentPlanDay="+currentPlanDay+"&areaCode="+areaCode;  // 여행번호, 제주도, 몇번째 날
-		
-})
 </script>
 
 </html>

@@ -111,4 +111,21 @@ public class AdminjudgeManagement {
 		return new Gson().toJson(myplanlist);
 	}
 
+	public String judgeplanshare(String judge, int tnum) {
+		// TODO Auto-generated method stub
+
+		int result = 0 ;
+		if(judge.equals("승인")) {
+			result = aDao.updatePermit(tnum);
+		}else if(judge.equals("거절")) {
+			result = aDao.deletereject(tnum);
+		}
+		
+		
+		List<Trip_plan> myplanlist = aDao.getmyplan();//모든 여행 대기 목록
+		
+		
+		return new Gson().toJson(myplanlist);
+	}
+
 }// class End

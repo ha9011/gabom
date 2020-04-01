@@ -8,6 +8,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>서비스업체 등록 심사</title>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a7e29fa39462f45fc2138a8307dbe830"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
@@ -15,8 +18,7 @@
 
 <link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
    
-<script type="text/javascript"
-   src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a7e29fa39462f45fc2138a8307dbe830&libraries=services"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- <script
 
@@ -24,6 +26,46 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <style>
+
+/* 맵 */
+.mapdialog{
+	width:800px;
+}
+
+.dot {
+	overflow: hidden;
+	float: left;
+	width: 12px;
+	height: 12px;
+	background:
+		url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');
+}
+
+.dotOverlay {
+	position: relative;
+	top: 40px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	border-bottom: 2px solid #ddd;
+	float: left;
+	font-size: 12px;
+	padding: 5px;
+	background: #fff;
+}
+
+.numberr {
+	font-weight: bold;
+	color: #ee6152;
+}
+.planFrame {
+	display: flex;
+}
+
+.idxbtn {
+	border-radius: 10px;
+	padding: 8px;
+}
+/* 맵끝 */
 #headerContainer {
 	margin-top: 10px;
 	border-radius: 20px;
@@ -145,6 +187,7 @@ li {
    display: flex;
    margin: 0 0 0 8px;
 }
+
 </style>
 
 </head>
@@ -367,23 +410,30 @@ li {
 
 	   <!-- 상세보기 모달 -->
 <div class="modal" id="detail" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog mapdialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
        <div id="map" style="width:100%; height:300px;"></div>
        <div class="plan">
           <!-- 여행계획 및 날짜  -->
        <div id="day">
-            <div id='dayFrame'>
-               <div class="icon" id="left">◀</div>
-               <ul id="date"></ul>
-               <div class="icon" id="right">▶</div>
-            </div>
-         </div>
+				<div id='dayFrame'>
+					<div class="icon" id="left">◀</div>
+					<ul id="date"></ul>
+					<div class="icon" id="right">▶</div>
+				</div>
+			</div>
+			<hr>
+			<!-- ---------------------------------여기부터 여행 계획 내역들 나옴--------------------------------- -->
+			<div id="detailTrip"></div>
+			<!-- ---------------------------------   ↑↑↑ 여행 계획 ↑↑↑    --------------------------------- -->
+
+			<hr>
        </div>
       </div>
       <div style="display:flex;" class="modal-footer">
-         <!-- <button type="button" class="dsbtn btn btn-primary" >내 여행등록</button> -->
+         <button type="button" class="dsbtn btn btn-primary planjudgebtn" >승인</button>
+         <button type="button" class="dsbtn btn btn-primary planjudgebtn" >거절</button> 
         <button type="button" class="dsbtn btn btn-secondary">닫기</button>
       </div>
     </div>
@@ -392,13 +442,25 @@ li {
 	<div>
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
 	</div>
-	<script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
-   
+   <script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
 	
 	
 	<script>
 	var socketalarm =null;  // 소켓 지박령!!
+	var tnum ; // 승인대기 여행 번호 
+	var map;
+	let arr ; // 계획 모음!
+	let points ={}; // x,y좌표 모음
+	let planidx = 1;
 	
+	
+	let customOverlayy = [];
+	let distanceOverlayy = [];
+	let clickLinee =[];
+      
+      
+      
+
 	
 	function getToday() {
 		const today = new Date();
@@ -625,24 +687,24 @@ $(document).on("click",".sns_comment_delete",function(e) {
  				
  				$("#qnadatatable").append(boards);
 				
+ 				setTimeout(() => {
+					dtable =$("#qna_boards").DataTable({
+						 "order": [[0, 'desc']], // asc 또는 desc
+
+						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+
+			             	// 검색 기능 숨기기
+			             	searching: false,
+//			             	// 정렬 기능 숨기기
+//			             	ordering: false,
+//			             	// 정보 표시 숨기기
+			             	info: false,
+//			             	// 페이징 기능 숨기기
+//			             	paging: false
+			            	
+			            });
+				}, 100);	
 					
-					setTimeout(() => {
-						dtable =$("#qna_boards").DataTable({
-							 "order": [[0, 'desc']], // asc 또는 desc
-
-							 "dom" : '<"top"il>t<"bottom"prf><"clear">',
-
-				             	// 검색 기능 숨기기
-				             	searching: false,
-//				             	// 정렬 기능 숨기기
-//				             	ordering: false,
-//				             	// 정보 표시 숨기기
-				             	info: false,
-//				             	// 페이징 기능 숨기기
-//				             	paging: false
-				            	
-				            });
-					}, 100);
 					
 				
 				
@@ -971,7 +1033,6 @@ $(document).on("click",".sns_comment_delete",function(e) {
      				}, 100);
      				
      				
-     				
                 }, error : function(jqXHR, status, e) {
                      console.error("공지사항 삭제 에러");
                  }
@@ -1069,7 +1130,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
  				
  				$("#boardstable").append(boards);
  				
- 		setTimeout(() => {
+ 				setTimeout(() => {
  					dtable =boards.DataTable({
  						 "order": [[0, 'desc']], // asc 또는 desc
 
@@ -1085,7 +1146,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
 // 			             	paging: false
  			            	
  			            });
- 		}, 100);
+ 				}, 100);
  			
  				console.log("qweqwe")
  				
@@ -1524,23 +1585,23 @@ $(document).on("click",".sns_comment_delete",function(e) {
   				console.dir(boards);
   				$("#TripSharePlanList").append(boards);
   				
-//   				setTimeout(() => {
-//   					dtable =$("#boards").DataTable({
-//   						 "order": [[0, 'desc']], // asc 또는 desc
+  				setTimeout(() => {
+  					dtable =$("#boards").DataTable({
+  						 "order": [[0, 'desc']], // asc 또는 desc
 
-//   						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+  						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
 
-//   			             	// 검색 기능 숨기기
-//   			             	searching: false,
-// //  			             	// 정렬 기능 숨기기
-// //  			             	ordering: false,
-// //  			             	// 정보 표시 숨기기
-//   			             	info: false,
-// //  			             	// 페이징 기능 숨기기
-// //  			             	paging: false
+  			             	// 검색 기능 숨기기
+  			             	searching: false,
+//  			             	// 정렬 기능 숨기기
+//  			             	ordering: false,
+//  			             	// 정보 표시 숨기기
+  			             	info: false,
+//  			             	// 페이징 기능 숨기기
+//  			             	paging: false
   			            	
-//   			            });
-//   				}, 100);
+  			            });
+  				}, 100);
 				
 				
 				
@@ -1614,24 +1675,27 @@ $(document).on("click",".sns_comment_delete",function(e) {
 })
 
 $(document).on('click','.modalplan',function(e){//모달 열고 지도 및 정보 표시
+	arr={};
+	points={};
+	
+	$("#detailTrip").empty();
+	setTimeout(function() {
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+		mapOption = { 
+	      
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };
+	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+	   map = new kakao.maps.Map(mapContainer, mapOption); 
+	}, 500)
+	
+	
    $("#detail").show();
-   var tnum = e.target.dataset.name //여행번호
+   tnum = e.target.dataset.name //여행번호
    console.log(tnum);
 
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-
-	mapOption = { 
-      
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };
-
-// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-
-setTimeout(() => {
-
-   var map = new kakao.maps.Map(mapContainer, mapOption); 
-      }, 100);
+	
       
  $.ajaxSetup({         
     beforeSend : function(xhr){
@@ -1645,11 +1709,32 @@ setTimeout(() => {
    dataType:"json", //rest 컨트롤 이용   
    success:function(data){
       console.log(data);
-      
-      for(i of data){
-         var li =$('<li data-trnum="'+i.trip_number+'" class="number">'+i.trip_day+'일차'+'</li>');
+      arr = data
+      let obj_length = Object.keys(data).length;
+      for(let i = 1 ; i <= obj_length ; i++){
+    	  console.log(i);
+         let li =$('<li data-trnum="'+tnum+'" class="number">'+i+'일차'+'</li>');
          $("#date").append(li);
+         // point 넣기
+         // new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint)
+         points[i]=[];
+      	
+//          for(let v of data[i]){
+// 			points[i].push(new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint));
+         	 
+//           }
       } 
+      
+      
+      console.log("arr",arr);
+      console.log("points",points)
+     setTimeout(function() {
+      		 let arrFrame = arr[1];
+      		  let pointsFrame = points[1];
+      		
+      		  createPlanForm(arrFrame,pointsFrame)
+	}, 300)
+     
       
    },
    error:function(error){
@@ -1661,8 +1746,7 @@ setTimeout(() => {
 })
 
 $("#left").on("click",function(e){
-    $("#savebtn").prop("disabled", true);
-    $("#savebtn").css('opacity',0.5);
+   
     
       var $lastNumber = $(".number").length-1
       var $li = $(".number")[$lastNumber];
@@ -1670,19 +1754,25 @@ $("#left").on("click",function(e){
       var tripNum = $(".number")[0].dataset.trnum;
       currentPlanDay = $('#date li:nth-child(1)').text();
       console.log("여행번호 : ", tripNum)
-      console.log("현재페이지 : ", currentPlanDay)
-      
-      var Data = {
-      "day" : currentPlanDay,
-      "tripNum" : tripNum
-   }
+      console.log("현재페이지 : ", currentPlanDay.substring(0, currentPlanDay.indexOf("일")))
+      var currentDay = currentPlanDay.substring(0, currentPlanDay.indexOf("일"));
+      $("#detailTrip").empty();
+      console.log("arr",arr)
+      console.log("points",points)
+      points[currentDay]=[];    // 좌표 초기화
+ 	 initMapKaKao();
+ 	//	$("#detailTrip").empty();
+
+   let arrFrame = arr[currentDay];
+	  let pointsFrame = points[currentDay];
+	
+	  createPlanForm(arrFrame,pointsFrame)
 });   
       
       
       
 $("#right").on("click",function(e){
-      $("#savebtn").prop("disabled", true);
-      $("#savebtn").css('opacity',0.5);
+     
           
           var trnum =e.target.dataset.trnum
          var $li = $(".number")[0];
@@ -1690,14 +1780,334 @@ $("#right").on("click",function(e){
          var tripNum = $(".number")[0].dataset.trnum;
          currentPlanDay = $('#date li:nth-child(1)').text();
          console.log("여행번호 : ", tripNum)
-         console.log("현재페이지 : ", currentPlanDay)
+         console.log("현재페이지 : ", currentPlanDay.substring(0, currentPlanDay.indexOf("일")))
+         var currentDay = currentPlanDay.substring(0, currentPlanDay.indexOf("일"));
+         $("#detailTrip").empty();
+         
+         console.log("arr",arr)
+         console.log("points",points)
+         points[currentDay]=[];    // 좌표 초기화
+    	 initMapKaKao();
+    	//	$("#detailTrip").empty();
 
-         var Data = {
-            "day" : currentPlanDay,
-            "tripNum" : tripNum
-         }
-      });
+      let arrFrame = arr[currentDay];
+	  let pointsFrame = points[currentDay];
+	
+	  createPlanForm(arrFrame,pointsFrame)
+ 
+ });
 
+
+//--------------------- 맵에 필요한 친구
+var houseNum = null;
+const createPlanForm = (arrFrame,pointsFrame) =>{
+	console.log("arrFrame",arrFrame)
+	console.log("pointsFrame",pointsFrame)
+	var checkHouseD = false;
+	
+	for( let v of arrFrame){
+		if(v.trip_type==1){ //숙소일때
+			console.log("숙소 포문")
+			console.log("v",v)
+			
+			let planFrame = $("<div class='planFrame'>  </div>");
+			let planNum = $("<div class='planNum'> <img style='width:40;height:40px;'src='./resources/tripImage/bookhouse.png'> </div>");
+			let planImg = $("<div class='planImg'><img src='"+v.trip_img+"' width='50px' height='50px' ></div>");
+			
+			planFrame.append(planNum);
+			planFrame.append(planImg);
+			
+			
+			let planContFram = $("<div class='planContFram'> </div>");
+			let contTitle = $("<div class='contTitle'>"+v.trip_title+"</div>");
+			let contAddr= $("<div class='contAddr'>"+v.trip_destination+" </div>");
+			planContFram.append(contTitle);
+			planContFram.append(contAddr);
+			
+			planFrame.append(planContFram);
+			
+			
+			
+			
+			
+			$("#detailTrip").append(planFrame);
+			
+			
+			pointsFrame.push(new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint)); //추가 할 마커 저장하기 arr에...
+			console.log("pointsFrame",pointsFrame);
+		
+			
+			let clickPosition = new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint); // 클릭한 좌표...(가상)
+			
+			if( planidx >= 2){
+				console.log(planidx);
+				console.log("??")
+				let clickLine = new kakao.maps.Polyline({
+	            	map: map, // 선을 표시할 지도입니다 
+	            	path: [pointsFrame[planidx-2] ,pointsFrame[planidx-1]], // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
+	            	strokeWeight: 3, // 선의 두께입니다 
+	            	strokeColor: '#db4040', // 선의 색깔입니다
+	            	strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+	            	strokeStyle: 'solid' // 선의 스타일입니다
+	        	});
+				console.log("???")
+				clickLinee.push(clickLine);
+				
+				let distance = Math.round(clickLine.getLength());
+				
+				displayCircleDot(pointsFrame[planidx-1], distance)
+			
+			}
+			houseNum = planidx;
+			planidx++;
+			checkHouseD = true;
+		
+		}else{ //숙소 아닐때
+			console.log("숙소아닌 포문")
+			console.log("v",v)
+			
+			let planFrame = $("<div class='planFrame'>  </div>");
+		
+			let planNum
+			if(checkHouseD==true){
+				planNum = $("<div class='planNum'> <button type='button' class='btn btn-primary idxbtn'> <span class='badge badge-light'>"+(planidx+1)+"</span> </button> </div>");
+			}else{
+				planNum = $("<div class='planNum'> <button type='button' class='btn btn-primary idxbtn'> <span class='badge badge-light'>"+planidx+"</span> </button> </div>");
+								
+			}
+			
+			let planImg = $("<div class='planImg'><img src='"+v.trip_img+"' width='50px' height='50px' ></div>");
+			
+			planFrame.append(planNum);
+			planFrame.append(planImg);
+			
+			
+			let planContFram = $("<div class='planContFram'> </div>");
+			let contTitle = $("<div class='contTitle'>"+v.trip_title+"</div>");
+			let contAddr= $("<div class='contAddr'>"+v.trip_destination+" </div>");
+			planContFram.append(contTitle);
+			planContFram.append(contAddr);
+			
+			planFrame.append(planContFram);
+			
+		
+			
+			
+			
+			$("#detailTrip").append(planFrame);
+			
+			
+			pointsFrame.push(new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint)); //추가 할 마커 저장하기 arr에...
+			console.log("pointsFrame",pointsFrame);
+		
+			
+			let clickPosition = new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint); // 클릭한 좌표...(가상)
+			
+			if( planidx >= 2){
+				console.log(planidx);
+				console.log("!!")
+				
+				let clickLine = new kakao.maps.Polyline({
+	            	map: map, // 선을 표시할 지도입니다 
+	            	path: [pointsFrame[planidx-2] ,pointsFrame[planidx-1]], // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
+	            	strokeWeight: 3, // 선의 두께입니다 
+	            	strokeColor: '#db4040', // 선의 색깔입니다
+	            	strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+	            	strokeStyle: 'solid' // 선의 스타일입니다
+	        	});
+				
+				console.log("!!!")
+				
+				clickLinee.push(clickLine);
+				
+				let distance = Math.round(clickLine.getLength());
+				
+				displayCircleDot(pointsFrame[planidx-1], distance)
+			
+			}
+		
+			planidx++;
+		
+		
+		} 
+	}
+	
+	 //-----------지도 마커에 따른 재위치 선정
+	 let bounds = new kakao.maps.LatLngBounds(); 
+	 var checkHouse = false;
+	 for (i = 0; i < pointsFrame.length; i++) {
+	     // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
+	// 커스텀 오버레이에 표시할 내용입니다     
+	// HTML 문자열 또는 Dom Element 입니다 
+	let content;
+	if(houseNum-1 == i){
+		content = " <img style='width:40;height:40px;'src='./resources/tripImage/bookhouse.png'>  ";
+		checkHouse = true;
+	}else{
+		if(checkHouse==true){
+			content = "<button  type='button' class='btn btn-primary idxbtn mapbtn'> <span class='badge badge-light'>"+(i)+"</span> </button> ";
+		}else{
+			content = "<button  type='button' class='btn btn-primary idxbtn mapbtn'> <span class='badge badge-light'>"+(i+1)+"</span> </button> ";
+		}
+	}
+	
+	
+	// 커스텀 오버레이를 생성합니다
+	let custom = new kakao.maps.CustomOverlay({
+   	 position: pointsFrame[i],
+   	 content: content   
+	});
+	customOverlayy.push(custom);
+	// 커스텀 오버레이를 지도에 표시합니다
+ 	customOverlayy[customOverlayy.length-1].setMap(map);
+	
+	   
+	
+	 bounds.extend(pointsFrame[i]);
+	 }
+	 
+	 setTimeout(function() {
+		 setBounds(bounds)
+		}, 100);
+	     // 재설정매소드
+	 
+ 	
+	planidx=1;
+} 
+	
+const initMapKaKao=()=>{
+	for(v of customOverlayy){
+		v.setMap(null);
+	}
+	customOverlayy=[];
+	for(v of distanceOverlayy){
+		v.setMap(null);
+	}
+	distanceOverlayy=[];
+	for(v of clickLinee){
+		v.setMap(null);
+	}
+	clickLinee=[];
+}	
+
+function setBounds(bounds, points) {
+    // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+    // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+    map.setBounds(bounds);
+}
+
+function displayCircleDot(position, distance) {
+	
+    if (distance > 0) {
+        // 클릭한 지점까지의 그려진 선의 총 거리를 표시할 커스텀 오버레이를 생성합니다
+         var distanceOverlay = new kakao.maps.CustomOverlay({
+            content: '<div class="dotOverlay">거리 <span class="numberr">' + distance + '</span>m</div>',
+            position: position,
+            yAnchor: 1,
+            zIndex: 2
+        });
+
+         distanceOverlayy.push(distanceOverlay);
+         
+        // 지도에 표시합니다
+        distanceOverlayy[distanceOverlayy.length-1].setMap(map);
+    }
+
+    // 배열에 추가합니다
+    //dots.push({circle:circleOverlay, distance: distanceOverlay});
+}
+
+//--------------------------------------------------거절 승인
+$(".planjudgebtn").on('click',function(e){
+	console.dir(e.target.innerText)  //승인or거절
+	var judge = e.target.innerText
+	var data = {"tnum":tnum,
+		"judge":judge
+	}
+	$("#TripSharePlanList").empty();
+	if(dtable!=null){
+		dtable.destroy();
+	}
+	$.ajaxSetup({         
+	      beforeSend : function(xhr){
+	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	      });//먼저 보냄
+    	
+    	
+    $.ajax({
+        url : "judgeplanshare",
+        type : "post",
+        data : data,
+        dataType : 'json',
+        success : function(response) {
+				console.log(response);
+				 $("#sns_table").empty();
+	  				console.log(response);
+	  				console.log("전체공지 사이즈",response.length);
+	  				let pagesize = response.length;
+	  				console.log("페이지사이즈",pagesize);
+	  				$("#TripSharePlanList").empty();
+	  				
+	  				
+
+	  				
+	  				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
+	  				let colgroup =$("<colgroup><col width='25%'><col width='30%'><col width='45%'></colgroup>")
+	  				let thead = $("<thead><tr><th>지역</th><th>이름</th><th>날짜</th></tr></thead>")
+	  		        
+	  				let tbody = $("<tbody ></tbody>")		
+	  				
+	  				
+	  		        
+	  		        console.log("포문직전")
+	  				for(  i of response){
+	  					
+	  					let sd = getFormatDate(i.trip_start_date);
+	  				 	let ed = getFormatDate(i.trip_end_date);
+	  				 	let areaStr = getTripAreaStr(i.all_notices_number)
+	  					let tr = $("<tr></tr>")
+	  					
+	  					let td1 =$('<td>'+areaStr+'</td>');  //지역
+	  					
+	  					//<a data-name="'+i.trip_number+'" class="modalplan">
+	  					let td2 = $('<td><a data-name="'+i.trip_number+'" class="modalplan">'+i.trip_title+'</a></td>');   // 이름
+	  					let td3 = $('<td>'+sd+' - '+ed+'</td>'); // 날짜
+
+	  					tr.append(td1)
+	  					tr.append(td2)
+	  					tr.append(td3)
+	  					
+	  					tbody.append(tr);	
+	  				}//for문 종료
+	  				
+	  				boards.append(colgroup);
+	  				boards.append(thead); 
+	  				boards.append(tbody);
+	  				console.dir(boards);
+	  				$("#TripSharePlanList").append(boards);
+	  				
+	  				setTimeout(() => {
+	  					dtable =$("#boards").DataTable({
+	  						 "order": [[0, 'desc']], // asc 또는 desc
+
+	  						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+
+	  			             	// 검색 기능 숨기기
+	  			             	searching: false,
+//	  			             	// 정렬 기능 숨기기
+//	  			             	ordering: false,
+//	  			             	// 정보 표시 숨기기
+	  			             	info: false,
+//	  			             	// 페이징 기능 숨기기
+//	  			             	paging: false
+	  			            	
+	  			            });
+	  				}, 100);
+        }, error : function(jqXHR, status, e) {
+
+        }
+    });
+})
 </script>
 </body>
 

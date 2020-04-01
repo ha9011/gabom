@@ -2,7 +2,9 @@ package icia.project.gabom.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import icia.project.gabom.dto.AdminSns;
 import icia.project.gabom.dto.Adminfood;
@@ -54,5 +56,11 @@ public interface IAdminDao {
 	List<AdminSns> getsnscommentreport();
 	
 	List<Trip_plan> getmyplan();
+	
+	@Update("update trip_plan_recommand set TRIP_PLAN_APPLY =2 where TRIP_NUMBER = #{tripPlanNum}")
+	int updatePermit(@Param("tripPlanNum")int tnum);
+	
+	@Delete("DELETE FROM trip_plan_recommand WHERE TRIP_NUMBER = #{tripPlanNum} ")
+	int deletereject(@Param("tripPlanNum")int tnum);
 	
 }
