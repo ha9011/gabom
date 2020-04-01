@@ -7,16 +7,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.project.gabom.service.AdminjudgeManagement;
-import icia.project.gabom.service.TripApiService;
 
 @Controller
 public class AdminjudgeController {
 	private ModelAndView mav;
 	@Autowired
 	private AdminjudgeManagement am; //관리자
-	@Autowired
-	private TripApiService ts; //api서비스
-	
+		
 	//어드민페이지로 이동
 	@RequestMapping(value = "/adminmenu", method = RequestMethod.GET)
 	public ModelAndView adminmenu() {
