@@ -13,7 +13,7 @@
 	</insert>
 
 	<insert id="savetripdate" parameterType="tripdate">
-		INSERT INTO TRIP_PLAN_DATE VALUES(#{date},#{trip_number2},#{index})
+		INSERT INTO TRIP_PLAN_DATE VALUES(#{date},#{trip_number2},#{index},null)
 	</insert>
 
 	<insert id="togetherplan" parameterType="trfriend">
@@ -148,6 +148,11 @@ order by tc.chatting_date desc
 	UPDATE TRIP_PLAN_DETAIL SET TRIP_MEMO = #{trip_memo} WHERE TRIP_NUMBER = #{trip_number} AND TRIP_DATE = #{trip_date} AND TRIP_ORDER = #{trip_order} AND TRIP_TITLE = #{trip_title}
 	</update>
 	
-	
+	<!-- 여행지 검색 -->
+ 	<select id="searchtrippaln" resultType="trip">
+	SELECT TP.TRIP_NUMBER,TP.TRIP_TITLE,TP.TRIP_AREA,TP.TRIP_START_DATE,TP.TRIP_END_DATE
+	FROM TRIP_PLAN TP,TRIP_PLAN_RECOMMAND TPR
+	WHERE TP.TRIP_NUMBER = TPR.TRIP_NUMBER AND TRIP_AREA=#{trip_area} AND TPR.TRIP_PLAN_APPLY =2
+	</select> 
 	
 </mapper>

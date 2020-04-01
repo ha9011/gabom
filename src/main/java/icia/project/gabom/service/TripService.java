@@ -500,6 +500,63 @@ public class TripService {
 	}
 
 
+	public String searchtrippaln(String trip_area) {//여행지역 검색
+		String json =null;
+			
+//			if(trip_area.equals("서울")) {
+//				trip_area = "1";
+//			}else if(trip_area.equals("인천")) {
+//				trip_area= "2";
+//			}else if(trip_area.equals( "대전")) {
+//				trip_area ="3";
+//			}else if(trip_area.equals( "대구")){
+//				trip_area ="4";
+//			}else if(trip_area.equals( "광주")) {
+//				trip_area ="5";
+//			}else if(trip_area.equals( "부산")) {
+//				trip_area = "6";
+//			}else if(trip_area.equals( "울산")) {
+//				trip_area ="7";
+//			}else if(trip_area.equals( "세종시")) {
+//				trip_area ="8";
+//			}else if(trip_area.equals( "경기도")) {
+//				trip_area ="31";
+//			}else if(trip_area.equals( "강원도")) {
+//				trip_area ="32";
+//			}else if(trip_area.equals( "충청북도")) {
+//				trip_area ="33";
+//			}else if(trip_area.equals( "충청남도")) {
+//				trip_area ="34";
+//			}else if(trip_area.equals( "경상북고")) {
+//				trip_area ="35";
+//			}else if(trip_area.equals( "경상남도")) {
+//				trip_area ="36";
+//			}else if(trip_area.equals( "전라북도")) {
+//				trip_area ="37";
+//			}else if(trip_area.equals( "전라남도")) {
+//				trip_area ="38";
+//			}else if(trip_area.equals( "제주도")) {
+//				trip_area ="39";
+//			}
+		System.out.println(trip_area);
+		List<Trip_plan> trlist = tpDao.searchtrippaln(trip_area);
+		
+		json = new Gson().toJson(trlist);
+		return json;
+	}
+
+
+	public String getplan(int trip_number) {
+		String json = null;
+		
+		List<Trip_plan> detrip = tpDao.detailplan(trip_number);// 여행관련 정보 다 퍼옴  1일,2일,3일,4일
+	    json = new Gson().toJson(detrip);
+		
+	    System.out.println(json);
+		return json;
+	}
+
+
 	
    
    
