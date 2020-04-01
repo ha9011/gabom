@@ -28,18 +28,24 @@ function makeTimeLineProfile(id) {
 			make+='</div>';
 			if(json.reverse==1){
 				make+='<div class="container friendRequestBtnBox">';
+				make+='<button type="button" class="btn-default messageBox" onclick="window.open(\'snsdm\',\'DM\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=400,top=150\')">';
+				make+='<i class="far fa-envelope fa-2x"></i></button>';
 				make+='<button type="button" class="btn-default pull-right friendRequestBtn" onclick="friendReqCancel(\''+json.id+'\')">거절</button><span>';
 				make+='<button type="button" class="btn-default pull-right friendRequestBtn" onclick="friendAccept(\''+json.id+'\')">수락</button></span>';
 				make+='</div>';
 			}
 			else if(json.friendStatus==0&&userId!=json.id){
 				make+='<div class="container friendRequestBtnBox">';
+				make+='<button type="button" class="btn-default messageBox" onclick="window.open(\'snsdm\',\'DM\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=400,top=150\')">';
+				make+='<i class="far fa-envelope fa-2x"></i></button>';
 				make+='<button type="button" class="btn-default pull-right friendRequestBtn"';
 				make+='onclick="friendRequest(\''+json.id+'\')">';
 				make+='친구 신청&nbsp;<i class="fas fa-star faa-tada animated" style="color:gold"></i></button></div>';
 			}
 			else if(json.friendStatus==1&&userId!=json.id){
-				make+='<div class="container friendRequestBtnBox">';
+				make+='<div class="container friendRequestBtnBox messageBox">';
+				make+='<button type="button" class="btn-default messageBox" onclick="window.open(\'snsdm\',\'DM\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=400,top=150\')">';
+				make+='<i class="far fa-envelope fa-2x"></i></button>';
 				make+='<button type="button" class="btn-default pull-right friendRequestBtn"';
 				make+='onclick="friendRequestStatus(\''+json.id+'\')">';
 				make+='요청중&nbsp;<i class="fa fa-spinner faa-spin animated"></i></button>';
@@ -47,6 +53,8 @@ function makeTimeLineProfile(id) {
 			}
 			else if(json.friendStatus==2&&userId!=json.id){
 				make+='<div class="container friendRequestBtnBox">';
+				make+='<button type="button" class="btn-default messageBox" onclick="window.open(\'snsdm\',\'DM\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=400,top=150\')">';
+				make+='<i class="far fa-envelope fa-2x"></i></button>';
 				make+='<button type="button" class="btn-default pull-right friendRequestBtn"';
 				make+='onclick="friendCancel(\''+json.id+'\')">';
 				make+='친구 해제</button></div>';
