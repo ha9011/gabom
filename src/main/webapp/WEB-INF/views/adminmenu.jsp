@@ -2017,6 +2017,8 @@ function displayCircleDot(position, distance) {
     //dots.push({circle:circleOverlay, distance: distanceOverlay});
 }
 
+
+
 //--------------------------------------------------거절 승인
 $(".planjudgebtn").on('click',function(e){
 	console.dir(e.target.innerText)  //승인or거절
