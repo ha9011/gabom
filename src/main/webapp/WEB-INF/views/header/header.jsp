@@ -33,12 +33,13 @@ body {
 }
 
 img {
-   float: none;
-   margin: 0 35%;
-   display: flex;
-   align-items: center;
-   width: 40%;
-   margin-bottom: 40px;
+  float: none;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	width: 250px;
+	height: 75px;
+	margin-bottom: 40px;
 }
 
 li {
@@ -99,7 +100,7 @@ background-color: #E6E6E6
       </ul>
       </div>
       <div class="col-md-12 col-sm-12 col-xs-12"><a href="/gabom/">
-         <img src="resources/headerImage/logo3.png">
+         <img src="resources/headerImage/logo.png">
          </a>
       </div>
       </div>
@@ -110,7 +111,7 @@ background-color: #E6E6E6
             <li><a href="housechoice" id="room" >숙박</a></li>
             <li><a href="foodmain" id="popularRestaurant">맛집</a></li>
             <li><a href="somoim/mainsomoim" id="somoim">소모임</a></li>
-            <li><a href="#" id="service">고객센터</a></li>
+            <li><a href="servicecenter" id="service">고객센터</a></li>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
             <li><a href="adminmenu" id="admin">관리자</a></li>
 			</sec:authorize>
