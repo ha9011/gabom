@@ -129,8 +129,7 @@ li {
 		<!-- <h2>Toggleable Tabs</h2> -->
 		<br>
 		<!-- Nav tabs -->
-		<ul class="nav nav-tabs" role="tablist"
-			style="background-color: infobackground;">
+		<ul class="nav nav-tabs" role="tablist">
 			<li class="qwe nav-item"><a class="nav-link active"
 				data-toggle="tab" href="#judge" id="judge_click">서비스업체 등록심사</a></li>
 <!-- 			<li class="nav-item"><a class="nav-link" data-toggle="tab" -->
