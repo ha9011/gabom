@@ -291,12 +291,12 @@ header {
 
 			<hr>
 			<div id="t_destination">
+				<!-- onclick="modal" -->
+				<button class="addbtn btn-lg btn-primary" id="savebtn" onclick="saveplan()">저장하기</button>
+				<button class="addbtn btn-lg btn-primary" id="addDate" onclick="addDate()">+날짜추가</button>
 				<button id="apiup" class="addbtn btn-lg btn-primary"
 					data-toggle="modal" data-target="#area_modal"
 					onclick="sigunguChange()">장소추가</button>
-				<!-- onclick="modal" -->
-				
-				<button class="addbtn btn-lg btn-primary" id="savebtn" onclick="saveplan()">저장하기</button>
 			</div>
 
 			<!-- ---------------------------------areaCode기준 검색 모달--------------------------------- -->
@@ -1048,6 +1048,7 @@ function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
 
 
  $("#right").on("click",function(e){
+	 
 	 $("#savebtn").prop("disabled", true);
 	 $("#savebtn").css('opacity',0.5);
 	 
@@ -1470,7 +1471,6 @@ $(document).on('click',".cancelPlan",function(e){
 	let arrFrame = arr[currentPlanDay];
 	let pointsFrame = points[currentPlanDay];
 	
-	
 	createPlanForm(arrFrame,pointsFrame)
 	
 })
@@ -1528,10 +1528,8 @@ $(document).on('click',".cancelReser",function(e){  // ajax해서 예약취소�
     		console.log("success",data)
     		HouseReserCheck = data;
     		
-    		
     		$("#savebtn").trigger("click");
- 		
- 		
+ 			alert("예약이 취소되었고 자동 저장되었습니다.");
  		
  		
     	},
