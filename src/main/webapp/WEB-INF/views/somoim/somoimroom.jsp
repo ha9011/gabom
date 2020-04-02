@@ -1972,6 +1972,9 @@ for(let add = 0 ; add < ${JsonJungmoRoom}.length-Attendlist.length; add++){
 console.log("기본정보",${JsonBasicInfo})
 console.log("채팅 : " , ${JsonchatData})
 var recentChatData = 	${JsonchatData}
+
+var si = $('<img style="width:100%;height:200px;" src="../'+${JsonBasicInfo}.somoim_sys_mainpicture+'">');
+$("#top").append(si);
 //채팅에 넣기
 
 	for(let v of recentChatData ){

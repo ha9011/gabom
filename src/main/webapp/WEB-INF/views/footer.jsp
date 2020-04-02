@@ -9,18 +9,29 @@
 </head>
 <style>
 #footer {
-	border-bottom: solid black 1px;
-	border-top: solid black 1px;
 	width: 100%;
 	height: 100px;
+	text-align:center;
+}
+#cn{
+font-size:50px;
+border-bottom:4px solid black;
+line-height:40px;
+padding-bottom:10px;
+}
+#tel{
+font-size:30px;
 }
 
 #alarm{
 	position: fixed;
     top: 100px;
-    left: 100px;
-    width: 300px;
-    border: 3px solid #73AD21;
+    left: 20px;
+    width: 400px;
+    border-radius:10px;
+    background-color: white;
+    z-index:2;
+    
 }
 
 </style>
@@ -102,13 +113,14 @@
 			   $('#alarm').hide();
 			}, 5000);
 		}else if(JsonRespon.type=='tripShare'){
+			$("#content").empty();
 			console.log("여행 계획 공유 이벤트")
 			console.log("JsonRespon",JsonRespon)
 			var alarmName = JsonRespon.my_id;
 			//var alarmNum = JsonRespon.somoimNumber; 	
 			//console.log("페이지 : " + alarmNum)
 			var toastCont = $("<a href='/gabom/myplan'>"+alarmName+"님 께서 여행계획을 공유하셨습니다.</a>")
-			$("#toast-body").append(toastCont);
+			$("#content").append(toastCont);
 		
 			$('#alarm').show();
 			  setTimeout(function() { 
@@ -125,17 +137,40 @@
 <body>
 
 	
-	<div id="footer">여기는 footer 영역입니다.</div>
+	<div id="footer">
+		<p style="font-size:20px;margin:20px;">
+		<strong id="cn">Contact Us</strong>
+			<br>
+			<br>
+			<br>
+		<strong id="tel">Tel 032.876.3332</strong>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			
+		
+		</p>	
+	</div>
 	
 	
-	<div style='display: none' id="alarm" class="masthead">
+	<div style='display: none' id="alarm" >
     <div id="alarm-header">
       <strong class="mr-auto text-primary">알람이 왔습니다!!</strong>
       <small id="alarmtext">5초 후 꺼짐</small>
       <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
     </div>
     <div id="toast-body" >
+      <div id="content">
       
+      </div>
     </div>
   	</div>
 
