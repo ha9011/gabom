@@ -23,7 +23,7 @@ float:left;
 margin-left: -605px;
 }
 .inbox{
-margin-top: -200px;
+margin-top:30px;
 width:700px;
 height:820px;
 background-color:black;
@@ -63,7 +63,7 @@ font-size:15px;
 }
 #triplist{
 float:right;
-margin-top: -200px;
+margin-top: 30px;
 margin-right:-86%;
 width:700px;
 height:820px;

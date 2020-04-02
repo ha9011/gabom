@@ -40,7 +40,7 @@ body {
 
 #trp {
 	width: 100%;
-	height: 1200px;
+	height: 100%;
 	background-color: rgba(255, 255, 255, 0.7);
 	margin-top: 80px;
 	text-align: center;
@@ -56,6 +56,7 @@ body {
 	text-align: center;
 	font-size: 30px;
 }
+
 
 #table {
 	margin: 20px 10px;
@@ -106,6 +107,7 @@ tr {
 #t_title {
 	cursor: pointer;
 	text-decoration: none;
+	text-align:left;
 }
 
 #rqmbtn {
@@ -129,6 +131,14 @@ tr {
 	float: right;
 	border-radius: 10px;
 }
+
+/* 버튼 */
+.applybtn{
+margin-left: 10px;
+border-radius:30px;
+width:30px;
+}
+
 </style>
 
 </head>
@@ -141,14 +151,14 @@ tr {
 			<div class="navbar-header page-scroll">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span> <span
+					<!-- <span class="sr-only">Toggle navigation</span> <span
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
+						class="icon-bar"></span> -->
 				</button>
 
 				<!--로고 자리 -->
-				<img style="width: 200px;" src="./resources/headerImage/logo3.png"
-					alt="logo">
+				<a href="/gabom/"><img style="width: 200px;" src="./resources/headerImage/logo3.png"
+					alt="logo"></a>
 			</div>
 
 
@@ -163,7 +173,7 @@ tr {
 					<li><a class="page-scroll" href="myplan">내여행</a></li>
 					<li><a class="page-scroll" href="housechoice">숙박</a></li>
 					<li><a class="page-scroll" href="foodmain">맛집</a></li>
-					<li><a class="page-scroll" href="#team">VIP</a></li>
+					<li><a class="page-scroll" href="somoim/mainsomoim">소모임</a></li>
 					<li><a class="page-scroll" href="#contact">고객센터</a></li>
 				</ul>
 			</div>
@@ -324,25 +334,25 @@ tr {
  $("#fql").hide(); */ 
   function myreq() {//내가 받은 요청사항
 	  var x = document.getElementById("mql");
-	  if (x.style.display === "none") {
-	    x.style.display = "block";
-	  } else {
+	  if (x.style.display === "block") {
 	    x.style.display = "none";
+	  } else {
+	    x.style.display = "block";
 	  }
 	}
  
  
  function freq() {//내가 보낸 요청사항 
 	  var y = document.getElementById("fql");
-	  if (y.style.display === "none") {
-		 y.style.display = "block";
+	  if (y.style.display === "block") {
+		 y.style.display = "none";
 	} else {
-         y.style.display = "none";
+         y.style.display = "block";
 	 }
 	}
  
  //-------------------------------------------------------------------유저 정보 영역
- 	var thead = $("<tr><th class='bar'>여행 제목</th><th class='bar'>여행지</th><th class='bar'>여행 날짜</th><th style='width: 500px' class='bar'>친구와 함께하기</th></tr>")
+ 	var thead = $("<tr><th class='bar' id='t'>여행 제목</th><th class='bar'>여행지</th><th class='bar'>여행 날짜</th><th style='width: 500px' class='bar'>친구와 함께하기</th></tr>")
 	$("#mylist").append(thead) 
   
   for(i of mylist) { //게시글
@@ -398,11 +408,11 @@ tr {
     if(new Date(i.trip_end_date) < new Date()){  // 날짜 지났으니 버튼 추가
     	
     	if(i.trip_plan_appry_status == 2){
-    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><button data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" >추천취소</button></td>');
+    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><img src="./resources/css/c.JPG" data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" ></td>');
     	}else if(i.trip_plan_appry_status == 1){
-    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><button data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" >대기취소</button></td>');
+    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><img src="./resources/css/d.JPG" data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" ></td>');
     	}else if(i.trip_plan_appry_status == 0){
-    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><button data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" >신청</button></td>');
+    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><img src="./resources/css/p.JPG" data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" ></td>');
     	}
     	
     
@@ -413,7 +423,7 @@ tr {
    
     var area =$('<td>'+i.trip_area+'</td>');
     var date =$('<td>'+sd+' - '+ed+'</td>');
-    var btn =$('<td><button id="jbtn" class="joinbtn btn" data-toggle="modal" data-target="#exampleModal"  data-tripnum ="'+i.trip_number+'">친구 초대</button></td>');
+    var btn =$('<td><button id="jbtn" class="joinbtn btn btn-info" data-toggle="modal" data-target="#exampleModal"  data-tripnum ="'+i.trip_number+'">친구 초대</button></td>');
     
     
     $("#mylist").append(tr);
@@ -719,21 +729,29 @@ $(document).on("click",".applybtn",function(e){
  	var ed = getFormatDate(i.trip_end_date);	  
 	  
  	
-
+//  	<tr>
+// 	<th class="bar">여행 제목</th>
+// 	<th class="bar">여행지</th>
+// 	<th class="bar">여행 날짜</th>
+// 	<th style="width: 500px" class="bar">친구와 함께하기</th>
+// </tr>
 
     var tr = $('<tr></tr>'); 
     
- 
+    // 추천에 승인 추가 if문
+//     console.log("tripendday2",new Date(i.trip_end_date));
+//     console.log("today1",new Date());
+//     console.log(new Date(i.trip_end_date) < new Date());
 
     var title;
     if(new Date(i.trip_end_date) < new Date()){  // 날짜 지났으니 버튼 추가
     	
     	if(i.trip_plan_appry_status == 2){
-    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><button data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" >추천취소</button></td>');
+    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><img src="./resources/css/c.JPG" data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" ></td>');
     	}else if(i.trip_plan_appry_status == 1){
-    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><button data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" >대기취소</button></td>');
+    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><img src="./resources/css/d.JPG" data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" ></td>');
     	}else if(i.trip_plan_appry_status == 0){
-    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><button data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" >신청</button></td>');
+    		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><img src="./resources/css/p.JPG" data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" ></td>');
     	}
     	
     
