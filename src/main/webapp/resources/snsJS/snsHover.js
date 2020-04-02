@@ -1,9 +1,4 @@
 //호버시 아이콘 변환 스크립트
-	$("#snsProfileNotice a").hover(function () {
-		$("#snsProfileNotice a").html('<i class="fas fa-bell"></i>');
-	},function(){
-		$("#snsProfileNotice a").html('알람');
-	});
 	$("#snsProfileInfo a").hover(function () {
 		$("#snsProfileInfo a").html('<i class="fas fa-cog fa-spin"></i>');
 	},function(){

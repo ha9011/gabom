@@ -225,7 +225,6 @@ ul li {
 	background-color: #000;
 }
 .owl-slider-item img {
-	opacity: 0.7;
 }
 .owl-slider .owl-controls {
 	position: absolute;
@@ -258,7 +257,6 @@ ul li {
 }
 
 .intro-text {
-	padding-top: 100px;
 	padding-bottom: 50px;
 	position: absolute;
 	top: 50px;
@@ -269,8 +267,7 @@ ul li {
 
 @media (min-width: 768px) {
 	.intro-text {
-		padding-top: 230px;
-		padding-bottom: 400px;
+		
     }
 }
 
