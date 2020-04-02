@@ -615,6 +615,10 @@ margin-top: 2px;
 .messageBox i{
 color: #337ab7;
 }
+#snsProfileNotice i{
+	font-size: 23px;
+
+}
 </style>
 <script type="text/javascript">
 	$(window).scroll(function() {
@@ -652,8 +656,8 @@ color: #337ab7;
 					<div class="snsProfile">
 						<ul class="nav nav-pills nav-stacked">
 							<li><div id="snsProfileName"></div></li>
-							<!-- <li role="presentation" id="snsProfileNotice" onclick="notice()"><a
-								href="#;">알람</a></li> -->
+							 <li role="presentation" id="snsProfileNotice" onclick="window.open('snsdm','DM','width=600,height=700,toolbar=no,menubar=no,location=no,left=400,top=150')"><a
+								href="#;"><i class="far fa-envelope"></i></a></li>
 							<li role="presentation" id="snsProfileInfo"><a href="myinfo">정보수정</a></li>
 							<li role="presentation" id="snsFriendList"><a href="#">내친구&nbsp;
 									<i class="fas fa-star faa-tada animated" style="color: gold"></i>
@@ -1068,7 +1072,7 @@ color: #337ab7;
 	<script type="text/javascript"
 		src="resources/snsJS/postInsert.js?ver=3"></script>
 	<!-- 호버시 아이콘 변환 스크립트1 -->
-	<script type="text/javascript" src="resources/snsJS/snsHover.js?ver=1"></script>
+	<script type="text/javascript" src="resources/snsJS/snsHover.js?ver=2"></script>
 	<!-- 글쓰기칸 만드는 스크립트1 -->
 	<script type="text/javascript" src="resources/snsJS/writeBox.js?ver=5"></script>
 	<!-- 이미지 미리보기 스크립트1 -->
