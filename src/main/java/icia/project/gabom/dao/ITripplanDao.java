@@ -137,6 +137,31 @@ public interface ITripplanDao {
    @Select("select count(*) from trip_plan_date where TRIP_NUMBER = #{trip_number}")
    int selectCountTripDay(@Param("trip_number")int trip_number);
 
+
+   @Select("select * from TRIP_PLAN where trip_number = #{tripnum}")
+   Trip_plan selectShareTripPlan(@Param("tripnum")int tripnum) ;
+
+   int insertShareTripPlan(Trip_plan tp);
+
+
+   @Insert("INSERT INTO TRIP_PLAN_DATE VALUES(#{date},#{trip_number},#{ndate},null)")
+   int insertShareTripPlanDate(@Param("date")String date, @Param("trip_number")int trip_number,@Param("ndate")int ndate);
+
+   int insertShareTripPlanDetail(@Param("newNumber")int trip_number, @Param("Number")int tripnum);
+
+   List<Map<String, Integer>> selectHouseReserCheck(@Param("tripNum")String tripNum);
+
+   
+   
+   @Update("update TRIP_PLAN_DATE set reservation_number = null where trip_number =#{tripNum} and TRIP_DAY=#{currentPlanDay} and reservation_number = #{resernumber}")
+   int updateTripPlanDate(@Param("tripNum")int tripNum, @Param("currentPlanDay")int currentPlanDay, @Param("resernumber")int resernumber);
+
+   @Delete("DELETE FROM TRIP_PLAN_DETAIL where trip_number =#{tripNum} and TRIP_DATE=#{currentPlanDay} and trip_order = #{dbnum}")
+   int deleteTripPlanDatail(@Param("tripNum")int tripNum, @Param("currentPlanDay")int currentPlanDay, @Param("resernumber")int resernumber, @Param("dbnum")int dbnum);
+
+   @Delete(" DELETE FROM HOUSERESERVATION where RESERVATION_NUMBER =#{resernumber} ")
+   int deleteHouseReservation(@Param("resernumber")int resernumber);
+
 //   @Select("select trip_number,trip_date,trip_destination,trip_memo,trip_title,trip_order from trip_plan_detail where trip_number = #{trip_number} and trip_date = #{trip_date} and trip_order = #{trip_order} and trip_title = #{trip_title}")
 //   String selecttripmemo(Tripmemoupdate tripup);
 

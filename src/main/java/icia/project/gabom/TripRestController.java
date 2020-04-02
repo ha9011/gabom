@@ -21,6 +21,7 @@ import icia.project.gabom.dto.Housereservation;
 import icia.project.gabom.dto.Sns_friend;
 import icia.project.gabom.dto.TripPlanDay;
 import icia.project.gabom.dto.TripPlanDetail;
+import icia.project.gabom.dto.Trip_SavePlan;
 import icia.project.gabom.dto.Trip_member;
 import icia.project.gabom.dto.Trip_plan;
 import icia.project.gabom.dto.Trip_plan_date;
@@ -58,7 +59,20 @@ public class TripRestController {
       return json;
    }
    
-   
+ //여행 공유 저장
+   @PostMapping(value = "/shareplansave" ,produces = "application/json;charset=utf-8")
+   public String shareplansave(
+		   @RequestParam(value="rangedate[]")String[] rangedate,
+		   @RequestParam("tripnum")int tripnum,
+		   Principal ppl 
+	) throws ParseException {
+     
+	  System.out.println("여행 추천 저장");
+	  
+	  String json = trs.insertSharePlan(rangedate,tripnum, ppl.getName());
+	  
+      return "";
+   }
    
  //친구 초대 (공유하기)
    @PostMapping(value = "/togetherplan" ,produces = "application/json;charset=utf-8")
@@ -238,6 +252,23 @@ public class TripRestController {
 	}
 	
 	
-	
+	//여행 취소할 경우
+		@PostMapping(value = "/cancelReservation",produces = "application/json;charset=utf-8")
+		public String getplan(
+				@RequestParam("tripNum")int tripNum,
+				@RequestParam("currentPlanDay")int currentPlanDay,
+				@RequestParam("resernumber")int resernumber,
+				@RequestParam("dbnum")int dbnum,
+				Principal pr
+				){
+			System.out.println("예약 취소 하기");
+			System.out.println("tripNum : " +tripNum);
+			System.out.println("currentPlanDay : " +currentPlanDay);
+			System.out.println("resernumber : " +resernumber);
+			
+			String json = trs.cancelReservation(tripNum,currentPlanDay,resernumber,dbnum);
+			
+			return json;
+		}
    
 }

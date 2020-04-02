@@ -16,6 +16,7 @@ public class RestSnsPostSecurityController {
 	@PostMapping(value = "/sns/post/security",produces = "application/json;charset=utf-8")
 	public String snsPostSecurity(@RequestParam("postNumber") int postNumber,
 			@RequestParam("securityVal") int securityVal) {
+		
 		String json=snsPostSecurity.edit(postNumber,securityVal);
 		
 		return json;

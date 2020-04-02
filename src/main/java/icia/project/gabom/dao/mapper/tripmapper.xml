@@ -157,4 +157,25 @@ order by tc.chatting_date desc
 	WHERE TP.TRIP_NUMBER = TPR.TRIP_NUMBER AND TRIP_AREA=#{trip_area} AND TPR.TRIP_PLAN_APPLY =2
 	</select> 
 	
+	
+	<insert id="insertShareTripPlan" parameterType="trip">
+		INSERT INTO TRIP_PLAN
+		VALUES(SEQ_TRIP_PLAN.nextval,#{trip_id},#{trip_title},#{trip_area},#{trip_start_date},#{trip_end_date})
+		<selectKey keyProperty="trip_number" resultType="integer"
+			order="AFTER">
+			SELECT SEQ_TRIP_PLAN.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<insert id="insertShareTripPlanDetail" parameterType="int">
+		 insert into TRIP_PLAN_DETAIL 
+		 select DECODE(TRIP_NUMBER,0,1,#{newNumber}), TRIP_DATE, trip_destination, DECODE(TRIP_MEMO,'','없음','없음'),trip_xpoint,trip_ypoint,trip_title,trip_img,trip_order,trip_type 
+        from TRIP_PLAN_DETAIL where trip_number = #{Number}
+		
+	</insert>
+	
+	<select id="selectHouseReserCheck" parameterType="String" resultType="map">
+	select TRIP_NUMBER, TRIP_DAY, NVL(RESERVATION_NUMBER,0) RESERVATION_NUMBER from TRIP_PLAN_DATE where trip_number = #{tripNum}
+	</select> 
+	
 </mapper>

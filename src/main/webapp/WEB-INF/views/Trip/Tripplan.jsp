@@ -251,6 +251,7 @@ text-align:center;
     									<input autocomplete="off" name="trip_start_date" type="date" class="date" aria-label="Start Date" ><input name="trip_end_date" class="date" type="date" placeholder="End Date">
     								</div>
     								<br>
+    								
     								<button id="savebtn" class="btn btn-primary btn-lg btn-block">저장 </button>
     								<button id="resetbtn" class="btn btn-dark btn-lg btn-block">초기화</button>
     							</form>
@@ -300,9 +301,12 @@ text-align:center;
 			<hr>
        </div>
       </div>
+      <div>
+    	<input id="datebtn" type="date" placeholder="여행 첫 날짜 입력해주세요"> <button id="dateCommit">확정</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      	<span id="finalDay"> </span>
+      </div>
       <div style="display:flex;" class="modal-footer">
-         <button type="button" class="dsbtn btn btn-primary planjudgebtn" >승인</button>
-         <button type="button" class="dsbtn btn btn-primary planjudgebtn" >거절</button> 
+         <button type="button" class="dsbtn btn btn-primary planjudgebtn" >저장</button>
         <button type="button" class="dsbtn btn btn-secondary">닫기</button>
       </div>
     </div>
@@ -318,6 +322,22 @@ text-align:center;
 		<script src="./resources/js/SmoothScroll.min.js"></script>
 </body>
 <script>
+
+var tnum ; // 승인대기 여행 번호 
+var map;
+let arr ; // 계획 모음!
+let points ={}; // x,y좌표 모음
+let planidx = 1;
+
+
+let customOverlayy = [];
+let distanceOverlayy = [];
+let clickLinee =[];
+
+let tripnum // 여행번호
+let sdate //  여행 저장 날짜
+let edate //
+
 $("#triplist").hide();
 $("#planlist").on('click',function(){
 	$("#triplist").show();
@@ -445,11 +465,16 @@ $(document).on('click',"#search",function(){
    $("#detail").hide();
 })
 
+var checkbtn = false;  //날짜 확정 버튼 눌러야 저장 가능함. 
 $(document).on('click','.modalplan',function(e){//모달 열고 지도 및 정보 표시
 	arr={};
 	points={};
-	
+	checkbtn = false;
+	$("#finalDay").text("");
+	$("#datebtn").val("");
 	$("#detailTrip").empty();
+	tripnum =e.target.dataset.name //전역변수에 넣기
+	
 	setTimeout(function() {
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 		mapOption = { 
@@ -852,6 +877,79 @@ function getFormatDate(strdate){
  day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
  return  year + '년  ' + month + '월  ' + day+'일   ';
 }
+
+$("#dateCommit").on("click", function(){
+	checkbtn = true;   
+    let obj_length = Number(Object.keys(arr).length-1);	
+	console.log(obj_length);
+    console.log($("#datebtn").val());
+    
+    sdate = new Date($("#datebtn").val());
+    console.log(sdate);
+    
+    edate = new Date($("#datebtn").val())
+    edate.setDate(edate.getDate()+obj_length);
+    console.log(edate);
+    
+    let resultPerid = "  최종확정일은  " +getFormatDate(sdate) + " ~ " + getFormatDate(edate)
+    $("#finalDay").text(resultPerid);
+})
+
+$(document).on("click", ".planjudgebtn", function(){   // 저장 누르면 반드시 초기화 해야함, 
+    var rangedate = getDateRangeData(sdate,edate)
+	
+    console.log("rangedate",rangedate)
+    console.log("tripnum",tripnum)
+    var data = {
+		"rangedate" : rangedate,
+		"tripnum" : tripnum
+	}
+	
+	console.log(data);
+	
+    $.ajaxSetup({         
+	      beforeSend : function(xhr){
+	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	      });//먼저 보냄
+
+	$.ajax({
+    	url:'tprest/shareplansave',
+    	type:'post',
+    	data:data,
+     	dataType:"json", //rest 컨트롤 이용   
+    	success:function(data){
+      	 	alert("여행플랜이 저장되었습니다.");
+       		console.log(data)
+       		$("#content")[0].reset();
+       
+    },
+    error:function(error){
+       		alert("저장에 실패했습니다.")
+       		console.log(error);
+    }
+    
+ })
+	
+})
+
+
+
+function getDateRangeData(param1, param2){  //param1은 시작일, param2는 종료일이다.
+	var res_day = [];
+ 	var ss_day = new Date(param1);
+   	var ee_day = new Date(param2);    	
+  		while(ss_day.getTime() <= ee_day.getTime()){
+  			var _mon_ = (ss_day.getMonth()+1);
+  			_mon_ = _mon_ < 10 ? '0'+_mon_ : _mon_;
+  			var _day_ = ss_day.getDate();
+  			_day_ = _day_ < 10 ? '0'+_day_ : _day_;
+   			res_day.push(ss_day.getFullYear() + '-' + _mon_ + '-' +  _day_);
+   			ss_day.setDate(ss_day.getDate() + 1);
+   	}
+   	return res_day;
+}
+
+
 
 </script>
 

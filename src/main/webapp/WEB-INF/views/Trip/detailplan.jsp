@@ -275,7 +275,6 @@ header {
 
 
 			<div id="hc">
-				<button id="houseReservate">숙소 선택하기</button>
 			</div>
 
 			<div id="day">
@@ -378,8 +377,9 @@ header {
 </body>
 <script>
 var trip_data = ${detrip};
-
+var HouseReserCheck = ${HouseReserCheck};  //예약했는지 유무
 var areaCode = trip_data[0].trip_area;
+console.log("예약했는지 확인 ",HouseReserCheck)
 console.log(areaCode)
 console.log(trip_data)
 var chatData = ${JsonchatData}; // 최근 날자로 채팅 가져오기
@@ -419,8 +419,13 @@ $(document).ready(function(){
 	 $("#savebtn").css('opacity',0.5);
 	 
 	 
+	 //----------------------------
+	 if(HouseReserCheck[0].RESERVATION_NUMBER!=0){ // 예약이 있는 경우
+	 }else{ //예약이 없는 경우
+		 $("#hc").append($("<button id='houseReservate'>숙소 선택하기</button>"));
+	 }
 	 
-	 
+	
 	 
 	 
 })
@@ -986,6 +991,11 @@ function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
 		currentPlanDay = $('#date li:nth-child(1)').text();
 		console.log("여행번호 : ", tripNum)
 		console.log("현재페이지 : ", currentPlanDay)
+		$("#hc").empty();
+		if(HouseReserCheck[currentPlanDay-1].RESERVATION_NUMBER!=0){ // 예약이 있는 경우
+		 }else{ //예약이 없는 경우
+			 $("#hc").append($("<button id='houseReservate'>숙소 선택하기</button>"));
+		 }
 		
 		var Data = {
 		"day" : currentPlanDay,
@@ -1049,6 +1059,11 @@ function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
 		console.log("여행번호 : ", tripNum)
 		console.log("현재페이지 : ", currentPlanDay)
 		
+		$("#hc").empty();
+		if(HouseReserCheck[currentPlanDay-1].RESERVATION_NUMBER!=0){ // 예약이 있는 경우
+		 }else{ //예약이 없는 경우
+			 $("#hc").append($("<button id='houseReservate'>숙소 선택하기</button>"));
+		 }
 		
 	var Data = {
 		"day" : currentPlanDay,
@@ -1459,7 +1474,75 @@ $(document).on('click',".cancelPlan",function(e){
 	createPlanForm(arrFrame,pointsFrame)
 	
 })
+
+
+$(document).on('click',".cancelReser",function(e){  // ajax해서 예약취소도 하고, 0으로 변경해야함 , 트리거로 자동 저장까지해야함
+	$("#savebtn").prop("disabled", false);
+	 $("#savebtn").css('opacity',1);
+	//마커 성공
+	initMapKaKao()
+	// 위까진 지도 초기화
 	
+	
+	// 해당하는 var에 대해 수정해야함. 그럼 포인트도 해당 번호에 맞게 초기화와 추가가 이루어져야함.
+	//-------------
+	points[currentPlanDay]=[];    // 좌표 초기화
+	$("#detailTrip").empty();
+	let choiceIdx =e.target.dataset.idx  // 몇번쨰 클릭했는지에 대한 번호
+	arr[currentPlanDay].splice(choiceIdx, 1); // 해당 클릭한 놈 삭제
+
+	console.log("arr",arr);
+	console.log("points",points);
+	console.log("tripDat",tripDate);
+	console.log("currentPlanDay",currentPlanDay);
+	
+	let arrFrame = arr[currentPlanDay];
+	let pointsFrame = points[currentPlanDay];
+	
+	
+	createPlanForm(arrFrame,pointsFrame)
+	
+	var resernumber = e.target.dataset.resernumber
+	var dbnum = e.target.dataset.dbnum
+	
+	
+	var data = {  // 예약번호, 몇번째인지, 여행번호
+		"tripNum":tripNum,
+		"currentPlanDay":currentPlanDay,
+		"resernumber":resernumber,
+		"dbnum":dbnum
+	}
+	console.log(data);
+	
+	$.ajaxSetup({         
+    	beforeSend : function(xhr){
+    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+    });//먼저 보냄
+    				
+    $.ajax({
+    	url:'tprest/cancelReservation',
+    	type:'post',
+    	data:data,
+    	dataType:"json",
+    	success:function(data){
+    		console.log("success",data)
+    		HouseReserCheck = data;
+    		
+    		
+    		$("#savebtn").trigger("click");
+ 		
+ 		
+ 		
+ 		
+    	},
+    	error:function(error){
+			alert("fail")
+			console.log(error);
+		}
+	})
+	
+	
+})
 
 const saveplan= () => {
 	console.log("save")//
@@ -1517,7 +1600,8 @@ const saveplan= () => {
 		}
 	})
    
-	
+	$("#savebtn").prop("disabled", true);
+	 $("#savebtn").css('opacity',0.5);
 }
 
 var houseNum = null;
@@ -1545,8 +1629,7 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 			
 			planFrame.append(planContFram);
 			
-			let cancelPlan = $("<div ><button class='cancelPlan' data-idx='"+(planidx-1)+"'>예약취소</button></div>");
-			planFrame.append(cancelPlan);
+			
 			
 			let updownFrame = $("<div ></div>");
 			let upPlan = $("<div ><button class='upPlan' data-idx='"+(planidx-1)+"'>up</button></div>");
@@ -1562,6 +1645,16 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 
 			memoFrame.append(memoPlan);
 			planFrame.append(memoFrame);
+			
+			let dbnum = arr[currentPlanDay][planidx-1].trip_order;
+			let cancelPlan
+			 if(HouseReserCheck[currentPlanDay-1].RESERVATION_NUMBER!=0){ // 예약이 있는 경우
+				 cancelPlan = $("<div ><button class='cancelplan cancelReser' data-resernumber='"+HouseReserCheck[currentPlanDay-1].RESERVATION_NUMBER+"' data-dbnum='"+dbnum+"' data-idx='"+(planidx-1)+"'>예약취소</button></div>"); 
+			 }else{ //예약이 없는 경우
+				 cancelPlan = $("<div ><button class='cancelPlan' data-idx='"+(planidx-1)+"'>x</button><span>공유자의 여행계획 숙소입니다.</span></div>");
+			 }
+			
+			planFrame.append(cancelPlan);
 			
 			$("#detailTrip").append(planFrame);
 			
@@ -1623,8 +1716,6 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 			
 			planFrame.append(planContFram);
 			
-			let cancelPlan = $("<div ><button class='cancelPlan' data-idx='"+(planidx-1)+"'>x</button></div>");
-			planFrame.append(cancelPlan);
 			
 			let updownFrame = $("<div ></div>");
 			let upPlan = $("<div ><button class='upPlan' data-idx='"+(planidx-1)+"'>up</button></div>");
@@ -1640,6 +1731,9 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 			memoFrame.append(memoPlan);
 			planFrame.append(memoFrame);
 			
+			let cancelPlan = $("<div ><button class='cancelPlan' data-idx='"+(planidx-1)+"'>x</button></div>");
+			planFrame.append(cancelPlan);
+
 			$("#detailTrip").append(planFrame);
 			
 			
@@ -1735,7 +1829,7 @@ const initMapKaKao=()=>{
 
 
 // 숙소 선택하기 버튼 누를 경우
-$("#houseReservate").on('click', function(){
+$("#hc").on('click',"#houseReservate", function(){
 	 
 	if(areaCode == 1){
 		areaCode = "서울"		  

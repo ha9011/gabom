@@ -13,6 +13,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -262,13 +263,21 @@ public class TripService {
 	    tpd.setDay("1").setTripNum(tripNum).setTripData(selectResult);
 	    String jsonResult = new Gson().toJson(tpd);
 	  	mav.addObject("firstDayPlan", jsonResult);
-	  	
+	  
 	  	//첫쨋날 숙소 가져오기
 	  	ReservationPlanHouse selectReservationHouse = tpDao.selectReservationHouse(tripNum, "1");//해당 여행번호에 , 몇번째 여행일
 	    
 	    String jsonReservationHouse = new Gson().toJson(selectReservationHouse);
 	    System.out.println("ReservationHouse : " + jsonReservationHouse);
 	  	mav.addObject("ReservationHouse", jsonReservationHouse);
+	  	
+	  	// 숙소 예약했는지 파악 - 단순 공유인지 확인하기 위해 추가함;
+	  	List<Map<String,Integer>> HouseReserCheck = tpDao.selectHouseReserCheck(tripNum);//해당 여행번호에 , 몇번째 여행일
+	    String jsonHouseReserCheck = new Gson().toJson(HouseReserCheck);
+	    System.out.println("HouseReserCheck : " + jsonHouseReserCheck);
+	  	mav.addObject("HouseReserCheck", jsonHouseReserCheck);
+	  	
+	  	
 	  	
 	    view="Trip/detailplan";
 	    mav.setViewName(view);
@@ -553,6 +562,51 @@ public class TripService {
 	    json = new Gson().toJson(resultMap);
 	    System.out.println("resultMap : "+json);
 		return json;
+	}
+
+	@Transactional
+	public String insertSharePlan(String[] rangedate, int tripnum, String name) {
+		// 
+		//공유할 친구의 데이터 가져오기
+		//1. 데이터 삽입 TRIP_TABLE
+		Trip_plan tp = tpDao.selectShareTripPlan(tripnum);
+		tp.setTrip_id(name).setTrip_start_date(rangedate[0]).setTrip_end_date(rangedate[rangedate.length-1]);
+		System.out.println("share할 plan data : " + tp.toString());
+		int resultShare = tpDao.insertShareTripPlan(tp);
+		System.out.println("currval값="+tp.getTrip_number());
+		System.out.println("resultShare 성공 : " + resultShare);
+		
+		//2.몇번째 여행까지 있는지 삽입
+		int Ndate = 1;
+		for(String date : rangedate) {
+			System.out.println("date : " + date + " 몇번여행  : " + tp.getTrip_number() + " 몇번째 : " + Ndate );
+			int tripplandate = tpDao.insertShareTripPlanDate(date,tp.getTrip_number(),Ndate);
+			Ndate++;
+			System.out.println("tripplandate 성공 : " + tripplandate);
+		}
+		
+		//3.모든 여행 계획 넣기  //
+		int detailplandate = tpDao.insertShareTripPlanDetail(tp.getTrip_number(),tripnum);  // 새로운번호, 공유번호
+		System.out.println("detailplandate 성공 : " + detailplandate);
+		return null;
+	}
+
+	@Transactional
+	public String cancelReservation(int tripNum, int currentPlanDay, int resernumber, int dbnum) {
+		
+		// 숙소 번호 없는 걸로 바꾸기
+		int updateTripPlanDate = tpDao.updateTripPlanDate(tripNum,currentPlanDay,resernumber); 
+		// 디테일에서 삭제하기
+		int deleteTripPlanDatail = tpDao.deleteTripPlanDatail(tripNum,currentPlanDay,resernumber,dbnum); 
+		// 예약번호 지우기
+		int deleteHouseReservation = tpDao.deleteHouseReservation(resernumber); 
+
+		// 숙소 예약했는지 파악 - 단순 공유인지 확인하기 위해 추가함;
+	  	List<Map<String,Integer>> HouseReserCheck = tpDao.selectHouseReserCheck(Integer.toString(tripNum));//해당 여행번호에 , 몇번째 여행일
+	    String jsonHouseReserCheck = new Gson().toJson(HouseReserCheck);
+	    System.out.println("HouseReserCheck : " + jsonHouseReserCheck);
+	  	
+		return jsonHouseReserCheck;
 	}
 
 
