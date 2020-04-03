@@ -1,10 +1,11 @@
 package icia.project.gabom.dto;
 
-import java.time.LocalDateTime;
+
+
+import java.security.Timestamp;
+import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -17,7 +18,6 @@ public class SnsDmDto {
 	String sendMember;
 	String getMember;
 	String contents;
-	@JsonFormat(pattern = "yyyy-MM-dd HH:MM", timezone = "Asia/Seoul")
-	LocalDateTime dmDate;
+	Date dmDate;
 	String memberPic;
 }

@@ -10,6 +10,9 @@ public interface SnsDmDao {
 
 	
 
-	List<SnsDmDto> getDmList(@Param("id")String id);
+
+	List<SnsDmDto> check(String id);
+
+	SnsDmDto getNewContent(String sendMember);
 
 }

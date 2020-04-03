@@ -2,14 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="icia.project.gabom.dao.SnsDmDao">
-	<select id="getDmList" resultType="snsDmDto">
-		SELECT DM.SEND_MEMBER_ID SENDMEMBER,
-		DM.GET_MEMBER_ID GETMEMBER,
-		DM.DM_CONTENTS CONTENTS,
-		DM.DM_DATE DMDATE,
-		MB.MEMBER_PROFILE_PICTURE MEMBERPIC
-		FROM SNS_DM DM INNER JOIN MEMBER MB 
-		ON DM.SEND_MEMBER_ID=MB.MEMBER_ID
+	<select id="check" resultType="snsDmDto">
+		SELECT DISTINCT SEND_MEMBER_ID sendMember FROM SNS_DM
 		WHERE GET_MEMBER_ID=#{id}
 	</select>
 </mapper>
