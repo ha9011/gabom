@@ -76,7 +76,7 @@ table img {
 </script>
 </head>
 <body>
-	<div class="contanner msgBox">
+	<div class="msgBox">
 		<table class="table table-hover">
 
 		</table>
