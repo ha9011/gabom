@@ -13,21 +13,8 @@
 <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<!-- 데이타테이블 -->
-<link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/> 
-<script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/> 
     
-<script>
-        jQuery(function($){
-            $("#data_table").DataTable({
-            	"order": [[0, 'desc']], // asc 또는 desc
-
-				 "dom" : '<"top"il>t<"bottom"prf><"clear">',
-				 
-				 info : false ,//정보 표시 숨기기
-				 searching : false //검색기능 숨기기 
-            });
-        });
-    </script>
 <style>
 #data_table_paginate{
 	text-align: center;
@@ -165,6 +152,9 @@ margin: 3% 3% 3% 3%;
  <div>
 	<jsp:include page="/WEB-INF/views/footer.jsp"/>
 </div> 
+
+<script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
+
 <script>
 	const notice = ${noticelist}; 
 	const qna = ${qnalist};
@@ -189,7 +179,20 @@ function getToday() {
 /* if(dtable!=null){
 		dtable.destroy();  // 일단 초기화
 	} */
-let boards = $("<table id='data_table' class='table table-bordered table-hover'></table>")
+
+	
+//  jQuery(function($){
+//      $("#data_table").DataTable({
+//      	"order": [[0, 'desc']], // asc 또는 desc
+
+//			 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+			 
+//			 info : false ,//정보 표시 숨기기
+//			 searching : false //검색기능 숨기기 
+//      });
+//  });
+
+	let boards = $("<table id='data_table' class='table table-bordered table-hover'></table>")
 let colgroup =$("<colgroup><col width='15%'><col width='45%'><col width='20%'><col width='20%'></colgroup>")
 let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>날짜</th><th>조회수</th></tr></thead>")
 
@@ -225,6 +228,17 @@ boards.append(thead);
 boards.append(tbody);
 console.dir(boards);
 $("#right_div").append(boards);
+console.log("qwewqewqewqewqewq")
+
+$("#data_table").DataTable({
+	"order": [[0, 'desc']], // asc 또는 desc
+
+	 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+	 
+	 info : false ,//정보 표시 숨기기
+	 searching : false //검색기능 숨기기 
+});
+
 //-----------------------------------------------------고객센터 클릭시 이벤트 End---------------------------------------------------------
 
 //-----------------------------------------------전체공지 클릭시 ajax----------------------------------------------------
@@ -296,6 +310,7 @@ $("#right_div").append(boards);
 			             	info: false,
 			            });
 				}, 100);
+				
 				
          }, error : function(jqXHR, status, e) {
              console.error("게시판출력 에러");
@@ -475,8 +490,9 @@ $("#write_modal_button").on("click",function(e){
 	console.log("글쓰기 클릭");
 	
 	$("#right_div").empty();
-	dtable.destroy();
-	
+	if(dtable!=null){
+		dtable.destroy();  // datatable 초기화
+	}
 	var formData = new FormData();
 	formData.append("title",document.getElementById("title").value);
 	formData.append("member",document.getElementById("member").value);

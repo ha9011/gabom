@@ -229,7 +229,7 @@ public class RestAdminController {
 		String json = new Gson().toJson(nlist);
 		System.out.println("댓글작성후 dao=" + json);
 
-		return null;
+		return json;
 	}
 
 	// sns게시글 신고 출력

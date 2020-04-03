@@ -635,84 +635,86 @@ $(document).on("click",".sns_comment_delete",function(e) {
 			dtable.destroy();
 		}
 		
-		$.ajaxSetup({         
-		      beforeSend : function(xhr){
-		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-		      });//먼저 보냄
-		 $.ajax({
-             url : "qnaboard",
-             type : "Post",
-             dataType : 'json',
-             success : function(response) {
-				console.log('qna불러오기 성공');
-				 let container = $('#paginationqna');
-				console.log("size",response.length);
-				$("#sns_table").empty();
-				$("#qnadatatable").empty();
-				
-				let boards = $("<table id='qna_boards' class='table table-bordered table-hover'> </table>")
-				let colgroup =$("<colgroup><col width='15%'><col width='45%'><col width='20%'><col width='20%'></colgroup>")
-				let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>글쓴이</th><th>날짜</th></tr></thead>")
-		        
-				let tbody = $("<tbody ></tbody>")	
-				
-				
-				
-				
-				for(i=0;i<response.length;i++){
+		setTimeout(function() {
+			
+			$.ajaxSetup({         
+			      beforeSend : function(xhr){
+			         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+			      });//먼저 보냄
+			 $.ajax({
+	             url : "qnaboard",
+	             type : "Post",
+	             dataType : 'json',
+	             success : function(response) {
+					console.log('qna불러오기 성공');
+					 let container = $('#paginationqna');
+					console.log("size",response.length);
+					$("#sns_table").empty();
+					$("#qnadatatable").empty();
 					
-					let tr = $("<tr></tr>")
- 					let td1 =$('<td>'+response[i].qna_number+'</td><td><a id="qna_detail" class="qna_detail" href="#;" data-toggle="modal" data-target="#qnaModal" data-number="'+response[i].qna_number+'">'+response[i].qna_title+'</a></td><td>'+response[i].qna_member_id+'</td>');
- 					
-					const writeDate=response[i].qna_date.split(" ");  //split(쪼개다)
-					
-					const today = getToday(); //오늘 날짜를 직접 정의
+					let boards = $("<table id='qna_boards' class='table table-bordered table-hover'> </table>")
+					let colgroup =$("<colgroup><col width='15%'><col width='45%'><col width='20%'><col width='20%'></colgroup>")
+					let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>글쓴이</th><th>날짜</th></tr></thead>")
+			        
+					let tbody = $("<tbody ></tbody>")	
 					
 					
-					let td2 ;
- 					if(today==writeDate[0]){ //날 짜
- 						td2 = $('<td>'+writeDate[1]+'</td>')
- 					}else{
- 						td2= $('<td>'+writeDate[0]+'</td>');
- 					}
- 					
- 					tr.append(td1);
- 					tr.append(td2);
- 					tbody.append(tr);		
-				}
-				
-				boards.append(colgroup);
- 				boards.append(thead); 
- 				boards.append(tbody);
- 				
- 				$("#qnadatatable").append(boards);
-				
- 				setTimeout(() => {
-					dtable =$("#qna_boards").DataTable({
-						 "order": [[0, 'desc']], // asc 또는 desc
+					
+					
+					for(i=0;i<response.length;i++){
+						
+						let tr = $("<tr></tr>")
+	 					let td1 =$('<td>'+response[i].qna_number+'</td><td><a id="qna_detail" class="qna_detail" href="#;" data-toggle="modal" data-target="#qnaModal" data-number="'+response[i].qna_number+'">'+response[i].qna_title+'</a></td><td>'+response[i].qna_member_id+'</td>');
+	 					
+						const writeDate=response[i].qna_date.split(" ");  //split(쪼개다)
+						
+						const today = getToday(); //오늘 날짜를 직접 정의
+						
+						
+						let td2 ;
+	 					if(today==writeDate[0]){ //날 짜
+	 						td2 = $('<td>'+writeDate[1]+'</td>')
+	 					}else{
+	 						td2= $('<td>'+writeDate[0]+'</td>');
+	 					}
+	 					
+	 					tr.append(td1);
+	 					tr.append(td2);
+	 					tbody.append(tr);		
+					}
+					
+					boards.append(colgroup);
+	 				boards.append(thead); 
+	 				boards.append(tbody);
+	 				
+	 				$("#qnadatatable").append(boards);
+					
+	 				setTimeout(() => {
+						dtable =$("#qna_boards").DataTable({
+							 "order": [[0, 'desc']], // asc 또는 desc
 
-						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+							 "dom" : '<"top"il>t<"bottom"prf><"clear">',
 
-			             	// 검색 기능 숨기기
-			             	searching: false,
-//			             	// 정렬 기능 숨기기
-//			             	ordering: false,
-//			             	// 정보 표시 숨기기
-			             	info: false,
-//			             	// 페이징 기능 숨기기
-//			             	paging: false
-			            	
-			            });
-				}, 100);	
+				             	// 검색 기능 숨기기
+				             	searching: false,
+//				             	// 정렬 기능 숨기기
+//				             	ordering: false,
+//				             	// 정보 표시 숨기기
+				             	info: false,
+//				             	// 페이징 기능 숨기기
+//				             	paging: false
+				            	
+				            });
+					}, 100);	
+						
 					
-					
-				
-				
-				
-             }, error : function(jqXHR, status, e) {
-                 console.error("qna출력 에러");
-             }
-         });	 
+	             }, error : function(jqXHR, status, e) {
+	                 console.error("qna출력 에러");
+	             }
+	         });	
+		}, 200)
+		
+	 
 		      
 		      
 	}); //qna function End
@@ -820,88 +822,94 @@ $(document).on("click",".sns_comment_delete",function(e) {
 		if(dtable!=null){
 			dtable.destroy();  // 일단 초기화
 		}
-		$.ajaxSetup({         
-		      beforeSend : function(xhr){
-		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-		      });//먼저 보냄
-		 $.ajax({
-           url : "allnotices",
-           type : "Post",
-           dataType : 'json',
-           success : function(response) {
-        	   
-        	   $("#sns_table").empty();
-				console.log('notices불러오기 성공');
-				console.log(response);
-				console.log("전체공지 사이즈",response.length);
-				let pagesize = response.length;
-				console.log("페이지사이즈",pagesize);
-				$("#boardstable").empty();
-				
+		
+		setTimeout(function() {
 
-				
-				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
-				let colgroup =$("<colgroup><col width='15%'><col width='45%'><col width='20%'><col width='20%'></colgroup>")
-				let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>날짜</th><th>조회수</th></tr></thead>")
-		        
-				let tbody = $("<tbody ></tbody>")		
-				
-				
-		        
-		        
-				for(let i = 0;i<response.length;i++){
+			$.ajaxSetup({         
+			      beforeSend : function(xhr){
+			         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+			      });//먼저 보냄
+			 $.ajax({
+	           url : "allnotices",
+	           type : "Post",
+	           dataType : 'json',
+	           success : function(response) {
+	        	   
+	        	   $("#sns_table").empty();
+					console.log('notices불러오기 성공');
+					console.log(response);
+					console.log("전체공지 사이즈",response.length);
+					let pagesize = response.length;
+					console.log("페이지사이즈",pagesize);
+					$("#boardstable").empty();
 					
-					let tr = $("<tr></tr>")
-					let td1 =$('<td>'+response[i].all_notices_number+'</td><td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a></td>');
-					
-					const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
-					//console.log(writeDate[0]); //년 월 일
-					//console.log(writeDate[1]); //시 분 초
-					const today = getToday(); //오늘 날짜를 직접 정의
-					
-					let td2 ;
-					if(today==writeDate[0]){ //날 짜
-						td2 = $('<td>'+writeDate[1]+'</td>')
-					}else{
-						td2= $('<td>'+writeDate[0]+'</td>');
-					}
-					let td3 = $('<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'); //조 회 수
 
-					tr.append(td1)
-					tr.append(td2)
-					tr.append(td3)
 					
-					tbody.append(tr);	
-				}//for문 종료
-				
-				boards.append(colgroup);
-				boards.append(thead); 
-				boards.append(tbody);
-				console.dir(boards);
-				$("#boardstable").append(boards);
-				
-				setTimeout(() => {
-					dtable =$("#boards").DataTable({
-						 "order": [[0, 'desc']], // asc 또는 desc
+					let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
+					let colgroup =$("<colgroup><col width='15%'><col width='45%'><col width='20%'><col width='20%'></colgroup>")
+					let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>날짜</th><th>조회수</th></tr></thead>")
+			        
+					let tbody = $("<tbody ></tbody>")		
+					
+					
+			        
+			        
+					for(let i = 0;i<response.length;i++){
+						
+						let tr = $("<tr></tr>")
+						let td1 =$('<td>'+response[i].all_notices_number+'</td><td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a></td>');
+						
+						const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
+						//console.log(writeDate[0]); //년 월 일
+						//console.log(writeDate[1]); //시 분 초
+						const today = getToday(); //오늘 날짜를 직접 정의
+						
+						let td2 ;
+						if(today==writeDate[0]){ //날 짜
+							td2 = $('<td>'+writeDate[1]+'</td>')
+						}else{
+							td2= $('<td>'+writeDate[0]+'</td>');
+						}
+						let td3 = $('<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'); //조 회 수
 
-						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+						tr.append(td1)
+						tr.append(td2)
+						tr.append(td3)
+						
+						tbody.append(tr);	
+					}//for문 종료
+					
+					boards.append(colgroup);
+					boards.append(thead); 
+					boards.append(tbody);
+					console.dir(boards);
+					$("#boardstable").append(boards);
+					
+					setTimeout(() => {
+						dtable =$("#boards").DataTable({
+							 "order": [[0, 'desc']], // asc 또는 desc
 
-			             	// 검색 기능 숨기기
-			             	searching: false,
-//			             	// 정렬 기능 숨기기
-//			             	ordering: false,
-//			             	// 정보 표시 숨기기
-			             	info: false,
-//			             	// 페이징 기능 숨기기
-//			             	paging: false
-			            	
-			            });
-				}, 100);
-				
-           }, error : function(jqXHR, status, e) {
-               console.error("게시판출력 에러");
-           }
-       		}); //ajax end
+							 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+
+				             	// 검색 기능 숨기기
+				             	searching: false,
+//				             	// 정렬 기능 숨기기
+//				             	ordering: false,
+//				             	// 정보 표시 숨기기
+				             	info: false,
+//				             	// 페이징 기능 숨기기
+//				             	paging: false
+				            	
+				            });
+					}, 100);
+					
+	           }, error : function(jqXHR, status, e) {
+	               console.error("게시판출력 에러");
+	           }
+	       		}); //ajax end
+		}, 200)
+		
+		
 		//}); //datatable end
 	}); //notices function End
 	
@@ -947,96 +955,102 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	//----------------------------------------------공지사항 삭제---------------------------------------------------------------------
 	$(".delete").on("click",function(){
 		dtable.destroy();
-		console.log("삭제버튼 클릭");
-		var params = $("#notices_delete").val();
-		console.log("params",params);
 		
-		$.ajaxSetup({         
-		      beforeSend : function(xhr){
-		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-		      });//먼저 보냄
-        	console.log("notices delete시작");
-        	 $.ajax({
-                 url : "noticedelete",
-                 type : "Post",
-                 data : {"num":params}, 
-                 dataType : 'json',
-                 success : function(response) {
-                	 
-                	 $("#sns_table").empty();
-     				console.log('notices불러오기 성공');
-     				console.log(response);
-     				console.log("전체공지 사이즈",response.length);
-     				let pagesize = response.length;
-     				console.log("페이지사이즈",pagesize);
-     				$("#boardstable").empty();
-     				
-     				let strb = " ";
+		setTimeout(function() {
+			console.log("삭제버튼 클릭");
+			var params = $("#notices_delete").val();
+			console.log("params",params);
+			
+			$.ajaxSetup({         
+			      beforeSend : function(xhr){
+			         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+			      });//먼저 보냄
+	        	console.log("notices delete시작");
+	        	 $.ajax({
+	                 url : "noticedelete",
+	                 type : "Post",
+	                 data : {"num":params}, 
+	                 dataType : 'json',
+	                 success : function(response) {
+	                	 
+	                	 $("#sns_table").empty();
+	     				console.log('notices불러오기 성공');
+	     				console.log(response);
+	     				console.log("전체공지 사이즈",response.length);
+	     				let pagesize = response.length;
+	     				console.log("페이지사이즈",pagesize);
+	     				$("#boardstable").empty();
+	     				
+	     				let strb = " ";
 
-     				
-     				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
-     				let colgroup =$("<colgroup><col width='15%'><col width='45%'><col width='20%'><col width='20%'></colgroup>")
-     				let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>날짜</th><th>조회수</th></tr></thead>")
-     		        
-     				let tbody = $("<tbody ></tbody>")		
-     				
-     				
-     		        
-     		        
-     				for(let i = 0;i<response.length;i++){
-     					
-     					let tr = $("<tr></tr>")
-     					let td1 =$('<td>'+response[i].all_notices_number+'</td><td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a></td>');
-     					
-     					const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
-     					//console.log(writeDate[0]); //년 월 일
-     					//console.log(writeDate[1]); //시 분 초
-     					const today = getToday(); //오늘 날짜를 직접 정의
-     					
-     					let td2 ;
-     					if(today==writeDate[0]){ //날 짜
-     						td2 = $('<td>'+writeDate[1]+'</td>')
-     					}else{
-     						td2= $('<td>'+writeDate[0]+'</td>');
-     					}
-     					let td3 = $('<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'); //조 회 수
+	     				
+	     				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
+	     				let colgroup =$("<colgroup><col width='15%'><col width='45%'><col width='20%'><col width='20%'></colgroup>")
+	     				let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>날짜</th><th>조회수</th></tr></thead>")
+	     		        
+	     				let tbody = $("<tbody ></tbody>")		
+	     				
+	     				
+	     		        
+	     		        
+	     				for(let i = 0;i<response.length;i++){
+	     					
+	     					let tr = $("<tr></tr>")
+	     					let td1 =$('<td>'+response[i].all_notices_number+'</td><td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a></td>');
+	     					
+	     					const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
+	     					//console.log(writeDate[0]); //년 월 일
+	     					//console.log(writeDate[1]); //시 분 초
+	     					const today = getToday(); //오늘 날짜를 직접 정의
+	     					
+	     					let td2 ;
+	     					if(today==writeDate[0]){ //날 짜
+	     						td2 = $('<td>'+writeDate[1]+'</td>')
+	     					}else{
+	     						td2= $('<td>'+writeDate[0]+'</td>');
+	     					}
+	     					let td3 = $('<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'); //조 회 수
 
-     					tr.append(td1)
-     					tr.append(td2)
-     					tr.append(td3)
-     					
-     					tbody.append(tr);	
-     				}//for문 종료
-     				
-     				boards.append(colgroup);
-     				boards.append(thead); 
-     				boards.append(tbody);
-     				console.dir(boards);
-     				$("#boardstable").append(boards);
-     				
-     				setTimeout(() => {
-     					dtable =$("#boards").DataTable({
-     						 "order": [[0, 'desc']], // asc 또는 desc
+	     					tr.append(td1)
+	     					tr.append(td2)
+	     					tr.append(td3)
+	     					
+	     					tbody.append(tr);	
+	     				}//for문 종료
+	     				
+	     				boards.append(colgroup);
+	     				boards.append(thead); 
+	     				boards.append(tbody);
+	     				console.dir(boards);
+	     				$("#boardstable").append(boards);
+	     				
+	     				setTimeout(() => {
+	     					dtable =$("#boards").DataTable({
+	     						 "order": [[0, 'desc']], // asc 또는 desc
 
-     						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+	     						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
 
-     			             	// 검색 기능 숨기기
-     			             	searching: false,
-//     			             	// 정렬 기능 숨기기
-//     			             	ordering: false,
-//     			             	// 정보 표시 숨기기
-     			             	info: false,
-//     			             	// 페이징 기능 숨기기
-//     			             	paging: false
-     			            	
-     			            });
-     				}, 100);
-     				
-     				
-                }, error : function(jqXHR, status, e) {
-                     console.error("공지사항 삭제 에러");
-                 }
-             });	  
+	     			             	// 검색 기능 숨기기
+	     			             	searching: false,
+//	     			             	// 정렬 기능 숨기기
+//	     			             	ordering: false,
+//	     			             	// 정보 표시 숨기기
+	     			             	info: false,
+//	     			             	// 페이징 기능 숨기기
+//	     			             	paging: false
+	     			            	
+	     			            });
+	     				}, 100);
+	     				
+	     				
+	                }, error : function(jqXHR, status, e) {
+	                     console.error("공지사항 삭제 에러");
+	                 }
+	             });		
+		}, 200)
+		
+		
+		  
    	}); //notices delete End
 	
 	//---------------------------------------------------------------------글쓰기 버튼 생성---------------------------------------------------------------------
@@ -1049,127 +1063,131 @@ $(document).on("click",".sns_comment_delete",function(e) {
 		$("#boardstable").empty();
 		dtable.destroy();
 		
-		var formData = new FormData();
-		formData.append("title",document.getElementById("title").value);
-		
-		var str = $('#content').val();
-		str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-		document.getElementById("content").value=str;
-		formData.append("content",document.getElementById("content").value);
-		console.log("글쓰기=",formData.get("title"));
-		console.log("글내용=",formData.get("content"));
-		$.ajaxSetup({         
-			beforeSend : function(xhr){
-		    xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-		    });
-        	console.log("글쓰기 ajax시작");
-        	
-		$.ajax({
-			url : "noticeswrite",
-            type : "Post",
-            data : formData, 
-            dataType : 'json',
-			processData:false,//application/x-www-form-urlencoded(쿼리스트링)
-            contentType:false,//multipart의 경우 contentType을 false로
-            
-            success : function(response) {
-            	
-            	console.log("글쓰기 성공",response);
-            	document.getElementById("title").value = " ";
-            	document.getElementById("content").value = " ";
-            	
-            	$("#sns_table").empty();
- 				console.log('notices불러오기 성공');
- 				console.log(response);
- 				console.log("전체공지 사이즈",response.length);
- 				let pagesize = response.length;
- 				console.log("페이지사이즈",pagesize);
- 				
- 				
- 				let strb = " ";
+		setTimeout(function() {
 
- 				
- 				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
- 				let colgroup =$("<colgroup><col width='15%'><col width='45%'><col width='20%'><col width='20%'></colgroup>")
- 				let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>날짜</th><th>조회수</th></tr></thead>")
- 		        
- 				let tbody = $("<tbody ></tbody>")		
- 				
- 				
- 		        
- 		        
- 				for(let i = 0;i<response.length;i++){
- 					
- 					let tr = $("<tr></tr>")
- 					let td1 =$('<td>'+response[i].all_notices_number+'</td><td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a></td>');
- 					
- 					const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
- 					//console.log(writeDate[0]); //년 월 일
- 					//console.log(writeDate[1]); //시 분 초
- 					const today = getToday(); //오늘 날짜를 직접 정의
- 					
- 					let td2 ;
- 					if(today==writeDate[0]){ //날 짜
- 						td2 = $('<td>'+writeDate[1]+'</td>')
- 					}else{
- 						td2= $('<td>'+writeDate[0]+'</td>');
- 					}
- 					let td3 = $('<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'); //조 회 수
-
- 					tr.append(td1)
- 					tr.append(td2)
- 					tr.append(td3)
- 					
- 					tbody.append(tr);	
- 				}//for문 종료
- 				
- 				boards.append(colgroup);
- 				boards.append(thead); 
- 				boards.append(tbody);
- 				console.dir(boards);
- 				
- 				$("#boardstable").append(boards);
- 				
- 				setTimeout(() => {
- 					dtable =boards.DataTable({
- 						 "order": [[0, 'desc']], // asc 또는 desc
-
- 						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
-
- 			             	// 검색 기능 숨기기
- 			             	searching: false,
-// 			             	// 정렬 기능 숨기기
-// 			             	ordering: false,
-// 			             	// 정보 표시 숨기기
- 			             	info: false,
-// 			             	// 페이징 기능 숨기기
-// 			             	paging: false
- 			            	
- 			            });
- 				}, 100);
- 			
- 				console.log("qweqwe")
- 				
- 				
- //--- 전체 공지 알람 
- 
-//  	let somoimAllMemberObj ={
-// 			"type" : "noti",
-// 			"somoimNumber" : somoimnumber,
-// 			"members" : somoimAllMember
+			var formData = new FormData();
+			formData.append("title",document.getElementById("title").value);
 			
-// 				};
-	
-	
-// 		let resultMemberData = JSON.stringify(somoimAllMemberObj);
-//  				socketalarm.send(resultMemberData); 
- 				
- //--
-            }, error : function(jqXHR, status, e) {
-                console.log("글쓰기 에러");
-            }
-            
-		});
+			var str = $('#content').val();
+			str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+			document.getElementById("content").value=str;
+			formData.append("content",document.getElementById("content").value);
+			console.log("글쓰기=",formData.get("title"));
+			console.log("글내용=",formData.get("content"));
+			$.ajaxSetup({         
+				beforeSend : function(xhr){
+			    xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+			    });
+	        	console.log("글쓰기 ajax시작");
+	        	
+			$.ajax({
+				url : "noticeswrite",
+	            type : "Post",
+	            data : formData, 
+	            dataType : 'json',
+				processData:false,//application/x-www-form-urlencoded(쿼리스트링)
+	            contentType:false,//multipart의 경우 contentType을 false로
+	            
+	            success : function(response) {
+	            	
+	            	console.log("글쓰기 성공",response);
+	            	document.getElementById("title").value = " ";
+	            	document.getElementById("content").value = " ";
+	            	
+	            	$("#sns_table").empty();
+	 				console.log('notices불러오기 성공');
+	 				console.log(response);
+	 				console.log("전체공지 사이즈",response.length);
+	 				let pagesize = response.length;
+	 				console.log("페이지사이즈",pagesize);
+	 				
+	 				
+	 				let strb = " ";
+
+	 				
+	 				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
+	 				let colgroup =$("<colgroup><col width='15%'><col width='45%'><col width='20%'><col width='20%'></colgroup>")
+	 				let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>날짜</th><th>조회수</th></tr></thead>")
+	 		        
+	 				let tbody = $("<tbody ></tbody>")		
+	 				
+	 				
+	 		        
+	 		        
+	 				for(let i = 0;i<response.length;i++){
+	 					
+	 					let tr = $("<tr></tr>")
+	 					let td1 =$('<td>'+response[i].all_notices_number+'</td><td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a></td>');
+	 					
+	 					const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
+	 					//console.log(writeDate[0]); //년 월 일
+	 					//console.log(writeDate[1]); //시 분 초
+	 					const today = getToday(); //오늘 날짜를 직접 정의
+	 					
+	 					let td2 ;
+	 					if(today==writeDate[0]){ //날 짜
+	 						td2 = $('<td>'+writeDate[1]+'</td>')
+	 					}else{
+	 						td2= $('<td>'+writeDate[0]+'</td>');
+	 					}
+	 					let td3 = $('<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'); //조 회 수
+
+	 					tr.append(td1)
+	 					tr.append(td2)
+	 					tr.append(td3)
+	 					
+	 					tbody.append(tr);	
+	 				}//for문 종료
+	 				
+	 				boards.append(colgroup);
+	 				boards.append(thead); 
+	 				boards.append(tbody);
+	 				console.dir(boards);
+	 				
+	 				$("#boardstable").append(boards);
+	 				
+	 				setTimeout(() => {
+	 					dtable =boards.DataTable({
+	 						 "order": [[0, 'desc']], // asc 또는 desc
+
+	 						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+
+	 			             	// 검색 기능 숨기기
+	 			             	searching: false,
+//	 			             	// 정렬 기능 숨기기
+//	 			             	ordering: false,
+//	 			             	// 정보 표시 숨기기
+	 			             	info: false,
+//	 			             	// 페이징 기능 숨기기
+//	 			             	paging: false
+	 			            	
+	 			            });
+	 				}, 100);
+	 			
+	 				console.log("qweqwe")
+	 				
+	 				
+	 //--- 전체 공지 알람 
+	 
+//	  	let somoimAllMemberObj ={
+//	 			"type" : "noti",
+//	 			"somoimNumber" : somoimnumber,
+//	 			"members" : somoimAllMember
+				
+//	 				};
+		
+		
+//	 		let resultMemberData = JSON.stringify(somoimAllMemberObj);
+//	  				socketalarm.send(resultMemberData); 
+	 				
+	 //--
+	            }, error : function(jqXHR, status, e) {
+	                console.log("글쓰기 에러");
+	            }
+	            
+			});	
+		}, 200)
+		
             
 	});//글쓰기 ajax End 
 
@@ -1248,91 +1266,96 @@ $(document).on("click",".sns_comment_delete",function(e) {
 			dtable.destroy();  // datatable 초기화
 		}
  		
- 		console.log("서비스업체 클릭");
- 		$.ajaxSetup({         
-		      beforeSend : function(xhr){
-		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-		      });//먼저 보냄
- 		$.ajax({
- 			url : 'judgelist',
- 			type : 'post',
- 			dataType : 'json',
- 			success : function(response) {
- 				console.log("select성공");
- 				console.log("flist",response.flist);
- 				console.log("hlist",response.hlist);
- 				$("#sns_table").empty();
- 				$("#foodmain_judge").empty();
- 				$("#housemain_judge").empty();
- 				
- 				//strh = "";
- 				strh = "<h3>House심사대기 List</h3>";
- 				$("#housemain_judge").append(strh);
- 				strh = "";
- 				
- 				for(let i=0;i<response.hlist.length;i++){
- 			 		if(i>=2){
- 			 			console.log("house break");
- 			 			break;
- 			 		}
- 			 		strh+='<div style="border: 1px solid black; margin-top: 5px; id="house_judge">';
- 					strh+='<div id="house_judge">';
+ 		setTimeout(function() {
+ 			console.log("서비스업체 클릭");
+ 	 		$.ajaxSetup({         
+ 			      beforeSend : function(xhr){
+ 			         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+ 			      });//먼저 보냄
+ 	 		$.ajax({
+ 	 			url : 'judgelist',
+ 	 			type : 'post',
+ 	 			dataType : 'json',
+ 	 			success : function(response) {
+ 	 				console.log("select성공");
+ 	 				console.log("flist",response.flist);
+ 	 				console.log("hlist",response.hlist);
+ 	 				$("#sns_table").empty();
+ 	 				$("#foodmain_judge").empty();
+ 	 				$("#housemain_judge").empty();
+ 	 				
+ 	 				//strh = "";
+ 	 				strh = "<h3>House심사대기 List</h3>";
+ 	 				$("#housemain_judge").append(strh);
+ 	 				strh = "";
+ 	 				
+ 	 				for(let i=0;i<response.hlist.length;i++){
+ 	 			 		if(i>=2){
+ 	 			 			console.log("house break");
+ 	 			 			break;
+ 	 			 		}
+ 	 			 		strh+='<div style="border: 1px solid black; margin-top: 5px; id="house_judge">';
+ 	 					strh+='<div id="house_judge">';
 
- 					strh+='<div id="list_left"><img style="height:200px; width:100%;" src="'+response.hlist[i].house_sysname+'"></div>';
- 					strh+='<div id="list_right_sec">';
- 					strh+='<div id="list_right">상 호 명 : '+response.hlist[i].house_name+'<br>';
+ 	 					strh+='<div id="list_left"><img style="height:200px; width:100%;" src="'+response.hlist[i].house_sysname+'"></div>';
+ 	 					strh+='<div id="list_right_sec">';
+ 	 					strh+='<div id="list_right">상 호 명 : '+response.hlist[i].house_name+'<br>';
 
- 					if(response.hlist[i].house_type == 1){
- 						strh+='집 유 형 : 아파트 <br>';
- 					}else if(response.hlist[i].house_type == 2){
- 						strh+='집 유 형 : 빌라 <br>';
- 					}else if(response.hlist[i].house_type == 3){
- 						strh+='집 유 형 : 주택 <br>';
- 					}
- 					strh+='집 주 소 : '+response.hlist[i].house_address+'</div>';
- 					strh+='<div id="list_button" class="house"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-number="'+response.hlist[i].house_number+'">승인/거절</button></div>';
- 					strh+='</div>';
- 					strh+='</div>';
- 					strh+='</div>';
- 			 	}
- 			 	$("#housemain_judge").append(strh); //house 리스트 End
-//----------------------------------------------------------------------------------------------------------
- 				//strf = "";
- 				strf = "<h3>Food심사대기 List</h3>";
- 				$("#foodmain_judge").append(strf);
- 				strf = "";
- 				
- 			 	for(let i=0;i<response.flist.length;i++){
+ 	 					if(response.hlist[i].house_type == 1){
+ 	 						strh+='집 유 형 : 아파트 <br>';
+ 	 					}else if(response.hlist[i].house_type == 2){
+ 	 						strh+='집 유 형 : 빌라 <br>';
+ 	 					}else if(response.hlist[i].house_type == 3){
+ 	 						strh+='집 유 형 : 주택 <br>';
+ 	 					}
+ 	 					strh+='집 주 소 : '+response.hlist[i].house_address+'</div>';
+ 	 					strh+='<div id="list_button" class="house"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-number="'+response.hlist[i].house_number+'">승인/거절</button></div>';
+ 	 					strh+='</div>';
+ 	 					strh+='</div>';
+ 	 					strh+='</div>';
+ 	 			 	}
+ 	 			 	$("#housemain_judge").append(strh); //house 리스트 End
+ 	//----------------------------------------------------------------------------------------------------------
+ 	 				//strf = "";
+ 	 				strf = "<h3>Food심사대기 List</h3>";
+ 	 				$("#foodmain_judge").append(strf);
+ 	 				strf = "";
+ 	 				
+ 	 			 	for(let i=0;i<response.flist.length;i++){
 
- 			 		if(i>=2){
- 			 			console.log("food break");
- 			 			break;
- 			 		}
- 			 		strf+='<div style="border: 1px solid black; margin-top: 5px; id="food_judge">';
- 					strf+='<div id="food_judge">';
- 					strf+='<div id="list_left"><img style="height:200px; width:100%;" src="'+response.flist[i].food_sysname+'"></div>';
- 					strf+='<div id="list_right_sec">';
- 					strf+='<div id="list_right">상 호 명 : '+response.flist[i].food_name+'<br>';
- 					if(response.flist[i].food_type == 1){
- 						strf+='집 유 형 : 레스토랑 <br>';
- 					}else if(response.flist[i].food_type == 2){
- 						strf+='집 유 형 : 카페 <br>';
- 					}else if(response.flist[i].food_type == 3){
- 						strf+='집 유 형 : 호프 <br>';
- 					}
- 					strf+='음식점 주소 : '+response.flist[i].food_address+'</div>';
- 					strf+='<div id="list_button" class="food"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-number="'+response.flist[i].food_number+'">승인/거절</button></div>';
- 					strf+='</div>';
- 					strf+='</div>';
- 					strf+='</div>';
- 			 	}
- 			 	$("#foodmain_judge").append(strf); //food 리스트 End
- 				
- 			},
- 			error : function(jqXHR, status, e) {
- 				console.log("서비스업체심사리스트 에러");
- 			}
- 		}); //ajax end
+ 	 			 		if(i>=2){
+ 	 			 			console.log("food break");
+ 	 			 			break;
+ 	 			 		}
+ 	 			 		strf+='<div style="border: 1px solid black; margin-top: 5px; id="food_judge">';
+ 	 					strf+='<div id="food_judge">';
+ 	 					strf+='<div id="list_left"><img style="height:200px; width:100%;" src="'+response.flist[i].food_sysname+'"></div>';
+ 	 					strf+='<div id="list_right_sec">';
+ 	 					strf+='<div id="list_right">상 호 명 : '+response.flist[i].food_name+'<br>';
+ 	 					if(response.flist[i].food_type == 1){
+ 	 						strf+='집 유 형 : 레스토랑 <br>';
+ 	 					}else if(response.flist[i].food_type == 2){
+ 	 						strf+='집 유 형 : 카페 <br>';
+ 	 					}else if(response.flist[i].food_type == 3){
+ 	 						strf+='집 유 형 : 호프 <br>';
+ 	 					}
+ 	 					strf+='음식점 주소 : '+response.flist[i].food_address+'</div>';
+ 	 					strf+='<div id="list_button" class="food"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-number="'+response.flist[i].food_number+'">승인/거절</button></div>';
+ 	 					strf+='</div>';
+ 	 					strf+='</div>';
+ 	 					strf+='</div>';
+ 	 			 	}
+ 	 			 	$("#foodmain_judge").append(strf); //food 리스트 End
+ 	 				
+ 	 			},
+ 	 			error : function(jqXHR, status, e) {
+ 	 				console.log("서비스업체심사리스트 에러");
+ 	 			}
+ 	 		}); //ajax end
+ 		}, 200)
+ 		
+ 		
+ 		
  	});//judge_click end
  	
  	
@@ -1525,91 +1548,95 @@ $(document).on("click",".sns_comment_delete",function(e) {
 		if(dtable!=null){
 			dtable.destroy();
 		}
+		
+		setTimeout(function() {
+
+			$.ajaxSetup({         
+			      beforeSend : function(xhr){
+			         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+			      });//먼저 보냄
+			      
+			$.ajax({
+				url : 'tripshareplanlist',
+				type : 'post',
+				dataType : 'json',
+				success : function(response) {
+					console.log("승인대기 목록 : " , response);
+					
+					
+					 $("#sns_table").empty();
+	  				console.log(response);
+	  				console.log("전체공지 사이즈",response.length);
+	  				let pagesize = response.length;
+	  				console.log("페이지사이즈",pagesize);
+	  				$("#TripSharePlanList").empty();
+	  				
+	  				
+
+	  				
+	  				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
+	  				let colgroup =$("<colgroup><col width='25%'><col width='30%'><col width='45%'></colgroup>")
+	  				let thead = $("<thead><tr><th>지역</th><th>이름</th><th>날짜</th></tr></thead>")
+	  		        
+	  				let tbody = $("<tbody ></tbody>")		
+	  				
+	  				
+	  		        
+	  		        console.log("포문직전")
+	  				for(  i of response){
+	  					
+	  					let sd = getFormatDate(i.trip_start_date);
+	  				 	let ed = getFormatDate(i.trip_end_date);
+	  				 	let areaStr = getTripAreaStr(i.all_notices_number)
+	  					let tr = $("<tr></tr>")
+	  					
+	  					let td1 =$('<td>'+areaStr+'</td>');  //지역
+	  					
+	  					//<a data-name="'+i.trip_number+'" class="modalplan">
+	  					let td2 = $('<td><a data-name="'+i.trip_number+'" class="modalplan">'+i.trip_title+'</a></td>');   // 이름
+	  					let td3 = $('<td>'+sd+' - '+ed+'</td>'); // 날짜
+
+	  					tr.append(td1)
+	  					tr.append(td2)
+	  					tr.append(td3)
+	  					
+	  					tbody.append(tr);	
+	  				}//for문 종료
+	  				
+	  				boards.append(colgroup);
+	  				boards.append(thead); 
+	  				boards.append(tbody);
+	  				console.dir(boards);
+	  				$("#TripSharePlanList").append(boards);
+	  				
+	  				setTimeout(() => {
+	  					dtable =$("#boards").DataTable({
+	  						 "order": [[0, 'desc']], // asc 또는 desc
+
+	  						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+
+	  			             	// 검색 기능 숨기기
+	  			             	searching: false,
+//	  			             	// 정렬 기능 숨기기
+//	  			             	ordering: false,
+//	  			             	// 정보 표시 숨기기
+	  			             	info: false,
+//	  			             	// 페이징 기능 숨기기
+//	  			             	paging: false
+	  			            	
+	  			            });
+	  				}, 100);
+					
+					
+					
+				},
+				error : function(jqXHR, status, e) {
+					console.log("서비스업체심사리스트 에러");
+				}
+			}); //ajax end	
+		}, 200)
 		//TripSharePlanList
 		
-		$.ajaxSetup({         
-		      beforeSend : function(xhr){
-		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-		      });//먼저 보냄
-		      
-		$.ajax({
-			url : 'tripshareplanlist',
-			type : 'post',
-			dataType : 'json',
-			success : function(response) {
-				console.log("승인대기 목록 : " , response);
-				
-				
-				 $("#sns_table").empty();
-  				console.log(response);
-  				console.log("전체공지 사이즈",response.length);
-  				let pagesize = response.length;
-  				console.log("페이지사이즈",pagesize);
-  				$("#TripSharePlanList").empty();
-  				
-  				
-
-  				
-  				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
-  				let colgroup =$("<colgroup><col width='25%'><col width='30%'><col width='45%'></colgroup>")
-  				let thead = $("<thead><tr><th>지역</th><th>이름</th><th>날짜</th></tr></thead>")
-  		        
-  				let tbody = $("<tbody ></tbody>")		
-  				
-  				
-  		        
-  		        console.log("포문직전")
-  				for(  i of response){
-  					
-  					let sd = getFormatDate(i.trip_start_date);
-  				 	let ed = getFormatDate(i.trip_end_date);
-  				 	let areaStr = getTripAreaStr(i.all_notices_number)
-  					let tr = $("<tr></tr>")
-  					
-  					let td1 =$('<td>'+areaStr+'</td>');  //지역
-  					
-  					//<a data-name="'+i.trip_number+'" class="modalplan">
-  					let td2 = $('<td><a data-name="'+i.trip_number+'" class="modalplan">'+i.trip_title+'</a></td>');   // 이름
-  					let td3 = $('<td>'+sd+' - '+ed+'</td>'); // 날짜
-
-  					tr.append(td1)
-  					tr.append(td2)
-  					tr.append(td3)
-  					
-  					tbody.append(tr);	
-  				}//for문 종료
-  				
-  				boards.append(colgroup);
-  				boards.append(thead); 
-  				boards.append(tbody);
-  				console.dir(boards);
-  				$("#TripSharePlanList").append(boards);
-  				
-  				setTimeout(() => {
-  					dtable =$("#boards").DataTable({
-  						 "order": [[0, 'desc']], // asc 또는 desc
-
-  						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
-
-  			             	// 검색 기능 숨기기
-  			             	searching: false,
-//  			             	// 정렬 기능 숨기기
-//  			             	ordering: false,
-//  			             	// 정보 표시 숨기기
-  			             	info: false,
-//  			             	// 페이징 기능 숨기기
-//  			             	paging: false
-  			            	
-  			            });
-  				}, 100);
-				
-				
-				
-			},
-			error : function(jqXHR, status, e) {
-				console.log("서비스업체심사리스트 에러");
-			}
-		}); //ajax end
 		
 		
 		
@@ -2030,85 +2057,90 @@ $(".planjudgebtn").on('click',function(e){
 	if(dtable!=null){
 		dtable.destroy();
 	}
-	$.ajaxSetup({         
-	      beforeSend : function(xhr){
-	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-	      });//먼저 보냄
-    	
-    	
-    $.ajax({
-        url : "judgeplanshare",
-        type : "post",
-        data : data,
-        dataType : 'json',
-        success : function(response) {
-				console.log(response);
-				 $("#sns_table").empty();
-	  				console.log(response);
-	  				console.log("전체공지 사이즈",response.length);
-	  				let pagesize = response.length;
-	  				console.log("페이지사이즈",pagesize);
-	  				$("#TripSharePlanList").empty();
-	  				
-	  				
+	
+	setTimeout(function() {
+		$.ajaxSetup({         
+		      beforeSend : function(xhr){
+		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+		      });//먼저 보냄
+	    	
+	    	
+	    $.ajax({
+	        url : "judgeplanshare",
+	        type : "post",
+	        data : data,
+	        dataType : 'json',
+	        success : function(response) {
+					console.log(response);
+					 $("#sns_table").empty();
+		  				console.log(response);
+		  				console.log("전체공지 사이즈",response.length);
+		  				let pagesize = response.length;
+		  				console.log("페이지사이즈",pagesize);
+		  				$("#TripSharePlanList").empty();
+		  				
+		  				
 
-	  				
-	  				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
-	  				let colgroup =$("<colgroup><col width='25%'><col width='30%'><col width='45%'></colgroup>")
-	  				let thead = $("<thead><tr><th>지역</th><th>이름</th><th>날짜</th></tr></thead>")
-	  		        
-	  				let tbody = $("<tbody ></tbody>")		
-	  				
-	  				
-	  		        
-	  		        console.log("포문직전")
-	  				for(  i of response){
-	  					
-	  					let sd = getFormatDate(i.trip_start_date);
-	  				 	let ed = getFormatDate(i.trip_end_date);
-	  				 	let areaStr = getTripAreaStr(i.all_notices_number)
-	  					let tr = $("<tr></tr>")
-	  					
-	  					let td1 =$('<td>'+areaStr+'</td>');  //지역
-	  					
-	  					//<a data-name="'+i.trip_number+'" class="modalplan">
-	  					let td2 = $('<td><a data-name="'+i.trip_number+'" class="modalplan">'+i.trip_title+'</a></td>');   // 이름
-	  					let td3 = $('<td>'+sd+' - '+ed+'</td>'); // 날짜
+		  				
+		  				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
+		  				let colgroup =$("<colgroup><col width='25%'><col width='30%'><col width='45%'></colgroup>")
+		  				let thead = $("<thead><tr><th>지역</th><th>이름</th><th>날짜</th></tr></thead>")
+		  		        
+		  				let tbody = $("<tbody ></tbody>")		
+		  				
+		  				
+		  		        
+		  		        console.log("포문직전")
+		  				for(  i of response){
+		  					
+		  					let sd = getFormatDate(i.trip_start_date);
+		  				 	let ed = getFormatDate(i.trip_end_date);
+		  				 	let areaStr = getTripAreaStr(i.all_notices_number)
+		  					let tr = $("<tr></tr>")
+		  					
+		  					let td1 =$('<td>'+areaStr+'</td>');  //지역
+		  					
+		  					//<a data-name="'+i.trip_number+'" class="modalplan">
+		  					let td2 = $('<td><a data-name="'+i.trip_number+'" class="modalplan">'+i.trip_title+'</a></td>');   // 이름
+		  					let td3 = $('<td>'+sd+' - '+ed+'</td>'); // 날짜
 
-	  					tr.append(td1)
-	  					tr.append(td2)
-	  					tr.append(td3)
-	  					
-	  					tbody.append(tr);	
-	  				}//for문 종료
-	  				
-	  				boards.append(colgroup);
-	  				boards.append(thead); 
-	  				boards.append(tbody);
-	  				console.dir(boards);
-	  				$("#TripSharePlanList").append(boards);
-	  				
-	  				setTimeout(() => {
-	  					dtable =$("#boards").DataTable({
-	  						 "order": [[0, 'desc']], // asc 또는 desc
+		  					tr.append(td1)
+		  					tr.append(td2)
+		  					tr.append(td3)
+		  					
+		  					tbody.append(tr);	
+		  				}//for문 종료
+		  				
+		  				boards.append(colgroup);
+		  				boards.append(thead); 
+		  				boards.append(tbody);
+		  				console.dir(boards);
+		  				$("#TripSharePlanList").append(boards);
+		  				
+		  				setTimeout(() => {
+		  					dtable =$("#boards").DataTable({
+		  						 "order": [[0, 'desc']], // asc 또는 desc
 
-	  						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
+		  						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
 
-	  			             	// 검색 기능 숨기기
-	  			             	searching: false,
-//	  			             	// 정렬 기능 숨기기
-//	  			             	ordering: false,
-//	  			             	// 정보 표시 숨기기
-	  			             	info: false,
-//	  			             	// 페이징 기능 숨기기
-//	  			             	paging: false
-	  			            	
-	  			            });
-	  				}, 100);
-        }, error : function(jqXHR, status, e) {
+		  			             	// 검색 기능 숨기기
+		  			             	searching: false,
+//		  			             	// 정렬 기능 숨기기
+//		  			             	ordering: false,
+//		  			             	// 정보 표시 숨기기
+		  			             	info: false,
+//		  			             	// 페이징 기능 숨기기
+//		  			             	paging: false
+		  			            	
+		  			            });
+		  				}, 100);
+	        }, error : function(jqXHR, status, e) {
 
-        }
-    });
+	        }
+	    });	
+	}, 200)
+	
+	
 })
 </script>
 </body>
