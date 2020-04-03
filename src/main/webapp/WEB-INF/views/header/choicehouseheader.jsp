@@ -129,7 +129,7 @@ background-color: #E6E6E6
       
       
       <div class="col-md-12 col-sm-12 col-xs-12"><a href="/gabom/">
-         <img style="width:40%;margin:20px 35%;" src="./resources/headerImage/logo3.png">
+         <img style="width:30%;margin:5px 40%;" src="./resources/headerImage/logo3.png">
          </a>
       </div>
       

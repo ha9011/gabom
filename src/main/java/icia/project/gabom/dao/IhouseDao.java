@@ -61,6 +61,8 @@ public interface IhouseDao {
 
 	@Delete("DELETE FROM HOUSEREPLE WHERE HOUSE_REPLE_NUMBER=#{house_reple_number}")
 	void repledel(@Param("house_reple_number")int house_reple_number);
+
+	List<House> getreserdate();
 	
 	
 	

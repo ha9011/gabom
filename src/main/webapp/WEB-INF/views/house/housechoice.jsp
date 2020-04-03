@@ -36,14 +36,10 @@ letter-spacing:10px;
 <header>
 	<jsp:include page="/WEB-INF/views/header/choicehouseheader.jsp" />
 </header>
-<header style="background-color:#064D84" class="text-center py-5 mb-4">
-  <div class="container">
-    <h1 class="font-weight-bold text-white">Select Your HouseType</h1>
-  </div>
-</header>
+
 
 <!-- Page Content -->
-<section class="container" id="imgzone">
+<section class="container" id="imgzone" style="padding-top: 2rem;height:100%">
   
  
     <div class="col-xl-3 col-md-6 mb-4" id="out">
@@ -69,6 +65,10 @@ letter-spacing:10px;
   <!-- /.row -->
 </section>
 <!-- /.container -->
+
+ <div>
+	<jsp:include page="/WEB-INF/views/footer.jsp"/>
+</div> 
 </body>
 
 <script>

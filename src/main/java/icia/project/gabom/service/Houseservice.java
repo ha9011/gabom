@@ -1,7 +1,9 @@
 package icia.project.gabom.service;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,7 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
+import icia.project.gabom.dao.IfoodDao;
 import icia.project.gabom.dao.IhouseDao;
+import icia.project.gabom.dto.Food;
 import icia.project.gabom.dto.House;
 import icia.project.gabom.dto.House_reple;
 import icia.project.gabom.dto.House_review;
@@ -25,6 +29,27 @@ public class Houseservice {
 	
 	@Autowired
 	private IhouseDao hDao;
+	
+	@Autowired
+	private IfoodDao fDao;
+
+	public String gethouselist() { // home에서 집목록, 음식 목록 보여줌
+		String json = null;
+		
+		Map<String,Object> list = new HashMap<String, Object>();
+		
+		List<House> hlist =hDao.getreserdate();
+		List<Food> flist =fDao.getfreserdate();
+		
+		list.put("hlist", hlist);
+		list.put("flist", flist);
+		
+		System.out.println(list);
+		
+		json = new Gson().toJson(list);
+		return json;
+	}
+	
 	
 
 	public ModelAndView getHouseList(House house) {//메인에 출력하는 집 리스트 (전체 보유 리스트)
@@ -194,10 +219,5 @@ public class Houseservice {
 		json = new Gson().toJson(reple_list);
 		return json;
 	}
-
-
-	
-
-	
 
 }

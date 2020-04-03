@@ -18,7 +18,10 @@
 <link href="https://fonts.googleapis.com/css?family=Jua&display=swap&subset=korean" rel="stylesheet"/>
 <link rel="stylesheet" href="resources/fontCss/fontAni.css">
 <style>
-
+img{
+margin: 5px 40%;
+width:30%;
+}
 
 #headerContainer {
 	margin-top: 10px;
@@ -111,7 +114,7 @@ background-color: #E6E6E6
          	
          <sec:authorize access="isAuthenticated()">
             <li><form class='frmRight' class='' method="post" action="/gabom/logout">
-                  <input type="button" value="나의정보" id="myinfo"> 
+                  <input type="button" value="나의정보" id="myinfo" > 
                   
                </form></li>
             <li>
@@ -128,7 +131,7 @@ background-color: #E6E6E6
 		
 		
 		<div class="col-md-12 col-sm-12 col-xs-12"><a href="/gabom/">
-         <img style="width:40%;margin:20px 35%;" src="./resources/headerImage/logo3.png">
+         <img src="./resources/headerImage/logo3.png">
          </a>
       </div>
 		

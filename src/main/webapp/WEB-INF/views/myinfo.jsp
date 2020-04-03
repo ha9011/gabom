@@ -92,7 +92,7 @@ margin:0 20px;
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="sideNav">
+  <nav sty class="navbar navbar-expand-lg navbar-dark bg-primary" id="sideNav">
         <div id="profileArea">
 			<div id="picArea" class="card" >
 				<img id="meddelanden" class="card-img-top " src="${myinfodata.member_profile_picture}"  alt="Card image"
@@ -186,7 +186,8 @@ margin:0 20px;
                   	<input name="member_profile_contents" type="text" class="form-control" placeholder="${myinfodata.member_profile_contents}" 
                   		value="${myinfodata.member_profile_contents}" style="height:300px;">
                 	</div>
-					<button class="save btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">수정하기</button>
+					<button style="margin-top: 15px;"
+					class="save btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">수정하기</button>
                 </form>
 			</div>
 		</div>
@@ -320,14 +321,6 @@ margin:0 20px;
 
 $(".save").on('click',function(e){
 	 var formData = new FormData(document.getElementById("meminfo")); 
-	 
-    console.log(formData.get("member_name"));
-    console.log(formData.get("member_birth"));
-    console.log(formData.get("member_phone"));
-    console.log(formData.get("member_email"));
-    console.log(formData.get("member_address"));
-    console.log(formData.get("member_hobby"));
-    console.log(formData.get("member_profile_contents"));
     
    $.ajaxSetup({         
  	      beforeSend : function(xhr){
@@ -1249,7 +1242,7 @@ $("#writelist").on('click', function() { //게시물 클릭 작성한 게시물 
 	  			
     			for(i of data.snsreple){ //sns댓글 
 	  				
-	  				var li = $('<li>'+i.somoim_name+'소모임에 게시글   '+i.board_title+'  에 좋아요를 누르셨습니다.'+'</li>');
+	  				var li = $('<li>'+i.sns_posts_content+'을 남겼습니다.'+'</li>');
 	  				ul.append(li);
 				}
     		//---------------------------------------------------------sns 댓글 -------------------------------

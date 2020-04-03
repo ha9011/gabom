@@ -60,7 +60,7 @@ p {
 }
 
 .dark-bg p {
-color: #B1B1B1;	
+color:#34373b";	
 }
 
 a:hover, a:focus, a:active, a.active {
@@ -87,7 +87,7 @@ a, a:hover, a:focus, a:active, a.active {
 }
 
 section {
-	padding: 70px 0;
+	padding: 10px 0;
 }
 
 ul {
@@ -320,7 +320,6 @@ ul li {
 	letter-spacing: -0.6px;
 	position: relative;
 	margin: 0 0 50px 0;
-	padding-bottom: 15px;
 }
 
 .section-title h2:after {
@@ -844,11 +843,10 @@ section#contact .form-group input, section#contact .form-group textarea {
 
 footer {
 	padding: 30px;
-	background-color: #000;	
+	background-color: #3abade;	
 }
 
 footer p {
-	color: #B7B7B7;
 	margin: 0;
 	font-size: 10px;
 	text-transform: uppercase;
