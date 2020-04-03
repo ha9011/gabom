@@ -1,5 +1,6 @@
 package icia.project.gabom;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class RestServiceCenter {
 
 		List<Qnaboard> nlist = sDao.getQnaList(); // 전체qna 정보 출력
 		System.out.println("qnalist=" + nlist);
+		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for(Qnaboard qna : nlist) {
+			String wDate=format1.format(qna.getQna_date());
+			qna.setResultDate(wDate);
+		}
 
 		String json = new Gson().toJson(nlist);
 		System.out.println(json);

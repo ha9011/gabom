@@ -1,7 +1,8 @@
 package icia.project.gabom.dto;
 
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -14,7 +15,6 @@ public class Adminnotices {
 	private String all_notices_title;
 	private String all_notices_body;
 	private int all_notices_views;
-	
-	@DateTimeFormat(pattern="yyyy-mm-dd")
-	private String all_notices_date;
+	private Date all_notices_date;
+	private String resultDate;
 }

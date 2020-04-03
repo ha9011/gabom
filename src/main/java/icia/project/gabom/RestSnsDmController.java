@@ -17,7 +17,6 @@ public class RestSnsDmController {
 	
 	@PostMapping(value ="/sns/dm" ,produces = "application/json;charset=UTF-8")
 	public String snsDm(Principal principal) {
-		System.out.println(principal.getName());
 		String json=snsDm.dm(principal.getName());
 		return json;
 	}

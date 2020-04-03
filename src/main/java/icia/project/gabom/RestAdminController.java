@@ -1,6 +1,7 @@
 package icia.project.gabom;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,6 +125,11 @@ public class RestAdminController {
 		System.out.println("views=" + views);
 		List<Adminnotices> nlist = aDao.getnoticesmodal(num);
 		System.out.println("레스트컨트룰러 노티스모달" + nlist);
+		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for(Adminnotices admin : nlist) {
+			String wDate=format1.format(admin.getAll_notices_date());
+			admin.setResultDate(wDate);
+		}
 
 		String json = new Gson().toJson(nlist);
 		System.out.println(json);
@@ -142,6 +148,12 @@ public class RestAdminController {
 
 		List<Adminnotices> nlist = aDao.getadnotices(); // 전체공지 정보 출력
 		System.out.println("noticeslist=" + nlist);
+		
+		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for(Adminnotices admin : nlist) {
+			String wDate=format1.format(admin.getAll_notices_date());
+			admin.setResultDate(wDate);
+		}
 
 		String json = new Gson().toJson(nlist);
 		System.out.println(json);
@@ -156,7 +168,11 @@ public class RestAdminController {
 
 		List<Adminnotices> nlist = aDao.getadnotices(); // 전체공지 정보 출력
 		System.out.println("noticeslist=" + nlist);
-
+		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for(Adminnotices admin : nlist) {
+			String wDate=format1.format(admin.getAll_notices_date());
+			admin.setResultDate(wDate);
+		}
 		String json = new Gson().toJson(nlist);
 		System.out.println(json);
 
@@ -172,6 +188,12 @@ public class RestAdminController {
 		boolean result = aDao.getnoticedelete(num);
 		System.out.println("삭제 성공했니??" + result);
 		List<Adminnotices> nlist = aDao.getadnotices(); // 전체공지 정보 출력
+		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for(Adminnotices admin : nlist) {
+			String wDate=format1.format(admin.getAll_notices_date());
+			admin.setResultDate(wDate);
+		}
+		
 		String json = new Gson().toJson(nlist);
 
 		return json;
@@ -184,7 +206,11 @@ public class RestAdminController {
 
 		List<Qnaboard> qlist = aDao.getqnaboard(); // qna정보 출력
 		System.out.println("qnalist=" + qlist);
-
+		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for(Qnaboard qna : qlist) {
+			String wDate=format1.format(qna.getQna_date());
+			qna.setResultDate(wDate);
+		}
 		String json = new Gson().toJson(qlist);
 		System.out.println(json);
 
@@ -202,9 +228,12 @@ public class RestAdminController {
 		System.out.println("qnamodal=" + nlist);
 
 		List<Qnaboard> alist = aDao.getanswermodal(num); // 질문 답글 출력
-		// System.out.println("qnaanswer="+alist);
-		// String ason = new Gson().toJson(alist);
-		// System.out.println(ason);
+		
+		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for(Qnaboard qna : nlist) {
+			String wDate=format1.format(qna.getQna_date());
+			qna.setResultDate(wDate);
+		}
 
 		list.put("nlist", nlist);
 		list.put("alist", alist);
