@@ -13,6 +13,9 @@ public interface SnsDmDao {
 
 	List<SnsDmDto> check(String id);
 
-	SnsDmDto getNewContent(String sendMember);
+	List<SnsDmDto> getNewContent(@Param("id")String id,@Param("userId") String sendMember);
+
+	List<SnsDmDto> getNewCnt(@Param("id")String id,@Param("userId") String sendMember);
+
 
 }
