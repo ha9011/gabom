@@ -610,6 +610,61 @@ public class TripService {
 	}
 
 
+	public String addPlanDate(int tripnumber, String addDate, int nDate) {
+		
+		//1.TRip_Plan 여행막날 수정
+			int updateTripPlanEndDay = tpDao.updateTripPlanEndDay(tripnumber,addDate); 
+		//2.Trip_Plan_Date 추가하기
+			int insertAddTripPlanNDay = tpDao.insertAddTripPlanNDay(tripnumber,addDate,nDate); 
+		//3.select 하기
+			
+			Map<String,String> result = new HashMap<String, String>();
+			List<Trip_plan> detrip = tpDao.detailplan(tripnumber);
+		    String jsonDetrip = new Gson().toJson(detrip);
+		    
+		    List<Map<String,Integer>> HouseReserCheck = tpDao.selectHouseReserCheck(Integer.toString(tripnumber));//해당 여행번호에 , 몇번째 여행일
+		    String jsonHouseReserCheck = new Gson().toJson(HouseReserCheck);
+		    
+		    result.put("detail", jsonDetrip);
+		    result.put("HouseReserCheck", jsonHouseReserCheck);
+		    
+		    
+		return new Gson().toJson(result);
+	}
+
+
+	public String delePlanDate(int tripnumber, String deleDate, int nDate, int currentDay, String endDate) {
+		// tripnumber : 여행 고유번호 // deleDate : 제일 마지막 날짜에서 -1 // nDate : 총 몇개가 있는지 // currentDay : 현재 몇번째날 지웠는지  
+		
+		//1.TRip_Plan 여행막날 수정
+		int updateTripPlanEndDay = tpDao.updateTripPlanEndDay(tripnumber,endDate); 
+		System.out.println("여행막날 수정 성공했니? : " + updateTripPlanEndDay);
+		//2.Trip_Plan_Date 삭제하기
+		int deleteTripPlanNDay = tpDao.deleteTripPlanNDay(tripnumber,currentDay); 
+		System.out.println("여행 n번째 삭제 성공했니? : " + deleteTripPlanNDay);
+		//2-1 지운 날짜 이후로 하루씩 내려오기
+		int updateTripPlanNDay = tpDao.updateTripPlanNDay(tripnumber,currentDay); 
+		System.out.println("여행 n번째 이후로 수정 성공했니? : " + updateTripPlanNDay);
+		
+		//3.Trip_Plan_Date도 한단계식 내려오기 하기
+		int updateTripPlanDetailNDay = tpDao.updateTripPlanDetailNDay(tripnumber,currentDay);
+		System.out.println("여행 디테일 n번째 이후로 수정 성공했니? : " + updateTripPlanDetailNDay);
+		
+		
+		Map<String,String> result = new HashMap<String, String>();
+		List<Trip_plan> detrip = tpDao.detailplan(tripnumber);
+	    String jsonDetrip = new Gson().toJson(detrip);
+	    
+	    List<Map<String,Integer>> HouseReserCheck = tpDao.selectHouseReserCheck(Integer.toString(tripnumber));//해당 여행번호에 , 몇번째 여행일
+	    String jsonHouseReserCheck = new Gson().toJson(HouseReserCheck);
+	    
+	    result.put("detail", jsonDetrip);
+	    result.put("HouseReserCheck", jsonHouseReserCheck);
+		
+		return new Gson().toJson(result);
+	}
+
+
 	
    
    

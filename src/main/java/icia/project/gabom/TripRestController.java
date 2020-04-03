@@ -270,5 +270,42 @@ public class TripRestController {
 			
 			return json;
 		}
-   
+   //여행계획 추가 addPlanDate
+		@PostMapping(value = "/addPlanDate",produces = "application/json;charset=utf-8")
+		public String addPlanDate(
+				@RequestParam("tripnumber")int tripnumber,
+				@RequestParam("addDate")String addDate,
+				@RequestParam("nDate")int nDate,
+				Principal pr
+				){
+			System.out.println("예약 취소 하기");
+			System.out.println("tripnumber : " +tripnumber);
+			System.out.println("addDate : " +addDate);
+			System.out.println("nDate : " +nDate);
+			
+			String json = trs.addPlanDate(tripnumber,addDate,nDate);
+			System.out.println("여행날짜 추가 하고 최종결과값 : " + json);
+			return json;
+		}
+	//여행계획 삭제
+		@PostMapping(value = "/delePlanDate",produces = "application/json;charset=utf-8")
+		public String delePlanDate(
+				@RequestParam("tripnumber")int tripnumber,
+				@RequestParam("deleDate")String deleDate,
+				@RequestParam("nDate")int nDate,
+				@RequestParam("currentDay")int currentDay,
+				@RequestParam("endDate")String endDate,
+				Principal pr
+				){
+			System.out.println("예약 취소 하기");
+			System.out.println("tripnumber : " +tripnumber);
+			System.out.println("deleDate : " +deleDate);
+			System.out.println("nDate : " +nDate);
+			System.out.println("currentDay : " +currentDay);
+			System.out.println("endDate : " +endDate);
+			
+			String json = trs.delePlanDate(tripnumber,deleDate,nDate,currentDay,endDate);
+			System.out.println("여행날짜 삭제 하고 최종결과값 : " + json);
+			return json;
+		}
 }

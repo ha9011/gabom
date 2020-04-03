@@ -162,6 +162,24 @@ public interface ITripplanDao {
    @Delete(" DELETE FROM HOUSERESERVATION where RESERVATION_NUMBER =#{resernumber} ")
    int deleteHouseReservation(@Param("resernumber")int resernumber);
 
+   @Update("update TRIP_PLAN set TRIP_END_DATE = #{addDate} where trip_number =#{tripnumber}")
+   int updateTripPlanEndDay(@Param("tripnumber")int tripnumber, @Param("addDate")String addDate);
+   
+   @Insert("INSERT INTO TRIP_PLAN_DATE VALUES(#{addDate},#{tripnumber},#{nDate},null)")
+   int insertAddTripPlanNDay(@Param("tripnumber")int tripnumber, @Param("addDate")String addDate, @Param("nDate")int nDate);
+
+   @Delete("DELETE FROM TRIP_PLAN_DATE where TRIP_NUMBER =#{tripnumber} and TRIP_DAY=#{currentDay}")
+   int deleteTripPlanNDay(@Param("tripnumber")int tripnumber, @Param("currentDay")int currentDay);
+
+   
+   int updateTripPlanNDay(@Param("tripnumber")int tripnumber, @Param("currentDay")int currentDay);
+
+
+   int updateTripPlanDetailNDay(@Param("tripnumber")int tripnumber, @Param("currentDay")int currentDay);
+
+
+
+   
 //   @Select("select trip_number,trip_date,trip_destination,trip_memo,trip_title,trip_order from trip_plan_detail where trip_number = #{trip_number} and trip_date = #{trip_date} and trip_order = #{trip_order} and trip_title = #{trip_title}")
 //   String selecttripmemo(Tripmemoupdate tripup);
 

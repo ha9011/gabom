@@ -175,7 +175,23 @@ order by tc.chatting_date desc
 	</insert>
 	
 	<select id="selectHouseReserCheck" parameterType="String" resultType="map">
-	select TRIP_NUMBER, TRIP_DAY, NVL(RESERVATION_NUMBER,0) RESERVATION_NUMBER from TRIP_PLAN_DATE where trip_number = #{tripNum}
+	select TRIP_NUMBER, TRIP_DAY, NVL(RESERVATION_NUMBER,0) RESERVATION_NUMBER from TRIP_PLAN_DATE where trip_number = #{tripNum} order by Trip_day
 	</select> 
 	
+	
+	<update id="updateTripPlanNDay"  >
+			<![CDATA[
+			update TRIP_PLAN_DATE 
+       		 set trip_date = trip_date-1, trip_day = trip_day-1
+       		 where TRIP_NUMBER = #{tripnumber} and trip_day >= (#{currentDay}+1)
+			]]>
+	</update>
+	
+	<update id="updateTripPlanDetailNDay"  >
+			<![CDATA[
+			update TRIP_PLAN_DETAIL 
+       		 set trip_date = trip_date-1
+       		 where TRIP_NUMBER = #{tripnumber} and trip_date >= (#{currentDay}+1)
+			]]>
+	</update>
 </mapper>

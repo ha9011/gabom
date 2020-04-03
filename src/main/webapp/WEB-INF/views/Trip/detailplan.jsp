@@ -294,6 +294,7 @@ header {
 				<!-- onclick="modal" -->
 				<button class="addbtn btn-lg btn-primary" id="savebtn" onclick="saveplan()">저장하기</button>
 				<button class="addbtn btn-lg btn-primary" id="addDate" onclick="addDate()">+날짜추가</button>
+				<button class="addbtn btn-lg btn-primary" id="deleDate" onclick="deleDate()">-날짜삭제</button>
 				<button id="apiup" class="addbtn btn-lg btn-primary"
 					data-toggle="modal" data-target="#area_modal"
 					onclick="sigunguChange()">장소추가</button>
@@ -381,7 +382,7 @@ var HouseReserCheck = ${HouseReserCheck};  //예약했는지 유무
 var areaCode = trip_data[0].trip_area;
 console.log("예약했는지 확인 ",HouseReserCheck)
 console.log(areaCode)
-console.log(trip_data)
+console.log("trip_data",trip_data)
 var chatData = ${JsonchatData}; // 최근 날자로 채팅 가져오기
 var nextDay= "${nextDay}" // 다음 검색할 날짜
 var firstDayPlan = ${firstDayPlan}.tripData;
@@ -1234,6 +1235,16 @@ function getFormatDate(strdate){
  return  year + '년  ' + month + '월  ' + day+'일   ';
 }
 
+function getFormatDateDB(strdate){
+	   var date = new Date(strdate);
+	   console.log(date);
+	    var year = date.getFullYear();              //yyyy
+	 var month = (1 + date.getMonth());          //M
+	 month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+	 var day = date.getDate();                   //d
+	 day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+	 return  year + '-' + month + '-' + day;
+}
 //=================================================================================이예상 
 
 
@@ -1602,6 +1613,196 @@ const saveplan= () => {
 	 $("#savebtn").css('opacity',0.5);
 }
 
+//--------------------------------------------------날자 추가
+
+const addDate= () => {
+	console.log("addDate")//
+	console.log("현재페이지 : " +currentPlanDay )
+	console.log("arr",arr)
+	console.log("trip_data",trip_data[0].trip_end_date);
+	var addDate = new Date(trip_data[0].trip_end_date);
+	addDate.setDate(addDate.getDate()+1);
+	console.log("next",addDate);
+	console.log("whatnumber",HouseReserCheck.length+1)  //몇번째
+	
+	var data = {
+		"tripnumber":trip_data[0].trip_number,
+		"addDate" :  getFormatDateDB(addDate),
+		"nDate": HouseReserCheck.length+1
+	}
+	
+	console.log("add",data)
+	$.ajaxSetup({         
+    	beforeSend : function(xhr){
+    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+    });//먼저 보냄
+    				
+    $.ajax({
+    	url:'tprest/addPlanDate',
+    	type:'post',
+    	data:data,
+    	dataType: "json",
+    	success:function(data){
+    		//console.log("원래 하우스",HouseReserCheck)
+    		//console.log("어떻게 나올까",data);
+    		HouseReserCheck=JSON.parse(data.HouseReserCheck);
+    		trip_data = JSON.parse(data.detail);
+    		
+    		console.log("변경 하우스",HouseReserCheck)
+    		console.log("len",HouseReserCheck.length)
+    		arr[HouseReserCheck.length]=[];
+    		console.log("이후 arr : ",arr)
+    		
+    		
+    		//여행 리스트 추가  // 추가하면 바로 번호로 가기,
+    		$("#date").empty();
+    		let idxTD = 0;
+    		for(let i of trip_data){
+    			if(idxTD == trip_data.length-1){
+    				let li =$('<li data-trnum="'+i.trip_number+'" class="number">'+i.trip_day+'</li>');
+    				$("#date").prepend(li);
+    				console.log("이전날짜",currentPlanDay);
+    				currentPlanDay = i.trip_day;
+    				console.log("바뀐날짜",currentPlanDay);
+    			}else{
+    				let li =$('<li data-trnum="'+i.trip_number+'" class="number">'+i.trip_day+'</li>');
+    				$("#date").append(li);
+    			}
+    			idxTD++;
+    		}
+    		
+    		//     		var dayy = data.day;;
+//     		var tripNumm = data.tripNum;
+//     		var dataArr = data.tripData;
+
+    		points[currentPlanDay]=[];    // 좌표 초기화
+	 		$("#detailTrip").empty();
+	 		initMapKaKao();
+					
+// 			//가장 중요한 부분
+// 			arr[dayy] = data.tripData
+			
+// 			console.log("arr",arr);
+// 			console.log("points",points);
+// 			console.log("tripDate",arr[dayy]);
+// 			console.log("currentPlanDay",dayy);
+	
+//  		let arrFrame = arr[dayy];
+//  		let pointsFrame = points[dayy];
+	
+	
+//  		createPlanForm(arrFrame,pointsFrame)
+    		
+    	},
+    	error:function(error){
+			alert("fail")
+			console.log(error);
+		}
+	})
+	
+	
+}
+
+const deleDate= () => {
+	console.log("deleDate")//
+	console.log("현재페이지 : " +currentPlanDay )
+	console.log("arr",arr)
+	console.log("trip_data",trip_data[0].trip_end_date);
+	var endDate = new Date(trip_data[0].trip_end_date);   // 마지막 여행날짜에서 하루 줄어들어야함
+	endDate.setDate(endDate.getDate()-1);  
+	var deleDate = new Date(trip_data[0].trip_start_date);
+	deleDate.setDate(deleDate.getDate()+(currentPlanDay-1));  
+	
+	console.log("endDate",endDate);
+	console.log("whatnumber",HouseReserCheck.length-1)  //몇번째
+	
+	var data = {
+		"tripnumber":trip_data[0].trip_number,
+		"deleDate" :  getFormatDateDB(deleDate),
+		"nDate": HouseReserCheck.length-1,
+		"currentDay" : currentPlanDay,
+		"endDate" : getFormatDateDB(endDate)
+	}
+	
+	console.log("deleDate",data)
+	
+	$.ajaxSetup({         
+    	beforeSend : function(xhr){
+    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+    });//먼저 보냄
+    				
+    $.ajax({
+    	url:'tprest/delePlanDate',
+    	type:'post',
+    	data:data,
+    	dataType: "json",
+    	success:function(data){
+    		//console.log("원래 하우스",HouseReserCheck)
+    		console.log("어떻게 나올까",data);
+			HouseReserCheck=JSON.parse(data.HouseReserCheck);
+     		trip_data = JSON.parse(data.detail);
+    		console.log("변경 하우스",HouseReserCheck)
+			console.log("len",HouseReserCheck.length)
+			console.log("trip_data",trip_data)
+			
+            delete arr[currentPlanDay];
+    		for(let i = 1; i <=HouseReserCheck.length+1;i++){
+    		    if(i>currentPlanDay){
+    		    	arr[i-1]= arr[i]
+    		    }
+    		}
+    		delete arr[HouseReserCheck.length+1];  //마지막 번호 지우기
+    		
+     		console.log("이후 arr : ",arr)
+    		
+    		
+    		//여행 리스트 추가  // 추가하면 바로 번호로 가기,  //currentPlanDay현재 지워진날짜
+    		$("#date").empty();
+    		let idxTD = 1;
+    		//$("#date").append(li);
+    		for(let i = currentPlanDay; i <= HouseReserCheck.length ;i++){
+    				let li =$('<li data-trnum="'+trip_data[i-1].trip_number+'" class="number">'+trip_data[i-1].trip_day+'</li>');
+    				$("#date").append(li);
+    		}
+
+    		for(let i = 1; i < currentPlanDay ;i++){
+				let li =$('<li data-trnum="'+trip_data[i-1].trip_number+'" class="number">'+trip_data[i-1].trip_day+'</li>');
+				$("#date").append(li);
+			}	
+    		
+    		
+    		
+    		//     		var dayy = data.day;;
+//     		var tripNumm = data.tripNum;
+//     		var dataArr = data.tripData;
+
+  //  		points[currentPlanDay]=[];    // 좌표 초기화
+	// 		$("#detailTrip").empty();
+	 //		initMapKaKao();
+					
+// 			//가장 중요한 부분
+// 			arr[dayy] = data.tripData
+			
+// 			console.log("arr",arr);
+// 			console.log("points",points);
+// 			console.log("tripDate",arr[dayy]);
+// 			console.log("currentPlanDay",dayy);
+	
+//  		let arrFrame = arr[dayy];
+//  		let pointsFrame = points[dayy];
+	
+	
+//  		createPlanForm(arrFrame,pointsFrame)
+    		
+    	},
+    	error:function(error){
+			alert("fail")
+			console.log(error);
+		}
+	})
+}
+
+
 var houseNum = null;
 
 const createPlanForm = (arrFrame,pointsFrame) =>{
@@ -1714,7 +1915,6 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 			
 			planFrame.append(planContFram);
 			
-			
 			let updownFrame = $("<div ></div>");
 			let upPlan = $("<div ><button class='upPlan' data-idx='"+(planidx-1)+"'>up</button></div>");
 			let downPlan = $("<div ><button class='downPlan' data-idx='"+(planidx-1)+"'>down</button></div>");
@@ -1733,7 +1933,6 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 			planFrame.append(cancelPlan);
 
 			$("#detailTrip").append(planFrame);
-			
 			
 			pointsFrame.push(new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint)); //추가 할 마커 저장하기 arr에...
 			console.log("pointsFrame",pointsFrame);
