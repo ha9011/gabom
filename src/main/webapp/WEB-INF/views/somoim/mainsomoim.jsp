@@ -125,6 +125,9 @@
 #searchFrm{
 display:flex;
 }
+.contentFrame{
+display: flex;
+}
 
 /* 여기부터 기존에 있던 css */
 #somoim {
@@ -170,9 +173,9 @@ display:flex;
 .showlist {
    overflow: auto;
    padding: 5px;
-   border: 1px black solid;
    width: 100%;
    height: 500px;
+   margin: 0 15px;
 }
 
 #showlistContent {
@@ -241,7 +244,7 @@ display:flex;
 						</div>
 						<div class="container">
 
-        <form class="toggle">
+        <form class="toggle" style="width:500px;margin-left:200px;">
 
             <input type="radio" id="somoimMenu" name="choice" value="creative">
             <label for="somoimMenu">소모임</label>
@@ -304,52 +307,6 @@ display:flex;
 		</div>
 	</section>
 
-   <!--    mymoim    -->
-   <!-- <div id="mainMymoim">
-      <div id="content">
-         <div id="myJoin" class="section">
-            <div class="title">my join</div>
-
-            <div class="showlist">
-               <div id="showlistContent"></div>
-
-            </div>
-            <div id="makeSomoim">
-               <a href="./makesomoim"><button
-                     class="btn btn-primary makeSomoim">개설하기</button></a>
-            </div>
-         </div>
-
-         <div id="myNoti" class="section">
-            <div class="title">my Noti</div>
-
-           
-         </div>
-      </div>
-
-
-      somoim   
-
-   <div id="somoim">
-      <div id="content">
-         <div id="myJoin" class="section">
-            <div class="title">추천 소모임</div>
-
-            <div class="showlist">
-               <div id=""></div>
-
-            </div>
-
-         </div>
-
-         <div id="myNoti" class="section">
-            <div class="title">
-               <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-               </nav>
-            </div> -->
-
-
-
 </body>
 <script type="text/javascript">
    var notilist = ${jsonSbNotiList}
@@ -361,7 +318,7 @@ display:flex;
       
       var imageFrame = $("<div class='imageFrame mymoimcont'><div><img width='100px' height='100px' src='."+v.somoim_sys_mainpicture+"' >  </div> </div>");
       
-      var contentFrame =  $("<div class='contentFrame mymoimcont'>  </div>");
+      var contentFrame =  $("<div class='contentFrame mymoimcont'></div>");
       
       var contentUp ;
       var type = v.board_type == 'noti' ? '공지' : '정모';

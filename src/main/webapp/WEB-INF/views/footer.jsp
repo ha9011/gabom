@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  		<!-- <link rel="icon" href="favicon.ico">
+		<link href="./resources/css/style.css" rel="stylesheet"> -->
 </head>
 <style>
 #footer {
@@ -30,10 +32,11 @@ font-size:30px;
     width: 400px;
     border-radius:10px;
     background-color: white;
-    z-index:2;
-    
+    z-index:2;   
 }
-
+p{
+color:gray;
+}
 </style>
 <script type="text/javascript">
 	
@@ -135,29 +138,79 @@ font-size:30px;
 	
 </script>
 <body>
-
-	
 	<div id="footer">
-		<p style="font-size:20px;margin:20px;">
-		<strong id="cn">Contact Us</strong>
-			<br>
-			<br>
-			<br>
-		<strong id="tel">Tel 032.876.3332</strong>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			
-		
-		</p>	
+		<section id="contact" class="dark-bg" style="height:350px;background-color: white;">
+			<div class="container" style="margin-top:15px;">
+				<div class="row">
+					<div class="col-lg-12 text-center">
+						<div class="section-title">
+							<h2 style="color:#3abade;font-size:70px;">Contact Us</h2>
+							<p>If you have some Questions or need Help! Please Contact Us!<br>We make Cool and Clean Design for your Business</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="section-text">
+							<h4 style="color:#3abade">Our Business Office</h4>
+							<p>3422 Street, Barcelona 432, Spain, New Building North, 15th Floor</p>
+							<p><i class="fa fa-phone"></i> +101 377 655 22125</p>
+							<p><i class="fa fa-envelope"></i> mail@yourcompany.com</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="section-text">
+							<h4 style="color:#3abade">Business Hours</h4>
+							<p><i class="fa fa-clock-o"></i> <span class="day">Weekdays:</span><span>9am to 8pm</span></p>
+							<p><i class="fa fa-clock-o"></i> <span class="day">Saturday:</span><span>9am to 2pm</span></p>
+							<p><i class="fa fa-clock-o"></i> <span class="day">Sunday:</span><span>Closed</span></p>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<form name="sentMessage" id="contactForm" novalidate="">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<input type="text" class="form-control" placeholder="Your Name *" id="name">
+										<p class="help-block text-danger"></p>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<input type="email" class="form-control" placeholder="Your Email *" id="email">
+										<p class="help-block text-danger"></p>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<textarea class="form-control" placeholder="Your Message *" id="message" ></textarea>
+										<p class="help-block text-danger"></p>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12 text-center">
+									<div id="success"></div>
+									<button type="button" class="btn" style="background-color:black;">Send Message</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<p id="back-top">
+			<a href="#top"><i class="fa fa-angle-up"></i></a>
+		</p>
+		<footer style="background-color:#3abade">
+			<div class="container text-center" >
+				<p style="color:black;">Theme made by <a href="http://moozthemes.com"><span>MOOZ</span>Themes.com</a></p>
+			</div>
+		</footer>
+
 	</div>
 	
 	

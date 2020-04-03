@@ -33,7 +33,7 @@
 #chatDate {
 	position: absolute;
 	left: 65%;
-	top: 76%;
+	top: 40%;
 	width: 200px;
 	height: 35px;
 	border-radius: 10px;
@@ -68,14 +68,9 @@
 	height: 93%;
 	overflow: auto;
 }
-
-#noti {
-	
-}
-
 #main {
 	width: 100%;
-	height: 1000px;
+	height: 100%;
 }
 
 #top {
@@ -91,6 +86,7 @@
 	height: 700px;
 	display: flex;
 	justify-content: center;
+	padding-top: 2rem;
 }
 /* margin: 20px 50px 0px 0px */
 #out1 {
@@ -253,7 +249,7 @@
 /* 채팅 */
 #chattingRoom {
 	overflow: auto;
-	height: 85%;
+	height: 80%;
 	display: flex;
 	flex-direction: column;
 	background-color: #99BFE4;
@@ -278,9 +274,14 @@
 }
 
 #chattingInput {
-	width: 91%;
+	width: 89%;
+	border:none;
+	height:100%;
 }
 
+#chattingBtn{
+background-color:yellow;
+}
 .chatFrame {
 	display: flex;
 	flex-direction: column;
@@ -311,10 +312,6 @@ display : flex;
 
 
 	<div id="main">
-		<div id="top">
-			
-		</div>
-		<br>
 		<div id="bottom">
 			<div id="out1">
 				<!-- Nav pills -->
@@ -408,9 +405,9 @@ display : flex;
 			<div id="out2">
 				<div id="day1">소모임 이름</div>
 				<div id="chattingRoom"></div>
-				<div id="cont2">
+				<div id="cont2" style="height: 10%;">
 					<input type="text" id="chattingInput">
-					<button id="chattingBtn">전송</button>
+					<button id="chattingBtn" class="btn">전송</button>
 				</div>
 			</div>
 		</div>

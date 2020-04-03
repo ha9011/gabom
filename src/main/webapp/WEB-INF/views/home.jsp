@@ -10,18 +10,45 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js></script>
-	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
-	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <style>
 section {
   position: relative;
-  background-color: black;
   height: 75vh;
   min-height: 25rem;
   width: 100%;
   overflow: hidden;
+  
 }
-
+.sec{
+border-bottom:3px solid lightgray;
+width:80%;
+margin:0 10%;
+text-align:center;
+height: 50vh;
+padding-bottom:2rem;
+}
+#how{
+height:360px;
+}
+#sido{
+height:300px;
+}
+.in{
+margin:2%;
+}
+.out{
+display: flex;
+width:90%;
+margin:0 10%;
+padding-bottom:2rem;
+}
+.hftext{
+font-size:15px;
+}
+.img{
+margin:15px;
+}
 section video {
   position: absolute;
   top: 50%;
@@ -44,7 +71,6 @@ section .container {
   color:white;
   position: relative;
   margin-top:15%;
-  margin-left:22%;
   z-index: 2;
 }
 
@@ -74,14 +100,8 @@ section .overlay {
 
 <body>
 <header>
-<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 </header>
-
-
-
-
-
-
 
 <%-- <div>
 	<jsp:include page="/WEB-INF/views/homesearch.jsp" />
@@ -102,8 +122,116 @@ section .overlay {
   </div>
 </section>
 
+<section class="sec" id="how">
+	<!-- 사이트 이용설명 -->
+		<div class="section-title">
+			<h2 style="color:gray;font-size:70px;font-weight:bold;">Gabom</h2>
+		</div>
+		<div class="out" >
+			<div class="in">
+				<div class="featured-icon"><i class="fa-5x fas fa-plane-departure "></i></div>
+				<div class="featured-text">
+					<h4>나만의 여행을 계획해보세요!</h4>
+					<p style="width:300px"> 나만의 여행계획을 만들어 친구들과 공유해보세요</p>
+				</div>
+			</div>
+			<div class="in">
+				<div class="featured-icon"><i class="fa-5x fas fa-users"></i></div>
+				<div class="featured-text">
+					<h4>SNS와 소모임으로 다양한 <br>사람들과 소통하세요!</h4>
+					<p style="width:350px">다양한 소모임과  SNS를 활용하여 사람들과 소통하세요</p>
+				</div>
+			</div>
+			<div class="in">
+				<div class="featured-icon"><i class="fa-5x fas fa-home"></i></div>
+				<div class="featured-text">
+					<h4>숙박과 맛집을 한번에 해결하세요!</h4>
+					<p style="width:300px">가봄에서는 호텔뿐만 아니라 가봄만의 이색적인 숙소와 맛집을 예약해 이용해보세요</p>
+				</div>
+			</div>
+		</div>
+</section>
+
+<section class="sec" id="house">
+	<!-- 최근 예약된 집  4개 출력-->
+	<div class="section-title">
+			<h2 style="color:gray;font-size:70px;font-weight:bold;">House</h2>
+			<p><strong class="hftext">최근에 예약된 숙소를 만나보세요!</strong></p>
+			<div class="out" id="himg">
+				
+			</div>
+		</div>
+</section>
+
+<section class="sec" id="food">
+	<!-- 최근 예약된 맛집 리스트 4개 출력-->
+	<div class="section-title">
+			<h2 style="color:gray;font-size:70px;font-weight:bold;">Food</h2>
+			<p><strong class="hftext">최근에 예약된 맛집을 만나보세요!</strong></p>
+			<div class="out" id="fimg">
+				
+			</div>
+		</div>
+</section>
+
+<section class="sec" id="sido">
+	<!-- 대충 자리 채울려고 시,도청 마크 넣고 여행가능 지역 표시  -->
+	<div class="section-title">
+			<h2 style="color:gray;font-size:70px;font-weight:bold;">Tour</h2>
+			<div class="out"></div>
+		</div>
+</section>
+
  <div>
 	<jsp:include page="/WEB-INF/views/footer.jsp"/>
 </div> 
 </body>
+
+<script>
+
+$(function() {
+
+  $.ajaxSetup({         
+	      beforeSend : function(xhr){
+	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	      });//먼저 보냄
+    
+    $.ajax({
+        url:'hmrest/housefood',
+        method:'post',
+        dataType:"json", //rest 컨트롤 이용   
+        success:function(data){
+			console.log(data);
+			
+			 for(i of data.hlist){
+				 var div = $('<div class="img"></idv>');
+				 	$("#himg").append(div);
+				 var img = $('<img style="height:150px" src="'+i.house_sysname+'">');
+					 div.append(img);
+				 var title =$('<h5>'+i.house_name+'</h5>');
+				 	 div.append(title);
+			 }
+			 
+			 for(i of data.flist){
+				 var div = $('<div class="img"></idv>');
+				 	$("#fimg").append(div);
+				 var img = $('<img style="height:150px" src="'+i.food_sysname+'">');
+					 div.append(img);
+				 var title =$('<h5>'+i.food_name+'</h5>');
+				 	 div.append(title);
+			 }
+			 
+        },
+        error:function(error){
+      	  alert("실패");
+           console.log(error);
+        }
+	}); 
+	
+	
+});
+
+
+
+</script>
 </html>

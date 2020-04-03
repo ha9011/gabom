@@ -58,6 +58,8 @@ public interface IfoodDao {
 	void repledel(@Param("food_reple_number")int food_reple_number);
 
 	List<Food_review> showfreview(int food_review_number);
+
+	List<Food> getfreserdate();
 	
 	
 }
