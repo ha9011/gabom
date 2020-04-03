@@ -1,5 +1,6 @@
 package icia.project.gabom.service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class ServiceCenterManagement {
 		
 		System.out.println("전체공지사항"+nlist);
 		System.out.println("질문리스트"+qlist);
+		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for(Adminnotices admin : nlist) {
+			String wDate=format1.format(admin.getAll_notices_date());
+			admin.setResultDate(wDate);
+		}
 		
 		String nson = new Gson().toJson(nlist);
 		String qson = new Gson().toJson(qlist);

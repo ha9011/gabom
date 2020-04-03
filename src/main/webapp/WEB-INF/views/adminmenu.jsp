@@ -647,7 +647,6 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	             dataType : 'json',
 	             success : function(response) {
 					console.log('qna불러오기 성공');
-					 let container = $('#paginationqna');
 					console.log("size",response.length);
 					$("#sns_table").empty();
 					$("#qnadatatable").empty();
@@ -666,10 +665,9 @@ $(document).on("click",".sns_comment_delete",function(e) {
 						let tr = $("<tr></tr>")
 	 					let td1 =$('<td>'+response[i].qna_number+'</td><td><a id="qna_detail" class="qna_detail" href="#;" data-toggle="modal" data-target="#qnaModal" data-number="'+response[i].qna_number+'">'+response[i].qna_title+'</a></td><td>'+response[i].qna_member_id+'</td>');
 	 					
-						const writeDate=response[i].qna_date.split(" ");  //split(쪼개다)
+						const writeDate=response[i].resultDate.split(" ");  //split(쪼개다)
 						
 						const today = getToday(); //오늘 날짜를 직접 정의
-						
 						
 						let td2 ;
 	 					if(today==writeDate[0]){ //날 짜
@@ -743,14 +741,15 @@ $(document).on("click",".sns_comment_delete",function(e) {
 					console.log(response.nlist);
 
 					let strn = " ";
-					strn += '<div>'+response.nlist[0].qna_title+'</div>';
+					strn += '<div><h3>제목 : '+response.nlist[0].qna_title+'</h3></div>';
 					$("#qna_modal_header").append(strn);
 					strn = " ";
 					strn += '<div>작 성 자 : '+ response.nlist[0].qna_member_id + '<span> 글 번 호 : '+ response.nlist[0].qna_number+'<br>';
 					strn += '<input type="hidden" name="number" id="number" value="'+response.nlist[0].qna_number+'">';
-					strn += '작성일 : '+response.nlist[0].qna_date  +'</div>';
-					strn += '<div>'+response.nlist[0].qna_body+'</div>';
-					strn += '<div id="qna_reply_div" style="border-top: 1px solid #D8D8D8">댓글</div>';
+					
+					strn += '작성일 : '+response.nlist[0].resultDate+'</div>';
+					strn += '<div>내용 : '+response.nlist[0].qna_body+'</div>';
+					strn += '<br><div id="qna_reply_div">답변</div><br>';
 						for(i=0;i<response.alist.length;i++){
 							strn += '<div class="qna_reply_div" style="border-top: 1px solid #D8D8D8">'+response.alist[i].qna_reply+'</div>';
 						}
@@ -859,11 +858,11 @@ $(document).on("click",".sns_comment_delete",function(e) {
 						let tr = $("<tr></tr>")
 						let td1 =$('<td>'+response[i].all_notices_number+'</td><td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a></td>');
 						
-						const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
-						//console.log(writeDate[0]); //년 월 일
-						//console.log(writeDate[1]); //시 분 초
+						const writeDate=response[i].resultDate.split(" ");  //split(쪼개다)
+						console.log("년월일",writeDate[0]); //년 월 일
+						//console.log("시분초",writeDate[1]); //시 분 초
 						const today = getToday(); //오늘 날짜를 직접 정의
-						
+						console.log("sksksk",response);
 						let td2 ;
 						if(today==writeDate[0]){ //날 짜
 							td2 = $('<td>'+writeDate[1]+'</td>')
@@ -872,9 +871,9 @@ $(document).on("click",".sns_comment_delete",function(e) {
 						}
 						let td3 = $('<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'); //조 회 수
 
-						tr.append(td1)
+						tr.append(td1);
 						tr.append(td2)
-						tr.append(td3)
+						tr.append(td3);
 						
 						tbody.append(tr);	
 					}//for문 종료
@@ -940,7 +939,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
 					strn += '<input type="hidden" name="notices_delete" id="notices_delete" data-target="#notices_delete" value="'+response[0].all_notices_number+'">';
 					$("#notices_modal_header").append(strn);
 					strn = " ";
-					strn += '<div>작성일 : '+response[0].all_notices_date  +'<span> 조 회 수 : '+  response[0].all_notices_views+'</div>';
+					strn += '<div>작성일 : '+response[0].resultDate  +'<span> 조 회 수 : '+  response[0].all_notices_views+'</div>';
 					strn += '<div style="border-top: 1px solid #D8D8D8">'+response[0].all_notices_body+'</div>';
 					$("#notices_modal_body").append(strn);
 					console.log("modal생성"); 
@@ -998,17 +997,17 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	     					let tr = $("<tr></tr>")
 	     					let td1 =$('<td>'+response[i].all_notices_number+'</td><td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a></td>');
 	     					
-	     					const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
-	     					//console.log(writeDate[0]); //년 월 일
-	     					//console.log(writeDate[1]); //시 분 초
-	     					const today = getToday(); //오늘 날짜를 직접 정의
-	     					
-	     					let td2 ;
-	     					if(today==writeDate[0]){ //날 짜
-	     						td2 = $('<td>'+writeDate[1]+'</td>')
-	     					}else{
-	     						td2= $('<td>'+writeDate[0]+'</td>');
-	     					}
+	     					const writeDate=response[i].resultDate.split(" ");  //split(쪼개다)
+							console.log("년월일",writeDate[0]); //년 월 일
+							//console.log("시분초",writeDate[1]); //시 분 초
+							const today = getToday(); //오늘 날짜를 직접 정의
+							console.log("sksksk",response);
+							let td2 ;
+							if(today==writeDate[0]){ //날 짜
+								td2 = $('<td>'+writeDate[1]+'</td>')
+							}else{
+								td2= $('<td>'+writeDate[0]+'</td>');
+							}
 	     					let td3 = $('<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'); //조 회 수
 
 	     					tr.append(td1)
@@ -1119,17 +1118,17 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	 					let tr = $("<tr></tr>")
 	 					let td1 =$('<td>'+response[i].all_notices_number+'</td><td><a id="notices_detail" class="notices_detail" href="#;" data-toggle="modal" data-target="#noticesModal" data-number="'+response[i].all_notices_number+'">'+response[i].all_notices_title+'</a></td>');
 	 					
-	 					const writeDate=response[i].all_notices_date.split(" ");  //split(쪼개다)
-	 					//console.log(writeDate[0]); //년 월 일
-	 					//console.log(writeDate[1]); //시 분 초
-	 					const today = getToday(); //오늘 날짜를 직접 정의
-	 					
-	 					let td2 ;
-	 					if(today==writeDate[0]){ //날 짜
-	 						td2 = $('<td>'+writeDate[1]+'</td>')
-	 					}else{
-	 						td2= $('<td>'+writeDate[0]+'</td>');
-	 					}
+	 					const writeDate=response[i].resultDate.split(" ");  //split(쪼개다)
+						console.log("년월일",writeDate[0]); //년 월 일
+						//console.log("시분초",writeDate[1]); //시 분 초
+						const today = getToday(); //오늘 날짜를 직접 정의
+						console.log("sksksk",response);
+						let td2 ;
+						if(today==writeDate[0]){ //날 짜
+							td2 = $('<td>'+writeDate[1]+'</td>')
+						}else{
+							td2= $('<td>'+writeDate[0]+'</td>');
+						}
 	 					let td3 = $('<td id="'+'board'+response[i].all_notices_number+'">'+response[i].all_notices_views+'</td>'); //조 회 수
 
 	 					tr.append(td1)
