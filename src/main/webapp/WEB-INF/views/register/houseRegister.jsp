@@ -24,7 +24,7 @@
 }
 
 .bg-image {
-  background-image: url('./resources/houseimg/housefrm.JPG');
+  background-image: url('./resources/houseimg/housefrm.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -50,6 +50,7 @@
   padding: var(--input-padding-y) var(--input-padding-x);
   height: auto;
   border-radius: 2rem;
+  margin-bottom:20px;
 }
 
 .form-label-group>label {

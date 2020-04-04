@@ -50,6 +50,7 @@
   padding: var(--input-padding-y) var(--input-padding-x);
   height: auto;
   border-radius: 2rem;
+  margin-bottom:20px;
 }
 
 .form-label-group>label {

@@ -555,6 +555,12 @@ public class TripService {
 		return json;
 	}
 
+	/*
+	 * //home에서 여행계획들 불러옴 public String getplanlist() {
+	 * 
+	 * 
+	 * return null; }
+	 */
 
 	
    
