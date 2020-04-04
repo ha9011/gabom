@@ -328,7 +328,7 @@ public class TripRestController {
 					System.out.println("diffOriNewFirstday : " +diffOriNewFirstday);
 					System.out.println("changeTripTitle : " +changeTripTitle);
 					
-					String json = trs.changeDay(tripNumber,newStartDayDB,newLastDayDB,rangeDay,diffOriNewFirstday, changeTripTitle,pr.getName());
+					String json = trs.changeDay(tripNumber,newStartDayDB,newLastDayDB,rangeDay,diffOriNewFirstday, changeTripTitle, pr.getName());
 					//System.out.println("여행날짜 삭제 하고 최종결과값 : " + json);
 					return json;
 				}
