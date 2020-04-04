@@ -639,14 +639,17 @@ public class TripService {
 		//1.TRip_Plan 여행막날 수정
 		int updateTripPlanEndDay = tpDao.updateTripPlanEndDay(tripnumber,endDate); 
 		System.out.println("여행막날 수정 성공했니? : " + updateTripPlanEndDay);
-		//2.Trip_Plan_Date 삭제하기
+		//2-1.Trip_Plan_Date 삭제하기
 		int deleteTripPlanNDay = tpDao.deleteTripPlanNDay(tripnumber,currentDay); 
 		System.out.println("여행 n번째 삭제 성공했니? : " + deleteTripPlanNDay);
-		//2-1 지운 날짜 이후로 하루씩 내려오기
+		//2-2 지운 날짜 이후로 하루씩 내려오기
 		int updateTripPlanNDay = tpDao.updateTripPlanNDay(tripnumber,currentDay); 
 		System.out.println("여행 n번째 이후로 수정 성공했니? : " + updateTripPlanNDay);
 		
-		//3.Trip_Plan_Date도 한단계식 내려오기 하기
+		//3-1 삭제 하기 
+		int deleteTripPlanDetailNDay = tpDao.deleteTripPlanDetailNDay(tripnumber,currentDay);
+		System.out.println("여행 디테일 n번째 이후로 삭제 성공했니? : " + deleteTripPlanDetailNDay);
+		//3-2.Trip_Plan_Date도 한단계식 내려오기 하기
 		int updateTripPlanDetailNDay = tpDao.updateTripPlanDetailNDay(tripnumber,currentDay);
 		System.out.println("여행 디테일 n번째 이후로 수정 성공했니? : " + updateTripPlanDetailNDay);
 		
@@ -658,10 +661,35 @@ public class TripService {
 	    List<Map<String,Integer>> HouseReserCheck = tpDao.selectHouseReserCheck(Integer.toString(tripnumber));//해당 여행번호에 , 몇번째 여행일
 	    String jsonHouseReserCheck = new Gson().toJson(HouseReserCheck);
 	    
+	    
+	    
+	    // 위에서 1개씩 밀려왔으니 그냥 current 쓰면 됨
+	    List<TripPlanDetail> selectResult = tpDao.selectPlanDetail(Integer.toString(tripnumber), Integer.toString(currentDay));//해당 여행번호에 , 몇번째 여행일
+	    TripPlanDay tpd = new TripPlanDay();
+	    tpd.setDay(Integer.toString(currentDay)).setTripNum(Integer.toString(tripnumber)).setTripData(selectResult);
+	    String deleToNext = new Gson().toJson(tpd);
+	    
 	    result.put("detail", jsonDetrip);
 	    result.put("HouseReserCheck", jsonHouseReserCheck);
+	    result.put("deleToNext", deleToNext);
 		
 		return new Gson().toJson(result);
+	}
+
+
+	public String changeDay(int tripNumber, String newStartDayDB, String newLastDayDB, int rangeDay,
+			int diffOriNewFirstday,  String changeTripTitle,String trip_id) {
+		
+		//1. trip_plan 날짜 변경
+		int updateTripDay = tpDao.updateTripDay(tripNumber,changeTripTitle,newStartDayDB,newLastDayDB);
+		
+		//2. trip_plan_date 날짜 변경
+		int updateTripDate = tpDao.updateTripDate(tripNumber,diffOriNewFirstday);
+		
+		List<Trip_plan> myplanlist = tpDao.getmyplan(trip_id);
+		
+		
+		return new Gson().toJson(myplanlist);
 	}
 
 

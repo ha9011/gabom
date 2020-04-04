@@ -57,7 +57,6 @@ body {
 	font-size: 30px;
 }
 
-
 #table {
 	margin: 20px 10px;
 }
@@ -107,7 +106,7 @@ tr {
 #t_title {
 	cursor: pointer;
 	text-decoration: none;
-	text-align:left;
+	text-align: left;
 }
 
 #rqmbtn {
@@ -133,12 +132,11 @@ tr {
 }
 
 /* 버튼 */
-.applybtn{
-margin-left: 10px;
-border-radius:30px;
-width:30px;
+.applybtn {
+	margin-left: 10px;
+	border-radius: 30px;
+	width: 30px;
 }
-
 </style>
 
 </head>
@@ -157,8 +155,8 @@ width:30px;
 				</button>
 
 				<!--로고 자리 -->
-				<a href="/gabom/"><img style="width: 200px;" src="./resources/headerImage/logo3.png"
-					alt="logo"></a>
+				<a href="/gabom/"><img style="width: 200px;"
+					src="./resources/headerImage/logo3.png" alt="logo"></a>
 			</div>
 
 
@@ -218,7 +216,7 @@ width:30px;
 		<div class="masthead" id="trp">
 			<div id="table">
 				<table id="mylist">
-					
+
 				</table>
 			</div>
 		</div>
@@ -255,10 +253,52 @@ width:30px;
 		</div>
 	</div>
 
+
+	<!-- 날짜변경 모달 -->
+	<div class="modal" id="dateChangeModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title" id="dateChangeTitle">날짜변경</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div>
+						변경전 : <span id="dateChange_bf"></span>
+					</div>
+					<div>
+						변경후 : <span id="dateChange_af"></span>
+					</div>
+					<input type="hidden" id="newStartDay" name="newStartDay"> 
+					<input type="hidden" id="newLastDay" name="newLastDay"> 
+					<input type="hidden" id="tripNumber" name="tripNumber">
+
+					<div>
+						여행 제목 : <input id="inputTripTitle" type="text" ><br>
+						여행 날짜 : <input id="inputfirstday" type="text" placeholder="여행 첫날짜" onfocus="(this.type='date')">
+						<button type="button" class="btn btn-danger"  id="inputfirstdaybtn">등록</button>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal"
+						id="dataChangeSave" disabled="true">변경</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
 	<footer>
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
 	</footer>
-	
+
 	<!-- Custom scripts for this template -->
 	<script src="./resources/js/coming-soon.min.js"></script>
 	<script
@@ -276,11 +316,11 @@ width:30px;
 
 <script>
  var socketalarm; // 소켓 시작
- 
+ var rangeDay ;//날짜변경할때 필요한... 차이
  var mylist =${myplanlist};
  console.log("내 여행 목록",mylist);
  console.log(mylist.trip_area);
- 
+ var order;
  
  
  
@@ -352,9 +392,10 @@ width:30px;
 	}
  
  //-------------------------------------------------------------------유저 정보 영역
- 	var thead = $("<tr><th class='bar' id='t'>여행 제목</th><th class='bar'>여행지</th><th class='bar'>여행 날짜</th><th style='width: 500px' class='bar'>친구와 함께하기</th></tr>")
+ 	let thead = $("<tr><th class='bar' id='t'>여행 제목</th><th class='bar'>여행지</th><th class='bar'>여행 날짜</th><th style='width: 300px' class='bar'>친구와 함께하기</th><th style='width: 200px' class='bar'>변경하기</th></tr>")
 	$("#mylist").append(thead) 
   
+  let idx = 0;	
   for(i of mylist) { //게시글
 	  
 	  console.log(i.trip_area);
@@ -394,17 +435,17 @@ width:30px;
 		i.trip_area = "제주도"		  
  	  }
 	  
- 	var sd = getFormatDate(i.trip_start_date);
- 	var ed = getFormatDate(i.trip_end_date);	  
+ 	 let sd = getFormatDate(i.trip_start_date);
+ 	let ed = getFormatDate(i.trip_end_date);	  
  	
-    var tr = $('<tr></tr>'); 
+ 	let tr = $('<tr></tr>'); 
     
     // 추천에 승인 추가 if문
     console.log("tripendday2",new Date(i.trip_end_date));
     console.log("today1",new Date());
     console.log(new Date(i.trip_end_date) < new Date());
 
-    var title;
+    let title;
     if(new Date(i.trip_end_date) < new Date()){  // 날짜 지났으니 버튼 추가
     	
     	if(i.trip_plan_appry_status == 2){
@@ -421,9 +462,10 @@ width:30px;
         title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a></td>');    	
     }
    
-    var area =$('<td>'+i.trip_area+'</td>');
-    var date =$('<td>'+sd+' - '+ed+'</td>');
-    var btn =$('<td><button id="jbtn" class="joinbtn btn btn-info" data-toggle="modal" data-target="#exampleModal"  data-tripnum ="'+i.trip_number+'">친구 초대</button></td>');
+    let area =$('<td>'+i.trip_area+'</td>');
+    let date =$('<td>'+sd+' - '+ed+'</td>');
+    let btn =$('<td><button id="jbtn" class="joinbtn btn btn-info" data-toggle="modal" data-target="#exampleModal"  data-tripnum ="'+i.trip_number+'">친구 초대</button></td>');
+    let changeDate =$('<td><button id="changebtn"  class="changeDateBtn btn btn-info" data-order="'+idx+'" data-toggle="modal" data-target="#dateChangeModal"  data-tripnum ="'+i.trip_number+'">날짜 변경</button></td>');
     
     
     $("#mylist").append(tr);
@@ -431,9 +473,10 @@ width:30px;
     $(tr).append(area);
     $(tr).append(date);
     $(tr).append(btn);
+    $(tr).append(changeDate);
     
 
-    
+    idx++;
  }
  
  
@@ -466,6 +509,214 @@ $(".joinbtn").on('click', function(e) { // 친구 추가시 여행번호
 	}
 	
 })
+//---------------------------------------------------날짜변경이벤트
+$(".changeDateBtn").on('click', function(e) { 
+	$("#dataChangeSave").prop("disabled",true)
+	$("#inputfirstdaybtn").prop("disabled",true)
+	order =  e.target.dataset.order;
+	let trip_number = e.target.dataset.tripnum;
+	console.log(trip_number);
+	$("#tripNumber").val(trip_number);
+	console.log(e.target.parentNode.parentElement.cells[2].innerText)   // 부모 tr에서 3번째td내용 가져오기 ( 날짜 )
+	let originDay = e.target.parentNode.parentElement.cells[2].innerText;
+	$("#dateChange_bf").text(originDay);
+	let Triptitle = e.target.parentNode.parentElement.cells[0].innerText;
+	$("#inputTripTitle").val(Triptitle);
+	
+	let oriStartDay= getFormatDateDB(new Date(mylist[order].trip_start_date));
+	$("#inputfirstday").val(oriStartDay);
+	
+			
+	//초기화 
+	$("#inputfirstday").prop("type","text");
+	$("#inputfirstday").prop("placeholder","여행 첫날짜");
+	$("#dateChange_af").text("")
+	$("#newStartDay").val("");
+	$("#newLastDay").val("");
+	
+	order =  e.target.dataset.order;
+	var oriFirstDay = new Date(mylist[order].trip_start_date);
+	var oriLastDay = new Date(mylist[order].trip_end_date);
+	console.log("oriFirstDay",oriFirstDay);
+	console.log("oriLastDay",oriLastDay);
+	console.log("차이",oriLastDay-oriFirstDay)
+	rangeDay =Math.ceil((oriLastDay.getTime()-oriFirstDay.getTime())/(1000*3600*24));
+// 	<div id="dateChange_bf">변경전</div>
+// 	<div id="dateChange_af">변경후</div>
+//dateDiff = Math.ceil((edt.getTime()-sdt.getTime())/(1000*3600*24));
+	
+})
+// -- 날짜 확정시
+$("#inputfirstdaybtn").on("click", function(){
+	var firstday = new Date($("#inputfirstday").val());
+	var lastday = new Date($("#inputfirstday").val());
+	lastday.setDate(lastday.getDate()+rangeDay)
+	
+	var resultDays = getFormatDate(firstday)+" ~ "+getFormatDate(lastday);
+	$("#dateChange_af").text(resultDays);
+	$("#dataChangeSave").prop("disabled",false); // 버튼 활성화
+
+	// input hidden에 날짜 숨겨 놓기
+	//<input type="hidden" id="newStartDay" name="newStartDay">
+	//<input type="hidden" id="newLastDay" name="newLastDay">
+	$("#newStartDay").val(firstday);
+	$("#newLastDay").val(lastday);
+	
+
+	console.log("sd",$("#newStartDay").val())
+	console.log("ed",$("#newLastDay").val())
+})
+
+// -- 확정버튼
+$("#dataChangeSave").on("click", function(){
+	console.log("sd",$("#newStartDay").val())
+	console.log("ed",$("#newLastDay").val())
+	console.log("tripNumber",$("#tripNumber").val());
+	console.log("rangeDay",rangeDay)
+	console.log("order",order)
+	var oriFirstDay = new Date(mylist[order].trip_start_date);
+	var newStratDay = new Date($("#newStartDay").val());
+
+	var tripNumber = $("#tripNumber").val()
+	var newStartDayDB = getFormatDateDB($("#newStartDay").val());
+	var newLastDayDB = getFormatDateDB($("#newLastDay").val());
+	var rangeDayy = rangeDay;
+	var diffOriNewFirstday = Math.ceil((newStratDay.getTime()-oriFirstDay.getTime())/(1000*3600*24))-1;
+	var changeTripTitle = $("#inputTripTitle").val();
+	var data = {
+			"tripNumber":tripNumber,
+			"newStartDayDB":newStartDayDB,
+			"newLastDayDB":newLastDayDB,
+			"rangeDay":rangeDayy,
+			"diffOriNewFirstday":diffOriNewFirstday,
+			"changeTripTitle":changeTripTitle
+	}
+	console.log("data",data)
+	
+	
+	$.ajaxSetup({         
+	      beforeSend : function(xhr){
+	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	      });//먼저 보냄
+   
+   
+   $.ajax({
+      
+        url: "tprest/changeDay",
+         type: 'post',
+         data :data,
+         dataType: "json", //rest 컨트롤 이용   
+         success:function(data){ 
+        	 $("#mylist").empty();
+         console.log("data",data)
+         
+        let thead = $("<tr><th class='bar' id='t'>여행 제목</th><th class='bar'>여행지</th><th class='bar'>여행 날짜</th><th style='width: 300px' class='bar'>친구와 함께하기</th><th style='width: 200px' class='bar'>변경하기</th></tr>")
+	$("#mylist").append(thead) 
+     	
+     	let idx = 0;
+         for(i of data) { //게시글
+     	  
+     	  console.log(i.trip_area);
+     		 	  if(i.trip_area == 1){
+     				i.trip_area = "서울"		  
+     		 	  }else if(i.trip_area == 2){
+     				i.trip_area = "인천"		  
+     		 	  }else if(i.trip_area == 3){
+     				i.trip_area = "대전"		  
+     		 	  }else if(i.trip_area == 4){
+     				i.trip_area = "대구"		  
+     		 	  }else if(i.trip_area == 5){
+     				i.trip_area = "광주"		  
+     		 	  }else if(i.trip_area == 6){
+     				i.trip_area = "부산"		  
+     		 	  }else if(i.trip_area == 7){
+     				i.trip_area = "울산"		  
+     		 	  }else if(i.trip_area == 8){
+     				i.trip_area = "세종특별자치시"		  
+     		 	  }else if(i.trip_area == 31){
+     				i.trip_area = "경기도"		  
+     		 	  }else if(i.trip_area == 32){
+     				i.trip_area = "강원도"		  
+     		 	  }else if(i.trip_area == 33){
+     				i.trip_area = "충청북도"		  
+     		 	  }else if(i.trip_area == 34){
+     				i.trip_area = "충청남도"		  
+     		 	  }else if(i.trip_area == 35){
+     				i.trip_area = "경상북도"		  
+     		 	  }else if(i.trip_area == 36){
+     				i.trip_area = "경상남도"		  
+     		 	  }else if(i.trip_area == 37){
+     				i.trip_area = "전라북도"		  
+     		 	  }else if(i.trip_area == 38){
+     				i.trip_area = "전라남도"		  
+     		 	  }else if(i.trip_area == 39){
+     				i.trip_area = "제주도"		  
+     		 	  }
+     	  
+      	let sd = getFormatDate(i.trip_start_date);
+      	let ed = getFormatDate(i.trip_end_date);	  
+     	  
+      	
+//       	<tr>
+//      	<th class="bar">여행 제목</th>
+//      	<th class="bar">여행지</th>
+//      	<th class="bar">여행 날짜</th>
+//      	<th style="width: 500px" class="bar">친구와 함께하기</th>
+     // </tr>
+
+         let tr = $('<tr></tr>'); 
+         
+         // 추천에 승인 추가 if문
+//          console.log("tripendday2",new Date(i.trip_end_date));
+//          console.log("today1",new Date());
+//          console.log(new Date(i.trip_end_date) < new Date());
+
+         let title;
+         if(new Date(i.trip_end_date) < new Date()){  // 날짜 지났으니 버튼 추가
+         	
+         	if(i.trip_plan_appry_status == 2){
+         		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><img src="./resources/css/c.JPG" data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" ></td>');
+         	}else if(i.trip_plan_appry_status == 1){
+         		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><img src="./resources/css/d.JPG" data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" ></td>');
+         	}else if(i.trip_plan_appry_status == 0){
+         		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><img src="./resources/css/p.JPG" data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" ></td>');
+         	}
+         	
+         
+         
+         }else{
+             title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a></td>');    	
+         }
+        
+         let area =$('<td>'+i.trip_area+'</td>');
+         let date =$('<td>'+sd+' - '+ed+'</td>');
+         let btn =$('<td><button id="jbtn" class="joinbtn btn btn-info" data-toggle="modal" data-target="#exampleModal"  data-tripnum ="'+i.trip_number+'">친구 초대</button></td>');
+         let changeDate =$('<td><button id="changebtn"  class="changeDateBtn btn btn-info" data-order="'+idx+'" data-toggle="modal" data-target="#dateChangeModal"  data-tripnum ="'+i.trip_number+'">날짜 변경</button></td>');
+         
+         $("#mylist").append(tr);
+         $(tr).append(title);
+         $(tr).append(area);
+         $(tr).append(date);
+         $(tr).append(btn);
+         $(tr).append(changeDate);
+         
+
+         idx++;
+      }
+                 
+                 
+                 
+              },
+              error:function(error){
+                 alert("여행 거절 실패.");
+                    console.log(error);
+                 }
+      
+      
+   });//ajax 끝
+})
+
+
 //----------------------------------------------------------------------------------------친구초대 버튼 
 
 $(document).on('click',".fbtn", function(e) {
@@ -684,9 +935,11 @@ $(document).on("click",".applybtn",function(e){
         	 $("#mylist").empty();
             console.log("data",data)
             
-    var thead = $("<tr><th class='bar'>여행 제목</th><th class='bar'>여행지</th><th class='bar'>여행 날짜</th><th style='width: 500px' class='bar'>친구와 함께하기</th></tr>")
+    let thead = $("<tr><th class='bar' id='t'>여행 제목</th><th class='bar'>여행지</th><th class='bar'>여행 날짜</th><th style='width: 300px' class='bar'>친구와 함께하기</th><th style='width: 100px' class='bar'>변경하기</th></tr>")
 	$("#mylist").append(thead) 
-            for(i of data) { //게시글
+	
+	let idx = 0;
+    for(i of data) { //게시글
 	  
 	  console.log(i.trip_area);
 		 	  if(i.trip_area == 1){
@@ -725,8 +978,8 @@ $(document).on("click",".applybtn",function(e){
 				i.trip_area = "제주도"		  
 		 	  }
 	  
- 	var sd = getFormatDate(i.trip_start_date);
- 	var ed = getFormatDate(i.trip_end_date);	  
+ 	let sd = getFormatDate(i.trip_start_date);
+ 	let ed = getFormatDate(i.trip_end_date);	  
 	  
  	
 //  	<tr>
@@ -736,14 +989,14 @@ $(document).on("click",".applybtn",function(e){
 // 	<th style="width: 500px" class="bar">친구와 함께하기</th>
 // </tr>
 
-    var tr = $('<tr></tr>'); 
+    let tr = $('<tr></tr>'); 
     
     // 추천에 승인 추가 if문
 //     console.log("tripendday2",new Date(i.trip_end_date));
 //     console.log("today1",new Date());
 //     console.log(new Date(i.trip_end_date) < new Date());
 
-    var title;
+    let title;
     if(new Date(i.trip_end_date) < new Date()){  // 날짜 지났으니 버튼 추가
     	
     	if(i.trip_plan_appry_status == 2){
@@ -760,18 +1013,20 @@ $(document).on("click",".applybtn",function(e){
         title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a></td>');    	
     }
    
-    var area =$('<td>'+i.trip_area+'</td>');
-    var date =$('<td>'+sd+' - '+ed+'</td>');
-    var btn =$('<td><button id="jbtn" class="joinbtn btn" data-toggle="modal" data-target="#exampleModal"  data-tripnum ="'+i.trip_number+'">친구 초대</button></td>');
+    let area =$('<td>'+i.trip_area+'</td>');
+    let date =$('<td>'+sd+' - '+ed+'</td>');
+    let btn =$('<td><button id="jbtn" class="joinbtn btn btn-info" data-toggle="modal" data-target="#exampleModal"  data-tripnum ="'+i.trip_number+'">친구 초대</button></td>');
+    let changeDate =$('<td><button id="changebtn"  class="changeDateBtn btn btn-info" data-order="'+idx+'" data-toggle="modal" data-target="#dateChangeModal"  data-tripnum ="'+i.trip_number+'">날짜 변경</button></td>');
     
     $("#mylist").append(tr);
     $(tr).append(title);
     $(tr).append(area);
     $(tr).append(date);
     $(tr).append(btn);
+    $(tr).append(changeDate);
     
 
-    
+    idx++;
  }
             
             
@@ -785,7 +1040,19 @@ $(document).on("click",".applybtn",function(e){
       
    });//ajax 끝
 })
+//---------------------title 변경될때
+//inputTripTitle dataChangeSave
 
+$("#inputTripTitle").on("keydown",function(){
+	console.log("title변화")
+	$("#dataChangeSave").prop("disabled",false)
+})
+//inputfirstdaybtn
+
+$("#inputfirstday").on("change",function(){
+	console.log("날짜변화")
+	$("#inputfirstdaybtn").prop("disabled",false)
+})
 //--------------------------------------------------------------------------------------------- 승인 거절이벤트 
 
 //날짜 포맷 변환기  str -> date ->str
@@ -798,6 +1065,18 @@ $(document).on("click",".applybtn",function(e){
     var day = date.getDate();                   //d
     day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
     return  year + '년  ' + month + '월  ' + day+'일   ';
+   }
+   
+ //날짜 포맷 변환기  DB용도
+   function getFormatDateDB(strdate){
+      var date = new Date(strdate);
+      console.log(date);
+       var year = date.getFullYear();              //yyyy
+    var month = (1 + date.getMonth());          //M
+    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+    var day = date.getDate();                   //d
+    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+    return  year + '-' + month + '-' + day;
    }
 </script>
 

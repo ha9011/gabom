@@ -308,4 +308,28 @@ public class TripRestController {
 			System.out.println("여행날짜 삭제 하고 최종결과값 : " + json);
 			return json;
 		}
+		
+		//여행계획날짜 변경
+				@PostMapping(value = "/changeDay",produces = "application/json;charset=utf-8")
+				public String changeDay(
+						@RequestParam("tripNumber")int tripNumber,
+						@RequestParam("newStartDayDB")String newStartDayDB,
+						@RequestParam("newLastDayDB")String newLastDayDB,
+						@RequestParam("rangeDay")int rangeDay,
+						@RequestParam("diffOriNewFirstday")int diffOriNewFirstday,
+						@RequestParam("changeTripTitle")String changeTripTitle,
+						Principal pr
+						){
+					System.out.println("예약 취소 하기");
+					System.out.println("tripNumber : " +tripNumber);
+					System.out.println("newStartDayDB : " +newStartDayDB);
+					System.out.println("newLastDayDB : " +newLastDayDB);
+					System.out.println("rangeDay : " +rangeDay);
+					System.out.println("diffOriNewFirstday : " +diffOriNewFirstday);
+					System.out.println("changeTripTitle : " +changeTripTitle);
+					
+					String json = trs.changeDay(tripNumber,newStartDayDB,newLastDayDB,rangeDay,diffOriNewFirstday, changeTripTitle,pr.getName());
+					//System.out.println("여행날짜 삭제 하고 최종결과값 : " + json);
+					return json;
+				}
 }

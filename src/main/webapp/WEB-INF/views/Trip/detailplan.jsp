@@ -1739,9 +1739,20 @@ const deleDate= () => {
     	success:function(data){
     		//console.log("원래 하우스",HouseReserCheck)
     		console.log("어떻게 나올까",data);
+    		
 			HouseReserCheck=JSON.parse(data.HouseReserCheck);
      		trip_data = JSON.parse(data.detail);
-    		console.log("변경 하우스",HouseReserCheck)
+    		var deleToNext = JSON.parse(data.deleToNext);  // 새로운 arr 가져오는거용
+    		console.log("deleToNext",deleToNext);
+     		
+    		var dayy = deleToNext.day;;
+    		var tripNumm = deleToNext.tripNum;
+    		var dataArr = deleToNext.tripData;
+    		console.log("dayy",dayy);
+    		console.log("tripNumm",tripNumm);
+    		console.log("dataArr",dataArr);
+    		
+     		console.log("변경 하우스",HouseReserCheck)
 			console.log("len",HouseReserCheck.length)
 			console.log("trip_data",trip_data)
 			
@@ -1770,29 +1781,29 @@ const deleDate= () => {
 				$("#date").append(li);
 			}	
     		
-    		
+    		//arr[currentPlanDay]=dataArr;
     		
     		//     		var dayy = data.day;;
 //     		var tripNumm = data.tripNum;
 //     		var dataArr = data.tripData;
 
-  //  		points[currentPlanDay]=[];    // 좌표 초기화
-	// 		$("#detailTrip").empty();
-	 //		initMapKaKao();
+    		points[currentPlanDay]=[];    // 좌표 초기화
+	 		$("#detailTrip").empty();
+	 		initMapKaKao();
 					
 // 			//가장 중요한 부분
-// 			arr[dayy] = data.tripData
+ 			arr[dayy] = dataArr;
 			
-// 			console.log("arr",arr);
-// 			console.log("points",points);
-// 			console.log("tripDate",arr[dayy]);
-// 			console.log("currentPlanDay",dayy);
+			console.log("arr",arr);
+			console.log("points",points);
+			console.log("tripDate",arr[dayy]);
+			console.log("currentPlanDay",dayy);
 	
-//  		let arrFrame = arr[dayy];
-//  		let pointsFrame = points[dayy];
+ 			let arrFrame = arr[dayy];
+ 			let pointsFrame = points[dayy];
 	
 	
-//  		createPlanForm(arrFrame,pointsFrame)
+ 			createPlanForm(arrFrame,pointsFrame)
     		
     	},
     	error:function(error){

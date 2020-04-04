@@ -177,6 +177,15 @@ public interface ITripplanDao {
 
    int updateTripPlanDetailNDay(@Param("tripnumber")int tripnumber, @Param("currentDay")int currentDay);
 
+   @Delete("DELETE FROM TRIP_PLAN_DETAIL where TRIP_NUMBER =#{tripnumber} and TRIP_DATE=#{currentDay}")
+   int deleteTripPlanDetailNDay(@Param("tripnumber")int tripnumber, @Param("currentDay")int currentDay);
+
+   @Update("update TRIP_PLAN set TRIP_START_DATE = #{newStartDayDB}, TRIP_END_DATE = #{newLastDayDB}, TRIP_TITLE = #{changeTripTitle} where trip_number = #{tripNumber}")
+   int updateTripDay(@Param("tripNumber")int tripNumber,  @Param("changeTripTitle")String changeTripTitle,@Param("newStartDayDB")String newStartDayDB, @Param("newLastDayDB")String newLastDayDB);
+
+   @Update("update TRIP_PLAN_DATE set  trip_date = (trip_date+#{diffOriNewFirstday}) where trip_number =#{tripNumber}")
+   int updateTripDate(@Param("tripNumber")int tripNumber, @Param("diffOriNewFirstday")int diffOriNewFirstday);
+
 
 
    
