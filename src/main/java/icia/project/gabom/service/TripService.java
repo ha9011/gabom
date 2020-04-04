@@ -45,7 +45,7 @@ public class TripService {
    
    @Autowired
    private ITripplanDao tpDao;
-   private IhouseDao hDao;
+ 
    
    //여행 플랜 1단계
    public String savetripplan(Trip_plan tp, Principal ppl) throws ParseException {
