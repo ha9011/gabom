@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	<script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a7e29fa39462f45fc2138a8307dbe830&libraries=services"></script>
-	
+	  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 <style>
 section {
   position: relative;
@@ -24,7 +24,6 @@ section {
   
 }
 .sec{
-border-bottom:3px solid lightgray;
 width:100%;
 text-align:center;
 height: 50vh;
@@ -34,7 +33,7 @@ padding-bottom:2rem;
 height:360px;
 }
 #sido{
-height:300px;
+height:100px;
 }
 .in{
 margin:2%;
@@ -53,7 +52,7 @@ margin:15px;
 }
 section video {
   position: absolute;
-  top: 50%;
+  top: 78%;
   left: 50%;
   min-width: 100%;
   min-height: 100%;
@@ -67,7 +66,7 @@ section video {
 }
 .display-3{
 	font-size:100px;
-	letter-spacing:50px;
+	letter-spacing:70px;
 }
 section .container {
   color:white;
@@ -128,7 +127,7 @@ section .overlay {
 <section class="sec" id="how">
 	<!-- 사이트 이용설명 -->
 		<div class="section-title">
-			<h2 style="font-size:50px;font-weight:bold;">About The Gabom</h2>
+			<h2 style="color:#3abade;font-size:70px;font-weight:bold;">About The Gabom</h2>
 			<h5 style="font-weight:bold;">일상에 지친 당신 떠나가보자! </h5>
 		</div>
 		<div class="out" style="margin:0 20%;" >
@@ -143,7 +142,7 @@ section .overlay {
 				<div class="featured-icon"><i class="fa-3x fas fa-users"></i></div>
 				<div class="featured-text">
 					<h4 style="font-weight:bold;">SNS와 소모임으로 다양한 <br>사람들과 소통하세요!</h4>
-					<p style="width:350px">다양한 소모임과  SNS를 활용하여 사람들과 소통하세요</p>
+					<p style="width:370px">다양한 소모임과  SNS를 활용하여 사람들과 소통하세요</p>
 				</div>
 			</div>
 			<div class="in">
@@ -157,10 +156,10 @@ section .overlay {
 </section>
 
 <section class="sec" id="tourlist" style="height: 60vh;">
-	<!-- 최근 예약된 집  4개 출력-->
 			<div class="out">
-				<img style="width:50%;height:100%" src="./resources/houseimg/t4.JPG">
-				<div id="t_list">
+				<img style="width:50%;height:100%" src="./resources/cssimg/t4.JPG">
+				<div style="width:50%">
+				 공유많이 된 여행 리스트 가져오기 
 					<table id="t_table"></table>
 				</div>
 			</div>
@@ -169,7 +168,7 @@ section .overlay {
 <section class="sec" id="house">
 	<!-- 최근 예약된 집  4개 출력-->
 	<div class="section-title">
-			<h2 style="font-size:50px;font-weight:bold;">House</h2>
+			<h2 style="color:#3abade;font-size:70px;font-weight:bold;">House</h2>
 			<p><strong class="hftext">최근에 예약된 숙소를 만나보세요!</strong></p>
 			<div class="out" id="himg">
 				
@@ -180,7 +179,7 @@ section .overlay {
 <section class="sec" id="food">
 	<!-- 최근 예약된 맛집 리스트 4개 출력-->
 	<div class="section-title">
-			<h2 style="font-size:50px;font-weight:bold;">Food</h2>
+			<h2 style="color:#3abade;font-size:70px;font-weight:bold;">Food</h2>
 			<p><strong class="hftext">최근에 예약된 맛집을 만나보세요!</strong></p>
 			<div class="out" id="fimg">
 				
@@ -191,9 +190,26 @@ section .overlay {
 <section class="sec" id="sido">
 	<!-- 대충 자리 채울려고 시,도청 마크 넣고 여행가능 지역 표시  -->
 	<div class="section-title">
-			<h2 style="font-size:50px;font-weight:bold;">Tour</h2>
-			<div class="out"></div>
-		</div>
+			<h2 style="color:#3abade;font-size:70px;font-weight:bold;">Tour</h2>
+	</div>
+		<div class="out" style="height:100px;">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/1.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/2.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/3.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/4.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/5.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/6.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/7.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/8.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/9.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/10.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/11.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/12.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/13.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/14.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/15.JPG">
+					<img style="width:100px;height: 50px;" src="./resources/cssimg/16.JPG">
+			</div>
 </section>
 
 <section class="sec" style="height:40vh;">
@@ -305,20 +321,6 @@ $(function() {
 	
 	
 }); */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

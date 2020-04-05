@@ -27,11 +27,13 @@ public class RestHomeController {
 		return json;
 	}
 	
-	/*
-	 * @RequestMapping(value = "/planlist",
-	 * produces="text/plain;charset=utf-8")//시작할때 불러오는거 public String planlist() {
-	 * System.out.println("목록 불러와라 ");
-	 * 
-	 * String json =trs.getplanlist(); return json; }
-	 */
+	
+//	 @RequestMapping(value = "/planlist", produces="text/plain;charset=utf-8")//시작할때 불러오는거 
+//	 public String planlist() {
+//		 System.out.println("목록 불러와라 ");
+//	  
+//		 String json =trs.getplanlist(); 
+//		 return json; 
+//	 }
+	 
 }

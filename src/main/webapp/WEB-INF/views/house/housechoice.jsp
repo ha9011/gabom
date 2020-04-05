@@ -16,7 +16,7 @@ width:100%;
 }
 #sub{
 width:1000px;
-margin:0 35%;
+margin:0 15%;
 }
 .card-img-top{
 width:100%;
@@ -39,7 +39,7 @@ letter-spacing:10px;
 
 
 <!-- Page Content -->
-<section class="container" id="imgzone" style="padding-top: 2rem;height:100%">
+<section class="container" id="imgzone" style="padding:4rem;height:100%">
   
  
     <div class="col-xl-3 col-md-6 mb-4" id="out">

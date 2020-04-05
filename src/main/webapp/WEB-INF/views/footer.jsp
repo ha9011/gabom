@@ -145,25 +145,25 @@ color:gray;
 					<div class="col-lg-12 text-center">
 						<div class="section-title">
 							<h2 style="color:#3abade;font-size:70px;">Contact Us</h2>
-							<p>If you have some Questions or need Help! Please Contact Us!<br>We make Cool and Clean Design for your Business</p>
+							<p>질문이 있거나 도움이 필요한 경우 아래로 문의하시기 바랍니다</p>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-3">
 						<div class="section-text">
-							<h4 style="color:#3abade">Our Business Office</h4>
-							<p>3422 Street, Barcelona 432, Spain, New Building North, 15th Floor</p>
-							<p><i class="fa fa-phone"></i> +101 377 655 22125</p>
-							<p><i class="fa fa-envelope"></i> mail@yourcompany.com</p>
+							<h4 style="color:#3abade">회사위치</h4>
+							<p>인천광역시 미추홀구 학익동 663-1 <br>태승빌딩</p>
+							<p><i class="fa fa-phone"></i> +82 032-123-4567</p>
+							<p><i class="fa fa-envelope"></i> mail@ourcompany.com</p>
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="section-text">
-							<h4 style="color:#3abade">Business Hours</h4>
-							<p><i class="fa fa-clock-o"></i> <span class="day">Weekdays:</span><span>9am to 8pm</span></p>
-							<p><i class="fa fa-clock-o"></i> <span class="day">Saturday:</span><span>9am to 2pm</span></p>
-							<p><i class="fa fa-clock-o"></i> <span class="day">Sunday:</span><span>Closed</span></p>
+							<h4 style="color:#3abade">영업시간</h4>
+							<p><i class="fa fa-clock-o"></i> <span class="day">평일:</span><span>9시 - 20시</span></p>
+							<p><i class="fa fa-clock-o"></i> <span class="day">토요일:</span><span>9시 - 14시</span></p>
+							<p><i class="fa fa-clock-o"></i> <span class="day">일요일:</span><span>Closed</span></p>
 						</div>
 					</div>
 					<div class="col-md-6">
