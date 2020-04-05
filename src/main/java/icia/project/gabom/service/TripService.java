@@ -692,12 +692,16 @@ public class TripService {
 		return new Gson().toJson(myplanlist);
 	}
 
-	/*
-	 * //home에서 여행계획들 불러옴 public String getplanlist() {
-	 * 
-	 * 
-	 * return null; }
-	 */
+	
+	  //home에서 여행계획들 불러옴 
+//	public String getplanlist() {
+//		String json = null;
+//		
+//		
+//	 
+//		return json; 
+//	 }
+	 
 
 	
    
