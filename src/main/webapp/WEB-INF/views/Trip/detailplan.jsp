@@ -92,6 +92,7 @@ header {
 
 /* 상세여행 영역  */
 .area {
+	margin-top : 60px;
 	display: flex;
 }
 
@@ -377,6 +378,7 @@ header {
 
 </body>
 <script>
+
 var trip_data = ${detrip};
 var HouseReserCheck = ${HouseReserCheck};  //예약했는지 유무
 var areaCode = trip_data[0].trip_area;
@@ -1671,28 +1673,19 @@ const addDate= () => {
     			idxTD++;
     		}
     		
-    		//     		var dayy = data.day;;
-//     		var tripNumm = data.tripNum;
-//     		var dataArr = data.tripData;
-
+    		
     		points[currentPlanDay]=[];    // 좌표 초기화
 	 		$("#detailTrip").empty();
 	 		initMapKaKao();
 					
-// 			//가장 중요한 부분
-// 			arr[dayy] = data.tripData
-			
-// 			console.log("arr",arr);
-// 			console.log("points",points);
-// 			console.log("tripDate",arr[dayy]);
-// 			console.log("currentPlanDay",dayy);
-	
-//  		let arrFrame = arr[dayy];
-//  		let pointsFrame = points[dayy];
-	
-	
-//  		createPlanForm(arrFrame,pointsFrame)
-    		
+	 		
+	 		$("#totaldate").empty();
+ 			var sd = getFormatDate(trip_data[0].trip_start_date);
+ 			var ed = getFormatDate(trip_data[0].trip_end_date);
+ 			var totaldate =$('<h1>'+sd+' - '+ed+'</h1>')
+ 			//var area = $('<input type="hidden" value="'+areaCode+'"')
+ 			$("#totaldate").append(totaldate);
+
     	},
     	error:function(error){
 			alert("fail")
@@ -1703,114 +1696,280 @@ const addDate= () => {
 	
 }
 
-const deleDate= () => {
+const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 아예 삭제, 마지막 날짜를 지우면 뒤에게 오는게 아니라 앞에게 온다, 그외 날짜를 지우면 뒤에서 넘어온다.
+    
 	console.log("deleDate")//
 	console.log("현재페이지 : " +currentPlanDay )
 	console.log("arr",arr)
-	console.log("trip_data",trip_data[0].trip_end_date);
-	var endDate = new Date(trip_data[0].trip_end_date);   // 마지막 여행날짜에서 하루 줄어들어야함
-	endDate.setDate(endDate.getDate()-1);  
-	var deleDate = new Date(trip_data[0].trip_start_date);
-	deleDate.setDate(deleDate.getDate()+(currentPlanDay-1));  
+	var objlength = Object.keys(arr).length
+	console.log("길이 : ",objlength);
 	
-	console.log("endDate",endDate);
-	console.log("whatnumber",HouseReserCheck.length-1)  //몇번째
+	if(objlength==1){//아에 삭제
+		//alert("마지막 삭제")
+		
+		
+		var data = {
+			"tripnumber":trip_data[0].trip_number,
+		}
+		
+		
+		
+		$.ajaxSetup({         
+	    	beforeSend : function(xhr){
+	    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	    });//먼저 보냄
+	    				
+	    $.ajax({
+	    	url:'tprest/deleteTripPlan',
+	    	type:'post',
+	    	data:data,
+	    	success:function(data){
+				alert("마지막 페이지 삭제 되었습니다.");
+	    		location.href="myplan";
+	 			
+	    	},
+	    	error:function(error){
+				alert("fail")
+				console.log(error);
+			}
+		})  // ajax end
 	
-	var data = {
-		"tripnumber":trip_data[0].trip_number,
-		"deleDate" :  getFormatDateDB(deleDate),
-		"nDate": HouseReserCheck.length-1,
-		"currentDay" : currentPlanDay,
-		"endDate" : getFormatDateDB(endDate)
+	}else if(currentPlanDay==objlength){//----------------------마지막삭제
+		//alert("마지막 삭제")
+		console.log("trip_data",trip_data[0].trip_end_date);
+		var endDate = new Date(trip_data[0].trip_end_date);   // 마지막 여행날짜에서 하루 줄어들어야함
+		endDate.setDate(endDate.getDate()-1);  
+		var deleDate = new Date(trip_data[0].trip_start_date);
+		deleDate.setDate(deleDate.getDate()+(currentPlanDay-1));  
+		
+		console.log("endDate",endDate);
+		console.log("whatnumber",HouseReserCheck.length-1)  //몇번째
+		
+		var data = {
+			"tripnumber":trip_data[0].trip_number,
+			"deleDate" :  getFormatDateDB(deleDate),
+			"nDate": HouseReserCheck.length-1,
+			"currentDay" : currentPlanDay,
+			"endDate" : getFormatDateDB(endDate)
+		}
+		
+		console.log("deleDate",data)
+		
+		
+		
+		
+		$.ajaxSetup({         
+	    	beforeSend : function(xhr){
+	    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	    });//먼저 보냄
+	    				
+	    $.ajax({
+	    	url:'tprest/delePlanDateLast',
+	    	type:'post',
+	    	data:data,
+	    	dataType: "json",
+	    	success:function(data){
+	    		//console.log("원래 하우스",HouseReserCheck)
+	    		console.log("어떻게 나올까",data);
+	    		
+				HouseReserCheck=JSON.parse(data.HouseReserCheck);
+	     		trip_data = JSON.parse(data.detail);
+	    		let deleToNext = JSON.parse(data.deleToNext);  // 새로운 arr 가져오는거용
+	    		console.log("deleToNext",deleToNext);
+	     		
+	    		let dayy = (deleToNext.day);   // 앞에 거 불러야하니깐
+	    		let tripNumm = deleToNext.tripNum;
+	    		let dataArr = deleToNext.tripData;
+	    		console.log("dayy",dayy);
+	    		console.log("tripNumm",tripNumm);
+	    		console.log("dataArr",dataArr);
+	    		
+	     		console.log("변경 하우스",HouseReserCheck)
+				console.log("len",HouseReserCheck.length)
+				console.log("trip_data",trip_data)
+				
+// 	            delete arr[currentPlanDay];  // 여행플랜중 n번째  삭제, 확인
+// 	    		for(let i = 1; i <=HouseReserCheck.length+1;i++){
+// 	    		    if(i>currentPlanDay){
+// 	    		    	arr[i-1]= arr[i]
+// 	    		    }
+// 	    		}
+	            
+	            console.log("HouseReserCheck.length",HouseReserCheck.length)
+	            
+	    		delete arr[HouseReserCheck.length+1];  //마지막 번호 지우기
+	    		delete points[HouseReserCheck.length+1];  //마지막 좌표 지우기
+	    		
+	     		console.log("이후 arr : ",arr)
+	    		
+	    		
+	    		//여행 리스트 추가  // 추가하면 바로 번호로 가기,  //currentPlanDay현재 지워진날짜
+	    		$("#date").empty();
+	    		let idxTD = 1;
+	    		//$("#date").append(li);
+	    		
+				console.log("trip_data",trip_data)
+	    		for(let i = 1; i < currentPlanDay ;i++){
+
+	    			console.log("순서 i : ",i)
+	    			console.log("trip_data[i-1]",trip_data[i-1]);
+	    			let li =$('<li data-trnum="'+trip_data[i-1]["trip_number"]+'" class="number">'+trip_data[i-1].trip_day+'</li>');
+					$("#date").append(li);
+					
+					if(i==currentPlanDay-1){
+						let li =$('<li data-trnum="'+trip_data[i-1].trip_number+'" class="number">'+trip_data[i-1].trip_day+'</li>');
+						$("#date").prepend(li);
+							
+					}
+	    		}	
+
+	    		//points[currentPlanDay]=[];    // 좌표 초기화
+	    		
+		 		$("#detailTrip").empty();
+		 		initMapKaKao();
+						
+	 			//가장 중요한 부분
+	 			arr[dayy-1] = dataArr;
+				
+				console.log("arr",arr);
+				console.log("points",points);
+				console.log("tripDate",arr[dayy-1]);
+				console.log("currentPlanDay",dayy-1);
+		
+	 			let arrFrame = arr[dayy-1];
+	 			let pointsFrame = points[dayy-1];
+		
+		
+	 			createPlanForm(arrFrame,pointsFrame)
+	 			
+				
+	 			$("#totaldate").empty();
+	 			var sd = getFormatDate(trip_data[0].trip_start_date);
+	 			var ed = getFormatDate(trip_data[0].trip_end_date);
+	 			var totaldate =$('<h1>'+sd+' - '+ed+'</h1>')
+	 			//var area = $('<input type="hidden" value="'+areaCode+'"')
+	 			$("#totaldate").append(totaldate);
+	 			
+	    	},
+	    	error:function(error){
+				alert("fail")
+				console.log(error);
+			}
+		})  // ajax end
+	}else{  // 일반 삭제
+		console.log("trip_data",trip_data[0].trip_end_date);
+		var endDate = new Date(trip_data[0].trip_end_date);   // 마지막 여행날짜에서 하루 줄어들어야함
+		endDate.setDate(endDate.getDate()-1);  
+		var deleDate = new Date(trip_data[0].trip_start_date);
+		deleDate.setDate(deleDate.getDate()+(currentPlanDay-1));  
+		
+		console.log("endDate",endDate);
+		console.log("whatnumber",HouseReserCheck.length-1)  //몇번째
+		
+		var data = {
+			"tripnumber":trip_data[0].trip_number,
+			"deleDate" :  getFormatDateDB(deleDate),
+			"nDate": HouseReserCheck.length-1,
+			"currentDay" : currentPlanDay,
+			"endDate" : getFormatDateDB(endDate)
+		}
+		
+		console.log("deleDate",data)
+		
+		
+		
+		
+		$.ajaxSetup({         
+	    	beforeSend : function(xhr){
+	    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	    });//먼저 보냄
+	    				
+	    $.ajax({
+	    	url:'tprest/delePlanDate',
+	    	type:'post',
+	    	data:data,
+	    	dataType: "json",
+	    	success:function(data){
+	    		//console.log("원래 하우스",HouseReserCheck)
+	    		console.log("어떻게 나올까",data);
+	    		
+				HouseReserCheck=JSON.parse(data.HouseReserCheck);
+	     		trip_data = JSON.parse(data.detail);
+	    		var deleToNext = JSON.parse(data.deleToNext);  // 새로운 arr 가져오는거용
+	    		console.log("deleToNext",deleToNext);
+	     		
+	    		var dayy = deleToNext.day;;
+	    		var tripNumm = deleToNext.tripNum;
+	    		var dataArr = deleToNext.tripData;
+	    		console.log("dayy",dayy);
+	    		console.log("tripNumm",tripNumm);
+	    		console.log("dataArr",dataArr);
+	    		
+	     		console.log("변경 하우스",HouseReserCheck)
+				console.log("len",HouseReserCheck.length)
+				console.log("trip_data",trip_data)
+				
+	            delete arr[currentPlanDay];
+	    		for(let i = 1; i <=HouseReserCheck.length+1;i++){
+	    		    if(i>currentPlanDay){
+	    		    	arr[i-1]= arr[i]
+	    		    }
+	    		}
+	    		delete arr[HouseReserCheck.length+1];  //마지막 번호 지우기
+	    		
+	     		console.log("이후 arr : ",arr)
+	    		
+	    		
+	    		//여행 리스트 추가  // 추가하면 바로 번호로 가기,  //currentPlanDay현재 지워진날짜
+	    		$("#date").empty();
+	    		let idxTD = 1;
+	    		//$("#date").append(li);
+	    		for(let i = currentPlanDay; i <= HouseReserCheck.length ;i++){
+	    				let li =$('<li data-trnum="'+trip_data[i-1].trip_number+'" class="number">'+trip_data[i-1].trip_day+'</li>');
+	    				$("#date").append(li);
+	    		}
+
+	    		for(let i = 1; i < currentPlanDay ;i++){
+					let li =$('<li data-trnum="'+trip_data[i-1].trip_number+'" class="number">'+trip_data[i-1].trip_day+'</li>');
+					$("#date").append(li);
+				}	
+	    		
+	    	
+
+	    		points[currentPlanDay]=[];    // 좌표 초기화
+		 		$("#detailTrip").empty();
+		 		initMapKaKao();
+						
+	 			//가장 중요한 부분
+	 			arr[dayy] = dataArr;
+				
+				console.log("arr",arr);
+				console.log("points",points);
+				console.log("tripDate",arr[dayy]);
+				console.log("currentPlanDay",dayy);
+		
+	 			let arrFrame = arr[dayy];
+	 			let pointsFrame = points[dayy];
+		
+		
+	 			createPlanForm(arrFrame,pointsFrame)
+				
+	 			$("#totaldate").empty();
+	 			var sd = getFormatDate(trip_data[0].trip_start_date);
+	 			var ed = getFormatDate(trip_data[0].trip_end_date);
+	 			var totaldate =$('<h1>'+sd+' - '+ed+'</h1>')
+	 			//var area = $('<input type="hidden" value="'+areaCode+'"')
+	 			$("#totaldate").append(totaldate);
+	 			
+	    	},
+	    	error:function(error){
+				alert("fail")
+				console.log(error);
+			}
+		})  // ajax end
 	}
 	
-	console.log("deleDate",data)
 	
-	$.ajaxSetup({         
-    	beforeSend : function(xhr){
-    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
-    });//먼저 보냄
-    				
-    $.ajax({
-    	url:'tprest/delePlanDate',
-    	type:'post',
-    	data:data,
-    	dataType: "json",
-    	success:function(data){
-    		//console.log("원래 하우스",HouseReserCheck)
-    		console.log("어떻게 나올까",data);
-    		
-			HouseReserCheck=JSON.parse(data.HouseReserCheck);
-     		trip_data = JSON.parse(data.detail);
-    		var deleToNext = JSON.parse(data.deleToNext);  // 새로운 arr 가져오는거용
-    		console.log("deleToNext",deleToNext);
-     		
-    		var dayy = deleToNext.day;;
-    		var tripNumm = deleToNext.tripNum;
-    		var dataArr = deleToNext.tripData;
-    		console.log("dayy",dayy);
-    		console.log("tripNumm",tripNumm);
-    		console.log("dataArr",dataArr);
-    		
-     		console.log("변경 하우스",HouseReserCheck)
-			console.log("len",HouseReserCheck.length)
-			console.log("trip_data",trip_data)
-			
-            delete arr[currentPlanDay];
-    		for(let i = 1; i <=HouseReserCheck.length+1;i++){
-    		    if(i>currentPlanDay){
-    		    	arr[i-1]= arr[i]
-    		    }
-    		}
-    		delete arr[HouseReserCheck.length+1];  //마지막 번호 지우기
-    		
-     		console.log("이후 arr : ",arr)
-    		
-    		
-    		//여행 리스트 추가  // 추가하면 바로 번호로 가기,  //currentPlanDay현재 지워진날짜
-    		$("#date").empty();
-    		let idxTD = 1;
-    		//$("#date").append(li);
-    		for(let i = currentPlanDay; i <= HouseReserCheck.length ;i++){
-    				let li =$('<li data-trnum="'+trip_data[i-1].trip_number+'" class="number">'+trip_data[i-1].trip_day+'</li>');
-    				$("#date").append(li);
-    		}
-
-    		for(let i = 1; i < currentPlanDay ;i++){
-				let li =$('<li data-trnum="'+trip_data[i-1].trip_number+'" class="number">'+trip_data[i-1].trip_day+'</li>');
-				$("#date").append(li);
-			}	
-    		
-    		//arr[currentPlanDay]=dataArr;
-    		
-    		//     		var dayy = data.day;;
-//     		var tripNumm = data.tripNum;
-//     		var dataArr = data.tripData;
-
-    		points[currentPlanDay]=[];    // 좌표 초기화
-	 		$("#detailTrip").empty();
-	 		initMapKaKao();
-					
-// 			//가장 중요한 부분
- 			arr[dayy] = dataArr;
-			
-			console.log("arr",arr);
-			console.log("points",points);
-			console.log("tripDate",arr[dayy]);
-			console.log("currentPlanDay",dayy);
-	
- 			let arrFrame = arr[dayy];
- 			let pointsFrame = points[dayy];
-	
-	
- 			createPlanForm(arrFrame,pointsFrame)
-    		
-    	},
-    	error:function(error){
-			alert("fail")
-			console.log(error);
-		}
-	})
 }
 
 
@@ -2132,7 +2291,7 @@ $("#hc").on('click',"#houseReservate", function(){
     		title += "<input type='hidden' name='tripdate' value='"+tripdate+"'>";
     		textbox += " "+response+" ";
     		$("#memotitle").append(title);
-    		$("#memocontent").append(textbox);
+    		$("#memocontent").val(textbox);
               
            	var str = $('#memocontent').val();
 

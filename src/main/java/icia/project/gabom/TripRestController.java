@@ -309,6 +309,44 @@ public class TripRestController {
 			return json;
 		}
 		
+		//여행계획 마지막 날 삭제
+				@PostMapping(value = "/delePlanDateLast",produces = "application/json;charset=utf-8")
+				public String delePlanDateLast(
+						@RequestParam("tripnumber")int tripnumber,
+						@RequestParam("deleDate")String deleDate,
+						@RequestParam("nDate")int nDate,
+						@RequestParam("currentDay")int currentDay,
+						@RequestParam("endDate")String endDate,
+						Principal pr
+						){
+					System.out.println("예약 마지막 날 취소 하기");
+					System.out.println("tripnumber : " +tripnumber);
+					System.out.println("deleDate : " +deleDate);
+					System.out.println("nDate : " +nDate); // 몇번째 여행인지
+					System.out.println("currentDay : " +currentDay);
+					System.out.println("endDate : " +endDate);
+					
+					String json = trs.delePlanDate(tripnumber,deleDate,nDate,currentDay,endDate);
+					System.out.println("여행날짜 삭제 하고 최종결과값 : " + json);
+					return json;
+				}
+				
+				//여행계획 삭제
+				@PostMapping(value = "/deleteTripPlan",produces = "application/json;charset=utf-8")
+				public String deleteTripPlan(
+						@RequestParam("tripnumber")int tripnumber,
+						Principal pr
+						){
+					System.out.println("예약 마지막 날 취소 하기");
+					System.out.println("tripnumber : " +tripnumber);
+					
+					String json = trs.deleteTripPlan(tripnumber);
+					
+					return null;
+				}		
+				
+				
+				
 		//여행계획날짜 변경
 				@PostMapping(value = "/changeDay",produces = "application/json;charset=utf-8")
 				public String changeDay(

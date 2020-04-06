@@ -642,23 +642,17 @@ public class TripService {
 		//1.TRip_Plan 여행막날 수정
 		int updateTripPlanEndDay = tpDao.updateTripPlanEndDay(tripnumber,endDate); 
 		System.out.println("여행막날 수정 성공했니? : " + updateTripPlanEndDay);
-		//2-1.Trip_Plan_Date 삭제하기
+		//2.Trip_Plan_Date 삭제하기
 		int deleteTripPlanNDay = tpDao.deleteTripPlanNDay(tripnumber,currentDay); 
 		System.out.println("여행 n번째 삭제 성공했니? : " + deleteTripPlanNDay);
-		//2-2 지운 날짜 이후로 하루씩 내려오기
-		int updateTripPlanNDay = tpDao.updateTripPlanNDay(tripnumber,currentDay); 
-		System.out.println("여행 n번째 이후로 수정 성공했니? : " + updateTripPlanNDay);
 		
-		//3-1 삭제 하기 
+		//3 삭제 하기 
 		int deleteTripPlanDetailNDay = tpDao.deleteTripPlanDetailNDay(tripnumber,currentDay);
 		System.out.println("여행 디테일 n번째 이후로 삭제 성공했니? : " + deleteTripPlanDetailNDay);
-		//3-2.Trip_Plan_Date도 한단계식 내려오기 하기
-		int updateTripPlanDetailNDay = tpDao.updateTripPlanDetailNDay(tripnumber,currentDay);
-		System.out.println("여행 디테일 n번째 이후로 수정 성공했니? : " + updateTripPlanDetailNDay);
 		
 		
 		Map<String,String> result = new HashMap<String, String>();
-		List<Trip_plan> detrip = tpDao.detailplan(tripnumber);
+		List<Trip_plan> detrip = tpDao.detailplan(tripnumber);  // 디테일 여행 가져오기
 	    String jsonDetrip = new Gson().toJson(detrip);
 	    
 	    List<Map<String,Integer>> HouseReserCheck = tpDao.selectHouseReserCheck(Integer.toString(tripnumber));//해당 여행번호에 , 몇번째 여행일
@@ -667,9 +661,10 @@ public class TripService {
 	    
 	    
 	    // 위에서 1개씩 밀려왔으니 그냥 current 쓰면 됨
-	    List<TripPlanDetail> selectResult = tpDao.selectPlanDetail(Integer.toString(tripnumber), Integer.toString(currentDay));//해당 여행번호에 , 몇번째 여행일
+	    List<TripPlanDetail> selectResult = tpDao.selectPlanDetail(Integer.toString(tripnumber), Integer.toString(currentDay-1));//해당 여행번호에 , 몇번째 여행일
 	    TripPlanDay tpd = new TripPlanDay();
 	    tpd.setDay(Integer.toString(currentDay)).setTripNum(Integer.toString(tripnumber)).setTripData(selectResult);
+	    
 	    String deleToNext = new Gson().toJson(tpd);
 	    
 	    result.put("detail", jsonDetrip);
@@ -693,6 +688,23 @@ public class TripService {
 		
 		
 		return new Gson().toJson(myplanlist);
+	}
+
+
+	public String deleteTripPlan(int tripnumber) {
+
+		//1.TRIP_PLAN 삭제
+		int deleteTripPlan = tpDao.deleteTripPlan(tripnumber);
+		//2 TRIP_PLAN_DATE 삭제
+		int deleteTripPlanDate = tpDao.deleteTripPlanDate(tripnumber);
+		//3 TRIP_PLAN_DETAIL 삭제
+		int deleteTripPlanDetail = tpDao.deleteTripPlanDetail(tripnumber);
+		//4 trip_plan_recommand 삭제
+		int deleteTripPlanReco = tpDao.deleteTripPlanReco(tripnumber);
+		//5 TRIP_MEMBER 삭제
+		int deleteTripMember = tpDao.deleteTripMember(tripnumber);
+		
+		return null;
 	}
 
 	

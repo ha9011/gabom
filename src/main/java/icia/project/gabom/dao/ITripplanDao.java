@@ -189,9 +189,22 @@ public interface ITripplanDao {
    @Update("update TRIP_PLAN set  TRIP_SHARE_COUNT = (TRIP_SHARE_COUNT+1) where TRIP_NUMBER =#{tripnum}")
    int updateShareCountTripPlan(@Param("tripnum")int tripnum);  // 공유할떄마다 카운터 추가
 
+   	
+   @Delete("DELETE FROM TRIP_PLAN where TRIP_NUMBER =#{tripnumber}")
+   int deleteTripPlan(@Param("tripnumber")int tripnumber);
 
+   @Delete("DELETE FROM TRIP_PLAN_DATE where TRIP_NUMBER =#{tripnumber}")
+   int deleteTripPlanDate(@Param("tripnumber")int tripnumber);
 
-   
+   @Delete("DELETE FROM TRIP_PLAN_DETAIL where TRIP_NUMBER =#{tripnumber}")
+   int deleteTripPlanDetail(@Param("tripnumber")int tripnumber);
+
+   @Delete("DELETE FROM trip_plan_recommand where TRIP_NUMBER =#{tripnumber}")
+   int deleteTripPlanReco(@Param("tripnumber")int tripnumber);
+
+   @Delete("DELETE FROM TRIP_MEMBER where TRIP_NUMBER =#{tripnumber}")
+   int deleteTripMember(@Param("tripnumber")int tripnumber);
+
 //   @Select("select trip_number,trip_date,trip_destination,trip_memo,trip_title,trip_order from trip_plan_detail where trip_number = #{trip_number} and trip_date = #{trip_date} and trip_order = #{trip_order} and trip_title = #{trip_title}")
 //   String selecttripmemo(Tripmemoupdate tripup);
 
