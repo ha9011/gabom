@@ -1663,7 +1663,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
  	const getTripAreaStr = (areanum)=>{
  		let number = areanum;
  		let result 
- 		if(areanum == 1){
+ 		if(i.trip_area == 1){
  			result = "서울"		  
  	 	  }else if(i.trip_area == 2){
  	 		result = "인천"		  
