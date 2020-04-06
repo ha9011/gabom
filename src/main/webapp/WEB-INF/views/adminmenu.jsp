@@ -247,7 +247,7 @@ li {
 			<div id="sns_declaration" class="container tab-pane fade">
 				<ul class="nav nav-tabs">
 					<li class="nav-item" style="width: 50%">
-						<a class="nav-link" data-toggle="tab" href="#sns_posts" onclick="sns_posts()">sns게시글 신고</a></li>
+						<a class="nav-link" id="sns_trigger" data-toggle="tab" href="#sns_posts" onclick="sns_posts()">sns게시글 신고</a></li>
 					<li class="nav-item" style="width: 50%">
 						<a class="nav-link" data-toggle="tab" href="#sns_posts" onclick="sns_comment()">sns댓글 신고</a></li>
 				</ul>
@@ -474,6 +474,12 @@ li {
 		return yyyy+"-"+mm+"-"+dd;
 	}
 	//---------------------------------------------------------sns게시글 신고 출력 ----------------------------------------------------------------
+// 	$("#snsmanage").on("click",function(){
+// 		console.log("1111sns신고관리 클릭");
+// 		$("#snsmanage").trigger(sns_posts());
+// 	});
+	
+	
 function sns_posts() {
 	console.log("sns게시글 클릭");
 	$.ajaxSetup({
@@ -1538,6 +1544,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
 		if(dtable!=null){
 			dtable.destroy();
 		}
+		$("#sns_trigger").trigger('click');
 	})
 
 	$("#judgeTripPlan").on("click",function(){
