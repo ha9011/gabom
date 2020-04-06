@@ -29,7 +29,8 @@ body{overflow:scroll;}
 	display:flex; 
 }
 #food_list{
-	
+	overflow: auto;
+    height: 900px;
 	width:45%;
 	
 }
@@ -42,19 +43,20 @@ body{overflow:scroll;}
 #maparea{
 	width:70%;
 }
-img{
+#img{
 	width:200px;
 	height:100px;
-	margin:5px;
+	margin:0 10px 5px 0;
 }
 .out{
 width:100%;
 border:1px solid lightgray;
-margin:40px 0;
+margin:40px 0 0 0;
 border-radius: 50px;
 }
 #searchbtn{
 border-radius: 40px;
+background-color:#3abade
 }
 #foodchangesearch{
 text-align:center;
@@ -73,7 +75,7 @@ border:none;
 		<div class="container">
 	<div class="row justify-content-center">
                         <div class="col-12 col-md-5 col-lg-12">
-                                <div  class="out card-body row no-gutters align-items-center">
+                                <div style="padding: 0.5rem;margin:30px 0 30px 50px;" class="out card-body row no-gutters align-items-center">
                                     <div class="col-auto"> <!-- 돋보기 -->
                                         <i class="fas fa-search h4 text-body"></i>
                                     </div>
@@ -97,7 +99,7 @@ border:none;
 		</div>
 		
 		<div id="maparea">
-			<div id="map" style="width:100%; height: 1000px;"></div>
+			<div id="map" style="width:100%; height: 900px;"></div>
 		</div>
 </div>
 
@@ -111,8 +113,8 @@ var food_list = document.getElementById("food_list");
 for(i of test ){
 	console.log("집리스트 보여줘",i)
 	 var out = $('<div class="food" name ='+[i.food_number]+'></div>')
-	 var img = $('<div class="img"><img alt='+[i.food_sysname]+'name ='+[i.food_number]+' src="'+[i.food_sysname]+'"></div>')
-	 var info = $('<div class="info">'+"이름"+[i.food_name]+"<br>"+"가격"+[i.food_price]+"<br>"+"주소"+[i.food_address]+'</div>')
+	 var img = $('<div class="mainimg"><img id="img" alt='+[i.food_sysname]+'name ='+[i.food_number]+' src="'+[i.food_sysname]+'"></div>')
+	 var info = $('<div class="info"><p  style="font-weight:bold">'+[i.food_name]+"</p>"+"주소 : "+[i.food_address]+'</div>')
 
 	$("#food_list").append(out);
 	out.append(img);
@@ -211,9 +213,9 @@ for (var i = 0; i < positions.length; i ++) {
 			         
 			         for(i of data ){
 			        		console.log("집리스트 보여줘",i)
-			        		 var out = $('<div class="food" name ='+[i.food_number]+'></div>')
-			        		 var img = $('<div id="mainimg" name ='+[i.food_number]+'><img alt='+[i.food_sysname]+'name ='+[i.food_number]+' src="'+[i.food_sysname]+'"></div>')
-			        		 var info = $('<div class="info">'+"이름"+[i.food_name]+"<br>"+"가격"+[i.food_price]+"<br>"+"주소"+[i.food_address]+'</div>')
+			        		var out = $('<div class="food" name ='+[i.food_number]+'></div>')
+	 						var img = $('<div class="mainimg"><img id="img"alt='+[i.food_sysname]+'name ='+[i.food_number]+' src="'+[i.food_sysname]+'"></div>')
+	 						var info = $('<div class="info"><p  style="font-weight:bold">'+[i.food_name]+"<br>"+"주소 : "+[i.food_address]+'</div>')
 
 			        		$("#food_list").append(out);
 			        		out.append(img);

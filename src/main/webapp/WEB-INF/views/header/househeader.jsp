@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css?family=Jua&display=swap&subset=korean" rel="stylesheet"/>
 <link rel="stylesheet" href="resources/fontCss/fontAni.css">
 <style>
-img{
+#mainrogo{
 margin: 5px 40%;
 width:30%;
 }
@@ -131,7 +131,7 @@ background-color: #E6E6E6
 		
 		
 		<div class="col-md-12 col-sm-12 col-xs-12"><a href="/gabom/">
-         <img src="./resources/headerImage/logo3.png">
+         <img id="mainrogo" src="./resources/headerImage/logo3.png">
          </a>
       </div>
 		
@@ -145,10 +145,10 @@ background-color: #E6E6E6
 				<li class='testli nav-item popularRestaurant'><a href="foodmain" id="popularRestaurant">맛집</a></li>
 				<li class='testli nav-item somoim'><a href="somoim/mainsomoim" id="somoimm" >소모임</a></li>
 <!-- 				//<li class='testli nav-item somoim'><a href="somoim/mainsomoim" id="somoim">소모임</a></li> -->
-				<li class='testli nav-item service'><a href="#" id="service">고객센터</a></li>
+				<li class='testli nav-item service'><a href="servicecenter" id="service">고객센터</a></li>
 				
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
-           			 <li class='testli nav-item adminmenu'><a href="../adminmenu" id="admin">관리자</a></li>
+           			 <li class='testli nav-item adminmenu'><a href="adminmenu" id="admin">관리자</a></li>
 				</sec:authorize>
 			</ul>
 		

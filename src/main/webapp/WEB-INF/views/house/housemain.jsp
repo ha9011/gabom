@@ -16,6 +16,7 @@
 <style>
 .form-control-borderless {
     border:none;
+    
 }
 
 .form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
@@ -37,8 +38,8 @@
 }
 #img{
 	width:100%;
-	height:200px;
-	margin:5px 0;
+	height:150px;
+	margin:0;
 }
 #info{
 	color:#848484;
@@ -74,7 +75,7 @@ background-color:#3abade;
 	<div class="container">
 		<div class="row justify-content-center">
                         <div class="col-12 col-md-5 col-lg-12">
-                                <div style="padding: 0.5rem;" class="out card-body row no-gutters align-items-center">
+                                <div style="padding: 0.5rem;margin-left: 50px;" class="out card-body row no-gutters align-items-center">
                                     <div class="col-auto"> <!-- 돋보기 -->
                                         <i class="fas fa-search h4 text-body"></i>
                                     </div>
@@ -113,8 +114,8 @@ var houselist=${houselist};
  		 
  		 var out = $('<div class="house" name ='+[i.house_number]+'></div>');
  		 var img = $('<div id="mainimg" name ='+[i.house_number]+'><img id="img" alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>');
- 		 var title=$('<h4>'+[i.house_name]+'</h4>');
- 		 var info = $('<div id="info">'+"<br>"+"가격    "+[i.house_price]+"만원"+"<br>"+[i.house_address]+'</div>');
+ 		 var title=$('<p style="font-weight:bold">'+[i.house_name]+'</p>');
+ 		 var info = $('<div id="info">'+"가격    "+[i.house_price]+"만원"+"<br>"+[i.house_address]+'</div>');
 
  		$("#house_list").append(out);
  		out.append(img);

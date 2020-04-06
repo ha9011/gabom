@@ -24,7 +24,7 @@
 }
 
 .bg-image {
-  background-image: url('./resources/houseimg/housefrm.jpg');
+  background-image: url('./resources/houseimg/housefrm.JPG');
   background-size: cover;
   background-position: center;
 }

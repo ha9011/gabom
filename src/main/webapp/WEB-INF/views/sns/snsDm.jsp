@@ -71,6 +71,12 @@ table img {
 </style>
 <script type="text/javascript">
 	$(function(){
+		document.ondblclick = function(evt) {
+		    if (window.getSelection)
+		        window.getSelection().removeAllRanges();
+		    else if (document.selection)
+		        document.selection.empty();
+		}
 		dmLoad();
 	});
 </script>
@@ -91,7 +97,7 @@ table img {
 				make+='<img src="'+json[k][0]["memberPic"]+'" class="img-thumbnail';
 				make+=' img-responsive">';
 				make+='</td>';
-				make+='<td class="col-xs-10 col-sm-10 col-md-11 col-lg-11">';
+				make+='<td class="col-xs-10 col-sm-10 col-md-11 col-lg-11" ondblclick="window.open(\'sns/dm/detail\',\'DMDetail\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=800,top=150\')">';
 				make+='<div class="headBox">';
 				make+='<div class="userId">'+json[k][0]["sendMember"]+'</div>';
 				make+='<div class="contentDate">'+json[k][0]["dmDateRsult"];
@@ -134,7 +140,6 @@ table img {
 	</script>
 	<script>
 	function clickRow(e){
-		console.dir(e);
 		$(".oneRow").css("background-color","white");
 		e.style.backgroundColor="#E6E6E6";
 	}
