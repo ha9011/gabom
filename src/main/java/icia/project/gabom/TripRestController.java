@@ -215,7 +215,7 @@ public class TripRestController {
 		String json = trs.updatetripmemo(tripup);
 		
 		
-		return json;
+		return null;
 	
 	}
    
