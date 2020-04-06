@@ -26,7 +26,7 @@
 	margin:0 10%;
 }
 #food{
-	width:20%;
+	width:15%;
 	display:inline-block;
 	margin:20px;
 	box-shadow:5px 5px 3px lightgray;
@@ -34,8 +34,8 @@
 }
 #img{
 	width:100%;
-	height:200px;
-	margin:5px 0;
+	height:150px;
+	margin:0;
 }
 #info{
 	color:#848484;
@@ -56,6 +56,7 @@ border-radius: 50px;
 }
 #searchbtn{
 border-radius: 40px;
+background-color:#3abade;
 }
 </style>
 
@@ -70,7 +71,7 @@ border-radius: 40px;
 	<div class="container">
 		<div class="row justify-content-center">
                         <div class="col-12 col-md-5 col-lg-12">
-                                <div  class="out card-body row no-gutters align-items-center">
+                                <div style="padding: 0.5rem;margin-left: 50px;" class="out card-body row no-gutters align-items-center">
                                     <div class="col-auto"> <!-- 돋보기 -->
                                         <i class="fas fa-search h4 text-body"></i>
                                     </div>
@@ -80,7 +81,7 @@ border-radius: 40px;
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto"><!-- 검색버튼 -->
-                                        <button id="searchbtn" class="btn btn-lg btn-primary " type="submit">Search</button>
+                                        <button id="searchbtn" class="btn btn-lg " type="submit">Search</button>
                                     </div>
                                     <!--end of col-->
                                 </div>
@@ -108,7 +109,7 @@ var foodlist=${foodlist};
  		
  		 var out = $('<div id="food" name ='+[i.food_number]+'></div>')
  		 var img = $('<div id="mainimg" name ='+[i.food_number]+'><img id="img" alt='+[i.food_sysname]+'name ='+[i.food_number]+' src="'+[i.food_sysname]+'"></div>')
- 		 var title=$('<h4>'+[i.food_name]+'</h4>');
+ 		 var title=$('<p style="font-weight:bold">'+[i.food_name]+'</p>');
  		 var info = $('<div id="info">'+"주소: "+[i.food_address]+'</div>')
 
  		$("#food_list").append(out);

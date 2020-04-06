@@ -29,7 +29,8 @@ body{overflow:scroll;}
 	display:flex; 
 }
 #house_list{
-	
+	overflow: auto;
+    height: 900px;
 	width:45%;
 	
 }
@@ -42,19 +43,24 @@ body{overflow:scroll;}
 #maparea{
 	width:70%;
 }
-img{
+#img{
 	width:200px;
 	height:100px;
-	margin:5px;
+	margin:0 10px 5px 0;
 }
 .out{
 width:100%;
 border:1px solid lightgray;
-margin:40px 0;
+margin:40px 0 0 0;
 border-radius: 50px;
 }
 #searchbtn{
 border-radius: 40px;
+background-color:#3abade
+}
+#housechangesearch{
+border:none;
+text-align:center;
 }
 #searchhouse{
 text-align:center;
@@ -73,7 +79,7 @@ border:none;
 	<div class="container">
 	<div class="row justify-content-center">
                         <div class="col-12 col-md-5 col-lg-12">
-                                <div  class="out card-body row no-gutters align-items-center">
+                                <div style="padding: 0.5rem;margin:30px 0 30px 50px;" class="out card-body row no-gutters align-items-center">
                                     <div class="col-auto"> <!-- 돋보기 -->
                                         <i class="fas fa-search h4 text-body"></i>
                                     </div>
@@ -83,7 +89,7 @@ border:none;
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto"><!-- 검색버튼 -->
-                                        <button id="searchbtn" class="btn btn-lg btn-primary " type="submit">Search</button>
+                                        <button id="searchbtn" class="btn btn-lg  " type="submit">Search</button>
                                     </div>
                                     <!--end of col-->
                                 </div>
@@ -97,7 +103,7 @@ border:none;
 		</div>
 		
 		<div id="maparea">
-			<div id="map" style="width:100%; height: 1000px;"></div>
+			<div id="map" style="width:100%; height: 900px;"></div>
 		</div>
 </div>
 
@@ -111,8 +117,8 @@ var house_list = document.getElementById("house_list");
 for(i of test ){
 	console.log("집리스트 보여줘",i)
 	 var out = $('<div class="house" name ='+[i.house_number]+'></div>')
-	 var img = $('<div class="img"><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>')
-	 var info = $('<div class="info">'+"이름"+[i.house_name]+"<br>"+"가격"+[i.house_price]+"<br>"+"주소"+[i.house_address]+'</div>')
+	 var img = $('<div class="img"><img id="img" alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>')
+	 var info = $('<div class="info"><p  style="font-weight:bold">'+[i.house_name]+"</p>"+"1박 가격  : "+[i.house_price]+'만원'+"<br>"+"주소 : "+[i.house_address]+'</div>')
 
 	$("#house_list").append(out);
 	out.append(img);
@@ -255,9 +261,9 @@ function makeOutListener() {
 			         
 			         for(i of data ){
 			        		console.log("집리스트 보여줘",i)
-			        		 var out = $('<div class="house" name ='+[i.house_number]+'></div>')
-			        		 var img = $('<div id="mainimg" name ='+[i.house_number]+'><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>')
-			        		 var info = $('<div class="info">'+"이름"+[i.house_name]+"<br>"+"가격"+[i.house_price]+"<br>"+"주소"+[i.house_address]+'</div>')
+			        		var out = $('<div class="house" name ='+[i.house_number]+'></div>')
+							var img = $('<div class="img"><img id="img" alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>')
+	 						var info = $('<div class="info"><p  style="font-weight:bold">'+[i.house_name]+"</p>"+"1박 가격 : "+[i.house_price]+'만원'+"<br>"+"주소 : "+[i.house_address]+'</div>')
 
 			        		$("#house_list").append(out);
 			        		out.append(img);
@@ -322,8 +328,6 @@ function makeOutListener() {
 				}
 });
 })//event end
-	 
-
 
 
 

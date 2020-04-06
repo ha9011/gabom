@@ -19,294 +19,231 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"> 
 
+
 <!-- Bootstrap core CSS -->
-<link href="./resources/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-<!-- Custom styles for this template -->
-<link href="./resources/css/jquery.bxslider.css" rel="stylesheet">
-<link href="./resources/css/style.css" rel="stylesheet">
-<!-- 레이아웃 부트스트랩 영역 -->
+  <link href="./resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+  <!-- Custom styles for this template -->
+  <link href="./resources/css/modern-business.css" rel="stylesheet">
+  
 <style>
-body {
-	overflow: scroll;
-	font-size:20px;
+.navbar-dark .navbar-nav .nav-link{
+color:white;
 }
-
-.container {
-	width: 100%;
+#dtcommit{
+font-size: 15px;
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    margin-top: -26px;
+    margin-left: 15px;
 }
-
-.form-control-borderless {
-	border: none;
+.date{/* 예약날짜 */
+margin:0 0 5px 15px;
 }
-
-.form-control-borderless:hover, .form-control-borderless:active,
-	.form-control-borderless:focus {
-	outline: none;
-	box-shadow: none;
-	
-}
-
-h2 { /*숙소명 */
-	text-align: center;
-	margin: 2% 35%;
-	width: 300px;
-}
-
-input {
-	width: 200px;
-	height: 40px;
-	margin: 5px;
-}
-
-#reservation {
-	margin: 2% 0;
-}
-
-#reser {
-	font-size: 20px;
-	margin: 5% 0;
-	border:2px solid lightgray;
-	width:600px;
-}
-
-#insertbtn {
-	margin: 50px 7%;
-}
-
-section {
-	margin: -100px 0;
-	font-size:20px;
-}
-
-.carousel-inner {
-	margin: 20px;
-	width: 100%;
-	height: 550px;
-}
-
 .d-block{
-	width: 100%;
-	height: 500px;
-}
-#replyinsert{
-display:flex; 
-border:2px solid lightgray;
-}
-#user_id{
-margin:13px;
-}
-#repleinsert_btn{
-width:100px;
-font-size:20px;
-height:40px;
-margin:25px;
-margin-left:200px;
-text-align: center;
-}
-#replylist{
-font-size:20px;
-float:left;
-text-align:left;
-}
-.ui-datepicker{
-width:300px;
-height:250px;
-font-size:20px;
-}
-#ma{
-margin-top:-180px;
-margin-bottom:50px;
-}
-#ma2{
-margin-bottom:20px;
-font-size:20px;
-}
-#rev{
-border-top:1px solid lightgray;
-
-}
-#re{
-border-top:1px solid lightgray;
-margin-top:2%;
-
-}
-#searchhouse{
-text-align:center;
-margin:0 10px;
-border:none;
-font-size:20px;
-}
-.out{
 width:100%;
-border:1px solid lightgray;
-margin:40px;
-border-radius: 50px;
+height:600px;
 }
-#searchbtn{
-border-radius: 40px;
+.i{
+margin: 5px 15px 20px 0;
+font-weight:bold;
 }
-</style>
 
+</style>
 </head>
 <body>
-<!-- 	<header> -->
-<%-- 		<jsp:include page="/WEB-INF/views/header/househeader.jsp" /> --%>
-<!-- 	</header> -->
 
-	<form action="searchhouse" method="get" > <!-- housemain page에서 검색하는 것  -->
-	<div class="container">
-		<div class="row justify-content-center">
-                        <div class="col-12 col-md-5 col-lg-12">
-                                <div  class="out card-body row no-gutters align-items-center">
-                                    <div class="col-auto"> <!-- 돋보기 -->
-                                        <i class="fas fa-search h4 text-body"></i>
-                                    </div>
-                                    <!--end of col-->
-                                    <div class="col"><!-- 검색창 -->
-                                        <input id="searchhouse" name="house_address" class="form-control form-control-borderless" type="search" placeholder="지역을 입력해주세요">
-                                    </div>
-                                    <!--end of col-->
-                                    <div class="col-auto"><!-- 검색버튼 -->
-                                        <button id="searchbtn" class="btn btn-lg btn-primary " type="submit">Search</button>
-                                    </div>
-                                    <!--end of col-->
-                                </div>
-                        </div>
-                        <!--end of col-->
-          </div>
-	</div>
-	</form>
-	
-</div>
+  <!-- Navigation -->
+  <nav style="background-color:#3abade" class="navbar fixed-top navbar-expand-lg navbar-dark  fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/home/">GABOM</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="services.html">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-	<div class="container">
-		<div id="title"></div>
-		<!-- 숙소 이름 영역 -->
+  <header>
+    <div style="width: 70%;margin: 0 15%;" id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <!-- Slide One - Set the background image for this slide in the line below -->
+        <div class="carousel-item active">
+            <img id="img" class="d-block" src="">
+        </div>
+        <!-- Slide Two - Set the background image for this slide in the line below -->
+        <div class="carousel-item" id="one">
+           	<img id="img1" class="d-block" src="" >
+        </div>
+        <!-- Slide Three - Set the background image for this slide in the line below -->
+        <div class="carousel-item">
+           	<img id="img2" class="d-block" src="" >
+        </div>
+         <div class="carousel-item" >
+            	<img id="img3" class="d-block" src="" >
+        </div>
+         <div class="carousel-item">
+            	<img id="img4" class="d-block" src="" >
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </header>
 
-		<section class="main-slider">
-			<div id="carouselExampleControls" class="carousel slide"data-ride="carousel">
-				<div class="carousel-inner">
-					<div class="carousel-item active">
-						<img id="img" class="d-block" src="">
-					</div>
-					<div class="carousel-item">
-						<img id="img1" class="d-block" src="" >
-					</div>
-					<div class="carousel-item">
-						<img id="img2" class="d-block" src="" >
-					</div>
-					<div class="carousel-item">
-						<img id="img3" class="d-block" src="" >
-					</div>
-					<div class="carousel-item">
-						<img id="img4" class="d-block" src="" >
-					</div>
-				</div>
-				<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"> <span
-					class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-					class="sr-only">Previous</span>
-				</a> <a class="carousel-control-next" href="#carouselExampleControls"
-					role="button" data-slide="next"> <span
-					class="carousel-control-next-icon" aria-hidden="true"></span> <span
-					class="sr-only">Next</span>
-				</a>
-			</div>
-		</section>
-		<!--사진영역 -->
+  <!-- Page Content -->
+  <!-- Page Content -->
+  <div class="container">
 
+    <div class="row">
 
-		<section id="ma">
-			<div class="row">
-				<div class="col-md-5">
-					<article class="blog-post">
-						<div id="info" class="blog-post-body"></div>
-						<div class="blog-post-body">
-							<h3>주의사항</h3>
-							<p>체크인:오후 4:00 - 오후 10:00</p>
-							<p>체크아웃:오전 11:00</p>
-							<p>예약 취소</p>
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+        <h3 id="title" class="mt-4" style="margin-bottom: 20px;"></h3>
+
+        <!-- Post Content -->
+      <div class="blog-post-body">
+      					<div id="info"></div>
+							<p style="font-weight:bold;">주의사항</p>
+							<p>체크인:오후 4:00 - 오후 10:00 &nbsp & &nbsp 체크아웃:오전 11:00</p>
+							<p>예약 취소규정</p>
 							<p>48시간 동안 취소 수수료 없음</p>
 							<p>그 이후로 체크인 5일 전까지 취소하면 서비스 수수료를 제외한 전액이 환불됩니다.</p>
-							<p>애환동물 금지 , 흡연금지, 파티금지</p>
+							<p>애완동물 금지<i class="fas fa-paw"></i>  흡연금지<i class="fas fa-smoking-ban"></i> 파티금지<i class="fas fa-birthday-cake"></i></p>
 							
-							<img style="width:50px;height:50px;" src="./resources/houseimg/no.JPG">&nbsp;
-							<img style="width:50px;height:50px;" src="./resources/houseimg/nopet.JPG">&nbsp;
-							<img style="width:50px;height:50px;" src="./resources/houseimg/party.png">
+							
 						</div>
-					</article>
-				</div>
-				<!-- 정보 -->
-
-				<div class="rf col-md-7 sidebar-gutter">
-					<aside>
-						<!-- sidebar-widget -->
-						<div style="margin-left:50px;" id="reser" class="sidebar-widget">
-							<h3 class="sidebar-title">지금 예약하기</h3>
-							<div class="widget-container widget-about">
-								<form  id="reservation" name="reservation" method="post">
-									<input class="date" type="text" name="reservation_checkin"
-										id="datepicker1" autocomplete="off" > -<input class="date" type="text"
-										name="reservation_checkout" id="datepicker2" autocomplete="off" >
-									<button
-										style="font-size: 20px; width: 150px; height: 50px; background-color: #064D84"
-										type="button" id="dtcommit" class="btn btn-primary">날짜확정</button>
-									<br> 총액 : <input name="reservation_totalprice" type="text"
-										id="totalprice" placeholder="">만원<br> 인원 : <input
-										name="reservation_person" type="number" id="person" value="">명
-									<input type="hidden" name="house_hostid" id="hostid">
-									<input type="hidden" name="house_number" id="house_number"><br>
-
-									<button
-										style="font-size: 20px; height: 50px; width: 500px; background-color: #064D84"
-										type="submit" id="insertbtn" class="btn btn-lg btn-primary btn-block text-uppercase font-weight-bold mb-2">예약하기</button>
-								</form>
-							</div>
-						</div>
-					</aside>
-				</div>
-				<!-- 예약 form -->
-			</div>
-		</section>
-		<!-- middle end -->
-		
-		<section>
-			<div class="col-md-12" id="rev">
-				<article class="blog-post">
-					<div class="blog-post-image"></div>
-					<div class="blog-post-body">
-						<h3 style="margin-top: 20px;">후기</h3>
-						<div id="review">
-						</div>
-					</div>
-				</article>
-			</div>
-		</section>
-		<!-- 후기영역  -->
-<section  >
-			<div class="col-md-12" id="re">
-				<article class="blog-post">
-					<div class="blog-post-body" >
-						<h3 style="margin-top: 20px;">댓글</h3>
-						<form id="rel">
-						<div id="replyinsert">
-							<div id="user_id"></div>
-							<input style="width:100%; margin:25px 10px;" id="reple_content" name="house_reple_content" type="text">
-							<button id="repleinsert_btn"  class="btn btn-primary">등록</button>
-							<input type="hidden" name="house_number" id="hrnum">
-						</div>
-						</form>
-						<div id="replylist">
 						
+			<div class="blog-post-body">
+							
 						</div>
-					</div>
-				</article>
-			</div>
-		</section>
-		<!-- 댓글영역 -->
-	</div>
-	<!-- /.container -->
+      <div>후기내용</div>
+
+        <!-- Comments Form -->
+        <div class="card my-4">
+          <h5 class="card-header">Leave a Comment:</h5>
+          <div class="card-body">
+            <form  id="rel">
+              <div class="form-group">
+                <textarea class="form-control" rows="3" name="house_reple_content"></textarea>
+              </div>
+              <button id="repleinsert_btn" type="button" class="btn btn-primary">등록</button>
+              <input type="hidden" name="member_guestid" id="member_id">
+              <input type="hidden" name="house_number" id="hrnum">
+            </form>
+          </div>
+        </div>
+
+        <!-- Single Comment -->
+        <div class="media mb-4">
+          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+          <div class="media-body">
+            <h5 class="mt-0">Commenter Name</h5>
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+          </div>
+        </div>
+
+        <!-- Comment with nested comments -->
+        <div class="media mb-4">
+          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+          <div class="media-body">
+            <h5 class="mt-0">Commenter Name</h5>
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+
+            <div class="media mt-4">
+              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+              <div class="media-body">
+                <h5 class="mt-0">Commenter Name</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              </div>
+            </div>
+
+            <div class="media mt-4">
+              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+              <div class="media-body">
+                <h5 class="mt-0">Commenter Name</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+        <!-- Side Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">지금예약하기</h5>
+          <div class="card-body">
+          <form  id="reservation" name="reservation" method="post">
+				<input class="date" type="text" name="reservation_checkin"
+						id="datepicker1" autocomplete="off" placeholder="체크인 날짜">
+				<input class="date" type="text"
+						name="reservation_checkout" id="datepicker2" autocomplete="off" placeholder="체크아웃 날짜">
+				<button type="button" id="dtcommit" class="btn btn-info">날짜확정</button>
+				<br> <input class="date" name="reservation_totalprice" type="text"
+						id="totalprice" placeholder="">만원<br> 
+				<input class="date" name="reservation_person" type="number" id="person" value="" placeholder="인원수를 선택하세요">명
+				<input type="hidden" name="house_hostid" id="hostid">
+				<input type="hidden" name="house_number" id="house_number"><br>
+
+				<button id="insertbtn" class="btn btn-lg btn-info btn-block">예약하기</button>
+			</form>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="./resources/vendor/jquery/jquery.min.js"></script>
+  <script src="./resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
 
 <!-- 리뷰상세보기  -->
 <div class="modal" id="detail" tabindex="-1" role="dialog">
@@ -341,7 +278,7 @@ $(document).ready(function() {
     $('#house_number').val(house[0].house_number);
 });
 
-var title = $('<h2 style="font-size:50px">'+house[0].house_name+'</h2>'); // 집 이름 
+var title =$('<'+house[0].house_name+'>'); // 집 이름 
 $("#title").append(title);
 
 $("#img").attr('src', house[0].house_sysname);
@@ -351,23 +288,29 @@ $("#img3").attr('src', house[3].house_sysname);
 $("#img4").attr('src', house[4].house_sysname);
 
 
+if(house[0].house_parkable == 0){
+	house[0].house_parkable="불가능"
+}else{
+	house[0].house_parkable="가능"
+}
+
+
+
+
 
 //------------------------------------------------------------------------------이미지 영역
-
-var host=$('<h2 style="margin-left:10px;width:500px;">'+house[0].house_hostid+'님의 하우스'+'</h2>');
-var house_info= $('<p class="info">'+'주소:'+house[0].house_address+'  '+'<br>'
-        +'1박가격:'+house[0].house_price+'만원'+'<br>'
-        +'수용가능인원:'+house[0].house_person+'&nbsp'+'&nbsp'+'&nbsp'
-        +'주차장:'+house[0].house_parkable+'<br>'
-        +'방갯수:'+house[0].house_rooms+'&nbsp'
-        +'& 침대수:'+house[0].house_beds+'&nbsp'+'&nbsp'+'&nbsp'
-        +'욕실:'+house[0].house_bathrooms+
-        '</p>')
-$("#info").append(host);
+var house_info= $('<div class="info">'+'주소:'+house[0].house_address+'</div>')
+var info= $('<div style="display:flex;"><p class="i">인원'+house[0].house_person+'명'+'&nbsp'+'</p>'
+        +'<p class="i">주차장  '+house[0].house_parkable+'</p>'
+        +'<p class="i">침실'+house[0].house_rooms+'개'+'</p>'
+        +'<p class="i">침대'+house[0].house_beds+'개'+'</p>'
+        +'<p class="i">욕실'+house[0].house_bathrooms+'개'+'</p>'+
+        '</div>')
 $("#info").append(house_info);
+$("#info").append(info);
 //-----------------------------------------------------------------------------------------info영역
  
- $("#totalprice").attr('placeholder', 'PRICE PER night : '+house[0].house_price +"원"  ); 
+ $("#totalprice").attr('placeholder', 'PRICE PER night : '+house[0].house_price); 
  $("#person").attr('placeholder', '최대인원 : '+house[0].house_person+"명"  ); // 넘길때 이벤트 줘야함.
 
  //인원 버튼 
@@ -421,11 +364,6 @@ $("#info").append(house_info);
     console.log("로그인아이디",login_id);
     console.log(login_id[0].member_id)
     
-    var user_id =$('<h3 style="width:100px;margin:25px;">'+login_id[0].member_id+'</h3>');
-    	$("#user_id").append(user_id);
-    
-    
-    
     for( i of reple_list){
 		var reple_id = $('<div>'+i.member_guestid+'님의 댓글:      '+i.house_reple_content+'&nbsp'+'&nbsp'+'&nbsp'+i.house_reple_time+'<div>');
 		$("#replylist").append(reple_id);//아이디 
@@ -442,6 +380,7 @@ $("#info").append(house_info);
     $("#repleinsert_btn").on('click',function(e){
     	
     	$("#hrnum").val(house[0].house_number);
+    	$("#member_id").val(login_id[0].member_id);
     	var formData = new FormData(document.getElementById("rel")); 
     	
     	 $.ajaxSetup({         

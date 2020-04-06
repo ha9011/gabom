@@ -97,7 +97,6 @@ public class FoodUploadFile {
 	      return false;
 	   }
 	   
-	   
 	   public boolean fileUpdetail(MultipartHttpServletRequest multi,int food_number, HttpServletRequest req){
 		      System.out.println("fileUpdetail");
 		      //1.이클립스의 물리적 저장경로 찾기
@@ -107,39 +106,17 @@ public class FoodUploadFile {
 		      String sysRoot_path=root_path.substring(0, root_path.indexOf("\\.metadata"));
 		      String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\fooddetailImage\\upload\\";
 		      System.out.println("real="+real);
-		      
-		      
-		      
-		      
+
 		      System.out.println(real);
 		      //2.폴더 생성을 꼭 할것...
 		      File dir=new File(real);
 		      if(!dir.isDirectory()){  //upload폴더 없다면
 		         dir.mkdir();  //upload폴더 생성
 		      }
-		      
-		      //3.파일을 가져오기-파일태그가 여러개 일때 이름들 반환
-//		      Iterator<String> files=multi.getFileNames(); //파일태그가 2개이상일때
-//		      
-//		      Map<String,String> fMap=new HashMap<String, String>();
-//		      fMap.put("bnum", String.valueOf(bnum));
-//		      boolean f=false;
-//		      while(files.hasNext()){
-//		         String fileTagName=files.next();
-//		         System.out.println("fileTag="+fileTagName);  
-//		         //파일 메모리에 저장
-//		         MultipartFile mf=multi.getFile(fileTagName); //실제파일
-//		         String oriFileName=mf.getOriginalFilename();  //a.txt
-//		         fMap.put("oriFileName", oriFileName);
-//		         //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
-//		         String sysFileName=System.currentTimeMillis()+"."
-//		               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
-//		         fMap.put("sysFileName", sysFileName);
-//		      }  
-		         
+
 		         //3.파일을 가져오기-파일태그가 1개 일때
 		         Map<String,String> fMap=new HashMap<String, String>();
-		         List<MultipartFile> fList = multi.getFiles("food_menuImages");
+		         List<MultipartFile> fList = multi.getFiles("food_detailImage");
 		         boolean f2=false;
 		         
 		      for(int i=0;i<fList.size();i++) {
