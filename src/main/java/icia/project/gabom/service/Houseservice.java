@@ -1,12 +1,18 @@
 package icia.project.gabom.service;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -218,6 +224,61 @@ public class Houseservice {
 		
 		json = new Gson().toJson(reple_list);
 		return json;
+	}
+
+
+
+	public String searchHotel(String address, String checkin, String checkout) {
+		System.out.println("address : " + address);
+		System.out.println("checkin : " + checkin);
+		System.out.println("checkout : " + checkout);
+		
+		String resultHtml ;
+		try {
+			String URL = "https://www.hotelscombined.co.kr/Search?search="+address+"&checkin="+checkin+"&checkout="+checkout+"&languageCode=KO&currencyCode=KRW";
+			System.out.println("url : " + URL);
+			Document doc = Jsoup.connect(URL).get();
+			//System.out.println("doc : " + doc.toString());
+			// id="hc_usr"
+			
+			Elements elem = doc.select("div.hc_usi");  //
+			int idx = 0;
+			Iterator<Element> iter = elem.iterator();
+			while (iter.hasNext()) {
+			    Element s = iter.next();
+			    System.out.println(s.child(0).attr("href"));
+				if(s.child(0).attr("href").contains("Hotels")) {
+					System.out.println("포함 : " +  idx);
+					iter.remove();
+				
+				}else {
+					String href = "//www.hotelscombined.co.kr"+s.child(0).attr("href");
+					System.out.println("href : " + href );
+					s.child(0).attr("href", href);
+					s.child(1).child(0).attr("href",href);
+					
+					s.child(4).remove();
+					s.child(3).remove();
+					s.child(2).remove();
+				}
+			    
+			    //iter.remove();		
+						
+				idx++;
+			}
+			
+			System.out.println("=========elem===========");
+			System.out.println(elem.toString());
+			System.out.println("size : " + elem.size());
+			resultHtml = elem.toString();
+			return elem.toString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return null;
 	}
 
 }

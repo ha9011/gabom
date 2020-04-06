@@ -86,4 +86,18 @@ public class HouseRestController {
 			
 			return json;
 		}
+	   
+	   //호텔 크롤링 hotelsearch
+	   @PostMapping(value = "/hotelsearch", produces="text/plain;charset=utf-8")
+		public String hotelsearch(
+				@RequestParam("address") String address,
+				@RequestParam("checkin") String checkin,
+				@RequestParam("checkout") String checkout
+		) {
+			System.out.println("크롤링 접근!");
+			
+			String html = hs.searchHotel(address,checkin,checkout);
+			
+			return html;
+		}
 }

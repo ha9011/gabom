@@ -74,13 +74,13 @@ letter-spacing:10px;
 <script>
 	var hotel = document.getElementById("hotel");
 	var gabom_house1 = document.getElementById("gabom_house");
-	var hotelcom = "https://www.hotelscombined.co.kr/";
+	//var hotelcom = "https://www.hotelscombined.co.kr/";
 	var gabom_house2 ="housemain"
 	
 	hotel.addEventListener('click', function(e) {
 	console.log("호텔로 이동");
-	$(location).attr('href',hotelcom);
-});
+	$(location).attr('href',"choicehotel");
+	});
 	
 	gabom_house.addEventListener('click', function(e) {
 		console.log("가봄숙소로 이동");

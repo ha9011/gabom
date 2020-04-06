@@ -92,7 +92,13 @@ public class TripController {
 		mav = trs.triphousedetail(house_number,reserlist,ppl,td);
 		return mav;
 	}
+  //choicehotel 
    
-   
-   
+   @RequestMapping(value = "/choicehotel", method = RequestMethod.GET)
+  	public ModelAndView choicehotel() {
+  		System.out.println("호텔선택");
+  		ModelAndView mav = new ModelAndView();
+  		mav.setViewName("choicehotel");
+  		return mav;
+  	}
 }
