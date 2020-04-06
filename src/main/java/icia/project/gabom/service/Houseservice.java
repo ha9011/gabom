@@ -256,7 +256,14 @@ public class Houseservice {
 					System.out.println("href : " + href );
 					s.child(0).attr("href", href);
 					s.child(1).child(0).attr("href",href);
+					String hotelImg = s.child(0).toString();
+					String hotelTitle = s.child(1).toString();
 					
+					s.prepend("<div class='hotelTitle'>"+hotelTitle+"</div>");
+					s.prepend("<div class='hotelImg'>"+hotelImg+"</div>");
+
+					s.child(6).remove();
+					s.child(5).remove();
 					s.child(4).remove();
 					s.child(3).remove();
 					s.child(2).remove();
