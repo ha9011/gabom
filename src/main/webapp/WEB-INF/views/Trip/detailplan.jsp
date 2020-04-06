@@ -2183,7 +2183,7 @@ $("#hc").on('click',"#houseReservate", function(){
             url : "tprest/tripmemoupdate",
             type : "post",
             data :  params ,
-            dataType : "json",
+            //dataType : "json",
             //processData:false,//application/x-www-form-urlencoded(쿼리스트링)
             //contentType:false,//multipart의 경우 contentType을 false로
             success : function(response) {
