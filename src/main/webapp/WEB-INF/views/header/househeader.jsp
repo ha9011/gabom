@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css?family=Jua&display=swap&subset=korean" rel="stylesheet"/>
 <link rel="stylesheet" href="resources/fontCss/fontAni.css">
 <style>
-img{
+#mainrogo{
 margin: 5px 40%;
 width:30%;
 }
@@ -131,7 +131,7 @@ background-color: #E6E6E6
 		
 		
 		<div class="col-md-12 col-sm-12 col-xs-12"><a href="/gabom/">
-         <img src="./resources/headerImage/logo3.png">
+         <img id="mainrogo" src="./resources/headerImage/logo3.png">
          </a>
       </div>
 		
