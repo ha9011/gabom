@@ -542,9 +542,6 @@ td a {
 	background-size: 100%;
 }
 
-*:focus {
-	outline: none;
-}
 
 #footerM {
 	display: none;
@@ -618,6 +615,9 @@ color: #337ab7;
 #snsProfileNotice i{
 	font-size: 23px;
 
+}
+*:focus {
+	outline: none;
 }
 </style>
 <script type="text/javascript">
