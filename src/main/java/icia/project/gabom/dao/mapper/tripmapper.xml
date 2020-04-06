@@ -5,7 +5,7 @@
 
 	<insert id="savetripplan" parameterType="trip">
 		INSERT INTO TRIP_PLAN
-		VALUES(SEQ_TRIP_PLAN.nextval,#{trip_id},#{trip_title},#{trip_area},#{trip_start_date},#{trip_end_date})
+		VALUES(SEQ_TRIP_PLAN.nextval,#{trip_id},#{trip_title},#{trip_area},#{trip_start_date},#{trip_end_date},0)
 		<selectKey keyProperty="trip_number" resultType="integer"
 			order="AFTER">
 			SELECT SEQ_TRIP_PLAN.CURRVAL FROM DUAL
@@ -37,7 +37,7 @@
 	<select id="getmyplan" resultType="trfriend">
 		
 		SELECT TP.TRIP_NUMBER,TP.TRIP_ID,TP.TRIP_TITLE, TP.TRIP_AREA,
-		TP.TRIP_START_DATE, tp.trip_end_date,  nvl(tpr.trip_plan_apply,0) trip_plan_appry_status
+		TP.TRIP_START_DATE, TP.trip_end_date, TP.TRIP_SHARE_COUNT,  nvl(tpr.trip_plan_apply,0) trip_plan_appry_status
 		FROM TRIP_PLAN TP, TRIP_MEMBER TM,  trip_plan_recommand tpr
 		WHERE tp.TRIP_NUMBER = tpr.TRIP_NUMBER(+) and TP.TRIP_NUMBER=TM.TRIP_NUMBER AND share_id=#{trip_id} and
 		trip_type=1
@@ -160,7 +160,7 @@ order by tc.chatting_date desc
 	
 	<insert id="insertShareTripPlan" parameterType="trip">
 		INSERT INTO TRIP_PLAN
-		VALUES(SEQ_TRIP_PLAN.nextval,#{trip_id},#{trip_title},#{trip_area},#{trip_start_date},#{trip_end_date})
+		VALUES(SEQ_TRIP_PLAN.nextval,#{trip_id},#{trip_title},#{trip_area},#{trip_start_date},#{trip_end_date},0)
 		<selectKey keyProperty="trip_number" resultType="integer"
 			order="AFTER">
 			SELECT SEQ_TRIP_PLAN.CURRVAL FROM DUAL

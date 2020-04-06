@@ -576,7 +576,10 @@ public class TripService {
 		System.out.println("currval값="+tp.getTrip_number());
 		System.out.println("resultShare 성공 : " + resultShare);
 		
-		//2.몇번째 여행까지 있는지 삽입
+		//1-1 여행 공유 카운터에 +1 하기  tripnum 여행번호
+		int resultShareCount = tpDao.updateShareCountTripPlan(tripnum);
+		
+		//2.몇번째 여행까지 있는지 삽입   // 포문 없이 하는 법을 나중에 깨달았다..................
 		int Ndate = 1;
 		for(String date : rangedate) {
 			System.out.println("date : " + date + " 몇번여행  : " + tp.getTrip_number() + " 몇번째 : " + Ndate );

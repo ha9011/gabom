@@ -485,10 +485,10 @@ tr {
  
  
  
-  $(".movePlan").on('click', function(e) {
+  $(document).on('click',".movePlan", function(e) {
   	console.log(e.target.dataset.name);
   	var number = e.target.dataset.name;
-  location.href="detailplan?trip_number="+number;
+  	location.href="detailplan?trip_number="+number;
   });
 //------------------------------------------------------------------------------------------게시글 영역
 $(".joinbtn").on('click', function(e) { // 친구 추가시 여행번호 
@@ -531,8 +531,8 @@ $(".changeDateBtn").on('click', function(e) {
 	$("#inputfirstday").prop("type","text");
 	$("#inputfirstday").prop("placeholder","여행 첫날짜");
 	$("#dateChange_af").text("")
-	$("#newStartDay").val("");
-	$("#newLastDay").val("");
+	$("#newStartDay").val(getFormatDateDB(new Date(mylist[order].trip_start_date)));  // 초기화 말고 여행 첫날 이런걸로
+	$("#newLastDay").val(getFormatDateDB(new Date(mylist[order].trip_end_date)));
 	
 	order =  e.target.dataset.order;
 	var oriFirstDay = new Date(mylist[order].trip_start_date);
@@ -567,7 +567,7 @@ $("#inputfirstdaybtn").on("click", function(){
 	console.log("ed",$("#newLastDay").val())
 })
 
-// -- 확정버튼
+// -- 변경확정버튼  -- 날짜 변경시
 $("#dataChangeSave").on("click", function(){
 	console.log("sd",$("#newStartDay").val())
 	console.log("ed",$("#newLastDay").val())
@@ -585,10 +585,10 @@ $("#dataChangeSave").on("click", function(){
 	var changeTripTitle = $("#inputTripTitle").val();
 	var data = {
 			"tripNumber":tripNumber,
-			"newStartDayDB":newStartDayDB,
-			"newLastDayDB":newLastDayDB,
+			"newStartDayDB":newStartDayDB,   // 새롭게 변경된 첫날 날짜
+			"newLastDayDB":newLastDayDB,	// 새롭게 변경된 마지막날 날짜
 			"rangeDay":rangeDayy,
-			"diffOriNewFirstday":diffOriNewFirstday,
+			"diffOriNewFirstday":diffOriNewFirstday,  // 바꾼 날짜랑 얼마나 차이나는지..
 			"changeTripTitle":changeTripTitle
 	}
 	console.log("data",data)
@@ -704,7 +704,8 @@ $("#dataChangeSave").on("click", function(){
          idx++;
       }
                  
-                 
+     	$("#dataChangeSave").prop("disabled",true)
+    	$("#inputfirstdaybtn").prop("disabled",true)   
                  
               },
               error:function(error){

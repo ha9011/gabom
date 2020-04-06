@@ -186,6 +186,9 @@ public interface ITripplanDao {
    @Update("update TRIP_PLAN_DATE set  trip_date = (trip_date+#{diffOriNewFirstday}) where trip_number =#{tripNumber}")
    int updateTripDate(@Param("tripNumber")int tripNumber, @Param("diffOriNewFirstday")int diffOriNewFirstday);
 
+   @Update("update TRIP_PLAN set  TRIP_SHARE_COUNT = (TRIP_SHARE_COUNT+1) where TRIP_NUMBER =#{tripnum}")
+   int updateShareCountTripPlan(@Param("tripnum")int tripnum);  // 공유할떄마다 카운터 추가
+
 
 
    
