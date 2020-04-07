@@ -8,6 +8,7 @@
 <link rel="icon" href="favicon.ico">
 <!-- Bootstrap core CSS -->
 <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <!-- Custom styles for this template -->
@@ -40,7 +41,7 @@ body {
 
 #trp {
 	width: 100%;
-	height: 100%;
+	height: 1100px;
 	background-color: rgba(255, 255, 255, 0.7);
 	margin-top: 80px;
 	text-align: center;
@@ -75,16 +76,13 @@ tr {
 
 #ct {
 	width: 600px;
-	height: 1200px;
+	height: 1100px;
 	background-color: rgba(0, 46, 102, 0.8);
 	margin-top: 80px;
 	text-align: center;
 }
 
-#reauest {
-	background-color: white;
-	height: 680px;
-}
+
 
 #mql {
 	width: 100%;
@@ -183,7 +181,7 @@ tr {
 
 
 
-	<div class="overlay"></div>
+	<!-- <div class="overlay"></div> -->
 	<video playsinline="playsinline" autoplay="autoplay" muted="muted"
 		loop="loop">
 		<source src="./resources/css/bg.mp4" type="video/mp4">
@@ -296,7 +294,7 @@ tr {
 	</div>
 
 	<footer>
-		<jsp:include page="/WEB-INF/views/footer.jsp" />
+		<jsp:include page="/WEB-INF/views/footer/tripfooter.jsp" />
 	</footer>
 
 	<!-- Custom scripts for this template -->

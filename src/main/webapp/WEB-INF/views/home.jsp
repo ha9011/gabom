@@ -329,7 +329,7 @@ display: flex;
 </section>
 
  <div>
-	<jsp:include page="/WEB-INF/views/footer.jsp"/>
+	<jsp:include page="/WEB-INF/views/footer/footer.jsp"/>
 </div> 
 
 
@@ -408,9 +408,9 @@ $(function() {
         dataType:"json", //rest 컨트롤 이용   
         success:function(data){
 			console.log(data);
-			 var idx = 0;
+			 
 			 for(i of data.hlist){
-				 var div = $('<div class="img hz" id="hz'+idx+'"></idv>');
+				 var div = $('<div class="img hz"></idv>');
 				 	$("#himg").append(div);
 				 var img = $('<img style="height:200px;margin-bottom:10px;" src="'+i.house_sysname+'">');
 					 div.append(img);
@@ -421,18 +421,8 @@ $(function() {
 				 var btn =$('<button data-hnum="'+i.house_number+'" id ="hbtn" class="hbtn btn btn-block btn-info">지금 예약하러가기</button>');
 					 div.append(btn);
 					 
-					 $(".hbtn").hide();
-					 
-					 idx++;
 			 }
-			 $('#hz0').mouseover(function() {
-				 	$(".hbtn").show();
-				 	//$(".hbtn").slideDown("slow");
-				 });
-			 $('#hz0').mouseout(function() {
-				 	$(".hbtn").hide();
-					//$(".hbtn").slideUp("fast");
-				 });
+		
 
 			 
 			 $(".hbtn").on('click', function(e) {

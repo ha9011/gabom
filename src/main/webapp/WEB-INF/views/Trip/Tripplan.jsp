@@ -19,14 +19,15 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a7e29fa39462f45fc2138a8307dbe830&libraries=services"></script>
 
 <style>
+
 #outbox{
 float:left;
 margin-left: -605px;
 }
 .inbox{
-margin-top:30px;
+
 width:700px;
-height:870px;
+height:600px;
 background-color:black;
 background-color: rgba(0, 0, 0, 0.7);
 font-size:25px;
@@ -64,10 +65,10 @@ font-size:15px;
 }
 #triplist{
 float:right;
-margin-top: 30px;
+margin-top: 31px;
 margin-right:-86%;
 width:700px;
-height:870px;
+max-height:800px;
 background-color:black;
 background-color: rgba(0, 0, 0, 0.7);
 font-size:15px;
@@ -123,14 +124,6 @@ text-align:center;
 	width:800px;
 }
 
-.dot {
-	overflow: hidden;
-	float: left;
-	width: 12px;
-	height: 12px;
-	background:
-		url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');
-}
 
 .dotOverlay {
 	position: relative;
@@ -155,6 +148,13 @@ text-align:center;
 .idxbtn {
 	border-radius: 10px;
 	padding: 8px;
+}
+.btn-lg{
+width:40%;
+margin: 5px 15px;
+}
+td{
+font-weight: bold;
 }
 </style>
 
@@ -218,7 +218,10 @@ text-align:center;
 		<!-- Header -->
 		<header>
 			<div class="container-fluid">
-				<img style="width:100%;height:950px;" src="./resources/tripImage/planbg.JPG" class="img-responsive" alt="portfolio">
+				<!-- <img style="width:100%;height:950px;" src="./resources/tripImage/planbg.JPG" class="img-responsive" alt="portfolio"> -->
+					<video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+    					<source src="./resources/css/tripbg.mp4" type="video/mp4">
+  					</video>
 					<div id="outbox" class="intro-text">
 						<div class="inbox">
 								<br>
@@ -252,11 +255,12 @@ text-align:center;
     									<input autocomplete="off" name="trip_start_date" type="date" class="date" aria-label="Start Date" ><input name="trip_end_date" class="date" type="date" placeholder="End Date">
     								</div>
     								<br>
-    								
-    								<button id="savebtn" class="btn btn-primary btn-lg btn-block">저장 </button>
-    								<button id="resetbtn" class="btn btn-dark btn-lg btn-block">초기화</button>
+    								<div style="display: flex;width: 80%;margin: 0 15%;">
+    								<button id="savebtn" class="btn btn-primary btn-lg ">저장 </button>
+    								<button id="resetbtn" class="btn btn-dark btn-lg ">초기화</button>
+    								</div>
     							</form>
-    							<button id="planlist" class="btn btn-info btn-lg btn-block">추천여행보기</button>
+    							<button id="planlist" class="btn btn-info  btn-block">추천여행보기</button>
 						</div>
 					</div>
 					
@@ -443,7 +447,7 @@ $(document).on('click',"#search",function(){
     		var ed = getFormatDate(i.trip_end_date);
     		var tr = $('<tr></tr>'); 
     		var td =$('<td><a data-name="'+i.trip_number+'" class="modalplan">'+i.trip_title+'</a></td>');
-    		var td2 =$('<td>'+'&nbsp'+sd+' ~ '+ed+'   '+i.trip_area+'지역'+'</td>');
+    		var td2 =$('<td>'+'&nbsp'+sd+' ~ '+ed+'</td>');
     		table.append(tr);
     		tr.append(td);
     		tr.append(td2);

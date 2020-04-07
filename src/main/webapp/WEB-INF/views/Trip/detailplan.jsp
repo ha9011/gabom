@@ -12,11 +12,13 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"> 
 
 
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <link rel="icon" href="favicon.ico">
 <!-- Bootstrap core CSS -->
+<link href="./resources/css/deletebtn.css" rel="stylesheet">
 <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom styles for this template -->
 <link href="./resources/css/owl.carousel.css" rel="stylesheet">
@@ -72,7 +74,6 @@
 
 body {
 	overflow: scroll;
-	background-image: url( "./resources/css/diarybg.jpg" )
 }
 /* 머리 */
 header {
@@ -87,7 +88,7 @@ header {
 	text-align: center;
 	height: 50px;
 	font-size: 60px;
-	color: white;
+	color: #3abade;
 }
 
 /* 상세여행 영역  */
@@ -122,7 +123,7 @@ header {
 
 #hc {
 	text-align: center;
-	margin: 20px 40%;
+	margin: 20px 37%;
 	width: 300px;
 }
 
@@ -169,18 +170,31 @@ header {
 	background-color: #99BFE4;
 	height: 700px;
 }
+#chatInput {
+	width: 89%;
+	border:none;
+	height:100%;
+}
+#chatInput {
+	width: 89%;
+	border:none;
+	height:100%;
+}
+#chatBtn:hover{
+background-color:yellow;
+color:black;
+}
 
 #chatareaCont {
 	overflow: auto;
-	height: 93%;
-	width: 100%;
+	height: 80%;
 	display: flex;
 	flex-direction: column;
 	background-color: #99BFE4;
 }
 
 .yourCommnet {
-	margin: 15px 0 15px 10px;
+	margin: 15px 0 15px 20px;
 	padding: 10px;
 	font-size: 15px;
 	align-items: flex-start;
@@ -188,10 +202,21 @@ header {
 	text-align: left;
 	background: white;
 	border-radius: 10px;
+	position:relative;
 }
-/* align-self: flex-end; */
+.yourCommnet:after{
+ border-top:15px solid white;
+ border-left: 15px solid transparent;
+ border-right: 0px solid transparent;
+ border-bottom: 0px solid transparent;
+ content:"";
+ position:absolute;
+ top:10px;
+ left:-15px;
+}
+
 .myCommnet {
-	margin: 15px 10px 15px 0;
+	margin: 15px 20px 15px 0;
 	padding: 10px;
 	font-size: 15px;
 	align-items: flex-end;
@@ -199,20 +224,40 @@ header {
 	text-align: right;
 	background: yellow;
 	border-radius: 10px;
+	position:relative;
 }
+.myCommnet:after {
+ border-top:15px solid yellow;
+ border-left: 0px solid transparent;
+ border-right: 15px solid transparent;
+ border-bottom: 0px solid transparent;
+ content:"";
+ position:absolute;
+ top:10px;
+ right:-15px;
+}
+ 
 
 .media-body {
 	display: inline;
+}
+#day1 {
+	background-color: #93b7d9;
+	text-align: center;
+	height: 10%;
+    margin-top: -20px;
 }
 
 /* 여행계획 */
 .planFrame {
 	display: flex;
+	margin:10px 0; 
 }
 
 .idxbtn {
 	border-radius: 10px;
 	padding: 8px;
+	margin:5px 0;
 }
 .mapbtn{
 
@@ -223,6 +268,107 @@ header {
 /* 	 contTitle */
 /* 	 contAddr */
 
+.nav li a{
+color:white;
+}
+/* 추가된 css */
+.planImg{
+margin: 0 15px;
+}
+/* button css */
+.learn-more {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+.learn-more {
+  width: 12rem;
+  height: auto;
+}
+.learn-more .circle {
+  -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 3rem;
+  height: 3rem;
+  background: #3abade;
+  border-radius: 1.625rem;
+  
+}
+.learn-more .circle .icon {
+  -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #fff;
+}
+.learn-more .circle .icon.arrow {
+  -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  left: 0.625rem;
+  width: 1.125rem;
+  height: 0.125rem;
+  background: none;
+}
+.learn-more .circle .icon.arrow::before {
+  position: absolute;
+  content: '';
+  top: -0.25rem;
+  right: 0.0625rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-top: 0.125rem solid #fff;
+  border-right: 0.125rem solid #fff;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+.learn-more .button-text {
+  -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
+  margin: 0 0 0 1.85rem;
+  color: #282936;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
+  width:200px;
+}
+.learn-more:hover .circle {
+  width: 250px;
+}
+.learn-more:hover .circle .icon.arrow {
+  background: #fff;
+  -webkit-transform: translate(1rem, 0);
+          transform: translate(1rem, 0);
+}
+.learn-more:hover .button-text {
+  color: #fff;
+}
+.unbbtn{
+border:none;
+background-color:white;
+}
+.udbtn{
+display: flex;
+}
 </style>
 
 
@@ -231,7 +377,7 @@ header {
 </head>
 <body>
 	<!-- Navigation -->
-	<nav class="navbar navbar-default navbar-fixed-top">
+	<nav style="background-color:#3abade;" class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header page-scroll">
@@ -242,7 +388,7 @@ header {
 						class="icon-bar"></span>
 				</button>
 				<!--로고 자리 -->
-				<img style="width: 200px;" src="./resources/headerImage/logo3.png"
+				<img style="width: 200px;" src="./resources/headerImage/color_rogo.JPG"
 					alt="logo">
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -276,13 +422,14 @@ header {
 
 
 			<div id="hc">
+				<div id="container"></div>
 			</div>
 
 			<div id="day">
 				<div id='dayFrame'>
-					<div class="icon" id="left">◀</div>
+					<div class="icon" id="left"><i class="fas fa-caret-square-left"></i></div>
 					<ul id="date"></ul>
-					<div class="icon" id="right">▶</div>
+					<div class="icon" id="right"><i class="fas fa-caret-square-right"></i></div>
 				</div>
 			</div>
 			<hr>
@@ -293,12 +440,37 @@ header {
 			<hr>
 			<div id="t_destination">
 				<!-- onclick="modal" -->
-				<button class="addbtn btn-lg btn-primary" id="savebtn" onclick="saveplan()">저장하기</button>
-				<button class="addbtn btn-lg btn-primary" id="addDate" onclick="addDate()">+날짜추가</button>
-				<button class="addbtn btn-lg btn-primary" id="deleDate" onclick="deleDate()">-날짜삭제</button>
-				<button id="apiup" class="addbtn btn-lg btn-primary"
+				<button class="button addbtn e_btn " id="savebtn" onclick="saveplan()">
+					<div class="paper left"></div>
+    				<div class="paper middle"></div>
+    				<div class="paper right"></div>
+    				<div class="inner">
+        				<div class="zipper">
+            				<div class="line"></div>
+            				<div class="gradient"></div>
+       	 				</div>
+        				<span>저장하기</span>
+        				<svg viewBox="0 0 20 16">
+            				<polyline points="3 8.75 7.75 13.5 17 2.5"></polyline>
+       				 	</svg>
+    				</div>
+				</button>
+				
+				<button class="addbtn btn-lg " id="addDate" onclick="addDate()">
+					<span><i class="far fa-calendar-plus"></i></span>
+					<span>날짜추가</span>
+				</button>
+				<button class="addbtn btn-lg " id="deleDate" onclick="deleDate()">
+					<span><i class="fas fa-trash-alt"></i></span>
+    				<span>날짜삭제</span>
+				</button>
+				
+				<button id="apiup" class="addbtn btn-lg "
 					data-toggle="modal" data-target="#area_modal"
-					onclick="sigunguChange()">장소추가</button>
+					onclick="sigunguChange()">
+					<span><i class="far fa-map"></i></span>
+    				<span>장소추가 </span>
+				</button>
 			</div>
 
 			<!-- ---------------------------------areaCode기준 검색 모달--------------------------------- -->
@@ -365,16 +537,29 @@ header {
 
 
 		</div>
-		<div id="chatarea">
+		<!-- <div id="chatarea">
 			채팅창
 			<div id="chatareaCont"></div>
-			<input id="chatInput">
-			<button id='chatBtn'>입력</button>
-		</div>
+			<div style="display: flex;">
+				<input id="chatInput" style="width:85%;">
+				<button class="btn " id='chatBtn'>입력</button>
+			</div>
+		</div> -->
+		
+		<div id="chatarea">
+			<div id="day1"></div>
+				<div id="chatareaCont"></div>
+				<div id="cont2" style="height: 10%;display:flex;">
+					<input type="text" id="chatInput">
+					<button id="chatBtn" class="btn">전송</button>
+				</div>
+			</div>
 
 	</section>
 
-
+<div style="border-top:1px solid lightgray;margin-top:50px;"  >
+	<jsp:include page="/WEB-INF/views/footer/tripfooter.jsp"/>
+</div> 
 
 </body>
 <script>
@@ -425,7 +610,10 @@ $(document).ready(function(){
 	 //----------------------------
 	 if(HouseReserCheck[0].RESERVATION_NUMBER!=0){ // 예약이 있는 경우
 	 }else{ //예약이 없는 경우
-		 $("#hc").append($("<button id='houseReservate'>숙소 선택하기</button>"));
+		 $("#container").append($("<button class='learn-more' id='houseReservate'></button>"));
+	 	 $("#houseReservate").append($("<span class='circle' aria-hidden='true'></span>"));
+	 	 $(".circle").append($("<span class='icon arrow'></span>"));
+	 	 $("#houseReservate").append($(" <span class='button-text'>숙소 예약하러 가기</span>"));
 	 }
 	 
 	
@@ -448,11 +636,11 @@ for(let v of chatData ){
 				let media = $("<div class='myCommnet' data-date='"+cDate+"'></div>");
 				let mediabody = $("<div class='media-body'></div>");
 						
-				var bodyName = $("<span><small><i> "+cTime+" </i></small></span><br>");
-				var bodyCont = $("<span>"+cCont+"</span>");
+				var bodyName = $("<span><small><i> "+cTime+" </i></small></span>");
+				var bodyCont = $("<span>"+cCont+"</span><br>");
 				
-				mediabody.append(bodyName);
 				mediabody.append(bodyCont);
+				mediabody.append(bodyName);
 						
 				media.append(mediabody);
 				
@@ -466,12 +654,12 @@ for(let v of chatData ){
 	 			media.append(img);
 		 		
 	 			let mediabody = $("<div class='media-body'></div>");
-		 		
-	 			var bodyName = $("<span>"+cId+"<small><i> "+cTime+" </i></small></span><br>");
-				var bodyCont = $("<span>"+cCont+"</span>");
+	 			
+				var bodyCont = $("<span>"+cCont+"</span><br>");
+				var bodyName = $("<span>"+cId+"<small><i> "+cTime+" </i></small></span>");
 				
-				mediabody.append(bodyName);
-		 		mediabody.append(bodyCont);
+				mediabody.append(bodyCont);
+		 		mediabody.append(bodyName);
 		 		
 		 		media.append(mediabody);
 		 		$("#chatareaCont").append(media)
@@ -590,11 +778,11 @@ $("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
     									let mediabody = $("<div class='media-body'></div>");
     											
     									
-    									let bodyName = $("<span><small><i> "+cTime+" </i></small></span><br>");
-    									let bodyCont = $("<span>"+cCont+"</span>");
+    									let bodyName = $("<span><small><i> "+cTime+" </i></small></span>");
+    									let bodyCont = $("<span>"+cCont+"</span><br>");
     									
-    									mediabody.append(bodyName);
     									mediabody.append(bodyCont);
+    									mediabody.append(bodyName);
     											
     									media.append(mediabody);
     									iDateChatFrame.append(media)
@@ -607,12 +795,11 @@ $("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
     							 		
     						 			let mediabody = $("<div class='media-body'></div>");
     							 		
-    						 			
-    						 			let bodyName = $("<span>"+cId+"<small><i> "+cTime+" </i></small></span><br>");
-    						 			let bodyCont = $("<span>"+cCont+"</span>");
+    						 			let bodyCont = $("<span>"+cCont+"</span><br>");
+    						 			let bodyName = $("<span>"+cId+"<small><i> "+cTime+" </i></small></span>");
     									
-    							 		mediabody.append(bodyName);
     							 		mediabody.append(bodyCont);
+    							 		mediabody.append(bodyName);
     							 		
     							 		media.append(mediabody);
     							 		iDateChatFrame.append(media)
@@ -657,11 +844,16 @@ var ed = getFormatDate(trip_data[0].trip_end_date);
 
 //header
 var titel =$('<h1>'+trip_data[0].trip_title+'</h1>')
-var totaldate =$('<h1>'+sd+' - '+ed+'</h1>')
+var totaldate =$('<h1><i class="fas fa-calenda"></i>'+sd+' - '+ed+'</h1>')
 //var area = $('<input type="hidden" value="'+areaCode+'"')
+
 $("#apiup").append()
 $("#titel").append(titel);
 $("#totaldate").append(totaldate);
+
+
+var chatt =$('<h2>'+trip_data[0].trip_title+'</h2>');
+$("#day1").append(chatt);
 //--------------------------------페이징 --------------------------------------------
 
    
@@ -997,7 +1189,10 @@ function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
 		$("#hc").empty();
 		if(HouseReserCheck[currentPlanDay-1].RESERVATION_NUMBER!=0){ // 예약이 있는 경우
 		 }else{ //예약이 없는 경우
-			 $("#hc").append($("<button id='houseReservate'>숙소 선택하기</button>"));
+			 $("#container").append($("<button class='learn-more' id='houseReservate'></button>"));
+		 	 $("#houseReservate").append($("<span class='circle' aria-hidden='true'></span>"));
+		 	 $(".circle").append($("<span class='icon arrow'></span>"));
+		 	 $("#houseReservate").append($(" <span class='button-text'>숙소 예약하러 가기</span>"));
 		 }
 		
 		var Data = {
@@ -1066,7 +1261,10 @@ function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
 		$("#hc").empty();
 		if(HouseReserCheck[currentPlanDay-1].RESERVATION_NUMBER!=0){ // 예약이 있는 경우
 		 }else{ //예약이 없는 경우
-			 $("#hc").append($("<button id='houseReservate'>숙소 선택하기</button>"));
+			 $("#container").append($("<button class='learn-more' id='houseReservate'></button>"));
+		 	 $("#houseReservate").append($("<span class='circle' aria-hidden='true'></span>"));
+		 	 $(".circle").append($("<span class='icon arrow'></span>"));
+		 	 $("#houseReservate").append($(" <span class='button-text'>숙소 예약하러 가기</span>"));
 		 }
 		
 	var Data = {
@@ -1291,10 +1489,11 @@ function getFormatDateDB(strdate){
 		    			var media = $("<div class='  myCommnet' data-date='"+getFormatDate(new Date())+"' ></div>");
 						var mediabody = $("<div class='media-body'></div>");
 						
-						var bodyName = $("<span><small><i> "+chatTime+" </i></small></span><br>");
-						var bodyCont = $("<span>"+data.msg+"</span>");
-						mediabody.append(bodyName);
+						var bodyName = $("<span><small><i> "+chatTime+" </i></small></span>");
+						var bodyCont = $("<span>"+data.msg+"</span><br>");
+						
 						mediabody.append(bodyCont);
+						mediabody.append(bodyName);
 						
 						media.append(mediabody);
 						$("#chatareaCont").append(media)
@@ -1309,11 +1508,11 @@ function getFormatDateDB(strdate){
 						
 						var mediabody = $("<div class='media-body'></div>");
 						
+						var bodyCont = $("<span>"+data.msg+"</span><br>");
+						var bodyName = $("<span>"+data.id+"<small><i> "+chatTime+" </i></small></span>");
 						
-						var bodyName = $("<span>"+data.id+"<small><i> "+chatTime+" </i></small></span><br>");
-						var bodyCont = $("<span>"+data.msg+"</span>");
-						mediabody.append(bodyName);
 						mediabody.append(bodyCont);
+						mediabody.append(bodyName);
 						
 						media.append(mediabody);
 						$("#chatareaCont").append(media)
@@ -1381,7 +1580,7 @@ function getFormatDateDB(strdate){
 				type:'post',
 				data:chatData,
 				success:function(data){
-					alert("success");
+					//alert("success");
 					console.log(data)
 					 $('#chatInput').val("");
 			    	 $('#chatInput').focus();
@@ -2000,9 +2199,10 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 			
 			
 			
-			let updownFrame = $("<div ></div>");
-			let upPlan = $("<div ><button class='upPlan' data-idx='"+(planidx-1)+"'>up</button></div>");
-			let downPlan = $("<div ><button class='downPlan' data-idx='"+(planidx-1)+"'>down</button></div>");
+			let updownFrame = $("<div class='udbtn'></div>");
+			let upPlan = $("<div ><button class='unbbtn upPlan' data-idx='"+(planidx-1)+"'><span><i class= fas fa-2x fa-caret-square-up'></i></span></button></div>");
+			let downPlan = $("<div ><button class='unbbtn downPlan' data-idx='"+(planidx-1)+"'><span><i class='downPlan fas fa-2x fa-caret-square-down'></i></span></button></div>");
+			
 
 			updownFrame.append(upPlan);
 			updownFrame.append(downPlan);
@@ -2010,7 +2210,7 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 			
 			
 			let memoFrame = $("<div ></div>");
-			let memoPlan = $("<div ><button class='memoPlan' data-idx='"+(planidx-1)+"'>memo</button></div>");
+			let memoPlan = $("<div ><button class='memoPlan' data-idx='"+(planidx-1)+"'><span><i class='fas fa-2x fa-edit'></i></span></button></div>");
 
 			memoFrame.append(memoPlan);
 			planFrame.append(memoFrame);
@@ -2085,21 +2285,23 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 			
 			planFrame.append(planContFram);
 			
-			let updownFrame = $("<div ></div>");
-			let upPlan = $("<div ><button class='upPlan' data-idx='"+(planidx-1)+"'>up</button></div>");
-			let downPlan = $("<div ><button class='downPlan' data-idx='"+(planidx-1)+"'>down</button></div>");
+			let updownFrame = $("<div class='udbtn'></div>");
+			let upPlan = $("<div ><button class='unbbtn upPlan' data-idx='"+(planidx-1)+"'><i class='upPlan fas fa-2x fa-caret-square-up'></i></button></div>");
+			let downPlan = $("<div ><button class='unbbtn downPlan' data-idx='"+(planidx-1)+"'><i class='downPlan fas fa-2x fa-caret-square-down'></i></button></div>");
+			
+			
 
 			updownFrame.append(upPlan);
 			updownFrame.append(downPlan);
 			planFrame.append(updownFrame);
 			
 			let memoFrame = $("<div ></div>");
-			let memoPlan = $("<div ><button class='memoPlan' data-toggle='modal' data-target='#memoModal' data-date='"+v.trip_date+"'data-order='"+v.trip_order+"' data-title='"+v.trip_title+"' data-idx='"+(planidx-1)+"'>memo</button></div>");
+			let memoPlan = $("<div ><button class='unbbtn memoPlan' data-toggle='modal' data-target='#memoModal' data-date='"+v.trip_date+"'data-order='"+v.trip_order+"' data-title='"+v.trip_title+"' data-idx='"+(planidx-1)+"'><span><i class='fas fa-2x fa-edit'></i></span></button></div>");
 
 			memoFrame.append(memoPlan);
 			planFrame.append(memoFrame);
 			
-			let cancelPlan = $("<div ><button class='cancelPlan' data-idx='"+(planidx-1)+"'>x</button></div>");
+			let cancelPlan = $("<div ><button class='unbbtn cancelPlan' data-idx='"+(planidx-1)+"'><span><i class='far fa-2x fa-window-close'></i></span></button></div>");
 			planFrame.append(cancelPlan);
 
 			$("#detailTrip").append(planFrame);
@@ -2357,6 +2559,18 @@ $("#hc").on('click',"#houseReservate", function(){
 	})//메모추가 클릭 end
 		
 	 
+</script>
+<script>
+document.querySelectorAll('.button').forEach(button => button.addEventListener('click', e => {
+    if(!button.classList.contains('compress')) {
+
+        button.classList.add('compress');
+
+        setTimeout(() => button.classList.remove('compress'), 4000);
+
+    }
+    e.preventDefault();
+}));
 </script>
 
 </html>

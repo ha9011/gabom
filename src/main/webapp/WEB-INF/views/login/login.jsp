@@ -60,7 +60,6 @@
 		}
 		#apiLoginContainer{
 			text-align: center;
-			border: 1px solid red;
 			text-shadow: black 0em 0em 0em;
 		}
 		#findContainer{
@@ -146,7 +145,7 @@
 	<br/>
 	</form>
 	<div class="row" id="apiLoginContainer">
-	<div class="col-md-6 col-sm-12 col-xs-12">구글 로그인 영역</div><div class="col-md-6 col-sm-12 col-xs-12">카카오 로그인 영역</div>
+	<!-- <div class="col-md-6 col-sm-12 col-xs-12">구글 로그인 영역</div><div class="col-md-6 col-sm-12 col-xs-12">카카오 로그인 영역</div> -->
 	</div>
 	<br/>
 	</div>

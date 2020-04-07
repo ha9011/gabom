@@ -35,6 +35,7 @@
 	margin:20px;
 	box-shadow:5px 5px 3px lightgray;
 	text-align:center;
+	cursor: pointer;
 }
 #img{
 	width:100%;

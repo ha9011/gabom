@@ -256,23 +256,46 @@
 }
 
 .yourCommnet {
-	margin: 15px 0 15px 10px;
+	margin: 15px 0 15px 20px;
 	font-size: 15px;
 	align-self: flex-start;
 	text-align: left;
 	background: white;
 	border-radius: 10px;
+	position:relative;
+}
+
+.yourCommnet:after{
+ border-top:15px solid white;
+ border-left: 15px solid transparent;
+ border-right: 0px solid transparent;
+ border-bottom: 0px solid transparent;
+ content:"";
+ position:absolute;
+ top:10px;
+ left:-15px;
 }
 
 .myCommnet {
-	margin: 15px 10px 15px 0;
+	margin: 15px 20px 15px 0;
 	font-size: 15px;
 	align-self: flex-end;
 	text-align: right;
 	background: yellow;
 	border-radius: 10px;
+	position:relative;
 }
-
+.myCommnet:after {
+ border-top:15px solid yellow;
+ border-left: 0px solid transparent;
+ border-right: 15px solid transparent;
+ border-bottom: 0px solid transparent;
+ content:"";
+ position:absolute;
+ top:10px;
+ right:-15px;
+}
+ 
 #chattingInput {
 	width: 89%;
 	border:none;
@@ -280,8 +303,15 @@
 }
 
 #chattingBtn{
-background-color:yellow;
+background-color:lightgray;
+color:white;
 }
+
+#chattingBtn:hover{
+background-color:yellow;
+color:black;
+}
+
 .chatFrame {
 	display: flex;
 	flex-direction: column;
@@ -650,7 +680,7 @@ display : flex;
 	<div id="chatDate"></div> 
 
 	<footer>
-		<jsp:include page="/WEB-INF/views/footer.jsp" />
+		<jsp:include page="/WEB-INF/views/footer/footer.jsp" />
 	</footer>
 
 
@@ -1145,8 +1175,8 @@ $(document).on("click","#rejectSomoim",function(e){
     									let bodyName = $("<h4><small><i> "+cTime+" </i></small></h4>");
     									let bodyCont = $("<p>"+cCont+"</p>");
     									
-    									mediabody.append(bodyName);
     									mediabody.append(bodyCont);
+    									mediabody.append(bodyName);
     											
     									media.append(mediabody);
     									iDateChatFrame.append(media)
@@ -1159,10 +1189,11 @@ $(document).on("click","#rejectSomoim",function(e){
     							 		
     						 			let mediabody = $("<div class='media-body'></div>");
     							 		
-    						 			let bodyName = $("<h4>"+cId+"<small><i>"+cTime+"</i></small></h4>");
     						 			let bodyCont = $("<p>"+cCont+"</p>");
-    							 		mediabody.append(bodyName);
+    						 			let bodyName = $("<h4>"+cId+"<small><i>"+cTime+"</i></small></h4>");
+    							 		
     							 		mediabody.append(bodyCont);
+    							 		mediabody.append(bodyName);
     							 		
     							 		media.append(mediabody);
     							 		iDateChatFrame.append(media)
@@ -1221,8 +1252,9 @@ $(document).on("click","#rejectSomoim",function(e){
 						
 						var bodyName = $("<h4><small><i> "+chatTime+" </i></small></h4>");
 						var bodyCont = $("<p>"+data.msg+"</p>");
-						mediabody.append(bodyName);
+						
 						mediabody.append(bodyCont);
+						mediabody.append(bodyName);
 						
 						media.append(mediabody);
 						$("#chattingRoom").append(media)
@@ -1238,10 +1270,11 @@ $(document).on("click","#rejectSomoim",function(e){
 						
 						var mediabody = $("<div class='media-body'></div>");
 						
-						var bodyName = $("<h4>"+data.id+"<small><i>"+chatTime+"</i></small></h4>");
 						var bodyCont = $("<p>"+data.msg+"</p>");
-						mediabody.append(bodyName);
+						var bodyName = $("<h4>"+data.id+"<small><i>"+chatTime+"</i></small></h4>");
+						
 						mediabody.append(bodyCont);
+						mediabody.append(bodyName);
 						
 						media.append(mediabody);
 						$("#chattingRoom").append(media)
@@ -1969,6 +2002,9 @@ for(let add = 0 ; add < ${JsonJungmoRoom}.length-Attendlist.length; add++){
 console.log("기본정보",${JsonBasicInfo})
 console.log("채팅 : " , ${JsonchatData})
 var recentChatData = 	${JsonchatData}
+var somo_name = $(${JsonBasicInfo}.somoim_name);
+
+$("#day1").append(somo_name);
 
 var si = $('<img style="width:100%;height:200px;" src="../'+${JsonBasicInfo}.somoim_sys_mainpicture+'">');
 $("#top").append(si);
@@ -1995,8 +2031,8 @@ $("#top").append(si);
 				let bodyName = $("<h4><small><i> "+cTime+" </i></small></h4>");
 				let bodyCont = $("<p>"+cCont+"</p>");
 				
-				mediabody.append(bodyName);
 				mediabody.append(bodyCont);
+				mediabody.append(bodyName);
 						
 				media.append(mediabody);
 				
@@ -2010,10 +2046,11 @@ $("#top").append(si);
 		 		
 	 			let mediabody = $("<div class='media-body'></div>");
 		 		
-	 			let bodyName = $("<h4>"+cId+"<small><i>"+cTime+"</i></small></h4>");
 	 			let bodyCont = $("<p>"+cCont+"</p>");
-		 		mediabody.append(bodyName);
+	 			let bodyName = $("<h4>"+cId+"<small><i>"+cTime+"</i></small></h4>");
+		 		
 		 		mediabody.append(bodyCont);
+		 		mediabody.append(bodyName);
 		 		
 		 		media.append(mediabody);
 		 		$("#chattingRoom").append(media)
