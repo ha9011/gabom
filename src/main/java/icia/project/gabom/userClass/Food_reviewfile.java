@@ -36,9 +36,12 @@ public class Food_reviewfile {
 	      
 	      String root_path = req.getSession().getServletContext().getRealPath("/"); // 상대경로
 	      String sysRoot_path=root_path.substring(0, root_path.indexOf("\\.metadata"));
-	      String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\foodreview\\upload\\";
+	      String real=sysRoot_path+"\\gabom\\upload\\foodreview\\upload\\";
+	      //\\gabom\\upload\\userprofileimage\\
+	      
 	      System.out.println("real="+real);
 	      
+	     
 	      
 	      //2.폴더 생성을 꼭 할것...
 	      File dir=new File(real);
@@ -81,10 +84,9 @@ public class Food_reviewfile {
 		         String sysFileName="foodreviewimg"+System.currentTimeMillis()+"."
 		               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
 		         
-		         String sysFileNameDB2="./resources/foodreview/upload/"+sysFileName;
+		         String sysFileNameDB2="/upload/foodreview/upload/"+sysFileName;
 		         fMap.put("food_review_sysfile", sysFileNameDB2);
 		         //5.메모리->실제 파일 업로드
-		         
 		         try {
 		            mf.transferTo(new File(real+sysFileName)); // 서버upload에 파일 저장
 		            f1=minfDao.foodreviewimage(fMap); // db에 올림
