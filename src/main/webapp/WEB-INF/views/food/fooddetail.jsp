@@ -75,8 +75,9 @@ font-weight:bold;
 }
 #freplelist{
 height:600px;
-width:140%;
+width:100%;
 overflow:auto;
+margin: 15px 0;
 }
 #btnDelete{
 margin-right:50px;
@@ -91,7 +92,8 @@ border-bottom: 1px solid lightgray;
   <!-- Navigation -->
   <nav style="background-color:#3abade" class="navbar fixed-top navbar-expand-lg navbar-dark  fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="/gabom/">GABOM</a>
+      <a class="navbar-brand" href="/gabom/"><img style="width: 200px;" src="./resources/headerImage/color_rogo.JPG"
+					alt="logo"></a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -215,7 +217,7 @@ border-bottom: 1px solid lightgray;
       
 
         <!-- Comments Form -->
-        <div class="card my-4" style="width: 140%;">
+        <div class="card my-4" style="width: 100%;">
           <h5 class="card-header">Leave a Comment:</h5>
           <div class="card-body">
             <form  id="rel">
@@ -265,7 +267,7 @@ border-bottom: 1px solid lightgray;
   <!-- /.container -->
 
 <div style="border-top:1px solid lightgray;margin-top:50px;"  >
-	<jsp:include page="/WEB-INF/views/footer.jsp"/>
+	<jsp:include page="/WEB-INF/views/footer/footer.jsp"/>
 </div> 
 
 

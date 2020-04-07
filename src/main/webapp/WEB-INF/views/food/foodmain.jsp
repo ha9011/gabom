@@ -25,12 +25,14 @@
 	width:95%;
 	margin:0 10%;
 }
-#food{
+.food{
 	width:15%;
 	display:inline-block;
 	margin:20px;
 	box-shadow:5px 5px 3px lightgray;
 	text-align:center;
+	cursor:pointer;
+	
 }
 #img{
 	width:100%;
@@ -107,7 +109,7 @@ var foodlist=${foodlist};
  	 			$("#food_list").append(br);
  	 		} 
  		
- 		 var out = $('<div id="food" name ='+[i.food_number]+'></div>')
+ 		 var out = $('<div class="food" name ='+[i.food_number]+'></div>')
  		 var img = $('<div class="mainimg" name ='+[i.food_number]+'><img id="img" alt='+[i.food_sysname]+'name ='+[i.food_number]+' src="'+[i.food_sysname]+'"></div>')
  		 var title=$('<p style="font-weight:bold">'+[i.food_name]+'</p>');
  		 var info = $('<div id="info">'+"주소: "+[i.food_address]+'</div>')

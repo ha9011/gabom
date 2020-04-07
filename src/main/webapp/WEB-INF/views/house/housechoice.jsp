@@ -67,7 +67,7 @@ letter-spacing:10px;
 <!-- /.container -->
 
  <div>
-	<jsp:include page="/WEB-INF/views/footer.jsp"/>
+	<jsp:include page="/WEB-INF/views/footer/footer.jsp"/>
 </div> 
 </body>
 
