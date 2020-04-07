@@ -23,6 +23,12 @@ section {
   overflow: hidden;
   
 }
+.ul_list{
+	list-style: none;
+}
+.ul_list > li{
+	float:left;
+}
 .sec{
 width:100%;
 text-align:center;
@@ -141,6 +147,62 @@ display: flex;
 	margin: 0 0 0 8px;
 }
 
+.dot {
+	overflow: hidden;
+	float: left;
+	width: 12px;
+	height: 12px;
+	background:
+		url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');
+}
+
+.dotOverlay {
+	position: relative;
+	top: 40px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	border-bottom: 2px solid #ddd;
+	float: left;
+	font-size: 12px;
+	padding: 5px;
+	background: #fff;
+}
+
+.numberr {
+	font-weight: bold;
+	color: #ee6152;
+}
+.planFrame {
+	display: flex;
+}
+
+.idxbtn {
+	border-radius: 10px;
+	padding: 8px;
+	margin-top: 15px;
+}
+
+.planImg > img{
+	width : 70px;
+	height: 70px;
+	
+	
+}
+
+#detailTrip{
+	height : 300px;
+	overflow: auto;
+}
+
+#titleframe{
+	margin-top : 10px;
+	text-align: center;
+	
+}
+#plantitle{
+	font-size: 20px;
+	font-weight: bold;
+}
 </style>
 </head>
 
@@ -276,6 +338,7 @@ display: flex;
 <div class="modal" id="detail" tabindex="-1" role="dialog">
   <div class="modal-dialog mapdialog" role="document">
     <div class="modal-content">
+    	<div id="titleframe"><span id="plantitle"></span></div>
       <div class="modal-body">
        <div id="d_map" style="width:100%; height:300px;"></div>
        <div class="plan">
@@ -296,11 +359,11 @@ display: flex;
        </div>
       </div>
       <div>
-    	<input id="datebtn" type="date" placeholder="여행 첫 날짜 입력해주세요"> <button id="dateCommit">확정</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    	&nbsp&nbsp&nbsp&nbsp<input id="datebtn" type="date" placeholder="여행 첫 날짜 입력해주세요"> <button id="dateCommit">확정</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       	<span id="finalDay"> </span>
       </div>
       <div style="display:flex;" class="modal-footer">
-         <button type="button" class="dsbtn btn btn-primary planjudgebtn" >저장</button>
+         <button type="button" class="dsbtn btn btn-primary planjudgebtn" disabled="disabled" >저장</button>
         <button type="button" class="dsbtn btn btn-secondary">닫기</button>
       </div>
     </div>
@@ -317,6 +380,20 @@ display: flex;
 </body>
 
 <script>
+var tnum ; // 승인대기 여행 번호 
+var map;
+let arr ; // 계획 모음!
+let points ={}; // x,y좌표 모음
+let planidx = 1;
+
+
+let customOverlayy = [];
+let distanceOverlayy = [];
+let clickLinee =[];
+
+let tripnum // 여행번호
+let sdate //  여행 저장 날짜
+let edate //
 
 $(function() {
 
@@ -405,65 +482,32 @@ $(function() {
         dataType:"json", //rest 컨트롤 이용   
         success:function(data){
 			console.log("여행데이터",data);
-			
-			for(i of data){
-				
-				/* console.log(i.trip_area);
-			 	  if(i.trip_area == 1){
-					i.trip_area = "서울"		  
-					
-			 	  }else if(i.trip_area == 2){
-					i.trip_area = "인천"		  
-			 	  }else if(i.trip_area == 3){
-					i.trip_area = "대전"		  
-			 	  }else if(i.trip_area == 4){
-					i.trip_area = "대구"		  
-			 	  }else if(i.trip_area == 5){
-					i.trip_area = "광주"		  
-			 	  }else if(i.trip_area == 6){
-					i.trip_area = "부산"		  
-			 	  }else if(i.trip_area == 7){
-					i.trip_area = "울산"		  
-			 	  }else if(i.trip_area == 8){
-					i.trip_area = "세종특별자치시"		  
-			 	  }else if(i.trip_area == 31){
-					i.trip_area = "경기도"		  
-			 	  }else if(i.trip_area == 32){
-					i.trip_area = "강원도"		  
-			 	  }else if(i.trip_area == 33){
-					i.trip_area = "충청북도"		  
-			 	  }else if(i.trip_area == 34){
-					i.trip_area = "충청남도"		  
-			 	  }else if(i.trip_area == 35){
-					i.trip_area = "경상북도"		  
-			 	  }else if(i.trip_area == 36){
-					i.trip_area = "경상남도"		  
-			 	  }else if(i.trip_area == 37){
-					i.trip_area = "전라북도"		  
-			 	  }else if(i.trip_area == 38){
-					i.trip_area = "전라남도"		  
-			 	  }else if(i.trip_area == 39){
-					i.trip_area = "제주도"		  
-			 	  } */
+			arr = data;
+			let idx = 0;
+			for(let i of data){
 				  
-			 	 var sd = getFormatDate(i.trip_start_date);
-			 	 var ed = getFormatDate(i.trip_end_date);
+			 	var sd = getFormatDate(i.trip_start_date);
+			 	var ed = getFormatDate(i.trip_end_date);
 			 	  
-				var ul =$('<a class="modalplan" name="'+i.trip_number+'"><ul id="ul_list"></ul></a>');
-				var li =$('<li class="t_li"><i class="fas fa-fan"></i></li>');
-				var li1 =$('<li class="t_li">'+i.trip_title+'</li>');
+				var a =$('<a class="modalplan" data-title="'+i.trip_title+'" name="'+i.trip_number+'" data-arrnum="'+idx+'"></a>');
+				var ul = $('<ul  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="ul_list"></ul>');
+				var li =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li"><i class="fas fa-fan"></i></li>');
+				var li1 =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li">'+i.trip_title+'</li>');
 				//var li2 =$('<li class="t_li">'+i.trip_area+'</li>');
-				var li3 =$('<li class="t_li">'+sd+'   ~   '+'</li>');
-				var li4 =$('<li class="t_li">'+ed+'</li>');
+				var li3 =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li">'+sd+'   ~   '+'</li>');
+				var li4 =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li">'+ed+'</li>');
 				//var li5 =$('<li class="t_li">'+i.trip_share_count+'</li>');
 				
-				$("#t_list").append(ul);
+				
 				ul.append(li);
 				ul.append(li1);
 				//ul.append(li2);
 				ul.append(li3);
 				ul.append(li4);
-				//ul.append(li5);
+				a.append(ul);
+				$("#t_list").append(a);
+
+				idx++;
 			}
 			
         },
@@ -477,14 +521,39 @@ $(function() {
 }); 
 
 $(document).on('click','.modalplan',function(e){//모달 열고 지도 및 정보 표시
-	
+	$(".planjudgebtn").prop("disabled", true)
+	console.log("모달 첫 클릭")
+
+	console.log("etitle",e.target.dataset.title);
+	console.log("enum",e.target.dataset.arrnum);
+	$("#plantitle").text(e.target.dataset.title);
+	$("#detailTrip").empty();  // 비우기
 	$("#detail").show();
 	//$("#d_map").empty();
  	//$("#d_content").empty();
-	var tnum = $(this).attr("name");
+	var tnum = $(this).attr("name");//
+	
 	console.log(tnum);
 
-
+	//<button type="button" class="dsbtn btn btn-primary planjudgebtn" disabled="disabled" >저장</button>
+	var el = document.querySelector('.planjudgebtn');
+	el.dataset.tripnumber = tnum;
+	
+	var ell = document.querySelector('.planjudgebtn');
+	el.dataset.arrnum = e.target.dataset.arrnum;
+	
+	setTimeout(function() {
+		var mapContainer = document.getElementById('d_map'), // 지도를 표시할 div  
+		mapOption = { 
+	      
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };
+	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+	   map = new kakao.maps.Map(mapContainer, mapOption); 
+	}, 200)
+	
+	
 	 $.ajaxSetup({         
 		    beforeSend : function(xhr){
 		       xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
@@ -531,7 +600,7 @@ $(document).on('click','.modalplan',function(e){//모달 열고 지도 및 정�
 		   }
 		   
 		   })//ajax 끝    
-	
+		   
 });// 클릭이벤트 끝 
 
  
@@ -643,17 +712,253 @@ $(document).on('click','.dsbtn' ,function() {
 
 
 
-// 모달 여행지도
-	setTimeout(function() {
-		var mapContainer = document.getElementById('d_map'), // 지도를 표시할 div  
-		mapOption = { 
+// // 모달 여행지도
+// 	setTimeout(function() {
+// 		var mapContainer = document.getElementById('d_map'), // 지도를 표시할 div  
+// 		mapOption = { 
 	      
-	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-	        level: 3 // 지도의 확대 레벨
-	    };
-	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-	   map = new kakao.maps.Map(mapContainer, mapOption); 
-	}, 1000)
+// 	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+// 	        level: 3 // 지도의 확대 레벨
+// 	    };
+// 	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+// 	   map = new kakao.maps.Map(mapContainer, mapOption); 
+// 	}, 1000)
+
+
+
+
+	//--------------------- 맵에 필요한 친구
+	var houseNum = null;
+	const createPlanForm = (arrFrame,pointsFrame) =>{
+		console.log("arrFrame",arrFrame)
+		console.log("pointsFrame",pointsFrame)
+		var checkHouseD = false;
+		
+		for( let v of arrFrame){
+			if(v.trip_type==1){ //숙소일때
+				console.log("숙소 포문")
+				console.log("v",v)
+				
+				let planFrame = $("<div class='planFrame'>  </div>");
+				let planNum = $("<div class='planNum'> <img style='width:40;height:40px;'src='./resources/tripImage/bookhouse.png'> </div>");
+				let planImg = $("<div class='planImg'><img src='"+v.trip_img+"' width='50px' height='50px' ></div>");
+				
+				planFrame.append(planNum);
+				planFrame.append(planImg);
+				
+				
+				let planContFram = $("<div class='planContFram'> </div>");
+				let contTitle = $("<div class='contTitle'>"+v.trip_title+"</div>");
+				let contAddr= $("<div class='contAddr'>"+v.trip_destination+" </div>");
+				planContFram.append(contTitle);
+				planContFram.append(contAddr);
+				
+				planFrame.append(planContFram);
+				
+				
+				
+				
+				
+				$("#detailTrip").append(planFrame);
+				
+				
+				pointsFrame.push(new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint)); //추가 할 마커 저장하기 arr에...
+				console.log("pointsFrame",pointsFrame);
+			
+				
+				let clickPosition = new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint); // 클릭한 좌표...(가상)
+				
+				if( planidx >= 2){
+					console.log(planidx);
+					console.log("??")
+					let clickLine = new kakao.maps.Polyline({
+		            	map: map, // 선을 표시할 지도입니다 
+		            	path: [pointsFrame[planidx-2] ,pointsFrame[planidx-1]], // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
+		            	strokeWeight: 3, // 선의 두께입니다 
+		            	strokeColor: '#db4040', // 선의 색깔입니다
+		            	strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+		            	strokeStyle: 'solid' // 선의 스타일입니다
+		        	});
+					console.log("???")
+					clickLinee.push(clickLine);
+					
+					let distance = Math.round(clickLine.getLength());
+					
+					displayCircleDot(pointsFrame[planidx-1], distance)
+				
+				}
+				houseNum = planidx;
+				planidx++;
+				checkHouseD = true;
+			
+			}else{ //숙소 아닐때
+				console.log("숙소아닌 포문")
+				console.log("v",v)
+				
+				let planFrame = $("<div class='planFrame'>  </div>");
+			
+				let planNum
+				if(checkHouseD==true){
+					planNum = $("<div class='planNum'> <button type='button' class='btn btn-primary idxbtn'> <span class='badge badge-light'>"+(planidx+1)+"</span> </button> </div>");
+				}else{
+					planNum = $("<div class='planNum'> <button type='button' class='btn btn-primary idxbtn'> <span class='badge badge-light'>"+planidx+"</span> </button> </div>");
+									
+				}
+				
+				let planImg = $("<div class='planImg'><img src='"+v.trip_img+"' width='50px' height='50px' ></div>");
+				
+				planFrame.append(planNum);
+				planFrame.append(planImg);
+				
+				
+				let planContFram = $("<div class='planContFram'> </div>");
+				let contTitle = $("<div class='contTitle'>"+v.trip_title+"</div>");
+				let contAddr= $("<div class='contAddr'>"+v.trip_destination+" </div>");
+				planContFram.append(contTitle);
+				planContFram.append(contAddr);
+				
+				planFrame.append(planContFram);
+				
+			
+				
+				
+				
+				$("#detailTrip").append(planFrame);
+				
+				
+				pointsFrame.push(new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint)); //추가 할 마커 저장하기 arr에...
+				console.log("pointsFrame",pointsFrame);
+			
+				
+				let clickPosition = new kakao.maps.LatLng(v.trip_ypoint, v.trip_xpoint); // 클릭한 좌표...(가상)
+				
+				if( planidx >= 2){
+					console.log(planidx);
+					console.log("!!")
+					
+					let clickLine = new kakao.maps.Polyline({
+		            	map: map, // 선을 표시할 지도입니다 
+		            	path: [pointsFrame[planidx-2] ,pointsFrame[planidx-1]], // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
+		            	strokeWeight: 3, // 선의 두께입니다 
+		            	strokeColor: '#db4040', // 선의 색깔입니다
+		            	strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+		            	strokeStyle: 'solid' // 선의 스타일입니다
+		        	});
+					
+					console.log("!!!")
+					
+					clickLinee.push(clickLine);
+					
+					let distance = Math.round(clickLine.getLength());
+					
+					displayCircleDot(pointsFrame[planidx-1], distance)
+				
+				}
+			
+				planidx++;
+			
+			
+			} 
+		}
+		
+		 //-----------지도 마커에 따른 재위치 선정
+		 let bounds = new kakao.maps.LatLngBounds(); 
+		 var checkHouse = false;
+		 for (i = 0; i < pointsFrame.length; i++) {
+		     // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
+		// 커스텀 오버레이에 표시할 내용입니다     
+		// HTML 문자열 또는 Dom Element 입니다 
+		let content;
+		if(houseNum-1 == i){
+			content = " <img style='width:40;height:40px;'src='./resources/tripImage/bookhouse.png'>  ";
+			checkHouse = true;
+		}else{
+			if(checkHouse==true){
+				content = "<button  type='button' class='btn btn-primary idxbtn mapbtn'> <span class='badge badge-light'>"+(i)+"</span> </button> ";
+			}else{
+				content = "<button  type='button' class='btn btn-primary idxbtn mapbtn'> <span class='badge badge-light'>"+(i+1)+"</span> </button> ";
+			}
+		}
+		
+		
+		// 커스텀 오버레이를 생성합니다
+		let custom = new kakao.maps.CustomOverlay({
+	   	 position: pointsFrame[i],
+	   	 content: content   
+		});
+		customOverlayy.push(custom);
+		// 커스텀 오버레이를 지도에 표시합니다
+	 	customOverlayy[customOverlayy.length-1].setMap(map);
+		
+		   
+		
+		 bounds.extend(pointsFrame[i]);
+		 }
+		 
+		 setTimeout(function() {
+			 setBounds(bounds)
+			}, 100);
+		     // 재설정매소드
+		 
+	 	
+		planidx=1;
+	} 
+		
+	const initMapKaKao=()=>{
+		for(v of customOverlayy){
+			v.setMap(null);
+		}
+		customOverlayy=[];
+		for(v of distanceOverlayy){
+			v.setMap(null);
+		}
+		distanceOverlayy=[];
+		for(v of clickLinee){
+			v.setMap(null);
+		}
+		clickLinee=[];
+	}	
+
+	function setBounds(bounds, points) {
+	    // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+	    // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+	    map.setBounds(bounds);
+	}
+
+	function displayCircleDot(position, distance) {
+		
+	    if (distance > 0) {
+	        // 클릭한 지점까지의 그려진 선의 총 거리를 표시할 커스텀 오버레이를 생성합니다
+	         var distanceOverlay = new kakao.maps.CustomOverlay({
+	            content: '<div class="dotOverlay">거리 <span class="numberr">' + distance + '</span>m</div>',
+	            position: position,
+	            yAnchor: 1,
+	            zIndex: 2
+	        });
+
+	         distanceOverlayy.push(distanceOverlay);
+	         
+	        // 지도에 표시합니다
+	        distanceOverlayy[distanceOverlayy.length-1].setMap(map);
+	    }
+
+	    // 배열에 추가합니다
+	    //dots.push({circle:circleOverlay, distance: distanceOverlay});
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -734,6 +1039,66 @@ infowindow.open(map, marker);
 
 
 
+$("#dateCommit").on("click", function(){
+	
+	$(".planjudgebtn").prop("disabled",false)
+	checkbtn = true;   
+	
+	console.log("arr",arr)
+    let obj_length = Number(Object.keys(arr).length-1);	
+	console.log(obj_length);
+    console.log($("#datebtn").val());
+    
+    sdate = new Date($("#datebtn").val());
+    console.log(sdate);
+    
+    edate = new Date($("#datebtn").val())
+    edate.setDate(edate.getDate()+obj_length);
+    console.log(edate);
+    
+    let resultPerid = "  최종확정일은  " +getFormatDate(sdate) + " ~ " + getFormatDate(edate)
+    $("#finalDay").text(resultPerid);
+})
+
+
+$(".planjudgebtn").on("click",function(e){
+	console.log("?")
+	console.log(e.target.dataset.tripnumber)
+	
+	var rangedate = getDateRangeData(sdate,edate)
+	
+    
+    
+    var data = {
+		"rangedate" : rangedate,
+		"tripnum" : e.target.dataset.tripnumber
+	}
+	
+	console.log(data);
+	
+    $.ajaxSetup({         
+	      beforeSend : function(xhr){
+	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	      });//먼저 보냄
+
+	$.ajax({
+    	url:'tprest/shareplansave',
+    	type:'post',
+    	data:data,
+     	//dataType:"json", //rest 컨트롤 이용   
+    	success:function(data){
+      	 	alert("여행플랜이 저장되었습니다.");
+      	 	$(".planjudgebtn").prop("disabled",true);
+       
+    },
+    error:function(error){
+       		alert("저장에 실패했습니다.")
+       		console.log(error);
+    }
+    
+ })
+	
+})
 
 
 
@@ -753,5 +1118,20 @@ infowindow.open(map, marker);
     day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
     return  year + '년  ' + month + '월  ' + day+'일   ';
    }
+   // 날짜사이 간격 배열형태로 전환
+   function getDateRangeData(param1, param2){  //param1은 시작일, param2는 종료일이다.
+		var res_day = [];
+	 	var ss_day = new Date(param1);
+	   	var ee_day = new Date(param2);    	
+	  		while(ss_day.getTime() <= ee_day.getTime()){
+	  			var _mon_ = (ss_day.getMonth()+1);
+	  			_mon_ = _mon_ < 10 ? '0'+_mon_ : _mon_;
+	  			var _day_ = ss_day.getDate();
+	  			_day_ = _day_ < 10 ? '0'+_day_ : _day_;
+	   			res_day.push(ss_day.getFullYear() + '-' + _mon_ + '-' +  _day_);
+	   			ss_day.setDate(ss_day.getDate() + 1);
+	   	}
+	   	return res_day;
+	}
 </script>
 </html>

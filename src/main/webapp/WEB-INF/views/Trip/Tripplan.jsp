@@ -303,11 +303,11 @@ text-align:center;
        </div>
       </div>
       <div>
-    	<input id="datebtn" type="date" placeholder="여행 첫 날짜 입력해주세요"> <button id="dateCommit">확정</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    	&nbsp&nbsp&nbsp&nbsp<input id="datebtn" type="date" placeholder="여행 첫 날짜 입력해주세요"> <button id="dateCommit">확정</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       	<span id="finalDay"> </span>
       </div>
       <div style="display:flex;" class="modal-footer">
-         <button type="button" class="dsbtn btn btn-primary planjudgebtn" >저장</button>
+         <button type="button" class="dsbtn btn btn-primary planjudgebtn" disabled="disabled">저장</button>
         <button type="button" class="dsbtn btn btn-secondary">닫기</button>
       </div>
     </div>
@@ -881,6 +881,8 @@ function getFormatDate(strdate){
 
 $("#dateCommit").on("click", function(){
 	checkbtn = true;   
+	$(".planjudgebtn").prop("disabled",false);
+	
     let obj_length = Number(Object.keys(arr).length-1);	
 	console.log(obj_length);
     console.log($("#datebtn").val());
@@ -922,7 +924,7 @@ $(document).on("click", ".planjudgebtn", function(){   // 저장 누르면 반�
       	 	alert("여행플랜이 저장되었습니다.");
        		console.log(data)
        		$("#content")[0].reset();
-       
+       		$(".planjudgebtn").prop("disabled",true);	
     },
     error:function(error){
        		alert("저장에 실패했습니다.")
