@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <link rel="icon" href="favicon.ico">
 <title>여행 만들기 </title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap core CSS -->
 <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -25,7 +26,7 @@ margin-left: -605px;
 .inbox{
 margin-top:30px;
 width:700px;
-height:820px;
+height:870px;
 background-color:black;
 background-color: rgba(0, 0, 0, 0.7);
 font-size:25px;
@@ -66,7 +67,7 @@ float:right;
 margin-top: 30px;
 margin-right:-86%;
 width:700px;
-height:820px;
+height:870px;
 background-color:black;
 background-color: rgba(0, 0, 0, 0.7);
 font-size:15px;
@@ -217,7 +218,7 @@ text-align:center;
 		<!-- Header -->
 		<header>
 			<div class="container-fluid">
-				<img style="width:100%;height:900px;" src="./resources/tripImage/planbg.JPG" class="img-responsive" alt="portfolio">
+				<img style="width:100%;height:950px;" src="./resources/tripImage/planbg.JPG" class="img-responsive" alt="portfolio">
 					<div id="outbox" class="intro-text">
 						<div class="inbox">
 								<br>
@@ -274,9 +275,9 @@ text-align:center;
 			</div>
 		</header>
 		
-		 <div>
+		 <%-- <div>
 			<jsp:include page="/WEB-INF/views/footer.jsp"/>
-		</div> 
+		</div> --%> 
 		
 		<!-- 상세보기 모달 -->
 <div class="modal" id="detail" tabindex="-1" role="dialog">

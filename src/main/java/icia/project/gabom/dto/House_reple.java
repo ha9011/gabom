@@ -19,4 +19,7 @@ public class House_reple {
 	@DateTimeFormat(pattern="yyyy-mm-dd")
 	private String house_reple_time;
 	private String house_name;
+	
+	//댓글 작성자 사진
+	private String member_profile_picture;
 }

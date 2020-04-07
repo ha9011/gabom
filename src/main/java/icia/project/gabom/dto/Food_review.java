@@ -23,5 +23,8 @@ public class Food_review {
 		//후기 사진 
 		private String food_review_orifile;
 		private String food_review_sysfile;
+		
+		//작성자 사진
+		private String member_profile_picture;
 
 }

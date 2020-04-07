@@ -25,7 +25,7 @@ cursor: pointer;
 width:100%;
 }
 .list-group-item-action{
-width:140%;
+width:120%;
 }
 
 .filebox label { 
@@ -75,7 +75,7 @@ margin-top:70%;
 width:100%;
 }
 .table{
-width: 1550px;
+width: 120%;
 }
 .info{
 display: flex;
@@ -501,7 +501,7 @@ $("#myreser").on('click', function(e) {
   				
   				var t_td1 =$('<td>'+i.reservation_number+'</td>');//
   				var t_td2 =$('<td>'+i.member_guestid+'님'+'</td>');//
-  				var t_td3 =$('<td>'+i.house_name+'</td>');//
+  				var t_td3 =$('<td style="overflow:hidden">'+i.house_name+'</td>');//
   				var t_td4 =$('<td>'+cid+'</td>');//
   				var t_td5 =$('<td>'+cod+'</td>');//
   				var t_td6 =$('<td>'+i.reservation_person+'명'+'</td>');//

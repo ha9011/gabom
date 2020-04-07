@@ -678,7 +678,7 @@ public class TripService {
 
 
 	public String changeDay(int tripNumber, String newStartDayDB, String newLastDayDB, int rangeDay,
-			int diffOriNewFirstday,  String changeTripTitle,String trip_id) {
+		int diffOriNewFirstday,  String changeTripTitle,String trip_id) {
 		
 		//1. trip_plan 날짜 변경
 		int updateTripDay = tpDao.updateTripDay(tripNumber,changeTripTitle,newStartDayDB,newLastDayDB);
@@ -694,13 +694,15 @@ public class TripService {
 
 	
 	  //home에서 여행계획들 불러옴 
-//	public String getplanlist() {
-//		String json = null;
-//		
-//		
-//	 
-//		return json; 
-//	 }
+	public String getplanlist() {
+		String json = null;
+		
+		List<Trip_plan> tplist = tpDao.gettplist();
+		
+		json = new Gson().toJson(tplist);
+	 
+		return json; 
+	 }
 	 
 
 	

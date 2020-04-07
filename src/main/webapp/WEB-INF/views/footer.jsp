@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
   		<!-- <link rel="icon" href="favicon.ico">
 		<link href="./resources/css/style.css" rel="stylesheet"> -->
 </head>
@@ -139,7 +139,7 @@ color:gray;
 </script>
 <body>
 	<div id="footer">
-		<section id="contact" class="dark-bg" style="height:350px;background-color: white;">
+		<section id="contact" class="dark-bg" style="height: 40vh;background-color: white;">
 			<div class="container" style="margin-top:15px;">
 				<div class="row">
 					<div class="col-lg-12 text-center">

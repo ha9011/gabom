@@ -18,15 +18,31 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"> 
-
-
-<!-- Bootstrap core CSS -->
-  <link href="./resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Custom styles for this template -->
-  <link href="./resources/css/modern-business.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="./resources/css/modern-business.css" rel="stylesheet">
   
 <style>
+.out{
+width:100%;
+border:1px solid lightgray;
+margin:40px 0 0 0;
+border-radius: 50px;
+}
+#searchbtn{
+border-radius: 40px;
+background-color:#3abade
+}
+#housechangesearch{
+border:none;
+text-align:center;
+}
+#searchhouse{
+text-align:center;
+margin:0 10px;
+border:none;
+}
+
+
 .navbar-dark .navbar-nav .nav-link{
 color:white;
 }
@@ -49,7 +65,17 @@ height:600px;
 margin: 5px 15px 20px 0;
 font-weight:bold;
 }
-
+#reple_list{
+height:600px;
+width:140%;
+overflow:auto;
+}
+#btnDelete{
+margin-right:50px;
+}
+.blog-post-body{
+border-bottom: 1px solid lightgray;
+}
 </style>
 </head>
 <body>
@@ -57,34 +83,61 @@ font-weight:bold;
   <!-- Navigation -->
   <nav style="background-color:#3abade" class="navbar fixed-top navbar-expand-lg navbar-dark  fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="/home/">GABOM</a>
+      <a class="navbar-brand" href="/gabom/">GABOM</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
+            <a class="nav-link" href="trip">여행</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="services.html">Services</a>
+            <a class="nav-link" href="snsmain">sns</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
+            <a class="nav-link" href="housechoice">숙박</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
+            <a class="nav-link" href="foodmain">맛집</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
+            <a class="nav-link" href="somoim/mainsomoim">소모임</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
+            <a class="nav-link" href="servicecenter">고객센터</a>
           </li>
+          
         </ul>
       </div>
     </div>
   </nav>
+
+
+<form action="searchhouse" method="get" > <!-- housemain page에서 검색하는 것  -->
+	<div class="container">
+		<div class="row justify-content-center">
+                        <div class="col-12 col-md-5 col-lg-12">
+                                <div style="padding: 0.5rem;margin-left: 50px;margin-bottom:30px;" class="out card-body row no-gutters align-items-center">
+                                    <div class="col-auto"> <!-- 돋보기 -->
+                                        <i class="fas fa-search text-body"></i>
+                                    </div>
+                                    <!--end of col-->
+                                    <div class="col"><!-- 검색창 -->
+                                        <input id="searchhouse" name="house_address" class="form-control form-control-borderless" type="search" placeholder="지역을 입력해주세요">
+                                    </div>
+                                    <!--end of col-->
+                                    <div class="col-auto"><!-- 검색버튼 -->
+                                        <button id="searchbtn" class="btn btn-lg  " type="submit">Search</button>
+                                    </div>
+                                    <!--end of col-->
+                                </div>
+                        </div>
+                        <!--end of col-->
+          </div>
+	</div>
+	</form>
+
 
   <header>
     <div style="width: 70%;margin: 0 15%;" id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -151,18 +204,19 @@ font-weight:bold;
 							
 						</div>
 						
-			<div class="blog-post-body">
-							
-						</div>
-      <div>후기내용</div>
+			<div class="blog-post-body" style="width:140%;">
+				<div id="review" >
+      			</div>
+			</div>
+      
 
         <!-- Comments Form -->
-        <div class="card my-4">
+        <div class="card my-4" style="width: 140%;">
           <h5 class="card-header">Leave a Comment:</h5>
           <div class="card-body">
             <form  id="rel">
               <div class="form-group">
-                <textarea class="form-control" rows="3" name="house_reple_content"></textarea>
+                <textarea id="reple_content" class="form-control" rows="3" name="house_reple_content"></textarea>
               </div>
               <button id="repleinsert_btn" type="button" class="btn btn-primary">등록</button>
               <input type="hidden" name="member_guestid" id="member_id">
@@ -172,42 +226,12 @@ font-weight:bold;
         </div>
 
         <!-- Single Comment -->
-        <div class="media mb-4">
-          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-          <div class="media-body">
-            <h5 class="mt-0">Commenter Name</h5>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-          </div>
-        </div>
-
-        <!-- Comment with nested comments -->
-        <div class="media mb-4">
-          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-          <div class="media-body">
-            <h5 class="mt-0">Commenter Name</h5>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-
-            <div class="media mt-4">
-              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-              <div class="media-body">
-                <h5 class="mt-0">Commenter Name</h5>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-              </div>
-            </div>
-
-            <div class="media mt-4">
-              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-              <div class="media-body">
-                <h5 class="mt-0">Commenter Name</h5>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-              </div>
-            </div>
-
-          </div>
-        </div>
-
+       <div id="reple_list">
+       
       </div>
-
+	</div>
+	
+	
       <!-- Sidebar Widgets Column -->
       <div class="col-md-4">
         <!-- Side Widget -->
@@ -239,11 +263,10 @@ font-weight:bold;
   </div>
   <!-- /.container -->
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="./resources/vendor/jquery/jquery.min.js"></script>
-  <script src="./resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<div style="border-top:1px solid lightgray;margin-top:50px;"  >
+	<jsp:include page="/WEB-INF/views/footer.jsp"/>
+</div> 
 
-</body>
 
 <!-- 리뷰상세보기  -->
 <div class="modal" id="detail" tabindex="-1" role="dialog">
@@ -254,7 +277,7 @@ font-weight:bold;
        <div id="d_content"></div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="c-modal btn btn-secondary">Close</button>
       </div>
     </div>
   </div>
@@ -262,9 +285,13 @@ font-weight:bold;
 
 
 
+</body>
+
 	<!-- <script src="./resources/js/bootstrap.min.js"></script> -->
 	<script src="./resources/js/jquery.bxslider.js"></script>
 	<script src="./resources/js/mooz.scripts.min.js"></script>
+	<script src="./resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	
 </body>
 
 <script>
@@ -359,20 +386,31 @@ $("#info").append(info);
     });//---------------------------------------------------------예약영역------------------------------------------------------------------------
  
     var reple_list=${reple_list};
-    console.log(reple_list);
+    console.log("댓글들",reple_list);
     var login_id = ${memberinfo}
     console.log("로그인아이디",login_id);
     console.log(login_id[0].member_id)
     
     for( i of reple_list){
-		var reple_id = $('<div>'+i.member_guestid+'님의 댓글:      '+i.house_reple_content+'&nbsp'+'&nbsp'+'&nbsp'+i.house_reple_time+'<div>');
-		$("#replylist").append(reple_id);//아이디 
-		
-		
+    	
+    	var cont1 =$('<div class="media mb-4" id="reple"></div>');
+    	var cont2 =$('<img style="width:50px" class="d-flex mr-3 rounded-circle" src="'+i.member_profile_picture+'">');
+    	var cont3 =$('<div class="media-body"></div>');
+    	var cont4 =$('<h5 class="mt-0" id="use_name">'+i.member_guestid+'</h5>');
+    	var cont5 =$('<p>'+i.house_reple_time+'</p>');
+    	var cont6 =$('<p>'+i.house_reple_content+'</p>');
+    	
+    	$("#reple_list").append(cont1);
+    	cont1.append(cont2);
+    	cont1.append(cont3);
+    	cont3.append(cont4);
+    	cont3.append(cont5);
+    	cont3.append(cont6);
+    	
 		 if(i.member_guestid == login_id[0].member_id){
 			
      		$("<button data-housenum='"+house[0].house_number+"' data-replenum='"+i.house_reple_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
-    		                      .text("삭제").appendTo($("#replylist"));
+    		                      .text("삭제").appendTo(cont1);
     	 }
 		
 	}
@@ -397,8 +435,32 @@ $("#info").append(info);
             dataType:"json", //rest 컨트롤 이용   
            success:function(data){
               alert("댓글 입력완료 ");
-              console.log(data)
+              console.log("새로운댓글",data)
+              $("#reple_content").val("");
+              $("#reple_list").empty();
               
+              for( i of data){
+              	
+              	var cont1 =$('<div class="media mb-4" id="reple"></div>');
+              	var cont2 =$('<img style="width:50px" class="d-flex mr-3 rounded-circle" src="'+i.member_profile_picture+'">');
+              	var cont3 =$('<div class="media-body"></div>');
+              	var cont4 =$('<h5 class="mt-0" id="use_name">'+i.member_guestid+'</h5>');
+              	var cont5 =$('<p>'+i.house_reple_time+'</p>');
+              	var cont6 =$('<p>'+i.house_reple_content+'</p>');
+              	
+              	$("#reple_list").append(cont1);
+              	cont1.append(cont2);
+              	cont1.append(cont3);
+              	cont3.append(cont4);
+              	cont3.append(cont5);
+              	cont3.append(cont6);
+              	
+          		 if(i.member_guestid == login_id[0].member_id){
+          			
+               		$("<button data-housenum='"+house[0].house_number+"' data-replenum='"+i.house_reple_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
+              		                      .text("삭제").appendTo(cont1);
+              	 }
+              }
               
            },
            error:function(error){
@@ -439,20 +501,29 @@ $("#info").append(info);
 	         success:function(data){
 	         console.log(data);
 	         
-	         $("#replylist").empty();
-	         
+	         $("#reple_list").empty();
 	         for( i of data){
-	     		var reple_id = $('<div>'+i.member_guestid+'님의 댓글:      '+i.house_reple_content+'&nbsp'+'&nbsp'+'&nbsp'+i.house_reple_time+'<div>');
-	     		$("#replylist").append(reple_id);//아이디 
-	     		
-	     		
-	     		 if(i.member_guestid == login_id[0].member_id){
-	     			
-	          		$("<button data-replenum='"+i.house_reple_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
-	         		                      .text("삭제").appendTo($("#replylist"));
-	         	 }
-	     		
-	     		}
+	              	
+	              	var cont1 =$('<div class="media mb-4" id="reple"></div>');
+	              	var cont2 =$('<img style="width:50px" class="d-flex mr-3 rounded-circle" src="'+i.member_profile_picture+'">');
+	              	var cont3 =$('<div class="media-body"></div>');
+	              	var cont4 =$('<h5 class="mt-0" id="use_name">'+i.member_guestid+'</h5>');
+	              	var cont5 =$('<p>'+i.house_reple_time+'</p>');
+	              	var cont6 =$('<p>'+i.house_reple_content+'</p>');
+	              	
+	              	$("#reple_list").append(cont1);
+	              	cont1.append(cont2);
+	              	cont1.append(cont3);
+	              	cont3.append(cont4);
+	              	cont3.append(cont5);
+	              	cont3.append(cont6);
+	              	
+	          		 if(i.member_guestid == login_id[0].member_id){
+	          			
+	               		$("<button data-housenum='"+house[0].house_number+"' data-replenum='"+i.house_reple_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
+	              		                      .text("삭제").appendTo(cont1);
+	              	 }
+	              }
 	         },
 	         
 	         error:function(error){
@@ -469,26 +540,35 @@ $("#info").append(info);
     //review 영역
   var review =${review_list};
   console.log("리뷰리스트 ",review);
-  $("#review").empty(); 
   
-  for (i of review){
-	 
-	  var out =$('<div class="outl"></div>');
-	  var w_id = $('<h4>'+i.member_guestid+'님'+'</h4>');
-	  var w_cont = $('<p  class="dn">'+i.house_review_content+'</p>');
-	  var w_dt =$('<a style="float:right" class="dn detail" href="#" data-toggle="modal" data-target="#detail" name="'+i.house_review_number+'">자세히보기</a>');
-	  
-	  $("#review").append(out);
-	  out.append(w_id);
-	  out.append(w_cont);
-	  out.append(w_dt);	 
-  }
-    
-    
+  for( i of review){
+    	
+    	var cont1 =$('<div class="media mb-4" id="reple"></div>');
+    	var cont2 =$('<img style="width:50px" class="d-flex mr-3 rounded-circle" src="'+i.member_profile_picture+'">');
+    	var cont3 =$('<div class="media-body"></div>');
+    	var cont4 =$('<h5 class="mt-0" id="use_name">'+i.member_guestid+'</h5>');
+    	var cont5 =$('<p>'+i.house_review_date+'</p>');
+    	var cont6 =$('<p>'+i.house_review_content+'</p>');
+    	var cont7 =$('<a class="dn detail" href="#" name="'+i.house_review_number+'">자세히보기</a>');
+    	
+    	$("#review").append(cont1);
+    	cont1.append(cont2);
+    	cont1.append(cont3);
+    	cont3.append(cont4);
+    	cont3.append(cont5);
+    	cont3.append(cont6);
+    	cont3.append(cont7);
+    	
+    	
+    	 }
+  
   $(document).on('click',".detail", function() {
 		console.log("클릭한 리뷰번호"+$(this).attr("name"));
 		
+		$("#detail").show();
+		
 		var rnum = $(this).attr("name");
+		console.log(rnum);
 		
 		$.ajaxSetup({         
 		      beforeSend : function(xhr){
@@ -519,22 +599,12 @@ $("#info").append(info);
 	            }
 		 });//ajax 끝
 	})  
+	
+	$(document).on('click','.c-modal' ,function() {
+		$('#detail').hide();
+	})
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
 	var disabledDays = [];  //"2020-01-15"
 		

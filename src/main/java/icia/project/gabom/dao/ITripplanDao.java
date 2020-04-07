@@ -186,6 +186,8 @@ public interface ITripplanDao {
    @Update("update TRIP_PLAN_DATE set  trip_date = (trip_date+#{diffOriNewFirstday}) where trip_number =#{tripNumber}")
    int updateTripDate(@Param("tripNumber")int tripNumber, @Param("diffOriNewFirstday")int diffOriNewFirstday);
 
+   List<Trip_plan> gettplist();
+
 
 
    

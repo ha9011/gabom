@@ -25,4 +25,7 @@ public class House_review {
 	//후기 사진 
 	private String house_review_orifile;
 	private String house_review_sysfile;
+	
+	//후기작성자 사진
+	private String member_profile_picture;
 }
