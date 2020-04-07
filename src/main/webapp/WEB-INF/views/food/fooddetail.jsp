@@ -75,8 +75,9 @@ font-weight:bold;
 }
 #freplelist{
 height:600px;
-width:140%;
+width:100%;
 overflow:auto;
+margin: 15px 0;
 }
 #btnDelete{
 margin-right:50px;
@@ -216,7 +217,7 @@ border-bottom: 1px solid lightgray;
       
 
         <!-- Comments Form -->
-        <div class="card my-4" style="width: 140%;">
+        <div class="card my-4" style="width: 100%;">
           <h5 class="card-header">Leave a Comment:</h5>
           <div class="card-body">
             <form  id="rel">

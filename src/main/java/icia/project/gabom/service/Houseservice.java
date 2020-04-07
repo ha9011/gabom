@@ -138,7 +138,7 @@ public class Houseservice {
 		
 		view="house/housedetail";
 		
-		
+		System.out.println("댓글"+reple_list);
 		
 		json = new Gson().toJson(detailhouse);
 		json2 = new Gson().toJson(detailreser);

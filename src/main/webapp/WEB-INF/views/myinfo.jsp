@@ -252,7 +252,7 @@ margin:0 20px;
 						<ul class="detailImage_sections"></ul>
 					</div>
     		</div>
-    		<input id="hreview_content" style="width:100%;min-height:400px;" type="text" name="house_review_content">
+    		<input class="hreview_content" style="width:100%;min-height:400px;" type="text" name="house_review_content">
     		<input type="hidden" id="h_number" name="house_number">
     		<input type="hidden" id="r_number" name="reservation_number">
       </div>
@@ -864,15 +864,15 @@ $("#myreview").on('click', function(e) {
      				
 				}
 				
-				for(i of data.hrel){ //맛집작성한 리뷰 
-	  				var rd = getFormatDate(i.house_review_date);
+				for(i of data.frel){ //맛집작성한 리뷰 
+	  				var rd = getFormatDate(i.food_review_date);
 	  				var subtr =$('<tr id="fde"></tr>');
 		  			table2.append(subtr);
 	  				
 	  				var t_td1 =$('<td>'+i.member_guestid+'님'+'</td>');//
      				var t_td2 =$('<td>'+rd+'</td>');//
-     				var t_td3 =$('<td>'+i.house_name+'</td>');//
-     				var t_td4 =$('<td><button name="'+i.house_review_number+'" class="detail btn btn-lg btn-primary" data-toggle="modal" data-target="#detail">자세히보기</button></td>');//
+     				var t_td3 =$('<td>'+i.food_name+'</td>');//
+     				var t_td4 =$('<td><button name="'+i.food_review_number+'" class="detail btn btn-lg btn-primary" data-toggle="modal" data-target="#detail">자세히보기</button></td>');//
      				subtr.append(t_td1);
      				subtr.append(t_td2);
      				subtr.append(t_td3);
@@ -953,6 +953,8 @@ $(".upload-hidden").change(function(e){
 //-----------------------------------------------------------------------이미지 
 
  $(document).on('click',".hreview",function(e){//리뷰 작성
+	 $(".showPics").empty();
+	 $(".hreview_content").empty();
 	 
 	 var house_number = e.target.dataset.hnum
 	 var reservation_number= e.target.dataset.resernum

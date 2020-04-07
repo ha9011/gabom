@@ -112,6 +112,9 @@ button{
 margin: 0 5px;
 }
 
+.img-fluid{
+width:250px;
+}
 
 </style>
          <div id="title">
@@ -458,7 +461,7 @@ $(document).on('click',".pic", function() {
    })//ajax end -----------------------------------------------------------------------------------------------------------------------
 })  
 
-   $(document).on('click',"#btnDelete", function(e) {
+   $(document).on('click',".btnDelete", function(e) {
       var reply_number = e.target.dataset.replenum
       var photo_number = e.target.dataset.photonum
       

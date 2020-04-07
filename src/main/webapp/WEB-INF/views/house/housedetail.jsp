@@ -67,8 +67,9 @@ font-weight:bold;
 }
 #reple_list{
 height:600px;
-width:140%;
+width:100%;
 overflow:auto;
+margin: 15px 0;
 }
 #btnDelete{
 margin-right:50px;
@@ -206,13 +207,13 @@ border-bottom: 1px solid lightgray;
 						</div>
 						
 			<div class="blog-post-body" style="width:140%;">
-				<div id="review" >
+				<div id="review" style="margin: 15px;">
       			</div>
 			</div>
       
 
         <!-- Comments Form -->
-        <div class="card my-4" style="width: 140%;">
+        <div class="card my-7" style="width: 140%;">
           <h5 class="card-header">Leave a Comment:</h5>
           <div class="card-body">
             <form  id="rel">
@@ -410,7 +411,7 @@ $("#info").append(info);
     	
 		 if(i.member_guestid == login_id[0].member_id){
 			
-     		$("<button data-housenum='"+house[0].house_number+"' data-replenum='"+i.house_reple_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
+     		$("<button data-housenum='"+house[0].house_number+"' data-replenum='"+i.house_reple_number+"'></button").attr("class","btnDelete btn btn-warning")
     		                      .text("삭제").appendTo(cont1);
     	 }
 		
@@ -458,8 +459,7 @@ $("#info").append(info);
               	
           		 if(i.member_guestid == login_id[0].member_id){
           			
-               		$("<button data-housenum='"+house[0].house_number+"' data-replenum='"+i.house_reple_number+"'></button").attr("id","btnDelete").attr("class","btn btn-warning")
-              		                      .text("삭제").appendTo(cont1);
+               		$("<button data-housenum='"+house[0].house_number+"' data-replenum='"+i.house_reple_number+"'></button").attr("class","btnDelete btn btn-warning").text("삭제").appendTo(cont1);
               	 }
               }
               
@@ -476,7 +476,7 @@ $("#info").append(info);
     });// 댓글 등록 끝 
     
     
-    $("#btnDelete").on('click',function(e){//댓글 삭제
+    $(".btnDelete").on('click',function(e){//댓글 삭제
     	var result = confirm( '댓글을 삭제하시겠습니까?' );
     	
     	if(result){

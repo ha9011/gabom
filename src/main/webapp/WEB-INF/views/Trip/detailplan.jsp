@@ -18,6 +18,7 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <link rel="icon" href="favicon.ico">
 <!-- Bootstrap core CSS -->
+<link href="./resources/css/deletebtn.css" rel="stylesheet">
 <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom styles for this template -->
 <link href="./resources/css/owl.carousel.css" rel="stylesheet">
@@ -439,12 +440,37 @@ display: flex;
 			<hr>
 			<div id="t_destination">
 				<!-- onclick="modal" -->
-				<button class="addbtn btn-lg btn-primary" id="savebtn" onclick="saveplan()">저장하기</button>
-				<button class="addbtn btn-lg btn-primary" id="addDate" onclick="addDate()">+날짜추가</button>
-				<button class="addbtn btn-lg btn-primary" id="deleDate" onclick="deleDate()">-날짜삭제</button>
-				<button id="apiup" class="addbtn btn-lg btn-primary"
+				<button class="button addbtn e_btn " id="savebtn" onclick="saveplan()">
+					<div class="paper left"></div>
+    				<div class="paper middle"></div>
+    				<div class="paper right"></div>
+    				<div class="inner">
+        				<div class="zipper">
+            				<div class="line"></div>
+            				<div class="gradient"></div>
+       	 				</div>
+        				<span>저장하기</span>
+        				<svg viewBox="0 0 20 16">
+            				<polyline points="3 8.75 7.75 13.5 17 2.5"></polyline>
+       				 	</svg>
+    				</div>
+				</button>
+				
+				<button class="addbtn btn-lg " id="addDate" onclick="addDate()">
+					<span><i class="far fa-calendar-plus"></i></span>
+					<span>날짜추가</span>
+				</button>
+				<button class="addbtn btn-lg " id="deleDate" onclick="deleDate()">
+					<span><i class="fas fa-trash-alt"></i></span>
+    				<span>날짜삭제</span>
+				</button>
+				
+				<button id="apiup" class="addbtn btn-lg "
 					data-toggle="modal" data-target="#area_modal"
-					onclick="sigunguChange()">장소추가</button>
+					onclick="sigunguChange()">
+					<span><i class="far fa-map"></i></span>
+    				<span>장소추가 </span>
+				</button>
 			</div>
 
 			<!-- ---------------------------------areaCode기준 검색 모달--------------------------------- -->
@@ -610,11 +636,11 @@ for(let v of chatData ){
 				let media = $("<div class='myCommnet' data-date='"+cDate+"'></div>");
 				let mediabody = $("<div class='media-body'></div>");
 						
-				var bodyName = $("<span><small><i> "+cTime+" </i></small></span><br>");
-				var bodyCont = $("<span>"+cCont+"</span>");
+				var bodyName = $("<span><small><i> "+cTime+" </i></small></span>");
+				var bodyCont = $("<span>"+cCont+"</span><br>");
 				
-				mediabody.append(bodyName);
 				mediabody.append(bodyCont);
+				mediabody.append(bodyName);
 						
 				media.append(mediabody);
 				
@@ -628,12 +654,12 @@ for(let v of chatData ){
 	 			media.append(img);
 		 		
 	 			let mediabody = $("<div class='media-body'></div>");
-		 		
-	 			var bodyName = $("<span>"+cId+"<small><i> "+cTime+" </i></small></span><br>");
-				var bodyCont = $("<span>"+cCont+"</span>");
+	 			
+				var bodyCont = $("<span>"+cCont+"</span><br>");
+				var bodyName = $("<span>"+cId+"<small><i> "+cTime+" </i></small></span>");
 				
-				mediabody.append(bodyName);
-		 		mediabody.append(bodyCont);
+				mediabody.append(bodyCont);
+		 		mediabody.append(bodyName);
 		 		
 		 		media.append(mediabody);
 		 		$("#chatareaCont").append(media)
@@ -752,11 +778,11 @@ $("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
     									let mediabody = $("<div class='media-body'></div>");
     											
     									
-    									let bodyName = $("<span><small><i> "+cTime+" </i></small></span><br>");
-    									let bodyCont = $("<span>"+cCont+"</span>");
+    									let bodyName = $("<span><small><i> "+cTime+" </i></small></span>");
+    									let bodyCont = $("<span>"+cCont+"</span><br>");
     									
-    									mediabody.append(bodyName);
     									mediabody.append(bodyCont);
+    									mediabody.append(bodyName);
     											
     									media.append(mediabody);
     									iDateChatFrame.append(media)
@@ -769,12 +795,11 @@ $("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
     							 		
     						 			let mediabody = $("<div class='media-body'></div>");
     							 		
-    						 			
-    						 			let bodyName = $("<span>"+cId+"<small><i> "+cTime+" </i></small></span><br>");
-    						 			let bodyCont = $("<span>"+cCont+"</span>");
+    						 			let bodyCont = $("<span>"+cCont+"</span><br>");
+    						 			let bodyName = $("<span>"+cId+"<small><i> "+cTime+" </i></small></span>");
     									
-    							 		mediabody.append(bodyName);
     							 		mediabody.append(bodyCont);
+    							 		mediabody.append(bodyName);
     							 		
     							 		media.append(mediabody);
     							 		iDateChatFrame.append(media)
@@ -1464,10 +1489,11 @@ function getFormatDateDB(strdate){
 		    			var media = $("<div class='  myCommnet' data-date='"+getFormatDate(new Date())+"' ></div>");
 						var mediabody = $("<div class='media-body'></div>");
 						
-						var bodyName = $("<span><small><i> "+chatTime+" </i></small></span><br>");
-						var bodyCont = $("<span>"+data.msg+"</span>");
-						mediabody.append(bodyName);
+						var bodyName = $("<span><small><i> "+chatTime+" </i></small></span>");
+						var bodyCont = $("<span>"+data.msg+"</span><br>");
+						
 						mediabody.append(bodyCont);
+						mediabody.append(bodyName);
 						
 						media.append(mediabody);
 						$("#chatareaCont").append(media)
@@ -1482,11 +1508,11 @@ function getFormatDateDB(strdate){
 						
 						var mediabody = $("<div class='media-body'></div>");
 						
+						var bodyCont = $("<span>"+data.msg+"</span><br>");
+						var bodyName = $("<span>"+data.id+"<small><i> "+chatTime+" </i></small></span>");
 						
-						var bodyName = $("<span>"+data.id+"<small><i> "+chatTime+" </i></small></span><br>");
-						var bodyCont = $("<span>"+data.msg+"</span>");
-						mediabody.append(bodyName);
 						mediabody.append(bodyCont);
+						mediabody.append(bodyName);
 						
 						media.append(mediabody);
 						$("#chatareaCont").append(media)
@@ -2184,7 +2210,7 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 			
 			
 			let memoFrame = $("<div ></div>");
-			let memoPlan = $("<div ><button class='memoPlan' data-idx='"+(planidx-1)+"'><span><i class='fas fa-2x fa-sticky-note'></i></span></button></div>");
+			let memoPlan = $("<div ><button class='memoPlan' data-idx='"+(planidx-1)+"'><span><i class='fas fa-2x fa-edit'></i></span></button></div>");
 
 			memoFrame.append(memoPlan);
 			planFrame.append(memoFrame);
@@ -2270,7 +2296,7 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 			planFrame.append(updownFrame);
 			
 			let memoFrame = $("<div ></div>");
-			let memoPlan = $("<div ><button class='unbbtn memoPlan' data-toggle='modal' data-target='#memoModal' data-date='"+v.trip_date+"'data-order='"+v.trip_order+"' data-title='"+v.trip_title+"' data-idx='"+(planidx-1)+"'><span><i class='fas fa-2x fa-sticky-note'></i></span></button></div>");
+			let memoPlan = $("<div ><button class='unbbtn memoPlan' data-toggle='modal' data-target='#memoModal' data-date='"+v.trip_date+"'data-order='"+v.trip_order+"' data-title='"+v.trip_title+"' data-idx='"+(planidx-1)+"'><span><i class='fas fa-2x fa-edit'></i></span></button></div>");
 
 			memoFrame.append(memoPlan);
 			planFrame.append(memoFrame);
@@ -2533,6 +2559,18 @@ $("#hc").on('click',"#houseReservate", function(){
 	})//메모추가 클릭 end
 		
 	 
+</script>
+<script>
+document.querySelectorAll('.button').forEach(button => button.addEventListener('click', e => {
+    if(!button.classList.contains('compress')) {
+
+        button.classList.add('compress');
+
+        setTimeout(() => button.classList.remove('compress'), 4000);
+
+    }
+    e.preventDefault();
+}));
 </script>
 
 </html>
