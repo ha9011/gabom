@@ -280,8 +280,15 @@
 }
 
 #chattingBtn{
-background-color:yellow;
+background-color:lightgray;
+color:white;
 }
+
+#chattingBtn:hover{
+background-color:yellow;
+color:black;
+}
+
 .chatFrame {
 	display: flex;
 	flex-direction: column;
@@ -650,7 +657,7 @@ display : flex;
 	<div id="chatDate"></div> 
 
 	<footer>
-		<jsp:include page="/WEB-INF/views/footer.jsp" />
+		<jsp:include page="/WEB-INF/views/footer/footer.jsp" />
 	</footer>
 
 
@@ -1969,6 +1976,9 @@ for(let add = 0 ; add < ${JsonJungmoRoom}.length-Attendlist.length; add++){
 console.log("기본정보",${JsonBasicInfo})
 console.log("채팅 : " , ${JsonchatData})
 var recentChatData = 	${JsonchatData}
+var somo_name = $(${JsonBasicInfo}.somoim_name);
+
+$("#day1").append(somo_name);
 
 var si = $('<img style="width:100%;height:200px;" src="../'+${JsonBasicInfo}.somoim_sys_mainpicture+'">');
 $("#top").append(si);
