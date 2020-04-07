@@ -1299,7 +1299,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
  	 			 			console.log("house break");
  	 			 			break;
  	 			 		}
- 	 			 		strh+='<div style="border: 1px solid black; margin-top: 5px; id="house_judge">';
+ 	 			 		strh+='<div style="border: 1px solid black; margin-top: 5px;" id="house_judge">';
  	 					strh+='<div id="house_judge">';
 
  	 					strh+='<div id="list_left"><img style="height:200px; width:100%;" src="'+response.hlist[i].house_sysname+'"></div>';
@@ -1332,7 +1332,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
  	 			 			console.log("food break");
  	 			 			break;
  	 			 		}
- 	 			 		strf+='<div style="border: 1px solid black; margin-top: 5px; id="food_judge">';
+ 	 			 		strf+='<div style="border: 1px solid black; margin-top: 5px;" id="food_judge">';
  	 					strf+='<div id="food_judge">';
  	 					strf+='<div id="list_left"><img style="height:200px; width:100%;" src="'+response.flist[i].food_sysname+'"></div>';
  	 					strf+='<div id="list_right_sec">';
@@ -1366,7 +1366,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
  	
 	
  	//---------------------------------------------------------------------하우스 모달 ajax 시작---------------------------------------------------------------------
- 	$('.house').on('click',function(e){ 
+ 	$(document).on('click','.house',function(e){ 
  		console.log(e.target.dataset.number);
  		var params = e.target.dataset.number;
  		//시큐리티 ajax Setup
@@ -1433,7 +1433,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
  	}); //house모달 End
  	
  	//---------------------------------------------------------------------음식점 모달 ajax 시작---------------------------------------------------------------------
- 	 $('.food').on('click',function(e){ 
+ 	 $(document).on('click','.food',function(e){ 
  		console.log(e.target.dataset.number);
  		var params = e.target.dataset.number;
 
