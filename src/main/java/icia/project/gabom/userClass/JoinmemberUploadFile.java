@@ -37,7 +37,7 @@ public class JoinmemberUploadFile {
 	     
 	      String root_path = multi.getServletContext().getRealPath("/"); // 상대경로
 	      String sysRoot_path=root_path.substring(0, root_path.indexOf("\\.metadata"));
-	      String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\userprofileimage\\";
+	      String real=sysRoot_path+"\\gabom\\upload\\userprofileimage\\";
 	      System.out.println("real="+real);
 	      
 	      System.out.println("-----");

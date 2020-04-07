@@ -68,7 +68,7 @@ public class SomoimManagement {
 		String somoim_mainpicture = somoim_mainpicture_file.getOriginalFilename(); // 사진 원래 이름
 
 		String somoim_name_noblank = somoim_name.replaceAll(" ", "");
-		String somoim_sys_mainpicture = "./resources/somoimimage/upload/" + somoim_name_noblank
+		String somoim_sys_mainpicture = "/upload/somoimimage/upload/" + somoim_name_noblank
 				+ System.currentTimeMillis() + "."
 				+ somoim_mainpicture.substring(somoim_mainpicture.lastIndexOf(".") + 1);
 
@@ -343,7 +343,7 @@ public class SomoimManagement {
 			board_second_pic = multi.getFile("secondPic").getOriginalFilename();
 			String sysfile = System.currentTimeMillis() + "."
 					+ board_second_pic.substring(board_second_pic.lastIndexOf(".") + 1);
-			board_second_syspic = "./resources/somoimboard/upload/" + sysfile;
+			board_second_syspic = "/upload/somoimboard/upload/" + sysfile;
 
 			sbf.fileUpProfilePic(multi, "secondPic", sysfile);
 
@@ -357,7 +357,7 @@ public class SomoimManagement {
 			board_third_pic = multi.getFile("thirdPic").getOriginalFilename();
 			String sysfile = System.currentTimeMillis() + "."
 					+ board_third_pic.substring(board_third_pic.lastIndexOf(".") + 1);
-			board_third_syspic = "./resources/somoimboard/upload/" + sysfile;
+			board_third_syspic = "/upload/somoimboard/upload/" + sysfile;
 
 			sbf.fileUpProfilePic(multi, "thirdPic", sysfile);
 
@@ -590,7 +590,7 @@ public class SomoimManagement {
 			board_second_pic = multi.getFile("secondPic").getOriginalFilename();
 			String sysfile = System.currentTimeMillis() + "."
 					+ board_second_pic.substring(board_second_pic.lastIndexOf(".") + 1);
-			board_second_syspic = "./resources/somoimboard/upload/" + sysfile;
+			board_second_syspic = "/upload/somoimboard/upload/" + sysfile;
 
 			sbf.fileUpProfilePic(multi, "secondPic", sysfile);
 
@@ -606,7 +606,7 @@ public class SomoimManagement {
 			board_third_pic = multi.getFile("thirdPic").getOriginalFilename();
 			String sysfile = System.currentTimeMillis() + "."
 					+ board_third_pic.substring(board_third_pic.lastIndexOf(".") + 1);
-			board_third_syspic = "./resources/somoimboard/upload/" + sysfile;
+			board_third_syspic = "/upload/somoimboard/upload/" + sysfile;
 
 			sbf.fileUpProfilePic(multi, "thirdPic", sysfile);
 

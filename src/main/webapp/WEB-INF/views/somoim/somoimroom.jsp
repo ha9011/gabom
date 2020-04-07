@@ -738,7 +738,7 @@ const showAllMemberList= (JsonMemberList)=>{
 	for( v of JsonMemberList){
 		console.log("맴버 리스트 나옴?")
 		var MemberListFrame = $("<div class='attendListFrame'> </div>");
-		var MemberListPic = $("<div class='attendPicFrame'> <img src='."+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
+		var MemberListPic = $("<div class='attendPicFrame'> <img src='"+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
 			var MemberListCont =  $("<div class='attendCont'> </div>");	
 			var MemberListTitle = $("<div class='attendTitle'>"+v.member_name+"</div>");	
 			var MemberListIntroduce = $("<div class='attendIntroduce'>"+v.member_profile_contents+"</div>");
@@ -780,7 +780,7 @@ const showAllList = (boardlist)=>{
 		}
 		
 		var profileFrame = $("<div class='profileFrame'></div>")
-		var photoSection = $("<div class='photoSection'><img class='rounded-circle' width='90%' height='90%' src='."+v.member_profile_picture+"'></div>")
+		var photoSection = $("<div class='photoSection'><img class='rounded-circle' width='90%' height='90%' src='"+v.member_profile_picture+"'></div>")
 		var nameSection = $("<div style='width : 55%'><div >"+v.board_writer+"</div><div>"+getFormatTime(v.board_write_date,time+":"+min)+"</div></div>")
 		
 		var likeRepleCnt = $("<div style='text-align : right; width : 30%;'><img width='20%' height='40%' src='../resources/somoimboard/like.PNG'>"+v.total_like+"<span>&nbsp&nbsp&nbsp&nbsp</span><img width='20%' height='40%' src='../resources/somoimboard/reple.PNG'>"+v.total_reple+"</div>")
@@ -837,7 +837,7 @@ const showAllList = (boardlist)=>{
 		}
 		
 		var profileFrame = $("<div class='profileFrame'></div>")
-		var photoSection = $("<div class='photoSection'><img class='rounded-circle' width='90%' height='90%' src='."+v.member_profile_picture+"'></div>")
+		var photoSection = $("<div class='photoSection'><img class='rounded-circle' width='90%' height='90%' src='"+v.member_profile_picture+"'></div>")
 		var nameSection = $("<div style='width : 55%'><div >"+v.board_writer+"</div><div>"+getFormatTime(v.board_write_date,time+":"+min)+"</div></div>")
 		
 		var likeRepleCnt = $("<div style='text-align : right; width : 30%;'><img width='20%' height='40%' src='../resources/somoimboard/like.PNG'>"+v.total_like+"<span>&nbsp&nbsp&nbsp&nbsp</span><img width='20%' height='40%' src='../resources/somoimboard/reple.PNG'>"+v.total_reple+"</div>")
@@ -864,7 +864,7 @@ const showAllList = (boardlist)=>{
 			contentFrame.append(picSection);
 		}else{
 			console.log("1")
-			 picSection = $("<div class='picSection'><img width='90%' height='90%' src='."+v.board_first_syspic+"'></div>")
+			 picSection = $("<div class='picSection'><img width='90%' height='90%' src='"+v.board_first_syspic+"'></div>")
 			contentFrame.append(picSection);
 			
 		}
@@ -1524,7 +1524,7 @@ $(document).on("click","#rejectSomoim",function(e){
 		 if(boardinfo.board_first_syspic !== ""){
 			 console.log(boardinfo.board_first_syspic)
 			 console.log($("#firstPic"))
-			 $("#imgfirstPic").attr('src',"."+boardinfo.board_first_syspic );
+			 $("#imgfirstPic").attr('src',""+boardinfo.board_first_syspic );
 			 $("#firstPicFrame").append($("<button data-pic='1' type='button' class='btn btn-dark deletepic'>×</button>"))
 				 
 		 }else{
@@ -1532,14 +1532,14 @@ $(document).on("click","#rejectSomoim",function(e){
 		 }
 		
 		 if(boardinfo.board_second_syspic !== ""){
-			 $("#imgsecondPic").attr('src',"."+boardinfo.board_second_syspic);
+			 $("#imgsecondPic").attr('src',""+boardinfo.board_second_syspic);
 			 $("#secondPicFrame").append($("<button data-pic='2' type='button' class='btn btn-dark deletepic'>×</button>"))
 		 }else{
 			 $("#imgsecondPic").attr("src","../resources/somoimimage/camera.PNG");
 		 }
 	
 		 if(boardinfo.board_third_syspic !== ""){
-			 $("#imgthirdPic").attr('src',"."+boardinfo.board_third_syspic);
+			 $("#imgthirdPic").attr('src',""+boardinfo.board_third_syspic);
 			 $("#thirdPicFrame").append($("<button data-pic='3' type='button' class='btn btn-dark deletepic'>×</button>"))
 		 }else{
 			 $("#imgthirdPic").attr("src","../resources/somoimimage/camera.PNG");
@@ -2168,7 +2168,7 @@ let somoimnumber = String(${JsonBasicInfo}.somoim_number);
 			var boardFrame = $("<div  data-Bnum='"+v.board_number+"' data-Snum='"+v.somoim_number+"'   class='boardFrame showBoard'></div>")
 			
 			var profileFrame = $("<div class='profileFrame'></div>")
-			var photoSection = $("<div class='photoSection'><img class='rounded-circle' width='90%' height='90%' src='."+v.member_profile_picture+"'></div>")
+			var photoSection = $("<div class='photoSection'><img class='rounded-circle' width='90%' height='90%' src='"+v.member_profile_picture+"'></div>")
 			var nameSection = $("<div><div>"+v.somoim_board_reple_name+"</div> <div>"+getFormatDate(v.somoim_board_reple_date)+resulttime+"</div></div>")
 			profileFrame.append(photoSection);
 			profileFrame.append(nameSection);
@@ -2453,7 +2453,7 @@ let somoimnumber = String(${JsonBasicInfo}.somoim_number);
 				//$(".modal-body").empty(); // 작은 모달 초기화
 				for(let v of data){
 					var attendListFrame = $("<div class='attendListFrame'> </div>");
-					var attendPic = $("<div class='attendPicFrame'> <img src='."+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
+					var attendPic = $("<div class='attendPicFrame'> <img src='"+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
 		  			var attendCont =  $("<div class='attendCont'> </div>");	
 		  			var attendTitle = $("<div class='attendTitle'>"+v.member_name+"</div>");	
 		  			var attendIntroduce = $("<div class='attendIntroduce'>"+v.member_profile_contents+"</div>");
@@ -2666,7 +2666,7 @@ $("#joinsomoim").on("click",function(e){
 		
  		console.log("첫번쨰 사진!!!!!!!!!!!!!!!")
 		
- 		if($("#imgfirstPic").attr('src') =="."+boardinfo.board_first_syspic && formdata.get('firstPic').name.length == 0){ //암것도 안할때
+ 		if($("#imgfirstPic").attr('src') ==""+boardinfo.board_first_syspic && formdata.get('firstPic').name.length == 0){ //암것도 안할때
  			 console.log("그대로1")
  			 formdata.append("oripic1", boardinfo.board_first_pic)
  			 formdata.append("syspic1", boardinfo.board_first_syspic)
@@ -2679,7 +2679,7 @@ $("#joinsomoim").on("click",function(e){
  		}
 
 		
-		 if($("#imgsecondPic").attr('src') =="."+boardinfo.board_first_syspic && formdata.get('secondPic').name.length == 0){ //암것도 안할때
+		 if($("#imgsecondPic").attr('src') ==""+boardinfo.board_first_syspic && formdata.get('secondPic').name.length == 0){ //암것도 안할때
 			 console.log("그대로2")
 			 formdata.append("oripic2", boardinfo.board_second_pic)
  			 formdata.append("syspic2", boardinfo.board_second_syspic)
@@ -2690,7 +2690,7 @@ $("#joinsomoim").on("click",function(e){
 		 }
 		
 		
-		if($("#imgthirdPic").attr('src') =="."+boardinfo.board_first_syspic && formdata.get('thirdPic').name.length == 0){ //암것도 안할때
+		if($("#imgthirdPic").attr('src') ==""+boardinfo.board_first_syspic && formdata.get('thirdPic').name.length == 0){ //암것도 안할때
 			 console.log("그대로3")
 			  formdata.append("oripic3", boardinfo.board_third_pic)
  			  formdata.append("syspic3", boardinfo.board_third_syspic)
@@ -2870,7 +2870,7 @@ $("#joinsomoim").on("click",function(e){
 	  			if(data.board_first_syspic===""){
 	  				
 	  			}else{
-	  				var img = $("<img width='100%' height='100%' src='."+data.board_first_syspic+"'>")
+	  				var img = $("<img width='100%' height='100%' src='"+data.board_first_syspic+"'>")
 	  				$("#showfirstPic").append(img);
 	  				$("#showfirstPic").append($("<hr>"));
 	  			}
@@ -2878,7 +2878,7 @@ $("#joinsomoim").on("click",function(e){
 				if(data.board_second_syspic===""){
 					
 	  			}else{
-	  				var img = $("<img width='100%' height='100%' src='."+data.board_second_syspic+"'>")
+	  				var img = $("<img width='100%' height='100%' src='"+data.board_second_syspic+"'>")
 	  				$("#showsecondPic").append(img);
 	  				$("#showsecondPic").append($("<hr>"));
 	  			}
@@ -2886,7 +2886,7 @@ $("#joinsomoim").on("click",function(e){
 				if(data.board_third_syspic===""){
 				
 				}else{
-					var img = $("<img width='100%' height='100%' src='."+data.board_third_syspic+"'>")
+					var img = $("<img width='100%' height='100%' src='"+data.board_third_syspic+"'>")
 					$("#showthirdPic").append(img);
 					$("#showthirdPic").append($("<hr>"));
 				}	
@@ -3072,7 +3072,7 @@ $("#joinsomoim").on("click",function(e){
 		for( v of data['기존']){
 			var attendListFrame = $("<div class='attendListFrame '> </div>");  // 여기에 채워넣어야함
 			
-			var attendPic = $("<div class='attendPicFrame fitem item1'> <img src='."+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
+			var attendPic = $("<div class='attendPicFrame fitem item1'> <img src='"+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
   			
 			var attendCont =  $("<div class='attendCont fitem item2'> </div>");	
   			var attendTitle = $("<div class='attendTitle'>"+v.member_id+"</div>");	
@@ -3100,7 +3100,7 @@ $("#joinsomoim").on("click",function(e){
 		
 		for( v of data['대기']){
 		var attendListFrame = $("<div class='attendListFrame'> </div>");
-		var attendPic = $("<div class='attendPicFrame fitem item1'> <img src='."+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
+		var attendPic = $("<div class='attendPicFrame fitem item1'> <img src='"+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
 			var attendCont =  $("<div class='attendCont fitem item2'> </div>");	
 			var attendTitle = $("<div class='attendTitle '>"+v.member_id+"</div>");	
 			var attendIntroduce = $("<div class='attendIntroduce '>"+v.member_profile_contents+"</div>");
