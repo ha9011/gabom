@@ -4,6 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta id="_csrf" name="_csrf" content="${_csrf.token}" />
+<!-- default header name is X-CSRF-TOKEN -->
+<meta id="_csrf_header" name="_csrf_header"
+	content="${_csrf.headerName}" />
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -13,9 +17,7 @@
 		html,
 		body {
 			height: 90%;
-		
 		}
-		
 		body{
 		overflow-x: hidden;
 			overflow-y: hidden;
@@ -47,10 +49,13 @@
 			word-break: break-all;
 			border-radius: 20px;
 			background-color: #F4FA58;
+			text-align: left;
+			display: inline-block;
 		}
 		
 		.userTextContainer {
 			display: flex;
+			padding-top: 22px;
 		}
 		
 		.userTextContainer img {
@@ -58,7 +63,7 @@
 		}
 		
 		.userImg {
-			background-image: url(images/asd.jpg);
+			/* background-image: url(images/asd.jpg); */
 			background-size: 50px 50px;
 			width: 50px;
 			height: 50px;
@@ -80,9 +85,8 @@
 		}
 		
 		.userTextDate {
-			text-align: left;
+			text-align: right;
 			font-size: 10px;
-			padding-left: 120px;
 		}
 		.msgInput {
 			resize: none;
@@ -108,9 +112,9 @@
 		.msgCnt {
 			padding: 0;
 			font-size: 10px;
-			margin: 0 auto;
 			color: #F4FA58;
 			text-align: right;
+			margin-top: 37px;
 		}
 		
 		.myMsgCnt {
@@ -129,37 +133,23 @@
 			padding-right: 10px;
 			border-radius: 20px;
 			cursor: pointer;
+			
 		}
 		
 		*:focus {
 		outline: none;
 		}
 	</style>
+<script type="text/javascript">
+	let userId="${userId}";
+$(function(){
+	dmDetailLoad(userId);
+});
+</script>
 </head>
 <body>
 	<div class="msgBox">
-		<div class="container-fluid userTextContainer">
-			<div class="userImg">친구 이미지</div>
-			<div>
-			<div class="userTextBox">
-				<div class="userId">샘플2</div>
-				<div class="userTextContents">친구 내용</div>
-			</div>
-			<div class="userTextDate">
-				<div class="msgCnt">1카운터</div>
-				<br/>상대 메세지 2020-04-03 11:23
-			 </div>
-			 </div>
-			</div>
-			
-		<div class="container-fluid">
-			<div class="myTextBox">
-				<div class="myTextContents">내 내용</div>
-				<div class="myTextDate">
-					<div class="myMsgCnt">1카운터</div>
-					<br/>내 메세지 시간 2020-04-03 11:23 </div>
-			</div>
-		</div>
+
 	</div>
 	<div class="msgInputBox">
 		<textarea class="msgInput" rows="5"></textarea>
@@ -167,6 +157,107 @@
 			<input type="button" value="전송" class="msgInputBtn">
 		</div>
 	</div>
+	<script type="text/javascript">
+	$(".msgInputBtn").click(function () {
+		let contents=$(".msgInput").val();
+		if(contents==""){
+			alert("내용을 입력 해주세요.");
+			return false;
+		}else{
+		InsertDm(contents);
+		}
+	});
+	$(".msgInput").keyup(function(e){
+        if (e.keyCode == 13) {
+        	let contents=$(".msgInput").val();
+    		if(contents==""){
+    			alert("내용을 입력 해주세요.");
+    			return false;
+    		}else{
+    		InsertDm(contents);
+    		}
+        }
+	});
+	
+	function InsertDm(contents) {
+		contents = contents.replace(/(?:\r\n|\r|\n)/g, '&nbsp;');
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+ 			xhr.setRequestHeader(header,token);
+ 			}
+		});//먼저 보냄
+		let data={"contents":contents,
+				"userId":userId}
+		$.ajax({
+				method:'post',
+				url:"/gabom/insert/contents",
+				data:data,
+				dataType : "json"
+		}).done((dmJson)=>{
+			makeDmDetail(dmJson);
+		}).fail((error)=>{
+			console.log("err",error);
+		});			 
+	}
+	</script>
+	<script type="text/javascript">
+		let id="${id}";
+	function makeDmDetail(json) {
+		console.log(json);
+		console.log(id);
+		let make='';
+		for(let k in json){
+			if(json[k]["sendMember"]==userId){
+			make+='	<div class="container-fluid userTextContainer">';
+			make+='<div class="userImg" style="background-image:url('+json[k]["memberPic"]+')"></div>';
+			make+='<div class="userTextBox">';
+			make+='<div class="userId">'+json[k]["sendMember"]+'</div>';
+			make+='<div class="userTextContents">'+json[k]["contents"]+'</div>';
+			make+='<div class="userTextDate">';
+			if(json[k]["checkNum"]==1){
+			make+='	<div class="msgCnt">1</div>';
+			}
+			make+='<br/>'+json[k]["resultDate"];
+			make+=' </div>';
+			make+=' </div>';
+			make+='</div>';
+			}else if(json[k]["sendMember"]==id){
+				make+='<div class="container-fluid">';
+				make+='<div class="myTextBox">';
+				make+='<div class="myTextContents">'+json[k]["contents"]+'</div>';
+				make+='<div class="myTextDate">';
+				if(json[k]["checkNum"]==1){
+				make+='<div class="myMsgCnt">1</div>';
+				}
+				make+='<br/>'+json[k]["resultDate"]+'</div>';
+				make+='</div>';
+				make+='</div>';	
+			}
+		}
+		$(".msgBox").html(make);
+	}
+	</script>
+	<script type="text/javascript">
+	var header = $("meta[name='_csrf_header']").attr("content");
+	var token = $("meta[name='_csrf']").attr("content");
+	function dmDetailLoad(userId) {
+	 	$.ajaxSetup({
+			beforeSend : function(xhr){
+ 			xhr.setRequestHeader(header,token);
+ 			}
+		});//먼저 보냄
+		$.ajax({
+				method:'post',
+				url:"/gabom/detail/contents",
+				data:{"userId":userId},
+				dataType : "json"
+		}).done((dmJson)=>{
+			makeDmDetail(dmJson);
+		}).fail((error)=>{
+			console.log("err",error);
+		});			 
+	}
+	</script>
 	<script>
 		$(".userTextContents").mousedown(function(e){
 			if(e.which==3){

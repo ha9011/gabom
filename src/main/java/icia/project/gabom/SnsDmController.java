@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -24,8 +25,12 @@ public class SnsDmController {
 	
 	
 	@GetMapping(value ="/sns/dm/detail")
-	public String snsDmDetail() {
-		return "sns/snsDmDetail";
+	public ModelAndView snsDmDetail(@RequestParam("userid")String userId,Principal principal) {
+		ModelAndView mav= new ModelAndView();
+		mav.addObject("userId",userId);
+		mav.addObject("id",principal.getName());
+		mav.setViewName("sns/snsDmDetail");
+		return mav;
 	}
 	
 	

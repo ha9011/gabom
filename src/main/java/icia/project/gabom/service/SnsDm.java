@@ -53,5 +53,37 @@ public class SnsDm {
 		return new Gson().toJson(result);
 		
 	}
+	@Transactional
+	public String dmdetail(String userId, String id) {
+		System.out.println("받아옴"+userId);
+		//전부다 읽음으로 바꿔야함 order by 해야함 날짜별로 
+		snsDmDao.checkRead(userId,id);
+		List<SnsDmDto> dmContentsList=snsDmDao.getContets(userId,id);
+		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		for(SnsDmDto snsDm:dmContentsList) {
+			String result=format.format(snsDm.getDmDate());
+			snsDm.setResultDate(result);
+		}
+		return new Gson().toJson(dmContentsList);
+	}
+	
+	
+	
+	public String dmInsert(String contents, String name, String userId) {
+		boolean result=snsDmDao.insertDm(contents,name,userId);
+		if(result==true) {
+			List<SnsDmDto> dmContentsList=snsDmDao.getContets(userId,name);
+			SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			for(SnsDmDto snsDm:dmContentsList) {
+				String dResult=format.format(snsDm.getDmDate());
+				snsDm.setResultDate(dResult);
+			}
+			return new Gson().toJson(dmContentsList);
+		}else {
+			JsonObject resultOb=new JsonObject();
+			resultOb.addProperty("message", "오류");
+			return new Gson().toJson(resultOb);
+		}
+	}
 
 }

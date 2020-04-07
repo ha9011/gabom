@@ -19,5 +19,6 @@ public class SnsDmDto {
 	Date dmDate;
 	String memberPic;
 	String dmDateRsult;
+	String resultDate;
 	int checkNum;
 }
