@@ -37,7 +37,7 @@ public class FoodUploadFile {
 	      
 	      String root_path = req.getSession().getServletContext().getRealPath("/"); // 상대경로
 	      String sysRoot_path=root_path.substring(0, root_path.indexOf("\\.metadata"));
-	      String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\foodmainImage\\upload\\";
+	      String real=sysRoot_path+"\\gabom\\upload\\foodmainImage\\upload\\";
 	      System.out.println("real="+real);
 	      //2.폴더 생성을 꼭 할것...
 	      File dir=new File(real);
@@ -78,8 +78,8 @@ public class FoodUploadFile {
 	         //4.시스템파일이름 생성  a.txt  ==>112323242424.txt
 	         String sysFileName="foodmainImage"+System.currentTimeMillis()+"."
 	               +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
-	         String sysFileNameDB="./resources/foodmainImage/upload/"+sysFileName;
-	         
+	         String sysFileNameDB="/upload/foodmainImage/upload/"+sysFileName;
+	         //
 	         fMap.put("food_sysname", sysFileNameDB);
 	         //5.메모리->실제 파일 업로드
 	         

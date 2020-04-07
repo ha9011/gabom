@@ -512,7 +512,7 @@ public class MyInfoManagement {
 		
 		String member_profile_original =null;
 		String member_profile_picture = null;
-		String filepath = "./resources/userprofileimage/upload/";
+		String filepath = "/upload/userprofileimage/upload/";
 		long fileTimeStamp = System.currentTimeMillis();
 		
 		member_profile_original = multi.getFile("member_profile_picture").getOriginalFilename();
@@ -521,14 +521,15 @@ public class MyInfoManagement {
 		
 		member_profile_picture = filepath+name+fileTimeStamp+"."
 	               +member_profile_original.substring(member_profile_original.lastIndexOf(".")+1);
-	
+		System.out.println("---123-----");
+		System.out.println("사진 저장 경로 : " + member_profile_picture);
 		//업데이트하고
 		int resultJoinMember = minfDao.updateJoinMember(name,member_profile_picture);
-		
+		System.out.println("--------");
 		//파일에 업로드
 		member_profile_picture = name+fileTimeStamp+"."
 	               +member_profile_original.substring(member_profile_original.lastIndexOf(".")+1);
-		
+		System.out.println("파일업로드 경로  : " + member_profile_picture);
 		JULF.fileUpProfilePic(multi,member_profile_picture);
 		
 		return null;

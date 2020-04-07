@@ -37,7 +37,7 @@ public class houseUploadFile {
       //1.이클립스의 물리적 저장경로 찾기
       String root_path = req.getSession().getServletContext().getRealPath("/"); // 상대경로
       String sysRoot_path=root_path.substring(0, root_path.indexOf("\\.metadata"));
-      String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\housemainImage\\upload\\";
+      String real=sysRoot_path+"\\gabom\\upload\\housemainImage\\upload\\";
       System.out.println("real="+real);
       
       //String path=root+"upload\\";
@@ -82,7 +82,7 @@ public class houseUploadFile {
          String sysFileName="housemainImage"+System.currentTimeMillis()+"."
                +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
          
-         String sysFileNameDB="./resources/housemainImage/upload/"+sysFileName;
+         String sysFileNameDB="/upload/housemainImage/upload/"+sysFileName;
          
          fMap.put("house_sysname", sysFileNameDB);
          //5.메모리->실제 파일 업로드

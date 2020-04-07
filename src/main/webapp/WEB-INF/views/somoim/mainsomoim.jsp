@@ -316,7 +316,7 @@ display: flex;
     for( v of notilist){
        var mymoimFrame = $("<div class='mymoimFrame' data-roomnumber='"+v.somoim_number +"'></div>");
       
-      var imageFrame = $("<div class='imageFrame mymoimcont'><div><img width='100px' height='100px' src='."+v.somoim_sys_mainpicture+"' >  </div> </div>");
+      var imageFrame = $("<div class='imageFrame mymoimcont'><div><img width='100px' height='100px' src='"+v.somoim_sys_mainpicture+"' >  </div> </div>");
       
       var contentFrame =  $("<div class='contentFrame mymoimcont'></div>");
       
@@ -371,7 +371,7 @@ display: flex;
                      console.log(v);
                      var mymoimFrame = $("<div class='mymoimFrame' data-roomnumber='"+v.somoim_number +"'></div>");
                      
-                     var imageFrame = $("<div class='imageFrame mymoimcont'><div><img width='100px' height='100px' src='."+v.somoim_sys_mainpicture+"' >  </div> </div>");
+                     var imageFrame = $("<div class='imageFrame mymoimcont'><div><img width='100px' height='100px' src='"+v.somoim_sys_mainpicture+"' >  </div> </div>");
                      
                      var contentFrame =  $("<div class='contentFrame mymoimcont'>  </div>");
                      
@@ -434,7 +434,7 @@ display: flex;
       console.log(v);
       var mymoimFrame = $("<div class='mymoimFrame' data-roomnumber='"+v.SOMOIM_NUMBER +"'></div>");
       
-      var imageFrame = $("<div class='imageFrame mymoimcont'><div><img width='100px' height='100px' src='."+v.SOMOIM_SYS_MAINPICTURE+"' >  </div> </div>");
+      var imageFrame = $("<div class='imageFrame mymoimcont'><div><img width='100px' height='100px' src='"+v.SOMOIM_SYS_MAINPICTURE+"' >  </div> </div>");
       
       var contentFrame =  $("<div class='contentFrame mymoimcont'>  </div>");
       
@@ -463,7 +463,7 @@ display: flex;
       console.log(v);
       var mymoimFrame = $("<div class='mymoimFrame' data-roomnumber='"+v.somoim_number +"'></div>");
       
-      var imageFrame = $("<div class='imageFrame mymoimcont'><div><img width='100px' height='100px' src='."+v.somoim_sys_mainpicture+"' >  </div> </div>");
+      var imageFrame = $("<div class='imageFrame mymoimcont'><div><img width='100px' height='100px' src='"+v.somoim_sys_mainpicture+"' >  </div> </div>");
       
       var contentFrame =  $("<div class='contentFrame mymoimcont'>  </div>");
       

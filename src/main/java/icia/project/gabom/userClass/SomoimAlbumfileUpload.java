@@ -36,7 +36,7 @@ public class SomoimAlbumfileUpload {
 	     
 	      String root_path = multi.getServletContext().getRealPath("/"); // 상대경로
 	      String sysRoot_path=root_path.substring(0, root_path.indexOf("\\.metadata"));
-	      String real=sysRoot_path+"\\gabom\\src\\main\\webapp\\resources\\somoalbum\\";
+	      String real=sysRoot_path+"\\gabom\\upload\\somoalbum\\";
 	      System.out.println("real="+real);
 	      
 	      System.out.println("-----");
@@ -88,7 +88,7 @@ public class SomoimAlbumfileUpload {
          String sysFileName="somoalbum"+System.currentTimeMillis()+"."
                +oriFileName.substring(oriFileName.lastIndexOf(".")+1);
          
-         String sysFileNameDB2="./resources/somoalbum/upload/"+sysFileName;
+         String sysFileNameDB2="/upload/somoalbum/upload/"+sysFileName;
          fMap.put("somoalbum_sysname", sysFileNameDB2);
          //5.메모리->실제 파일 업로드
          
