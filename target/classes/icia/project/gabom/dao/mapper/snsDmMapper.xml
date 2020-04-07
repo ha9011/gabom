@@ -28,10 +28,25 @@
     ORDER BY DM.DM_DATE) TOT ON SNS_DM.GET_MEMBER_ID=TOT.GETMEMBER
     WHERE tot.GETMEMBER=#{id} AND tot.SENDMEMBER=#{userId} AND tot.RANK=1
 	</select>
+	<select id="getContets" resultType="snsDmDto">
+	 SELECT DM.SEND_MEMBER_ID SENDMEMBER,
+		DM.GET_MEMBER_ID GETMEMBER,
+		DM.DM_CONTENTS CONTENTS,
+		DM.DM_DATE DMDATE,DM.DM_CHECK CHECKNUM,
+		MB.MEMBER_PROFILE_PICTURE MEMBERPIC
+		FROM SNS_DM DM INNER JOIN MEMBER MB 
+		ON DM.SEND_MEMBER_ID=MB.MEMBER_ID
+		WHERE (DM.GET_MEMBER_ID=#{id} AND DM.SEND_MEMBER_ID=#{userId}) 
+    	OR (DM.GET_MEMBER_ID=#{userId} AND DM.SEND_MEMBER_ID=#{id}) 
+    	ORDER BY DM.DM_DATE
+	</select>
 	<select id="getNewCnt" resultType="snsDmDto">
 	 	SELECT COUNT(DM_CHECK) CHECKNUM FROM 
     	SNS_DM WHERE GET_MEMBER_ID=#{id}
     	AND SEND_MEMBER_ID=#{userId}
     	AND DM_CHECK=1
 	</select>
+	<insert id="insertDm">
+	INSERT INTO SNS_DM VALUES(#{id},#{userId},#{contents},SYSDATE,1)
+	</insert>
 </mapper>

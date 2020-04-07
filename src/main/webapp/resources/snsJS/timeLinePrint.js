@@ -68,7 +68,7 @@
 		 for(var k=0;k<timeLineJson[j]["photoList"].length;k++){
 		let $snsPostsImageBox=$("<div class='cover' id='gallery'>");
 		let $postsimageBox=$('<img class="img-thumbnail img-responsive" onclick="resizeImg(this.src)">');
-		$postsimageBox.attr("src","resources/snsPostsImage/"+timeLineJson[j]["photoList"][k]["sns_photo_origin_name"]);
+		$postsimageBox.attr("src","/upload/snsPostsImage/"+timeLineJson[j]["photoList"][k]["sns_photo_origin_name"]);
 		$postsimageBox.appendTo($snsPostsImageBox);
 		$snsPostsImageBox.appendTo($("#"+j));
 		}

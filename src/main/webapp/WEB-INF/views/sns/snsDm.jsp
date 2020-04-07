@@ -68,6 +68,9 @@ table img {
 .oneRow td{
 	padding: 10px;
 }
+.msgNot{
+text-align: center;
+height: 400px;}
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -90,6 +93,11 @@ table img {
 	<script type="text/javascript">
 	function makeDM(json) {
 		console.log(json);
+	if(json.message=="메세지가 없습니다"){
+		let make="";
+		make+="<tr class='msgNot'><td>"+json.message+"</td></tr>";
+		$(".msgBox table").html(make);
+	}else{
 		let make="";
 		for(let k in json){
 				make+='<tr class="oneRow" onclick="clickRow(this)">';
@@ -97,7 +105,7 @@ table img {
 				make+='<img src="'+json[k][0]["memberPic"]+'" class="img-thumbnail';
 				make+=' img-responsive">';
 				make+='</td>';
-				make+='<td class="col-xs-10 col-sm-10 col-md-11 col-lg-11" ondblclick="window.open(\'sns/dm/detail\',\'DMDetail\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=800,top=150\')">';
+				make+='<td class="col-xs-10 col-sm-10 col-md-11 col-lg-11" ondblclick="window.open(\'sns/dm/detail?userid='+json[k][0]["sendMember"]+'\',\'DMDetail\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=800,top=150\')">';
 				make+='<div class="headBox">';
 				make+='<div class="userId">'+json[k][0]["sendMember"]+'</div>';
 				make+='<div class="contentDate">'+json[k][0]["dmDateRsult"];
@@ -116,6 +124,7 @@ table img {
 				make+='</tr>';
 		}
 		$(".msgBox table").html(make);
+	}
 	}
 	</script>
 	<script type="text/javascript">
