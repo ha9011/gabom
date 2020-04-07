@@ -618,7 +618,7 @@ public class SomoimManagement {
 		System.out.println("smb : " + smb.toString());
 
 		
-		//파일 업로드하기
+		//파일 이름 DB update
 		int result = sDao.updateSomoimBoard(smb); // 성공 // 수정하기
 
 		// 파일 없음이면 그냥 바로 넘기기. 없음이 아니면 파일 업로드 하기

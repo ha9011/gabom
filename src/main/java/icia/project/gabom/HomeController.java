@@ -61,5 +61,12 @@ public class HomeController {
 		return mav;
 	}
 	
-
+	//testtest
+	@RequestMapping(value = "/TestTest", method = RequestMethod.GET)
+	public ModelAndView TestTest(Principal principal) {
+		mav = new ModelAndView();
+		mav.setViewName("TestTest");
+		return mav;
+	}
+	
 }

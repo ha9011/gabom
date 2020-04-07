@@ -1721,7 +1721,7 @@ $(document).on('click','.modalplan',function(e){//모달 열고 지도 및 정�
 	    };
 	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 	   map = new kakao.maps.Map(mapContainer, mapOption); 
-	}, 500)
+	}, 200)
 	
 	
    $("#detail").show();
@@ -2001,7 +2001,7 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 	 
 	 setTimeout(function() {
 		 setBounds(bounds)
-		}, 100);
+		}, 200);
 	     // 재설정매소드
 	 
  	

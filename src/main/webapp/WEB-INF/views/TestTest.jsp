@@ -25,13 +25,16 @@
 				<th>작성자</th>
 				<th>작성일</th>
 			</tr>
+			
 		</thead>
 		<tbody id="qna_body">
 		</tbody>
 	</table>
 	
 	</div>
-
+	<div>
+	<img src='./' >
+	</div>
 
  			
 </body>
