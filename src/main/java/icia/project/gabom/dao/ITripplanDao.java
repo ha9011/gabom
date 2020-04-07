@@ -188,7 +188,8 @@ public interface ITripplanDao {
 
    @Update("update TRIP_PLAN set  TRIP_SHARE_COUNT = (TRIP_SHARE_COUNT+1) where TRIP_NUMBER =#{tripnum}")
    int updateShareCountTripPlan(@Param("tripnum")int tripnum);  // 공유할떄마다 카운터 추가
-
+   
+   List<Trip_plan> gettplist();
    	
    @Delete("DELETE FROM TRIP_PLAN where TRIP_NUMBER =#{tripnumber}")
    int deleteTripPlan(@Param("tripnumber")int tripnumber);

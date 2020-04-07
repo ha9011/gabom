@@ -108,7 +108,7 @@ var foodlist=${foodlist};
  	 		} 
  		
  		 var out = $('<div id="food" name ='+[i.food_number]+'></div>')
- 		 var img = $('<div id="mainimg" name ='+[i.food_number]+'><img id="img" alt='+[i.food_sysname]+'name ='+[i.food_number]+' src="'+[i.food_sysname]+'"></div>')
+ 		 var img = $('<div class="mainimg" name ='+[i.food_number]+'><img id="img" alt='+[i.food_sysname]+'name ='+[i.food_number]+' src="'+[i.food_sysname]+'"></div>')
  		 var title=$('<p style="font-weight:bold">'+[i.food_name]+'</p>');
  		 var info = $('<div id="info">'+"주소: "+[i.food_address]+'</div>')
 
@@ -116,12 +116,11 @@ var foodlist=${foodlist};
  		out.append(img);
  		out.append(title);
  		out.append(info);
- 	 	
- $("#mainimg").on('click', function() {
-	console.log($(this).attr("name"));
-    location.href="fooddetail?food_number="+$(this).attr("name");
-	});
  index++;
  }
+ 		$(".mainimg").on('click', function() {
+ 			console.log($(this).attr("name"));
+ 		    location.href="fooddetail?food_number="+$(this).attr("name");
+ 			});
 </script>
 </html>

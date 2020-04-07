@@ -47,7 +47,6 @@ public interface IhouseDao {
 	@Select("select * from HOUSERESERVATION WHERE HOUSE_NUMBER=#{house_number} order by RESERVATION_CHECKIN")
 	List<Housereservation> detailreser(@Param("house_number") int house_number);
 	
-	@Select("SELECT * FROM HOUSEREPLE WHERE HOUSE_NUMBER=#{house_number} ORDER BY HOUSE_REPLE_TIME DESC" )
 	List<House_reple> replelist(@Param("house_number")int house_number);
 	
 	@Select("SELECT * FROM MEMBER WHERE MEMBER_ID=#{member_id}")

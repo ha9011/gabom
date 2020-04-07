@@ -11,7 +11,7 @@
 	</insert>
 	
 	<insert id="foodreservation" parameterType="freservation" >
-	INSERT INTO FOODRESERVATION VALUES(SQ_FOODRESERVATION.nextval,#{food_number},#{food_hostid},#{member_guestid},#{foodreservation_date},#{foodreservation_time},#{foodreservation_person},0)
+	INSERT INTO FOODRESERVATION VALUES(SQ_FOODRESERVATION.nextval,#{food_number},#{food_hostid},#{member_guestid},#{foodreservation_date},#{foodreservation_time},#{foodreservation_person},0,SYSDATE)
 	</insert>
 	
 	
@@ -34,6 +34,21 @@
 	ORDER BY HR.RESERVATION_DATE)
 	WHERE ROWNUM <![CDATA[ <= ]]>6
 	
+	</select>
+	
+	<select id="foodreple" resultType="f_reple">
+	SELECT  HP.FOOD_REPLE_NUMBER, HP.MEMBER_GUESTID,HP.FOOD_REPLE_TIME,HP.FOOD_REPLE_CONTENT,MB.MEMBER_PROFILE_PICTURE
+	FROM FOODREPLE HP, MEMBER MB
+	WHERE HP.MEMBER_GUESTID = MB.MEMBER_ID AND FOOD_NUMBER=#{food_number} 
+	ORDER BY FOOD_REPLE_TIME DESC
+	</select>
+	
+	<select id="foodreview" resultType="freview">
+	SELECT  HV.FOOD_REVIEW_NUMBER, HV.MEMBER_GUESTID,HV.FOOD_REVIEW_CONTENT,MB.MEMBER_PROFILE_PICTURE,
+	HV.FOOD_REVIEW_DATE
+	FROM FOOD_REVIEW HV, MEMBER MB
+	WHERE HV.MEMBER_GUESTID = MB.MEMBER_ID AND FOOD_NUMBER=#{food_number} 
+	ORDER BY FOOD_REVIEW_DATE DESC
 	</select>
 	
 	

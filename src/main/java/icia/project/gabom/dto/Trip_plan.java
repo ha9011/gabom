@@ -30,6 +30,5 @@ public class Trip_plan {
 	private int trip_plan_appry_status = 0;
 	
 	private int trip_share_count;
-	
-	
+
 }

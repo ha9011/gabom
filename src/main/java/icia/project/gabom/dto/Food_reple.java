@@ -19,4 +19,6 @@ public class Food_reple {
 	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private String food_reple_time;
 	private String food_name;
+	//작성자 사진
+	private String member_profile_picture;
 }

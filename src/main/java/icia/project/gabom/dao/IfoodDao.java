@@ -43,10 +43,8 @@ public interface IfoodDao {
 	@Select("select * from FOODRESERVATION WHERE FOOD_NUMBER=#{food_number} order by FOODRESERVATION_DATE")
 	List<Foodreservation> detailfoodreser(int food_number);
 	
-	@Select("SELECT * FROM FOODREPLE WHERE FOOD_NUMBER=#{food_number} ORDER BY FOOD_REPLE_TIME DESC" )
 	List<Food_reple> foodreple(@Param("food_number")int food_number);
 
-	@Select("SELECT * FROM FOOD_REVIEW WHERE FOOD_NUMBER=#{food_number}" )
 	List<Food_review> foodreview(@Param("food_number")int food_number);
 	
 	void insertreple(Food_reple freple);
