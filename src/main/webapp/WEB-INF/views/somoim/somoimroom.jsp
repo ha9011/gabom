@@ -808,7 +808,7 @@ const showAllList = (boardlist)=>{
 			contentFrame.append(picSection);
 		}else{
 			console.log("1")
-			 picSection = $("<div class='picSection'><img width='90%' height='90%' src='."+v.board_first_syspic+"'></div>")
+			 picSection = $("<div class='picSection'><img width='90%' height='90%' src='"+v.board_first_syspic+"'></div>")
 			contentFrame.append(picSection);
 			
 		}

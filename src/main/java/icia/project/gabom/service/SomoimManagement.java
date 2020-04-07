@@ -329,7 +329,7 @@ public class SomoimManagement {
 			board_first_pic = multi.getFile("firstPic").getOriginalFilename();
 			String sysfile = System.currentTimeMillis() + "."
 					+ board_first_pic.substring(board_first_pic.lastIndexOf(".") + 1);
-			board_first_syspic = "./resources/somoimboard/upload/" + sysfile;
+			board_first_syspic = "/upload/somoimboard/upload/" + sysfile;
 
 			sbf.fileUpProfilePic(multi, "firstPic", sysfile);
 
@@ -573,7 +573,7 @@ public class SomoimManagement {
 			board_first_pic = multi.getFile("firstPic").getOriginalFilename();
 			String sysfile = System.currentTimeMillis() + "."
 					+ board_first_pic.substring(board_first_pic.lastIndexOf(".") + 1);
-			board_first_syspic = "./resources/somoimboard/upload/" + sysfile;
+			board_first_syspic = "/upload/somoimboard/upload/" + sysfile;
 			sbf.fileUpProfilePic(multi, "firstPic", sysfile);
 			smb.setBoard_first_pic(board_first_pic).setBoard_first_syspic(board_first_syspic);
 		}else if(multi.getParameterMap().containsKey("oripic1")) {

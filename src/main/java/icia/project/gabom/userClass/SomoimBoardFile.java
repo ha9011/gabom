@@ -33,7 +33,7 @@ public class SomoimBoardFile {
 		     
 		      String root_path = multi.getServletContext().getRealPath("/"); // 상대경로
 		      String sysRoot_path=root_path.substring(0, root_path.indexOf("\\.metadata"));
-		      String real=sysRoot_path+"\\gabom\\upload\\somoimboard\\upload\\";
+		      String real=sysRoot_path+"\\gabom\\upload\\somoimboard\\";
 		      System.out.println("real="+real);
 		      
 		      System.out.println("-----");
