@@ -622,6 +622,7 @@ $(document).ready(function(){
 	 
 })
 
+console.log("chatData",chatData)
 //채팅 초기화 하기
 for(let v of chatData ){
 		//var myPic = ${myinfo}.member_profile_picture.substring(0);
@@ -1143,23 +1144,92 @@ for(let v in trip_data ){
  
 
 function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
+	console.log("-------장소저장--------")
 	$("#savebtn").prop("disabled", false);
-	 $("#savebtn").css('opacity',1);
-	 
+	$("#savebtn").css('opacity',1);
+	
+	
 	points[currentPlanDay]=[];  // 초기화
 	$("#detailTrip").empty(); // 여행계획 비워야하고
 	arr[currentPlanDay].push(params); // 계획 날짜에 맞게 추가해줘야함
 	
-	console.log("arr",arr);
-	console.log("points",points);
-	console.log("tripDat",tripDate);
-	console.log("currentPlanDay",currentPlanDay);
+	var tripNum = $(".number")[0].dataset.trnum;
+	console.log("arr",arr);  		 // arr
+	console.log("points",points);    // 좌표
+	console.log("tripDat",tripDate); // 몇번째 날짜
+	console.log("currentPlanDay",currentPlanDay);  // 몇번째 날에
+	console.log("tripNum",tripNum)
 	
-	let arrFrame = arr[currentPlanDay];
-	let pointsFrame = points[currentPlanDay];
-	// 해당하는 var에 대해 수정해야함. 그럼 포인트도 해당 번호에 맞게 초기화와 추가가 이루어져야함.
-	 
-	 createPlanForm(arrFrame,pointsFrame);
+	
+	
+	var jsonTripData = JSON.stringify(arr[currentPlanDay])
+	console.log(jsonTripData)
+	
+	var Data = {
+		"day" : currentPlanDay,
+		"tripNum" : trip_data[0].trip_number,
+		"tripData" : jsonTripData
+	}
+	
+	
+	
+	$.ajaxSetup({         
+    	beforeSend : function(xhr){
+    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+    });//먼저 보냄
+    				
+    $.ajax({
+    	url:'tprest/insertPlanDetail',
+    	type:'post',
+    	data:Data,
+    	dataType: "json",
+    	success:function(data){
+    		console.log("success",data)
+    		
+    		var dayy = data.day;;
+    		var tripNumm = data.tripNum;
+    		var dataArr = data.tripData;
+
+    		points[currentPlanDay]=[];    // 좌표 초기화
+	 		$("#detailTrip").empty();
+	 		initMapKaKao();
+					
+			//가장 중요한 부분
+			arr[dayy] = data.tripData
+			
+			console.log("arr",arr);
+			console.log("points",points);
+			console.log("tripDate",arr[dayy]);
+			console.log("currentPlanDay",dayy);
+	
+ 		let arrFrame = arr[dayy];
+ 		let pointsFrame = points[dayy];
+	
+	
+ 		createPlanForm(arrFrame,pointsFrame)
+    		
+    	},
+    	error:function(error){
+			alert("fail")
+			console.log(error);
+		}
+	})
+   
+	$("#savebtn").prop("disabled", true);
+	 $("#savebtn").css('opacity',0.5);
+	
+	
+	
+	
+	
+// 	let arrFrame = arr[currentPlanDay];
+// 	let pointsFrame = points[currentPlanDay];
+
+	
+// 	// 해당하는 var에 대해 수정해야함. 그럼 포인트도 해당 번호에 맞게 초기화와 추가가 이루어져야함.
+// 	createPlanForm(arrFrame,pointsFrame);
+	
+	 console.log("---------------------")
 } 
 
 
@@ -1572,7 +1642,7 @@ function getFormatDateDB(strdate){
 	    			"date" : date
 	    	}
 	    	
-	    	console.log(chatData);
+	    	console.log("chatData",chatData);
 	    	
 	    	$.ajaxSetup({         
 		    	  beforeSend : function(xhr){
@@ -1585,7 +1655,7 @@ function getFormatDateDB(strdate){
 				data:chatData,
 				success:function(data){
 					//alert("success");
-					console.log(data)
+					console.log("chatdata",data)
 					 $('#chatInput').val("");
 			    	 $('#chatInput').focus();
 					

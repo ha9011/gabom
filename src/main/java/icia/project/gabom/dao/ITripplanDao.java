@@ -81,8 +81,8 @@ public interface ITripplanDao {
    @Select("SELECT MEMBER_ID,MEMBER_PROFILE_PICTURE FROM MEMBER WHERE MEMBER_ID = #{name} ")
    Member myInfo(@Param("name")String name);
 
-   @Insert("insert into trip_chatting values(#{tripNum}, #{id},  sysdate, #{msg}) ")
-   int insertchatting(@Param("id")String id, @Param("msg")String msg, @Param("tripNum")int tripNum);
+   @Insert("insert into trip_chatting values(#{tripNum}, #{id}, sysdate, #{msg}, #{date} )")
+   int insertchatting(@Param("id")String id, @Param("msg")String msg, @Param("tripNum")int tripNum,@Param("date")String date);
 
 
    List<ChattingTrip> selectRecentChattingData(@Param("trip_number")int trip_number);

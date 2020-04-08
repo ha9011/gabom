@@ -285,8 +285,8 @@ public class TripService {
 	}
 
 
-	public String insertchatting(String id, String msg, int tripNum) {
-		int result = tpDao.insertchatting(id,msg,tripNum);
+	public String insertchatting(String id, String msg, int tripNum,String date) {
+		int result = tpDao.insertchatting(id,msg,tripNum,date);
 		System.out.println("채팅 db 성공여부: " + result);
 		return null;
 	}

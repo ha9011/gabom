@@ -121,11 +121,18 @@ public class TripRestController {
 		   @RequestParam("id")String id,
 			@RequestParam("msg")String msg,
 			@RequestParam("tripNum")int tripNum,
+			@RequestParam("date")String date,
+			
 			Principal ppl
 			) {
       System.out.println("여행 채팅 접근 input-insert");
+      System.out.println("id : " +id);
+      System.out.println("msg : " +msg);
+      System.out.println("tripNum : " +tripNum);
+      System.out.println("date : " +date);
+
       
-      String json = trs.insertchatting(id,msg,tripNum);
+      String json = trs.insertchatting(id,msg,tripNum,date);
       
       return json;
    }

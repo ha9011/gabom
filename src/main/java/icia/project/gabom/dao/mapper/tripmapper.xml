@@ -62,7 +62,7 @@
 
 	<select id="selectRecentChattingData" parameterType="int" resultType="chattingtrip">
 	<![CDATA[
-	 select tc.chatting_content, to_char(tc.chatting_date,'YYYY-MM-DD') as chatting_date ,tc.chatting_name, tc.trip_number ,m.member_profile_picture chatting_profile 
+	 select tc.chatting_content, to_char(tc.chatting_date,'YYYY-MM-DD') as chatting_date ,tc.chatting_name, tc.trip_number,tc.chatting_time ,m.member_profile_picture chatting_profile 
 	from trip_chatting tc, member m  
 	where tc.chatting_name = m.Member_id 
 	and TRIP_NUMBER = #{trip_number} 
