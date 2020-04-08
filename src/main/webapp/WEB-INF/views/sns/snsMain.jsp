@@ -1032,7 +1032,7 @@ color: #337ab7;
 	<!-- 친구 요청 목록 출력 1-->
 	<script type="text/javascript" src="resources/snsJS/friendReqPrint.js"></script>
 	<!-- 친구 요청 목록1 -->
-	<script type="text/javascript" src="resources/snsJS/friendReqList.js"></script>
+	<script type="text/javascript" src="resources/snsJS/friendReqList.js?ver=1"></script>
 	<!-- 친구 요청 취소1 -->
 	<script type="text/javascript" src="resources/snsJS/friendReqCancel.js"></script>
 	<!-- 친구 요청1 -->

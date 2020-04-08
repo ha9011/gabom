@@ -11,6 +11,7 @@
 					dataType : "json"
 			}).done((json)=>{
 				requestPrint(json);
+				makeTimeLineProfile(id);
 			});			
 		}else{
 			$('.info').text("본인만 이용 가능합니다.").css("background-color","red").fadeIn(400).delay(600)
