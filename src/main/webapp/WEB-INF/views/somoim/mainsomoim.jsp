@@ -23,7 +23,7 @@
     margin-left: -200px;
 }
 :root {
-    --accent: #c47135;;
+    --accent: #3abade;;
     --border-width: 6px;
     --border-radius: 55px;
     --font-size: 30px;
@@ -84,7 +84,7 @@
     justify-content: center;
     align-items: center;
     font-size: var(--font-size);
-    background-color: #c47135;
+    background-color: #3abade;
     border-top-right-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
     transform-style: preserve-3d;
@@ -236,7 +236,7 @@ display: flex;
 											placeholder="address"> <input id="searchinput2"
 											type="text" class="searchinput form-control" name="hobby"
 											placeholder="hobby">
-											<button style="background-color:#c47135;" type="button" id="searchSomoimBtn"
+											<button style="background-color:#3abade;" type="button" id="searchSomoimBtn"
 											class="btn btn-block btn-lg">Search</button>
 									</div>
 								</div>
