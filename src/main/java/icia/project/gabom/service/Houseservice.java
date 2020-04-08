@@ -242,7 +242,7 @@ public class Houseservice {
 			// id="hc_usr"
 			
 			Elements elem = doc.select("div.hc_usi");  //
-			int idx = 0;
+			int idx = 1;
 			Iterator<Element> iter = elem.iterator();
 			while (iter.hasNext()) {
 			    Element s = iter.next();
@@ -261,12 +261,16 @@ public class Houseservice {
 					
 					s.prepend("<div class='hotelTitle'>"+hotelTitle+"</div>");
 					s.prepend("<div class='hotelImg'>"+hotelImg+"</div>");
-
+						
 					s.child(6).remove();
 					s.child(5).remove();
 					s.child(4).remove();
 					s.child(3).remove();
 					s.child(2).remove();
+					
+					s.after("<br><br>");
+
+					
 				}
 			    
 			    //iter.remove();		

@@ -9,7 +9,7 @@
 <style>
 
 .form-label-group{
-display:flex;
+display:inline-block;
 margin-bottom: 15px;
 }
 #address{
@@ -137,8 +137,8 @@ color:black;
      		    console.log("호텔목록", data)
      		   $("#content").append(data);
      		    
-     		    
-     		    
+     		   $(".hc_usi").eq(4).after($("<br>"));
+     		   
          
    		   	},
      		 error:function(error){

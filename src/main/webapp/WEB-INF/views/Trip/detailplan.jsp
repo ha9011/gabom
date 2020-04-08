@@ -609,6 +609,7 @@ $(document).ready(function(){
 	 
 	 //----------------------------
 	 if(HouseReserCheck[0].RESERVATION_NUMBER!=0){ // 예약이 있는 경우
+		 
 	 }else{ //예약이 없는 경우
 		 $("#container").append($("<button class='learn-more' id='houseReservate'></button>"));
 	 	 $("#houseReservate").append($("<span class='circle' aria-hidden='true'></span>"));
@@ -1186,14 +1187,17 @@ function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
 		currentPlanDay = $('#date li:nth-child(1)').text();
 		console.log("여행번호 : ", tripNum)
 		console.log("현재페이지 : ", currentPlanDay)
-		$("#hc").empty();
+		$("#container").empty();
+		console.log("HouseReserCheck : ", HouseReserCheck)
+		
 		if(HouseReserCheck[currentPlanDay-1].RESERVATION_NUMBER!=0){ // 예약이 있는 경우
-		 }else{ //예약이 없는 경우
+			
+		}else{ //예약이 없는 경우
 			 $("#container").append($("<button class='learn-more' id='houseReservate'></button>"));
 		 	 $("#houseReservate").append($("<span class='circle' aria-hidden='true'></span>"));
 		 	 $(".circle").append($("<span class='icon arrow'></span>"));
 		 	 $("#houseReservate").append($(" <span class='button-text'>숙소 예약하러 가기</span>"));
-		 }
+		}
 		
 		var Data = {
 		"day" : currentPlanDay,
@@ -1258,7 +1262,7 @@ function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
 		console.log("여행번호 : ", tripNum)
 		console.log("현재페이지 : ", currentPlanDay)
 		
-		$("#hc").empty();
+		$("#container").empty();
 		if(HouseReserCheck[currentPlanDay-1].RESERVATION_NUMBER!=0){ // 예약이 있는 경우
 		 }else{ //예약이 없는 경우
 			 $("#container").append($("<button class='learn-more' id='houseReservate'></button>"));
