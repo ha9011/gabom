@@ -121,7 +121,7 @@ order by tc.chatting_date desc
 	</select>
 	
 	<insert id="housereservation" parameterType="hreservation" >
-	INSERT INTO HOUSERESERVATION VALUES(SQ_HOUSERESERVATION.nextval,#{house_number},#{house_hostid},#{member_guestid},#{reservation_checkin},#{reservation_checkout},#{reservation_person},#{reservation_totalprice},0)
+	INSERT INTO HOUSERESERVATION VALUES(SQ_HOUSERESERVATION.nextval,#{house_number},#{house_hostid},#{member_guestid},#{reservation_checkin},#{reservation_checkout},#{reservation_person},#{reservation_totalprice},0,SYSDATE)
 			<selectKey keyProperty="reservation_number" resultType="integer" order="AFTER">
 				SELECT SQ_HOUSERESERVATION.CURRVAL FROM DUAL
 			</selectKey>
@@ -203,6 +203,21 @@ order by tc.chatting_date desc
 		WHERE TP.TRIP_NUMBER = TR.TRIP_NUMBER AND TR.TRIP_PLAN_APPLY=2
 		ORDER BY TP.TRIP_SHARE_COUNT)
 		WHERE ROWNUM <![CDATA[ <= ]]>10
+	</select>
+	
+	<select id="replelist" resultType="h_reple">
+	SELECT  HP.HOUSE_REPLE_NUMBER, HP.MEMBER_GUESTID,HP.HOUSE_REPLE_TIME,HP.HOUSE_REPLE_CONTENT,MB.MEMBER_PROFILE_PICTURE
+	FROM HOUSEREPLE HP, MEMBER MB
+	WHERE HP.MEMBER_GUESTID = MB.MEMBER_ID AND HOUSE_NUMBER=#{house_number} 
+	ORDER BY HOUSE_REPLE_TIME DESC
+	</select>
+	
+	<select id="reviewlist" resultType="hreview">
+	SELECT  HV.HOUSE_REVIEW_NUMBER, HV.MEMBER_GUESTID,HV.HOUSE_REVIEW_CONTENT,MB.MEMBER_PROFILE_PICTURE,
+	HV.HOUSE_REVIEW_DATE
+	FROM HOUSE_REVIEW HV, MEMBER MB
+	WHERE HV.MEMBER_GUESTID = MB.MEMBER_ID AND HOUSE_NUMBER=#{house_number} 
+	ORDER BY HOUSE_REVIEW_DATE DESC
 	</select>
 	
 	

@@ -65,10 +65,8 @@ public interface ITripplanDao {
    @Select("select * from HOUSERESERVATION WHERE HOUSE_NUMBER=#{house_number} order by RESERVATION_CHECKIN")
    List<Housereservation> detailreser(int house_number);
    
-   @Select("SELECT * FROM HOUSEREPLE WHERE HOUSE_NUMBER=#{house_number} ORDER BY HOUSE_REPLE_TIME DESC" )
    List<House_reple> replelist(int house_number);
    
-   @Select("SELECT * FROM HOUSE_REVIEW HR WHERE HOUSE_NUMBER=#{house_number}")
    List<House_review> reviewlist(int house_number);
    
    @Select("SELECT * FROM MEMBER WHERE MEMBER_ID=#{member_id}")

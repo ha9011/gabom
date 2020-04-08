@@ -14,6 +14,11 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <style>
+#showhouse{
+	padding:5px;
+	background-color: white;
+	border: 2px solid black;
+}
 body{overflow:scroll;}
 .form-control-borderless {
     border:none;
@@ -29,7 +34,8 @@ body{overflow:scroll;}
 	display:flex; 
 }
 #house_list{
-	
+	overflow: auto;
+    height: 900px;
 	width:45%;
 	
 }
@@ -42,33 +48,53 @@ body{overflow:scroll;}
 #maparea{
 	width:70%;
 }
-img{
+#img{
 	width:200px;
 	height:100px;
-	margin:5px;
+	margin:0 10px 5px 0;
 }
-
+.out{
+width:100%;
+border:1px solid lightgray;
+margin:40px 0 0 0;
+border-radius: 50px;
+}
+#searchbtn{
+border-radius: 40px;
+background-color:#3abade
+}
+#housechangesearch{
+border:none;
+text-align:center;
+}
+#searchhouse{
+text-align:center;
+margin:0 10px;
+border:none;
+}
 
 </style>
 </head>
 <body>
-
+<header>
+		<jsp:include page="/WEB-INF/views/header/househeader.jsp" />
+	</header>
  <!-- searchdetail page에서 재검색하는 것  -->
  
 	<div class="container">
 	<div class="row justify-content-center">
-                        <div class="col-12 col-md-10 col-lg-8">
-                                <div class="card-body row no-gutters align-items-center">
+                        <div class="col-12 col-md-5 col-lg-12">
+                                <div style="padding: 0.5rem;margin:30px 0 30px 50px;" class="out card-body row no-gutters align-items-center">
                                     <div class="col-auto"> <!-- 돋보기 -->
                                         <i class="fas fa-search h4 text-body"></i>
                                     </div>
                                     <!--end of col-->
                                     <div class="col"><!-- 검색창 -->
-                                        <input id="housechangesearch" name="house_address" class="form-control form-control-lg form-control-borderless" type="search" placeholder="여행지역">
+                                        <input id="housechangesearch" name="house_address" class="form-control form-control-lg form-control-borderless" type="search" placeholder="지역을 입력해주세요">
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto"><!-- 검색버튼 -->
-                                        <button style="background-color:#064D84" id="searchbtn" class="btn btn-lg btn-success" type="submit">Search</button>
+                                        <button id="searchbtn" class="btn btn-lg  " type="submit">Search</button>
                                     </div>
                                     <!--end of col-->
                                 </div>
@@ -82,9 +108,16 @@ img{
 		</div>
 		
 		<div id="maparea">
-			<div id="map" style="width:100%; height: 1000px;"></div>
+			<div id="map" style="width:100%; height: 900px;"></div>
 		</div>
 </div>
+
+
+
+<div>
+	<jsp:include page="/WEB-INF/views/footer/footer.jsp"/>
+</div> 
+
 
 </body>
 <script>
@@ -103,9 +136,6 @@ img{
 		document.writeln("currentPlanDay:" +oParams.currentPlanDay)
 	}
  */
-
-
-
 var test = ${trip_houselist};
 var tripinfo= ${tripinfo};
 
@@ -113,22 +143,23 @@ console.log("집 목록",test);
 console.log("여행정보",tripinfo)
 var house_list = document.getElementById("house_list");
 
-for(i of test ){
+for(let i of test ){
 	console.log("집리스트 보여줘",i)
-	 var out = $('<div class="house" name ='+[i.house_number]+'></div>')
-	 var img = $('<div class="img"><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>')
-	 var info = $('<div class="info">'+"이름"+[i.house_name]+"<br>"+"가격"+[i.house_price]+"<br>"+"주소"+[i.house_address]+'</div>')
+	 let out = $('<div class="house" name ='+[i.house_number]+'></div>')
+	 let img = $('<div class="img"><img id="img" alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>')
+	 let info = $('<div class="info"><p  style="font-weight:bold">'+[i.house_name]+"</p>"+"1박 가격  : "+[i.house_price]+'만원'+"<br>"+"주소 : "+[i.house_address]+'</div>')
 
 	$("#house_list").append(out);
 	out.append(img);
 	out.append(info);
 	
+};
 	$(".house").on('click', function() { // 이미지 클릭시 url 이동
 		console.log("집 클릭") 
 		console.log($(this).attr("name"));
 	    location.href="triphousedetail?house_number="+$(this).attr("name")+"&trip_number="+tripinfo[0].trip_number+"&trip_day="+tripinfo[0].trip_day;
 	});	
-} 
+
 
 
 //--------------------------------------지도 마커싱
@@ -209,10 +240,10 @@ for (var i = 0; i < positions.length; i ++) {
 					 $('#map').empty();
 			         console.log(data);
 			         
-			         for(i of data ){
+			         for(i of test ){
 			        		console.log("집리스트 보여줘",i)
 			        		 var out = $('<div class="house" name ='+[i.house_number]+'></div>')
-			        		 var img = $('<div id="mainimg" name ='+[i.house_number]+'><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>')
+			        		 var img = $('<div class="img"><img alt='+[i.house_sysname]+'name ='+[i.house_number]+' src="'+[i.house_sysname]+'"></div>')
 			        		 var info = $('<div class="info">'+"이름"+[i.house_name]+"<br>"+"가격"+[i.house_price]+"<br>"+"주소"+[i.house_address]+'</div>')
 
 			        		$("#house_list").append(out);
@@ -220,11 +251,11 @@ for (var i = 0; i < positions.length; i ++) {
 			        		out.append(info);
 			         };
 			         
-			         $("#mainimg").on('click', function() { // 이미지 클릭시 url 이동
+			         $(".house").on('click', function() { // 이미지 클릭시 url 이동
 			     		console.log("집 클릭") 
 			     		console.log($(this).attr("name"));
-			     	    location.href="housedetail?house_number="+$(this).attr("name");
-			     	});	
+			     	    location.href="triphousedetail?house_number="+$(this).attr("name")+"&trip_number="+tripinfo[0].trip_number+"&trip_day="+tripinfo[0].trip_day;
+			     	});
 			        		
 			         		for(i of data){
 			        			console.log(i)
