@@ -12,4 +12,8 @@ public class Sns_friend {
 	private String friend_my_id;
 	private String friend_id;
 	private int friend_status;
+	
+	//여행에서 친구 이름 , 사진 가져옴 
+	private String member_name;
+	private String member_profile_picture;
 }

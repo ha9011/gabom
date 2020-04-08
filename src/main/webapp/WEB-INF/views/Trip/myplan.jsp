@@ -127,6 +127,8 @@ tr {
 #fbtn {
 	float: right;
 	border-radius: 10px;
+	height: 50px;
+    margin-top: 20px;
 }
 
 /* 버튼 */
@@ -134,6 +136,11 @@ tr {
 	margin-left: 10px;
 	border-radius: 30px;
 	width: 30px;
+}
+.f_img{
+width:100px;
+height:100px;
+border-radius:100px;
 }
 </style>
 
@@ -237,7 +244,7 @@ tr {
 					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
+						<!-- <span aria-hidden="true">&times;</span> -->
 					</button>
 				</div>
 				<div class="modal-body">
@@ -329,7 +336,7 @@ tr {
  var myinfo =${memberinfo};
  console.log("myinfo",myinfo);
  var friend =${friendlist};
- console.log(friend);
+ console.log("친구 리스트 ",friend);
  var friend =${friendlist};
  console.log(friend);
  
@@ -498,11 +505,14 @@ $(".joinbtn").on('click', function(e) { // 친구 추가시 여행번호
 	$("#flist").empty();
 	
 	for(i of friend){
-		
-	var freind =$('<div id="f"><h4>'+i.friend_id+'님'+'</h4></div>');
+	var f_div =$('<div style="display:flex"></div>');
+	var f_img = $('<img class="f_img" src="'+i.member_profile_picture+'">');
+	var freind =$('<div id="f"><h4>'+i.member_name+'님'+'</h4></div>');
 	var fbtn =$('<button id="fbtn" class="fbtn btn" data-fid="'+i.friend_id+'" data-tnum="'+trip_number+'">추가하기</button>')
-	$("#flist").append(freind);
-	$(freind).append(fbtn);
+	$("#flist").append(f_div);
+	$(f_div).append(f_img);
+	$(f_div).append(freind);
+	$(f_div).append(fbtn);
 	
 	}
 	

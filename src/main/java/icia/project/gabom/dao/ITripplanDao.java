@@ -39,8 +39,8 @@ public interface ITripplanDao {
    @Select("SELECT * FROM MEMBER WHERE MEMBER_ID=#{trip_id}")
    List<Member> getmemberinfo(String trip_id);
    
-   @Select("SELECT * FROM SNS_FRIEND WHERE FRIEND_MY_ID=#{trip_id} AND FRIEND_STATUS=2")
-   List<Sns_friend> getfriendlist(String trip_id);
+   
+   List<Sns_friend> getfriendlist(@Param("trip_id")String trip_id);
 
    
    boolean togetherplan(Trip_member tm);

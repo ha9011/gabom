@@ -221,4 +221,11 @@ order by tc.chatting_date desc
 	</select>
 	
 	
+	<select id="getfriendlist" resultType="friend">
+	SELECT SF.FRIEND_ID, MB.MEMBER_NAME, MB.MEMBER_PROFILE_PICTURE
+	FROM SNS_FRIEND SF, MEMBER MB 
+	WHERE SF.FRIEND_ID = MB.MEMBER_ID AND FRIEND_MY_ID=#{trip_id} AND SF.FRIEND_STATUS=2
+	</select>
+	
+	
 </mapper>
