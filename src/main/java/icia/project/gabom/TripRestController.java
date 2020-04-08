@@ -326,7 +326,7 @@ public class TripRestController {
 					System.out.println("currentDay : " +currentDay);
 					System.out.println("endDate : " +endDate);
 					
-					String json = trs.delePlanDate(tripnumber,deleDate,nDate,currentDay,endDate);
+					String json = trs.delePlanDateLast(tripnumber,deleDate,nDate,currentDay,endDate);
 					System.out.println("여행날짜 삭제 하고 최종결과값 : " + json);
 					return json;
 				}

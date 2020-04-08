@@ -158,31 +158,32 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 
 mapOption = { 
     center: new kakao.maps.LatLng(yavg, xavg), // 지도의 중심좌표
-    level: 7 // 지도의 확대 레벨
+    level: 9 // 지도의 확대 레벨
    };
 
 //지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-var map = new kakao.maps.Map(mapContainer, mapOption); 
+let map = new kakao.maps.Map(mapContainer, mapOption); 
 
-var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-
-for (var i = 0; i < positions.length; i ++) {
+let imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+let bounds = new kakao.maps.LatLngBounds();
+for (let i = 0; i < positions.length; i ++) {
     console.log(positions[i].latlng)
     // 마커 이미지의 이미지 크기 입니다
-    var imageSize = new kakao.maps.Size(24, 35); 
+    let imageSize = new kakao.maps.Size(24, 35); 
     
     // 마커 이미지를 생성합니다    
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+    let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
     
     // 마커를 생성합니다
-    var marker = new kakao.maps.Marker({
+    let marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
         position: positions[i].latlng, // 마커를 표시할 위치
         /* title : positions[i].title, */ // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
         image : markerImage // 마커 이미지 
     });
+    bounds.extend(positions[i].latlng);
 }
-
+map.setBounds(bounds)
 //---------------------------------------------------------------------------------------------------------
  $("#searchbtn").on("click", function() {
 	 	console.log("ajax 재검색")
@@ -213,9 +214,9 @@ for (var i = 0; i < positions.length; i ++) {
 			         
 			         for(i of data ){
 			        		console.log("집리스트 보여줘",i)
-			        		var out = $('<div class="food" name ='+[i.food_number]+'></div>')
-	 						var img = $('<div class="mainimg"><img id="img"alt='+[i.food_sysname]+'name ='+[i.food_number]+' src="'+[i.food_sysname]+'"></div>')
-	 						var info = $('<div class="info"><p  style="font-weight:bold">'+[i.food_name]+"<br>"+"주소 : "+[i.food_address]+'</div>')
+			        		let out = $('<div class="food" name ='+[i.food_number]+'></div>')
+	 						let img = $('<div class="mainimg"><img id="img"alt='+[i.food_sysname]+'name ='+[i.food_number]+' src="'+[i.food_sysname]+'"></div>')
+	 						let info = $('<div class="info"><p  style="font-weight:bold">'+[i.food_name]+"<br>"+"주소 : "+[i.food_address]+'</div>')
 
 			        		$("#food_list").append(out);
 			        		out.append(img);
@@ -228,7 +229,7 @@ for (var i = 0; i < positions.length; i ++) {
 			     	    location.href="fooddetail?food_number="+$(this).attr("name");
 			     	});	
 			        		
-			         		for(i of data){
+			         		for(let i of data){
 			        			console.log(i)
 			        			let innerList = {  
 			        				latlng: new kakao.maps.LatLng(i.food_ypoint, i.food_xpoint)
@@ -245,35 +246,42 @@ for (var i = 0; i < positions.length; i ++) {
 
 			        		yavg=yavg/data.length;
 			        		console.log("positions : " + positions);
-			        		var mapContainer = document.getElementById('map') // 지도를 표시할 div 
+			        		let mapContainer = document.getElementById('map') // 지도를 표시할 div 
 			        		console.dir(mapContainer);
 			        		
 			        		mapOption = { 
 			        		    center: new kakao.maps.LatLng(yavg, xavg), // 지도의 중심좌표
-			        		    level: 7 // 지도의 확대 레벨
+			        		    level: 9 // 지도의 확대 레벨
 			        		   };
 			        		
 			        		//지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-			        		var map = new kakao.maps.Map(mapContainer, mapOption); 
+			        		let map = new kakao.maps.Map(mapContainer, mapOption); 
 
-			        		var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+			        		let imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+							
+			        		let bounds = new kakao.maps.LatLngBounds();    
 
-			        		for (var i = 0; i < positions.length; i ++) {
-			        		    console.log(positions[i].latlng)
+			        		for (let i = 0; i < positions.length; i ++) {
+							
+			        			console.log(positions[i].latlng)
 			        		    // 마커 이미지의 이미지 크기 입니다
-			        		    var imageSize = new kakao.maps.Size(24, 35); 
+			        		    let imageSize = new kakao.maps.Size(24, 35); 
 			        		    
 			        		    // 마커 이미지를 생성합니다    
-			        		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+			        		    let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 			        		    
 			        		    // 마커를 생성합니다
-			        		    var marker = new kakao.maps.Marker({
+			        		    let marker = new kakao.maps.Marker({
 			        		        map: map, // 마커를 표시할 지도
 			        		        position: positions[i].latlng, // 마커를 표시할 위치
 			        		        /* title : positions[i].title, */ // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 			        		        image : markerImage // 마커 이미지 
 			        		    });
+			        		    
+			        		    bounds.extend(positions[i].latlng);
 			        		}
+			        		
+			        		 map.setBounds(bounds)
 				},
 				error:function(error){
 					console.log("실패")

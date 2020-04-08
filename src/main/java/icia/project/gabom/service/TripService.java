@@ -639,16 +639,23 @@ public class TripService {
 	public String delePlanDate(int tripnumber, String deleDate, int nDate, int currentDay, String endDate) {
 		// tripnumber : 여행 고유번호 // deleDate : 제일 마지막 날짜에서 -1 // nDate : 총 몇개가 있는지 // currentDay : 현재 몇번째날 지웠는지  
 		
+		
 		//1.TRip_Plan 여행막날 수정
-		int updateTripPlanEndDay = tpDao.updateTripPlanEndDay(tripnumber,endDate); 
+		int updateTripPlanEndDay = tpDao.updateTripPlanEndDay(tripnumber,endDate);   // 성공
 		System.out.println("여행막날 수정 성공했니? : " + updateTripPlanEndDay);
 		//2.Trip_Plan_Date 삭제하기
 		int deleteTripPlanNDay = tpDao.deleteTripPlanNDay(tripnumber,currentDay); 
 		System.out.println("여행 n번째 삭제 성공했니? : " + deleteTripPlanNDay);
+		//2-1.한칸씩 떙기기 앞으로
+		int updateTripPlanNDay = tpDao.updateTripPlanNDay(tripnumber,currentDay); 
+		System.out.println("여행 n번째 1칸씩 떙겨오기? : " + deleteTripPlanNDay);
 		
 		//3 삭제 하기 
 		int deleteTripPlanDetailNDay = tpDao.deleteTripPlanDetailNDay(tripnumber,currentDay);
 		System.out.println("여행 디테일 n번째 이후로 삭제 성공했니? : " + deleteTripPlanDetailNDay);
+		//3-1 한칸씩 떙기기
+		int updateTripPlanDetailNDay = tpDao.updateTripPlanDetailNDay(tripnumber,currentDay);
+		System.out.println("여행 디테일 n번번째 날짜 떙겨오니? : " + updateTripPlanDetailNDay);
 		
 		
 		Map<String,String> result = new HashMap<String, String>();
@@ -658,10 +665,8 @@ public class TripService {
 	    List<Map<String,Integer>> HouseReserCheck = tpDao.selectHouseReserCheck(Integer.toString(tripnumber));//해당 여행번호에 , 몇번째 여행일
 	    String jsonHouseReserCheck = new Gson().toJson(HouseReserCheck);
 	    
-	    
-	    
 	    // 위에서 1개씩 밀려왔으니 그냥 current 쓰면 됨
-	    List<TripPlanDetail> selectResult = tpDao.selectPlanDetail(Integer.toString(tripnumber), Integer.toString(currentDay-1));//해당 여행번호에 , 몇번째 여행일
+	    List<TripPlanDetail> selectResult = tpDao.selectPlanDetail(Integer.toString(tripnumber), Integer.toString(currentDay));//해당 여행번호에 , 몇번째 여행일
 	    TripPlanDay tpd = new TripPlanDay();
 	    tpd.setDay(Integer.toString(currentDay)).setTripNum(Integer.toString(tripnumber)).setTripData(selectResult);
 	    
@@ -671,6 +676,10 @@ public class TripService {
 	    result.put("HouseReserCheck", jsonHouseReserCheck);
 	    result.put("deleToNext", deleToNext);
 		
+	    System.out.println("detail :"+ jsonDetrip);
+	    System.out.println("jsonHouseReserCheck "+ jsonHouseReserCheck);
+	    System.out.println("deleToNext : "+ deleToNext);
+	    
 		return new Gson().toJson(result);
 	}
 
@@ -718,6 +727,48 @@ public class TripService {
 	 
 		return json; 
 	 }
+
+
+	public String delePlanDateLast(int tripnumber, String deleDate, int nDate, int currentDay, String endDate) {
+		// tripnumber : 여행 고유번호 // deleDate : 제일 마지막 날짜에서 -1 // nDate : 총 몇개가 있는지 // currentDay : 현재 몇번째날 지웠는지  
+		
+		//마지막 날짜니 그냥 삭제 떙겨올필요없음
+				//1.TRip_Plan 여행막날 수정
+				int updateTripPlanEndDay = tpDao.updateTripPlanEndDay(tripnumber,endDate);   // 성공
+				System.out.println("여행막날 수정 성공했니? : " + updateTripPlanEndDay);
+				//2.Trip_Plan_Date 삭제하기
+				int deleteTripPlanNDay = tpDao.deleteTripPlanNDay(tripnumber,currentDay); 
+				System.out.println("여행 n번째 삭제 성공했니? : " + deleteTripPlanNDay);
+				//3 삭제 하기 
+				int deleteTripPlanDetailNDay = tpDao.deleteTripPlanDetailNDay(tripnumber,currentDay);
+				System.out.println("여행 디테일 n번째 이후로 삭제 성공했니? : " + deleteTripPlanDetailNDay);
+				
+				
+				
+				Map<String,String> result = new HashMap<String, String>();
+				List<Trip_plan> detrip = tpDao.detailplan(tripnumber);  // 디테일 여행 가져오기
+			    String jsonDetrip = new Gson().toJson(detrip);
+			    
+			    List<Map<String,Integer>> HouseReserCheck = tpDao.selectHouseReserCheck(Integer.toString(tripnumber));//해당 여행번호에 , 몇번째 여행일
+			    String jsonHouseReserCheck = new Gson().toJson(HouseReserCheck);
+			    
+			    // 마지막 날짜니깐 앞에거 부르면 됨 그래서 current-1
+			    List<TripPlanDetail> selectResult = tpDao.selectPlanDetail(Integer.toString(tripnumber), Integer.toString(currentDay-1));//해당 여행번호에 , 몇번째 여행일
+			    TripPlanDay tpd = new TripPlanDay();
+			    tpd.setDay(Integer.toString(currentDay)).setTripNum(Integer.toString(tripnumber)).setTripData(selectResult);
+			    
+			    String deleToNext = new Gson().toJson(tpd);
+			    
+			    result.put("detail", jsonDetrip);
+			    result.put("HouseReserCheck", jsonHouseReserCheck);
+			    result.put("deleToNext", deleToNext);
+				
+			    System.out.println("detail :"+ jsonDetrip);
+			    System.out.println("jsonHouseReserCheck "+ jsonHouseReserCheck);
+			    System.out.println("deleToNext : "+ deleToNext);
+			    
+				return new Gson().toJson(result);
+			}
 	 
 
 	

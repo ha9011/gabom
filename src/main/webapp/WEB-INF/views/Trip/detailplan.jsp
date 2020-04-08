@@ -1934,7 +1934,8 @@ const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 �
 		})  // ajax end
 	
 	}else if(currentPlanDay==objlength){//----------------------마지막삭제
-		//alert("마지막 삭제")
+		console.log("------------------------------")
+		alert("마지막삭제")
 		console.log("trip_data",trip_data[0].trip_end_date);
 		var endDate = new Date(trip_data[0].trip_end_date);   // 마지막 여행날짜에서 하루 줄어들어야함
 		endDate.setDate(endDate.getDate()-1);  
@@ -1955,7 +1956,7 @@ const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 �
 		console.log("deleDate",data)
 		
 		
-		
+		console.log("------------------------------")
 		
 		$.ajaxSetup({         
 	    	beforeSend : function(xhr){
@@ -2048,7 +2049,7 @@ const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 �
 	 			var totaldate =$('<h1>'+sd+' - '+ed+'</h1>')
 	 			//var area = $('<input type="hidden" value="'+areaCode+'"')
 	 			$("#totaldate").append(totaldate);
-	 			
+	 			console.log("------------------------------")
 	    	},
 	    	error:function(error){
 				alert("fail")
@@ -2056,14 +2057,17 @@ const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 �
 			}
 		})  // ajax end
 	}else{  // 일반 삭제
-		console.log("trip_data",trip_data[0].trip_end_date);
+		console.log("------------------------------")
+		alert("일반 가운데 삭제")
+		console.log("원래 여행 마지막날",trip_data[0].trip_end_date);
 		var endDate = new Date(trip_data[0].trip_end_date);   // 마지막 여행날짜에서 하루 줄어들어야함
 		endDate.setDate(endDate.getDate()-1);  
+		
 		var deleDate = new Date(trip_data[0].trip_start_date);
 		deleDate.setDate(deleDate.getDate()+(currentPlanDay-1));  
 		
-		console.log("endDate",endDate);
-		console.log("whatnumber",HouseReserCheck.length-1)  //몇번째
+		console.log("하루 깍인 마지막 날",endDate);
+		console.log("원래 몇번째 여행 지웠니?",HouseReserCheck.length-1)  //몇번째
 		
 		var data = {
 			"tripnumber":trip_data[0].trip_number,
@@ -2076,7 +2080,7 @@ const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 �
 		console.log("deleDate",data)
 		
 		
-		
+		console.log("------------------------------")
 		
 		$.ajaxSetup({         
 	    	beforeSend : function(xhr){
@@ -2090,33 +2094,37 @@ const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 �
 	    	dataType: "json",
 	    	success:function(data){
 	    		//console.log("원래 하우스",HouseReserCheck)
-	    		console.log("어떻게 나올까",data);
+	    		
+	    		console.log("---AJAX 결과값---",data);
 	    		
 				HouseReserCheck=JSON.parse(data.HouseReserCheck);
 	     		trip_data = JSON.parse(data.detail);
-	    		var deleToNext = JSON.parse(data.deleToNext);  // 새로운 arr 가져오는거용
-	    		console.log("deleToNext",deleToNext);
+	    		
+	     		var deleToNext = JSON.parse(data.deleToNext);  // 새로운 arr 가져오는거용
+	    		console.log("새로운 날짜 data 가져오기, 지운날짜 다음 날",deleToNext);
 	     		
 	    		var dayy = deleToNext.day;;
 	    		var tripNumm = deleToNext.tripNum;
 	    		var dataArr = deleToNext.tripData;
-	    		console.log("dayy",dayy);
-	    		console.log("tripNumm",tripNumm);
-	    		console.log("dataArr",dataArr);
+	    		console.log("몇번째날인지",dayy);
+	    		console.log("여행번호",tripNumm);
+	    		console.log("여행데이터 dataarr",dataArr);
 	    		
-	     		console.log("변경 하우스",HouseReserCheck)
-				console.log("len",HouseReserCheck.length)
+	     		console.log("변경 하우스 ",HouseReserCheck)
+				console.log("변경 하우스 길인",HouseReserCheck.length)
 				console.log("trip_data",trip_data)
 				
-	            delete arr[currentPlanDay];
-	    		for(let i = 1; i <=HouseReserCheck.length+1;i++){
+	            delete arr[currentPlanDay]; // 지웠던거 날리고!
+	     		
+	    		for(let i = dayy; i <=HouseReserCheck.length+1;i++){
 	    		    if(i>currentPlanDay){
-	    		    	arr[i-1]= arr[i]
+	    		    	arr[i-1]= arr[i]  // 오류 찾음
 	    		    }
 	    		}
-	    		delete arr[HouseReserCheck.length+1];  //마지막 번호 지우기
 	    		
-	     		console.log("이후 arr : ",arr)
+	    		delete arr[HouseReserCheck.length+1];  
+	    		
+	     		console.log("마지막 날 지우기 arr : ",arr)
 	    		
 	    		
 	    		//여행 리스트 추가  // 추가하면 바로 번호로 가기,  //currentPlanDay현재 지워진날짜
@@ -2159,7 +2167,7 @@ const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 �
 	 			var totaldate =$('<h1>'+sd+' - '+ed+'</h1>')
 	 			//var area = $('<input type="hidden" value="'+areaCode+'"')
 	 			$("#totaldate").append(totaldate);
-	 			
+	 			console.log("------------------------------")
 	    	},
 	    	error:function(error){
 				alert("fail")

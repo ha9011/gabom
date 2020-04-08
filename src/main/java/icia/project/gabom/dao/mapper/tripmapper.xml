@@ -205,4 +205,5 @@ order by tc.chatting_date desc
 		WHERE ROWNUM <![CDATA[ <= ]]>10
 	</select>
 	
+	
 </mapper>
