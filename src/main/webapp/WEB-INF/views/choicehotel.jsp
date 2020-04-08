@@ -6,16 +6,99 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+
+.form-label-group{
+display:flex;
+margin-bottom: 15px;
+}
+#address{
+width:300px;
+float:right;
+margin: 0 15px;
+}
+#checkin{
+width:300px;
+float:right;
+margin: 0 15px;
+}
+#checkout{
+width:300px;
+float:right;
+margin: 0 15px;
+}
+
+/* hotel */
+
+#content{
+display:flex;
+}
+.hc_usi {
+box-shadow:5px 5px 3px lightgray;
+width:200px;
+margin:15px;
+}
+.hotelImg{
+width:200px;
+}
+.hc_usi_photo img{
+width:150px;
+margin:20px;
+}
+.hotelTitle h3{
+ font-size: 20px;
+ margin: 0 20px;
+}
+.hotelTitle a{
+color:black;
+}
+</style>
+
 </head>
 <body>
-Address : <input id="address"><br>
-CheckIn : <input type="date" id="checkin"><br>
-CheckOut : <input type="date" id="checkout"><br>
-<button id="searchHotel">검색</button>
-<hr>
+
+<header id="hea">
+		<jsp:include page="/WEB-INF/views/header/househeader.jsp" />
+</header>
+
+ 
+ <div style="display:flex;background-color:#00b0f0;width:100%;height:400px;margin-top:10px;position:relative;padding: 3rem;">
+ 	<div id="form" style="background-color:white;width:40%;padding: 2rem;">
+ 		<div class="form-label-group">
+           	<p style="font-weight: bold;color:black;">여행지</p>
+          <div id="area"><input style="margin-left:30px;" id="address" type="text" class="form-control"  ></div>
+         </div>
+         <div class="form-label-group">
+           	<p style="font-weight: bold;color:black;">체크인</p>
+           	<input style="margin-left:30px;" id="checkin" type="date" class="form-control" >
+         </div>
+         <div class="form-label-group">
+           	<p style="font-weight: bold;color:black;">체크아웃</p>
+          	<input id="checkout" type="date" class="form-control"  >
+         </div>
+		<button id="searchHotel" class="btn btn-primary btn-block">검색</button>
+ 	</div>
+ 	
+ 	<div id="imgarea" style="padding: 4rem;">
+ 		<img style="width:30%;margin-top: 50px;" src="./resources/headerImage/hotel_rogo.jpg">
+ 		
+ 		<img src="./resources/css/gom.JPG" >
+ 	</div>
+ </div>
+
 <div id="content" >
 
+
 </div>
+
+
+
+
+
+<div>
+	<jsp:include page="/WEB-INF/views/footer/footer.jsp"/>
+</div> 
+
 </body>
 <script>
 	$("#searchHotel").on("click",function(){
@@ -51,8 +134,11 @@ CheckOut : <input type="date" id="checkout"><br>
   		     dataType:"html", //rest 컨트롤 이용   
      		 success:function(data){
      		    
-     		    console.log(data)
+     		    console.log("호텔목록", data)
      		   $("#content").append(data);
+     		    
+     		    
+     		    
          
    		   	},
      		 error:function(error){
@@ -63,6 +149,12 @@ CheckOut : <input type="date" id="checkout"><br>
    		   })// end ajax
 		}
 	})
+
+	
+	
+	
+	
+	
 	
 
 //날짜 포맷 변환기  str -> date ->str

@@ -103,6 +103,11 @@ border:none;
 		</div>
 </div>
 
+
+<div>
+	<jsp:include page="/WEB-INF/views/footer/footer.jsp"/>
+</div> 
+
 </body>
 <script>
 var test = ${searchfood};
