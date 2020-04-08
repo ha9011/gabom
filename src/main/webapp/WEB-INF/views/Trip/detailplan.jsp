@@ -2222,7 +2222,7 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 			
 			
 			let memoFrame = $("<div ></div>");
-			let memoPlan = $("<div ><button class='memoPlan' data-idx='"+(planidx-1)+"'><span><i class='fas fa-2x fa-edit'></i></span></button></div>");
+			let memoPlan = $("<div ><button class='unbbtn memoPlan' data-toggle='modal' data-target='#memoModal' data-date='"+v.trip_date+"'data-order='"+v.trip_order+"' data-title='"+v.trip_title+"' data-idx='"+(planidx-1)+"'><span><i class='fas fa-2x fa-edit'></i></span></button></div>");
 
 			memoFrame.append(memoPlan);
 			planFrame.append(memoFrame);
@@ -2462,11 +2462,15 @@ $("#hc").on('click',"#houseReservate", function(){
 
 //------------------------메모 모달생성------------------------------
 	$(document).on("click",".memoPlan",function(e) { //메모버튼
+		console.log("-----------------------------------------")
+		console.log("e",e)
+		var edataset = e.currentTarget.dataset;
 		console.log("메모버튼 클릭");
 		var tripnumber = trip_data[0].trip_number; //여행번호
 		var tripdate = currentPlanDay; //여행날짜
-		var triporder = e.target.dataset.order //여행순서
-		var triptitle = e.target.dataset.title; //여행지
+		
+		var triporder = edataset.order //여행순서
+		var triptitle = edataset.title; //여행지
 		
 		console.log("number=",tripnumber);
 		console.log("date=",tripdate); //몇일날

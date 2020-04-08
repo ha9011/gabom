@@ -268,7 +268,7 @@ public class Houseservice {
 					s.child(3).remove();
 					s.child(2).remove();
 					
-					s.after("<br><br>");
+					
 
 					
 				}

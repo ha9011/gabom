@@ -56,6 +56,11 @@ font-size:15px;
 .img{
 margin:15px;
 }
+.houseimg{
+margin-top:15px;
+	width :46px;
+	height: 34px;
+}
 section video {
   position: absolute;
   top: 78%;
@@ -730,7 +735,7 @@ $(document).on('click','.dsbtn' ,function() {
 				console.log("v",v)
 				
 				let planFrame = $("<div class='planFrame'>  </div>");
-				let planNum = $("<div class='planNum'> <img style='width:40;height:40px;'src='./resources/tripImage/bookhouse.png'> </div>");
+				let planNum = $("<div class='planNum'> <img class='houseimg' style='width:40;height:40px;'src='./resources/tripImage/bookhouse.png'> </div>");
 				let planImg = $("<div class='planImg'><img src='"+v.trip_img+"' width='50px' height='50px' ></div>");
 				
 				planFrame.append(planNum);
@@ -860,7 +865,7 @@ $(document).on('click','.dsbtn' ,function() {
 		// HTML 문자열 또는 Dom Element 입니다 
 		let content;
 		if(houseNum-1 == i){
-			content = " <img style='width:40;height:40px;'src='./resources/tripImage/bookhouse.png'>  ";
+			content = " <img class='houseimg' style='width:40;height:40px;'src='./resources/tripImage/bookhouse.png'>  ";
 			checkHouse = true;
 		}else{
 			if(checkHouse==true){
