@@ -94,6 +94,12 @@ background-color:#3abade;
 	</form>
 	<div id="food_list">
 	</div>
+	
+	
+<div>
+	<jsp:include page="/WEB-INF/views/footer/footer.jsp"/>
+</div> 
+	
 </body>
 <script>
 var foodlist=${foodlist};
