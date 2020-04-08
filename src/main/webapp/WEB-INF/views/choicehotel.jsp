@@ -9,7 +9,7 @@
 <style>
 
 .form-label-group{
-display:inline-block;
+display:flex;
 margin-bottom: 15px;
 }
 #address{
@@ -30,10 +30,13 @@ margin: 0 15px;
 
 /* hotel */
 
-#content{
-display:flex;
-}
+/* #content{ */
+/* display: inline; */
+/* } */
+
+
 .hc_usi {
+display: inline-block;
 box-shadow:5px 5px 3px lightgray;
 width:200px;
 margin:15px;
@@ -137,7 +140,7 @@ color:black;
      		    console.log("호텔목록", data)
      		   $("#content").append(data);
      		    
-     		   $(".hc_usi").eq(4).after($("<br>"));
+     		   $(".hc_usi:nth-child(6n)").after($("<br>"));
      		   
          
    		   	},
