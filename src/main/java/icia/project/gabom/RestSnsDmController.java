@@ -28,16 +28,17 @@ public class RestSnsDmController {
 		return json;
 	}
 	
-	
-	
 	@PostMapping(value ="/insert/contents",produces = "application/json;charset=UTF-8")
 	public String snsInsertContents(@RequestParam("contents") String contents
 			,Principal principal,@RequestParam("userId") String userId) {
-		System.out.println("들어옴");
-		System.out.println(contents);
-		System.out.println(userId);
 		
 		String json=snsDm.dmInsert(contents,principal.getName(),userId);
+		return json;
+	}
+	@PostMapping(value ="/delete/contents",produces = "application/json;charset=UTF-8")
+	public String snsDeleteContents(@RequestParam("num") int num,
+			@RequestParam("id") String id,@RequestParam("userId") String userId) {
+		String json=snsDm.dmDelete(num,id,userId);
 		return json;
 	}
 	

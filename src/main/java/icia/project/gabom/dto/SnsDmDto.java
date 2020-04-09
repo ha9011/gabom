@@ -13,6 +13,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class SnsDmDto {
+	int dmNumber;
 	String sendMember;
 	String getMember;
 	String contents;

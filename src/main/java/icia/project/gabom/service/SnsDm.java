@@ -85,5 +85,21 @@ public class SnsDm {
 			return new Gson().toJson(resultOb);
 		}
 	}
+	public String dmDelete(int num, String id, String userId) {
+		boolean result=snsDmDao.deleteDm(num);
+		if(result==true) {
+			List<SnsDmDto> dmContentsList=snsDmDao.getContets(userId,id);
+			SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			for(SnsDmDto snsDm:dmContentsList) {
+				String dResult=format.format(snsDm.getDmDate());
+				snsDm.setResultDate(dResult);
+			}
+			return new Gson().toJson(dmContentsList);
+		}else {
+			JsonObject resultOb=new JsonObject();
+			resultOb.addProperty("message", "오류");
+			return new Gson().toJson(resultOb);
+		}
+	}
 
 }
