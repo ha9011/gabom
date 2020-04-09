@@ -46,6 +46,19 @@
 <script src="./resources/js/theme-scripts.js"></script>
 
 <style>
+/* 채팅날짜 */
+#chatDate {
+	position: absolute;
+	left: 77.5%;
+	top: 29%;
+	width: 200px;
+	height: 35px;
+	border-radius: 10px;
+	background: rgba(0, 0, 0, 0.3);
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+}
 .dot {
 	overflow: hidden;
 	float: left;
@@ -550,12 +563,14 @@ display: flex;
 			<div id="day1"></div>
 				<div id="chatareaCont"></div>
 				<div id="cont2" style="height: 10%;display:flex;">
-					<input type="text" id="chatInput">
+					<input type="text" id="chatInput" onkeypress="if( event.keyCode == 13 ){ $('#chatBtn').trigger('click')}">
 					<button id="chatBtn" class="btn">전송</button>
 				</div>
 			</div>
 
 	</section>
+	
+	<div id="chatDate"></div> 
 
 <div style="border-top:1px solid lightgray;margin-top:50px;"  >
 	<jsp:include page="/WEB-INF/views/footer/tripfooter.jsp"/>
@@ -617,7 +632,39 @@ $(document).ready(function(){
 	 	 $("#houseReservate").append($(" <span class='button-text'>숙소 예약하러 가기</span>"));
 	 }
 	 
-	
+	//------------날짜------------
+	 console.log("-- 채팅입력시 날짜변경 이벤트 --")
+		      console.dir($("#chatareaCont")[0]);
+			console.log("===")
+        	let domScroll = $("#chatareaCont")[0]
+			let scrollTop = domScroll.scrollTop ;
+			let scrollHeight = domScroll.scrollHeight;
+			let clientHeight = domScroll.clientHeight;
+			let offsetTop = domScroll.offsetTop;
+			let scrollAb= scrollTop+offsetTop;
+		
+        //chatDate.
+        console.log("echatDate",domScroll)
+        console.log("e.target.children",domScroll.children)
+        let index = 0 ;
+        for(let v of domScroll.children){
+        	console.log("----",v);
+         	let total = Number(v.offsetTop)+Number(v.offsetHeight) 
+         	console.log("----start----")
+         	console.log("v.offsetTop",v.offsetTop);
+         	console.log("scrollTop",scrollAb);
+         	console.log("total",total);
+         	console.log("----end------")
+        	if(v.offsetTop-15 < scrollAb && (total+15) > scrollAb ){
+        		console.log("채팅날짜 이벤트 실행")
+        		
+        		$("#chatDate").text(v.dataset.date);
+        		$("#chatDate").show();
+        		break;
+        	}
+        	index++;
+        }
+			
 	 
 	 
 })
@@ -630,7 +677,7 @@ for(let v of chatData ){
 		let cId = v.chatting_name;
 		let cCont = v.chatting_content;
 		let cDate = getFormatDate(v.chatting_date);
-		let cTime = getFormatOnlyTime(v.chatting_date)
+		let cTime = getFormatOnlyTime(v.chatting_time)
 		let cProfile =v.chatting_profile.substring(0);;
 		
 			if(cId===memberID){ //내가 보낸 데이터일 경우
@@ -691,14 +738,22 @@ $("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
         let scrollTop = e.target.scrollTop ;
 		let scrollHeight = e.target.scrollHeight;
 		let clientHeight = e.target.clientHeight;
+		let offsetTop = e.target.offsetTop;
+		let scrollAb= scrollTop+offsetTop;
 		
-        
         //chatDate.
+        console.log("echatDate",e)
+        console.log("e.target.children",e.target.children)
         let index = 0 ;
         for(let v of e.target.children){
-        	console.log("----");
+        	console.log("----",v);
          	let total = Number(v.offsetTop)+Number(v.offsetHeight) 
-        	if(v.offsetTop < scrollTop && (total) > scrollTop ){
+         	console.log("----start----")
+         	console.log("v.offsetTop",v.offsetTop);
+         	console.log("scrollTop",scrollTop);
+         	console.log("total",total);
+         	console.log("----end------")
+        	if(v.offsetTop < scrollAb && (total) > scrollAb ){
         		console.log("채팅날짜 이벤트 실행")
         		
         		$("#chatDate").text(v.dataset.date);
@@ -1664,6 +1719,55 @@ function getFormatDateDB(strdate){
 					 $('#chatInput').val("");
 			    	 $('#chatInput').focus();
 					
+			    	 
+			    	 
+			    	 
+			    	 
+			    	 
+			    	 
+			    	 //------------ 바로바로 날짜 변경
+			  console.log("-- 채팅입력시 날짜변경 이벤트 --")
+		      console.dir($("#chatareaCont")[0]);
+			console.log("===")
+        	let domScroll = $("#chatareaCont")[0]
+			let scrollTop = domScroll.scrollTop ;
+			let scrollHeight = domScroll.scrollHeight;
+			let clientHeight = domScroll.clientHeight;
+			let offsetTop = domScroll.offsetTop;
+			let scrollAb= scrollTop+offsetTop;
+		
+        //chatDate.
+        console.log("echatDate",domScroll)
+        console.log("e.target.children",domScroll.children)
+        let index = 0 ;
+        for(let v of domScroll.children){
+        	console.log("----",v);
+         	let total = Number(v.offsetTop)+Number(v.offsetHeight) 
+         	console.log("----start----")
+         	console.log("v.offsetTop",v.offsetTop);
+         	console.log("scrollTop",scrollAb);
+         	console.log("total",total);
+         	console.log("----end------")
+        	if(v.offsetTop-15 < scrollAb && (total+15) > scrollAb ){
+        		console.log("채팅날짜 이벤트 실행")
+        		
+        		$("#chatDate").text(v.dataset.date);
+        		$("#chatDate").show();
+        		break;
+        	}
+        	index++;
+        }
+			    	 
+			    	 
+			    	 
+			    	 
+			    	 
+			    	 
+			    	 
+			    	 
+			    	 
+			    	 
+			    	 
 				},
 				error:function(error){
 					alert("fail")
@@ -2088,18 +2192,21 @@ const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 �
 	    		//$("#date").append(li);
 	    		
 				console.log("trip_data",trip_data)
-	    		for(let i = 1; i < currentPlanDay ;i++){
+				console.log("--currentPlanDay--",currentPlanDay)
+	    		for(let i = 1; i < currentPlanDay ;i++){ // 지운날짜  currentPlanDay
 
 	    			console.log("순서 i : ",i)
-	    			console.log("trip_data[i-1]",trip_data[i-1]);
-	    			let li =$('<li data-trnum="'+trip_data[i-1]["trip_number"]+'" class="number">'+trip_data[i-1].trip_day+'</li>');
-					$("#date").append(li);
-					
-					if(i==currentPlanDay-1){
+	    			
+	    			if(i==currentPlanDay-1){
 						let li =$('<li data-trnum="'+trip_data[i-1].trip_number+'" class="number">'+trip_data[i-1].trip_day+'</li>');
 						$("#date").prepend(li);
 							
+					}else{
+	    			console.log("trip_data[i-1]",trip_data[i-1]);
+	    			let li =$('<li data-trnum="'+trip_data[i-1]["trip_number"]+'" class="number">'+trip_data[i-1].trip_day+'</li>');
+					$("#date").append(li);
 					}
+					
 	    		}	
 
 	    		//points[currentPlanDay]=[];    // 좌표 초기화
@@ -2108,7 +2215,7 @@ const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 �
 		 		initMapKaKao();
 						
 	 			//가장 중요한 부분
-	 			arr[dayy-1] = dataArr;
+	 			//arr[dayy-1] = dataArr;
 				
 				console.log("arr",arr);
 				console.log("points",points);

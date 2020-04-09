@@ -522,6 +522,7 @@ $(document).on('click','.modalplan',function(e){//모달 열고 지도 및 정�
 	console.log("etitle",e.target.dataset.title);
 	console.log("enum",e.target.dataset.arrnum);
 	$("#plantitle").text(e.target.dataset.title);
+	$("#date").empty();  // 비우기
 	$("#detailTrip").empty();  // 비우기
 	$("#detail").show();
 	//$("#d_map").empty();
