@@ -47,7 +47,7 @@ public class JoinMemberManageMent {
 		
 		String member_profile_original =null;
 		String member_profile_picture = null;
-		String filepath = "./resources/userprofileimage/upload/";
+		String filepath = "/upload/userprofileimage/upload/";
 		long fileTimeStamp = System.currentTimeMillis();
 		if(profillCheck.equals("1")) {
 			
@@ -63,7 +63,7 @@ public class JoinMemberManageMent {
 			System.out.println("파일없음");
 			member_profile_original = "basicprofile.jpg";
 			System.out.println("member_profile_original : "+member_profile_original); //member_profile_picture : loginpic.jpg
-			member_profile_picture= "./resources/userprofileimage/upload/"+member_profile_original;
+			member_profile_picture= "/upload/userprofileimage/upload/"+member_profile_original;
 		
 		}
 		
