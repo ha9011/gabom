@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,7 +54,7 @@ public class Housecontroller { //검색, 메인, 상세보기 컨트롤러
 		
 		return mav;
 	}
-	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/housedetail", method = RequestMethod.GET)
 	public ModelAndView housedetail(int house_number,Housereservation reserlist,Principal principal) {
 		System.out.println("reserlist="+reserlist);

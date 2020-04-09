@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,12 +46,11 @@ public class FoodController { //검색, 메인, 상세보기 컨트롤러
 	public ModelAndView searchfood(String food_address) {
 		System.out.println(food_address);
 		System.out.println("검색화면 가줘 ");
-		
 		mav = fs.searchfood(food_address);
 		
 		return mav;
 	}
-	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/fooddetail", method = RequestMethod.GET)
 	public ModelAndView fooddetail(int food_number,Foodreservation freserlist,Principal ppl) {
 		System.out.println("음식점번호는"+food_number);

@@ -194,7 +194,9 @@ $(function(){
 				data:data,
 				dataType : "json"
 		}).done((dmJson)=>{
+			$(".msgInput").val("");
 			makeDmDetail(dmJson);
+			$(".msgBox").scrollTop($(".msgBox")[0].scrollHeight);
 		}).fail((error)=>{
 			console.log("err",error);
 		});			 
@@ -203,8 +205,6 @@ $(function(){
 	<script type="text/javascript">
 		let id="${id}";
 	function makeDmDetail(json) {
-		console.log(json);
-		console.log(id);
 		let make='';
 		for(let k in json){
 			if(json[k]["sendMember"]==userId){
@@ -212,7 +212,7 @@ $(function(){
 			make+='<div class="userImg" style="background-image:url('+json[k]["memberPic"]+')"></div>';
 			make+='<div class="userTextBox">';
 			make+='<div class="userId">'+json[k]["sendMember"]+'</div>';
-			make+='<div class="userTextContents">'+json[k]["contents"]+'</div>';
+			make+='<div class="userTextContents" data-dmNumber="'+json[k]["dmNumber"]+'">'+json[k]["contents"]+'</div>';
 			make+='<div class="userTextDate">';
 			if(json[k]["checkNum"]==1){
 			make+='	<div class="msgCnt">1</div>';
@@ -224,7 +224,7 @@ $(function(){
 			}else if(json[k]["sendMember"]==id){
 				make+='<div class="container-fluid">';
 				make+='<div class="myTextBox">';
-				make+='<div class="myTextContents">'+json[k]["contents"]+'</div>';
+				make+='<div class="myTextContents" data-dmNumber="'+json[k]["dmNumber"]+'">'+json[k]["contents"]+'</div>';
 				make+='<div class="myTextDate">';
 				if(json[k]["checkNum"]==1){
 				make+='<div class="myMsgCnt">1</div>';
@@ -252,20 +252,24 @@ $(function(){
 				data:{"userId":userId},
 				dataType : "json"
 		}).done((dmJson)=>{
+			console.log(dmJson);
 			makeDmDetail(dmJson);
+			$(".msgBox").scrollTop($(".msgBox")[0].scrollHeight);
 		}).fail((error)=>{
 			console.log("err",error);
 		});			 
 	}
 	</script>
 	<script>
-		$(".userTextContents").mousedown(function(e){
+		$(".msgBox").on("mousedown",".userTextContents",function(e){
+			e.stopPropagation();
+			let num=e.target.dataset.dmnumber;
+			console.log(num);
 			if(e.which==3){
 				$(document).bind("contextmenu", function (event) {
-					console.log(e);
 			event.preventDefault();
 			$("div.custom-menu").remove();
-			let divss = $("<div class='custom-menu' onclick='delContents()'>삭제</div>").css({
+			let divss = $("<div class='custom-menu' onclick='delContents(\""+num+"\")'>삭제</div>").css({
 				top: event.pageY + "px"
 				, left: event.pageX + "px"
 			});
@@ -281,13 +285,15 @@ $(function(){
 		});
 		
 		
-		
-		$(".myTextContents").mousedown(function(e){
+		$(".msgBox").on("mousedown",".myTextContents",function(e){
+			e.stopPropagation();
+			let num=e.target.dataset.dmnumber;
+			console.log(num);
 			if(e.which==3){
 				$(document).bind("contextmenu", function (event) {
 			event.preventDefault();
 			$("div.custom-menu").remove();
-			let divss = $("<div class='custom-menu' onclick='delContents()'>삭제</div>").css({
+			let divss = $("<div class='custom-menu' onclick='delContents(\""+num+"\")'>삭제</div>").css({
 				top: event.pageY + "px"
 				, left: event.pageX + "px"
 			});
@@ -298,13 +304,40 @@ $(function(){
 		});		
 			}
 		});
-		$(".myTextContents").mouseout(function(){
+		$(".msgBox").on("mouseout",".myTextContents",function(e){
+			e.stopPropagation();
+			$(document).unbind("contextmenu");
+		});
+		$(".msgBox").on("mouseout",".userTextContents",function(e){
+			e.stopPropagation();
 			$(document).unbind("contextmenu");
 		});
 	</script>
 	<script>
-	function delContents(){
-		console.log("a");
+	function delContents(num){
+		console.log("num",num);
+		$.ajaxSetup({
+			beforeSend : function(xhr){
+ 			xhr.setRequestHeader(header,token);
+ 			}
+		});//먼저 보냄
+		let data={
+				"num":num,
+				"id":id,
+				"userId":userId
+		}
+		$.ajax({
+				method:'post',
+				url:"/gabom/delete/contents",
+				data:data,
+				dataType : "json"
+		}).done((delJson)=>{
+			console.log(delJson);
+			makeDmDetail(delJson);
+			$(".msgBox").scrollTop($(".msgBox")[0].scrollHeight);
+		}).fail((error)=>{
+			console.log("err",error);
+		});			 
 	}
 	</script>
 </body>
