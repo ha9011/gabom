@@ -372,19 +372,39 @@ $(document).on('click',"#search",function(){
 			trip_area = 31		  
 	 	  }else if(trip_area == "강원도"){
 			trip_area = 32		  
-	 	  }else if(trip_area == "충청북도"	){
+	 	  }else if(trip_area == "충청북도"){
 			trip_area = 33	  
-	 	  }else if(trip_area == "충청남도"	){
+	 	  }else if(trip_area == "충청남도"){
 			trip_area = 34	  
 	 	  }else if(trip_area == "경상북도"){
 			trip_area = 35		  
-	 	  }else if(trip_area == "경상남도"	){
+	 	  }else if(trip_area == "경상남도"){
 			trip_area = 36	  
-	 	  }else if(trip_area == "전라북도"	){
+	 	  }else if(trip_area == "전라북도"){
 			trip_area = 37	  
-	 	  }else if(trip_area == "전라남도"	){
+	 	  }else if(trip_area == "전라남도"){
 			trip_area = 38	  
 	 	  }else if(trip_area == "제주도"){
+			trip_area = 39		  
+	 	  }else if(trip_area == "세종"){
+			trip_area = 8		  
+	 	  }else if(trip_area == "경기"){
+			trip_area = 31		  
+	 	  }else if(trip_area == "강원"){
+			trip_area = 32		  
+	 	  }else if(trip_area == "충북"){
+			trip_area = 33	  
+	 	  }else if(trip_area == "충남"){
+			trip_area = 34	  
+	 	  }else if(trip_area == "경북"){
+			trip_area = 35		  
+	 	  }else if(trip_area == "경남"){
+			trip_area = 36	  
+	 	  }else if(trip_area == "전북"){
+			trip_area = 37	  
+	 	  }else if(trip_area == "전남"){
+			trip_area = 38	  
+	 	  }else if(trip_area == "제주"){
 			trip_area = 39		  
 	 	  }
 	 console.log("코드변환",trip_area);
@@ -402,6 +422,7 @@ $(document).on('click',"#search",function(){
        success:function(data){
        	console.log(data);
        	$("#table").empty();
+       	$("#t_list").empty();
        	var table =$('<table id="table"></table>');
     	$("#t_list").append(table);
 
@@ -478,6 +499,7 @@ $(document).on('click','.modalplan',function(e){//모달 열고 지도 및 정�
 	$("#finalDay").text("");
 	$("#datebtn").val("");
 	$("#detailTrip").empty();
+	$("#date").empty();
 	tripnum =e.target.dataset.name //전역변수에 넣기
 	
 	setTimeout(function() {

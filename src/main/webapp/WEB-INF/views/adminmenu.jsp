@@ -941,12 +941,12 @@ $(document).on("click",".sns_comment_delete",function(e) {
 					console.log("notices",response);
 					console.log("숫자",response[0].all_notices_number);
 					let strn = " ";
-					strn += '<div>'+response[0].all_notices_title+'</div>';
+					strn += '<div><h3>'+response[0].all_notices_title+'</h3></div>';
 					strn += '<input type="hidden" name="notices_delete" id="notices_delete" data-target="#notices_delete" value="'+response[0].all_notices_number+'">';
 					$("#notices_modal_header").append(strn);
 					strn = " ";
 					strn += '<div>작성일 : '+response[0].resultDate  +'<span> 조 회 수 : '+  response[0].all_notices_views+'</div>';
-					strn += '<div style="border-top: 1px solid #D8D8D8">'+response[0].all_notices_body+'</div>';
+					strn += '<br><div style="border-top: 1px solid #D8D8D8"><br>'+response[0].all_notices_body+'</div>';
 					$("#notices_modal_body").append(strn);
 					console.log("modal생성"); 
 					console.log(response[0].all_notices_views);
@@ -1412,7 +1412,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
                     strj += '욕실 : '+response[i].house_bathrooms+' 개<br>';
                     strj += '체크인 : '+response[i].house_mindate+'<br>';
                     strj += '체크아웃 : '+response[i].house_maxdate+'<br>';
-                    strj += '1박가격 : '+response[i].house_price+' 원<br>';
+                    strj += '1박가격 : '+response[i].house_price+' 만원<br>';
                     strj += '</div>';
                     strj += '<div>';
                     for(var j=0;j<response.length;j++){ //사진 for문 시작
