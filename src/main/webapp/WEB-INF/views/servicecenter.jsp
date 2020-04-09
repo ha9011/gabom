@@ -348,7 +348,7 @@ $(document).on("click", "#notices_detail",function(e){
 				$("#notices_modal_header").append(strn);
 				strn = " ";
 				strn += '<div>작성일 : '+response[0].resultDate  +'<span> 조 회 수 : '+  response[0].all_notices_views+'</div>';
-				strn += '<div style="border-top: 1px solid #D8D8D8">'+response[0].all_notices_body+'</div>';
+				strn += '<br><div style="border-top: 1px solid #D8D8D8"><br>'+response[0].all_notices_body+'</div>';
 				$("#notices_modal_body").append(strn);
 				console.log("modal생성"); 
 				console.log(response[0].all_notices_views);
