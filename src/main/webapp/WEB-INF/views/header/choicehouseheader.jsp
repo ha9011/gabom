@@ -51,7 +51,6 @@ outline: 0;
 background-color: white;
 color: #337ab7;
 font-family: 'Jua' ;
-width: 85px;
 height: 50px;
 }
 
@@ -74,6 +73,30 @@ height: 50px;
 background-color: #E6E6E6
 
 }
+.hfa{
+border: 0;
+outline: 0;
+background-color: white;
+color: #337ab7;
+font-family: 'Jua' ;
+width: 85px;
+height: 50px;
+
+}
+.hfa:hover{
+background-color: #E6E6E6;
+text-decoration:none;
+}
+
+.hf{
+margin-top: 15px;
+margin-right:20px;
+font-size: 16px;
+font-weight: 200;
+font-family: 'Jua' ;
+}
+
+
 
 .nav-tabs{
 
@@ -106,8 +129,8 @@ background-color: #E6E6E6
          </sec:authorize>
          
          <sec:authorize access="hasRole('ROLE_SERVICER')">
-            <li><a href="houseRegister">집등록</a></li>
-         <li><a href="foodshopRegister">음식점등록</a></li>
+            <li class="hf"><a class="hfa" href="houseRegister">집등록</a></li>
+         <li class="hf"><a class="hfa" href="foodshopRegister">음식점등록</a></li>
             </sec:authorize>
             
          <sec:authorize access="isAuthenticated()">

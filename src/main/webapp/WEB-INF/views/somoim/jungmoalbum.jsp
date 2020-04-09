@@ -112,8 +112,9 @@ button{
 margin: 0 5px;
 }
 
-.img-fluid{
-width:250px;
+.img-file{
+width:210px;
+height:150px;
 }
 
 </style>
@@ -263,11 +264,11 @@ $(".upload-name").hide();
                 	
                 	var img
             		if(mysomoimInfo==null){
-            			img = $('<td><a class="pic" name="'+i.photo_number+'"  data-toggle="modal" > <img   class="img-fluid img-thumbnail" src="'+i.photo_sysfile+'"></a></td>');
+            			img = $('<td><a class="pic" name="'+i.photo_number+'"  data-toggle="modal" > <img  class="img-file " src="'+i.photo_sysfile+'"></a></td>');
             		}else if(mysomoimInfo.member_status == 1){  // 0 - 대기, 1 - 승인, 2 - 탈퇴회면
-            			img = $('<td><a class="pic" name="'+i.photo_number+'"  href="#imgmodal"  data-toggle="modal" > <img   class="img-fluid img-thumbnail" src="'+i.photo_sysfile+'"></a></td>');
+            			img = $('<td><a class="pic" name="'+i.photo_number+'"  href="#imgmodal"  data-toggle="modal" > <img class="img-file " src="'+i.photo_sysfile+'"></a></td>');
             		}else{
-            			img = $('<td><a class="pic" name="'+i.photo_number+'"  data-toggle="modal" > <img   class="img-fluid img-thumbnail" src="'+i.photo_sysfile+'"></a></td>');
+            			img = $('<td><a class="pic" name="'+i.photo_number+'"  data-toggle="modal" > <img   class="img-file " src="'+i.photo_sysfile+'"></a></td>');
             		}
                 	
                 	
@@ -353,11 +354,11 @@ const showalbumlist = ()=>{
             
         		var img
         		if(mysomoimInfo==null){
-        			img = $('<td><a class="pic" name="'+i.photo_number+'"  data-toggle="modal" > <img   class="img-fluid img-thumbnail" src="'+i.photo_sysfile+'"></a></td>');
+        			img = $('<td><a class="pic" name="'+i.photo_number+'"  data-toggle="modal" > <img   class="img-file " src="'+i.photo_sysfile+'"></a></td>');
         		}else if(mysomoimInfo.member_status == 1){  // 0 - 대기, 1 - 승인, 2 - 탈퇴회면
-        			img = $('<td><a class="pic" name="'+i.photo_number+'"  href="#imgmodal"  data-toggle="modal" > <img   class="img-fluid img-thumbnail" src="'+i.photo_sysfile+'"></a></td>');
+        			img = $('<td><a class="pic" name="'+i.photo_number+'"  href="#imgmodal"  data-toggle="modal" > <img   class="img-file " src="'+i.photo_sysfile+'"></a></td>');
         		}else{
-        			img = $('<td><a class="pic" name="'+i.photo_number+'"  data-toggle="modal" > <img   class="img-fluid img-thumbnail" src="'+i.photo_sysfile+'"></a></td>');
+        			img = $('<td><a class="pic" name="'+i.photo_number+'"  data-toggle="modal" > <img   class="img-file " src="'+i.photo_sysfile+'"></a></td>');
         		}
         	 
         	 

@@ -758,7 +758,7 @@ $(document).on('click',".fbtn", function(e) {
          success:function(data){
             alert("친구 초대완료.");
             console.log("요청리스트",data);
-           
+            $("#mql").empty();
             $("#fql").empty();
             
              for(i of data.myreqlist){//내가 받은 리스트 
@@ -789,6 +789,7 @@ $(document).on('click',".fbtn", function(e) {
             socketalarm.send(resultMemberData);
            
            //-------------------
+           
          },
          
          error:function(error){
@@ -806,7 +807,7 @@ $(document).on('click',".fbtn", function(e) {
 //--------------------------------------------------------------------------------------------초대 이벤트 영역
 
 
-$(".sbtn").on('click', function(e) {//승인 버튼 
+$(document).on('click', ".sbtn",function(e) {//승인 버튼 
 	var trip_number = e.target.dataset.trnum
 	console.log(trip_number);
 	var data = {
@@ -827,21 +828,113 @@ $(".sbtn").on('click', function(e) {//승인 버튼
          data :data,
          dataType: "json", //rest 컨트롤 이용   
          success:function(data){
+        	 console.log("승인 내 목록",data);
             alert("여행 참여 완료.");
-           
-            $("#mql").empty();
-            $("#fql").empty();
             
-            for(i of reqmel){//내가 받은 리스트 
+            $("#mylist").empty();
+            
+            let thead = $("<tr><th class='bar' id='t'>여행 제목</th><th class='bar'>여행지</th><th class='bar'>여행 날짜</th><th style='width: 300px' class='bar'>친구와 함께하기</th><th style='width: 200px' class='bar'>변경하기</th></tr>")
+        	$("#mylist").append(thead) 
+          
+          let idx = 0;	
+          for(i of data.myplanlist) { //게시글
+        	  
+        	  console.log(i.trip_area);
+         	  if(i.trip_area == 1){
+        		i.trip_area = "서울"		  
+         	  }else if(i.trip_area == 2){
+        		i.trip_area = "인천"		  
+         	  }else if(i.trip_area == 3){
+        		i.trip_area = "대전"		  
+         	  }else if(i.trip_area == 4){
+        		i.trip_area = "대구"		  
+         	  }else if(i.trip_area == 5){
+        		i.trip_area = "광주"		  
+         	  }else if(i.trip_area == 6){
+        		i.trip_area = "부산"		  
+         	  }else if(i.trip_area == 7){
+        		i.trip_area = "울산"		  
+         	  }else if(i.trip_area == 8){
+        		i.trip_area = "세종특별자치시"		  
+         	  }else if(i.trip_area == 31){
+        		i.trip_area = "경기도"		  
+         	  }else if(i.trip_area == 32){
+        		i.trip_area = "강원도"		  
+         	  }else if(i.trip_area == 33){
+        		i.trip_area = "충청북도"		  
+         	  }else if(i.trip_area == 34){
+        		i.trip_area = "충청남도"		  
+         	  }else if(i.trip_area == 35){
+        		i.trip_area = "경상북도"		  
+         	  }else if(i.trip_area == 36){
+        		i.trip_area = "경상남도"		  
+         	  }else if(i.trip_area == 37){
+        		i.trip_area = "전라북도"		  
+         	  }else if(i.trip_area == 38){
+        		i.trip_area = "전라남도"		  
+         	  }else if(i.trip_area == 39){
+        		i.trip_area = "제주도"		  
+         	  }
+        	  
+         	 let sd = getFormatDate(i.trip_start_date);
+         	let ed = getFormatDate(i.trip_end_date);	  
+         	
+         	let tr = $('<tr></tr>'); 
+            
+            // 추천에 승인 추가 if문
+            console.log("tripendday2",new Date(i.trip_end_date));
+            console.log("today1",new Date());
+            console.log(new Date(i.trip_end_date) < new Date());
+
+            let title;
+            if(new Date(i.trip_end_date) < new Date()){  // 날짜 지났으니 버튼 추가
+            	
+            	if(i.trip_plan_appry_status == 2){
+            		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><img src="./resources/css/c.JPG" data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" ></td>');
+            	}else if(i.trip_plan_appry_status == 1){
+            		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><img src="./resources/css/d.JPG" data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" ></td>');
+            	}else if(i.trip_plan_appry_status == 0){
+            		title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a><img src="./resources/css/p.JPG" data-name="'+i.trip_number+'" data-status="'+i.trip_plan_appry_status+'" class="applybtn" ></td>');
+            	}
+            	
+            
+            
+            }else{
+                title = $('<td class="t_title" ><a class="movePlan" data-name="'+i.trip_number+'">'+i.trip_title+'</a></td>');    	
+            }
+           
+            let area =$('<td>'+i.trip_area+'</td>');
+            let date =$('<td>'+sd+' - '+ed+'</td>');
+            let btn =$('<td><button id="jbtn" class="joinbtn btn btn-info" data-toggle="modal" data-target="#exampleModal"  data-tripnum ="'+i.trip_number+'">친구 초대</button></td>');
+            let changeDate =$('<td><button id="changebtn"  class="changeDateBtn btn btn-info" data-order="'+idx+'" data-toggle="modal" data-target="#dateChangeModal"  data-tripnum ="'+i.trip_number+'">날짜 변경</button></td>');
+            
+            
+            $("#mylist").append(tr);
+            $(tr).append(title);
+            $(tr).append(area);
+            $(tr).append(date);
+            $(tr).append(btn);
+            $(tr).append(changeDate);
+            
+
+            idx++;
+         }
+            
+            
+          	$("#fql").empty();
+            $("#mql").empty();
+            
+            for(i of data.myreqlist){//내가 받은 리스트 
            	 var tr_id =$('<p>'+i.trip_id+'님이 '+i.trip_title+'에 '+i.share_id+'초대하셨습니다'+'</p>');
            	 var sbtn=$('<button class="sbtn btn-success" data-trnum="'+i.trip_number+'">승인 </button>');
            	 var cbtn=$('<button class="cbtn btn-danger" data-trnum="'+i.trip_number+'">거절  </button>');
            	 $("#mql").append(tr_id);
            	 $("#mql").append(sbtn);
            	 $("#mql").append(cbtn);
+           	 
             }
             
-            for (i of reql){//내가 보낸 리스트
+            for (i of data.reqlist){//내가 보낸 리스트
            	 var sh_id = $('<p>'+i.share_id+'님을 '+i.trip_title+'에 초대하셨습니다'+'</p>');
            	 
            	 $("#fql").append(sh_id);
@@ -888,7 +981,7 @@ $(".sbtn").on('click', function(e) {//승인 버튼
             $("#mql").empty();
             $("#fql").empty();
             
-            for(i of reqmel){//내가 받은 리스트 
+            for(i of data.myreqlist ){//내가 받은 리스트 
            	 var tr_id =$('<p>'+i.trip_id+'님이 '+i.trip_title+'에 '+i.share_id+'초대하셨습니다'+'</p>');
            	 var sbtn=$('<button class="sbtn btn-success" data-trnum="'+i.trip_number+'">승인 </button>');
            	 var cbtn=$('<button class="cbtn btn-danger" data-trnum="'+i.trip_number+'">거절  </button>');
@@ -897,7 +990,7 @@ $(".sbtn").on('click', function(e) {//승인 버튼
            	 $("#mql").append(cbtn);
             }
             
-            for (i of reql){//내가 보낸 리스트
+            for (i of data.reqlist){//내가 보낸 리스트
            	 var sh_id = $('<p>'+i.share_id+'님을 '+i.trip_title+'에 초대하셨습니다'+'</p>');
            	 
            	 $("#fql").append(sh_id);
@@ -915,6 +1008,9 @@ $(".sbtn").on('click', function(e) {//승인 버튼
    });//ajax 끝
 
 })// 클릭이벤트 종료 
+
+
+
  
 //--------------------------------------------------------------------------------------------- (오늘 기준) 지난 날짜 여행 계획 신청
 $(document).on("click",".applybtn",function(e){

@@ -49,11 +49,11 @@ public interface ITripplanDao {
 
    List<Trip_member> requestme(@Param("trip_id")String trip_id);
    
-   @Update("UPDATE TRIP_MEMBER SET TRIP_TYPE= 1 WHERE TRIP_NUMBER=#{trip_number} AND SHARE_ID=#{share_id}")
-   boolean accepttrip(@Param("share_id")String share_id,@Param("trip_number")int trip_number);
+   @Update("UPDATE TRIP_MEMBER SET TRIP_TYPE= 1 WHERE TRIP_NUMBER=#{trip_number} AND SHARE_ID=#{trip_id}")
+   boolean accepttrip(@Param("trip_id")String trip_id,@Param("trip_number")int trip_number);
    
-   @Update("UPDATE TRIP_MEMBER SET TRIP_TYPE= 2 WHERE TRIP_NUMBER=#{trip_number} AND SHARE_ID=#{share_id}")
-   boolean rejecttrip(@Param("share_id")String share_id,@Param("trip_number")int trip_number);
+   @Update("UPDATE TRIP_MEMBER SET TRIP_TYPE= 2 WHERE TRIP_NUMBER=#{trip_number} AND SHARE_ID=#{trip_id}")
+   boolean rejecttrip(@Param("trip_id")String trip_id,@Param("trip_number")int trip_number);
 
    List<Trip_plan> detailplan(@Param("trip_number")int trip_number);
 

@@ -132,7 +132,7 @@
 </head>
 <body>
 	<header>
-		<jsp:include page="/WEB-INF/views/header/somoimheader.jsp" />
+		<jsp:include page="/WEB-INF/views/header/househeader.jsp" />
 	</header>
 
 <div class="container-fluid">

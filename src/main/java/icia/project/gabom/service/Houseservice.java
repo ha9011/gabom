@@ -134,11 +134,11 @@ public class Houseservice {
 		String member_id=principal.getName();
 		
 		List<Member> memberinfo=hDao.memberinfo(member_id);
-		System.out.println("로그인 아이디"+member_id);
+		//System.out.println("로그인 아이디"+member_id);
 		
 		view="house/housedetail";
 		
-		System.out.println("댓글"+reple_list);
+		//System.out.println("댓글"+reple_list);
 		
 		json = new Gson().toJson(detailhouse);
 		json2 = new Gson().toJson(detailreser);
@@ -153,7 +153,7 @@ public class Houseservice {
 		mav.addObject("memberinfo",json4);
 		mav.addObject("review_list",json5);
 		
-		System.out.println("해당 방 정보 보여줘");
+		//System.out.println("해당 방 정보 보여줘");
 		mav.setViewName(view); //view에 url로 이동
 		return mav;
 	}
@@ -176,9 +176,11 @@ public class Houseservice {
 		
 		int reservation_number = hDao.housereservation(hreservation);
 		
-		json = new Gson().toJson(hreservation);
+		List<Housereservation> detailreser = hDao.detailreser(house_number);
+		
+		json = new Gson().toJson(detailreser);
 		System.out.println("json="+json);
-		System.out.println("예약했니?");
+		//System.out.println("예약했니?");
 		
 		return json;
 	}

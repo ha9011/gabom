@@ -48,13 +48,28 @@ margin:2%;
 display: flex;
 width:90%;
 margin:0 5%;
-padding-bottom:2rem;
+
 }
 .hftext{
 font-size:15px;
 }
 .img{
 margin:15px;
+height:350px;
+position: relative;
+width:260px;
+}
+.hbtn{
+position:absolute;
+bottom:25px;
+width:250px;
+right: 1px;
+}
+.fbtn{
+position:absolute;
+bottom:25px;
+width:250px;
+right: 1px;
 }
 .houseimg{
 margin-top:15px;
@@ -284,10 +299,11 @@ display: flex;
 	<div class="section-title">
 			<h2 style="color:#3abade;font-size:70px;font-weight:bold;">House</h2>
 			<p><strong class="hftext">최근에 예약된 숙소를 만나보세요!</strong></p>
+	</div>
 			<div class="out" id="himg">
 				
 			</div>
-		</div>
+	
 </section>
 
 <section class="sec" id="food">
@@ -415,7 +431,7 @@ $(function() {
 			console.log(data);
 			 
 			 for(i of data.hlist){
-				 var div = $('<div class="img hz"></idv>');
+				 var div = $('<div class="img"></idv>');
 				 	$("#himg").append(div);
 				 var img = $('<img style="height:200px;margin-bottom:10px;" src="'+i.house_sysname+'">');
 					 div.append(img);
@@ -423,7 +439,7 @@ $(function() {
 				 var address =$('<h5>'+i.house_address+'</h5>');
 				 	 div.append(title);
 				 	 div.append(address);
-				 var btn =$('<button data-hnum="'+i.house_number+'" id ="hbtn" class="hbtn btn btn-block btn-info">지금 예약하러가기</button>');
+				 var btn =$('<button data-hnum="'+i.house_number+'" class="hbtn btn btn-info">지금 예약하러가기</button>');
 					 div.append(btn);
 					 
 			 }

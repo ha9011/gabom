@@ -173,7 +173,7 @@
 }
 
 .attendCont {
-	margin-left: 10px;
+	margin-left: 120px;
 }
 
 /* 게시글 */
@@ -208,6 +208,7 @@
 }
 .pics{
 	position: relative;
+	width:150px;
 }
 .deletepic{
 	position: absolute;
@@ -3124,7 +3125,7 @@ $("#joinsomoim").on("click",function(e){
   			attendListFrame.append(attendCont);
   			
   			if(v.member_id !==  ${JsonBasicInfo}.somoim_maker){  //방장아닌 사람만 강퇴 버튼 추가
-  				var kickOutBtn = $("<div class='attendBtn fitem item3'><button id='kickOut' data-id='"+v.member_id+"'>강퇴</button></div>")
+  				var kickOutBtn = $("<div class='attendBtn fitem item3'><button class='btn btn-warning' id='kickOut' data-id='"+v.member_id+"'>강퇴</button></div>")
   				attendListFrame.append(kickOutBtn);
   			}
   			
@@ -3137,12 +3138,12 @@ $("#joinsomoim").on("click",function(e){
 		
 		for( v of data['대기']){
 		var attendListFrame = $("<div class='attendListFrame'> </div>");
-		var attendPic = $("<div class='attendPicFrame fitem item1'> <img src='"+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
+		var attendPic = $("<div class='attendPicFrame fitem item1'> <img style='width:200px;margin-right:10px;' src='"+v.member_profile_picture+"' class='attendPic' alt='Cinque Terre'> </div>");
 			var attendCont =  $("<div class='attendCont fitem item2'> </div>");	
 			var attendTitle = $("<div class='attendTitle '>"+v.member_id+"</div>");	
 			var attendIntroduce = $("<div class='attendIntroduce '>"+v.member_profile_contents+"</div>");
 			
-			var permitCancelBtn = $("<div class='attendBtn fitem item3'><button id='agreeSomoim' data-id='"+v.member_id+"'>승인</button><button id='rejectSomoim' data-id='"+v.member_id+"'>거절</button></div>")
+			var permitCancelBtn = $("<div class='attendBtn fitem item3'><button class='btn btn-success' id='agreeSomoim' data-id='"+v.member_id+"'>승인</button><button class='btn btn-danger' id='rejectSomoim' data-id='"+v.member_id+"'>거절</button></div>")
 			
 			attendCont.append(attendTitle);
 			attendCont.append(attendIntroduce);
