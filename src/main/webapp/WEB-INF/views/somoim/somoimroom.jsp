@@ -208,6 +208,7 @@
 }
 .pics{
 	position: relative;
+	width:150px;
 }
 .deletepic{
 	position: absolute;

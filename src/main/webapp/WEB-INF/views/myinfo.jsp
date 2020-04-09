@@ -490,6 +490,12 @@ $("#myreser").on('click', function(e) {
 			t_tr.append(t_th8);
 			
 			
+			if(data == null){
+				
+			}else{
+				
+			
+			
   			for(i of data){
   				
   				var cid = getFormatDate(i.reservation_checkin);
@@ -519,7 +525,7 @@ $("#myreser").on('click', function(e) {
   				subtr.append(t_td8);
   				
   			}
-  			
+		}
   			 
   		
   		},

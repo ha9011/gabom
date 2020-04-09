@@ -184,14 +184,26 @@ public class TripService {
 	public String accepttrip(Trip_member tm, Principal ppl) {
 		String json = null;
 		
-		String share_id=ppl.getName();
+		String trip_id=ppl.getName();
 		int trip_number =tm.getTrip_number();
-		System.out.println(share_id + trip_number);
+		System.out.println(trip_id + trip_number);
 		
 		
-		boolean acc= tpDao.accepttrip(share_id,trip_number);
+		boolean acc= tpDao.accepttrip(trip_id,trip_number);
 		
-		json = new Gson().toJson(acc);
+		Map<String,Object> list = new HashMap<String, Object>();
+		
+		List<Trip_member> reqlist =tpDao.requestmember(trip_id);//친구한테 요청한 것
+	  	
+		List<Trip_member> myreqlist =tpDao.requestme(trip_id);//나한테 온 것.
+		
+		List<Trip_plan> myplanlist = tpDao.getmyplan(trip_id);//내 여행목록
+		
+		list.put("reqlist", reqlist);
+		list.put("myreqlist", myreqlist);
+		list.put("myplanlist", myplanlist);
+		
+		json = new Gson().toJson(list);
 		
 		return json;
 }
@@ -200,14 +212,22 @@ public class TripService {
 	public String rejecttrip(Trip_member tm, Principal ppl) {
 		String json = null;
 		
-		String share_id=ppl.getName();
+		String trip_id=ppl.getName();
 		int trip_number =tm.getTrip_number();
-		System.out.println(share_id + trip_number);
+		System.out.println(trip_id + trip_number);
 		
+		boolean acc= tpDao.rejecttrip(trip_id,trip_number);
 		
-		boolean acc= tpDao.rejecttrip(share_id,trip_number);
+		Map<String,Object> list = new HashMap<String, Object>();
 		
-		json = new Gson().toJson(acc);
+		List<Trip_member> reqlist =tpDao.requestmember(trip_id);//친구한테 요청한 것
+	  	
+		List<Trip_member> myreqlist =tpDao.requestme(trip_id);//나한테 온 것.
+		
+		list.put("reqlist", reqlist);
+		list.put("myreqlist", myreqlist);
+		
+		json = new Gson().toJson(list);
 		
 		return json;
 

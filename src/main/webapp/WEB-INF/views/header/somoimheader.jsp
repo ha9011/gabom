@@ -20,30 +20,29 @@
 <link rel="stylesheet" href="resources/fontCss/fontAni.css">
 <style>
 
-
 #headerContainer {
-	margin-top: 10px;
-	border-radius: 20px;
-	background-color: white;
+   margin-top: 10px;
+   border-radius: 20px;
+   background-color: white;
 }
 /* class='testimg' */
 .frmRight{
-	
+   
 }
 .testimg {
-	float: none;
-	margin: 0 auto;
-	display: flex;
-	align-items: center;
-	width: 250px;
-	height: 75px;
-	margin-bottom: 40px;
+   float: none;
+   margin: 0 auto;
+   display: flex;
+   align-items: center;
+   width: 250px;
+   height: 75px;
+   margin-bottom: 40px;
 }
 /* class='testli' */
 .testli {   
-	font-size: 16px;
-	font-weight: 700;
-	font-family: 'Jua' ;
+   font-size: 16px;
+   font-weight: 700;
+   font-family: 'Jua' ;
 }
 #myinfo{
 border: 0;
@@ -51,7 +50,6 @@ outline: 0;
 background-color: white;
 color: #337ab7;
 font-family: 'Jua' ;
-width: 85px;
 height: 50px;
 }
 
@@ -74,23 +72,47 @@ height: 50px;
 background-color: #E6E6E6
 
 }
+.hfa{
+border: 0;
+outline: 0;
+background-color: white;
+color: #337ab7;
+font-family: 'Jua' ;
+width: 85px;
+height: 50px;
+
+}
+.hfa:hover{
+background-color: #E6E6E6;
+text-decoration:none;
+}
+
+.hf{
+margin-top: 15px;
+margin-right:20px;
+font-size: 16px;
+font-weight: 200;
+font-family: 'Jua' ;
+}
+
+
 
 .nav-tabs{
 
-			/* background-color: #16AEF6;  */
-			background-color : white; 
-			border: 0;
-			border-radius: 10px;
-			padding-left: 30px;
-			
-		}
-		.nav-tabs li a{
-			/*color: #2E2E2E;*/
-			color: black;
-			font-size: 19px;
-			margin-left: 20px;
-			
-		}
+         /* background-color: #16AEF6;  */
+         background-color : white; 
+         border: 0;
+         border-radius: 10px;
+         padding-left: 30px;
+         
+      }
+      .nav-tabs li a{
+         /*color: #2E2E2E;*/
+         color: black;
+         font-size: 19px;
+         margin-left: 20px;
+         
+      }
 </style>
 </head>
 <body>
@@ -106,8 +128,8 @@ background-color: #E6E6E6
 			</sec:authorize>
 			
 			<sec:authorize access="hasRole('ROLE_SERVICER')">
-         	<li><a href="houseRegister">집등록</a></li>
-			<li><a href="foodshopRegister">음식점등록</a></li>
+         	<li class="hf"><a class="hfa" href="houseRegister">집등록</a></li>
+			<li class="hf"><a class="hfa" href="foodshopRegister">음식점등록</a></li>
          	</sec:authorize>
          	
          <sec:authorize access="isAuthenticated()">

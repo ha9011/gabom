@@ -381,6 +381,11 @@ $("#info").append(info);
     console.log("로그인아이디",login_id);
     console.log(login_id[0].member_id)
     
+    if(freplelist == 0){
+    	var none = $('<h1 style="margin:50px 0;color:lightgray;">댓글이 없습니다 댓글을 입력해주세요 !</h1>');
+    	$("#freplelist").append(none);
+    }else{
+    
     for( i of freplelist){
     	
     	var cont1 =$('<div class="media mb-4" id="reple"></div>');
@@ -404,7 +409,7 @@ $("#info").append(info);
     	 }
 		
 	}
-    
+   }
     $("#repleinsert_btn").on('click',function(e){
     	
     	$("#hrnum").val(food[0].food_number);
@@ -531,6 +536,11 @@ $("#info").append(info);
   var review =${freviewlist};
   console.log("리뷰리스트 ",review);
   
+  if(review == 0){
+  	var none = $('<h1 style="margin:50px 0;color:lightgray;">아직 등록된 리뷰가 없습니다</h1>');
+  	$("#review").append(none);
+  }else{
+  
   for( i of review){
     	
     	var cont1 =$('<div class="media mb-4" id="reple"></div>');
@@ -539,7 +549,7 @@ $("#info").append(info);
     	var cont4 =$('<h5 class="mt-0" id="use_name">'+i.member_guestid+'</h5>');
     	var cont5 =$('<p>'+i.food_rview_date+'</p>');
     	var cont6 =$('<p>'+i.food_review_content+'</p>');
-    	var cont7 =$('<a class="dn detail" href="#"  name="'+i.food_review_number+'">자세히보기</a>');
+    	var cont7 =$('<a class="dn detail" href="javascript:void(0);"  name="'+i.food_review_number+'">자세히보기</a>');
     	
     	$("#review").append(cont1);
     	cont1.append(cont2);
@@ -550,7 +560,7 @@ $("#info").append(info);
     	cont3.append(cont7);
     	
     	 }
-  
+  }
   $(document).on('click',".detail", function() {
 		console.log("클릭한 리뷰번호"+$(this).attr("name"));
 		
@@ -573,11 +583,11 @@ $("#info").append(info);
 	         	$("#d_img").empty();
 	         	$("#d_content").empty();
 	         	
-	         	var d_content =$('<p>'+data[0].food_review_content+'</p>');
+	         	var d_content =$('<p style="color:black;margin:50px 15px;">'+data[0].food_review_content+'</p>');
 	         	$("#d_content").append(d_content);
 	         	
 	         	for(i of data){
-	         		var d_img =$('<img style="width:200px;" src="'+i.food_review_sysfile+'">');
+	         		var d_img =$('<img style="width:200px;height:150px;" src="'+i.food_review_sysfile+'">');
 	         		$("#d_img").append(d_img);
 	         	} 
 	         },
