@@ -67,4 +67,6 @@
 				authorities-by-username-query="select member_id, authority FROM authorities WHERE member_id= ?" />
 		</sec:authentication-provider>
 	</sec:authentication-manager>
+	
+	
 </beans>

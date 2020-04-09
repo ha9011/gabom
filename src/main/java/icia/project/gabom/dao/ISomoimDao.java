@@ -115,7 +115,7 @@ public interface ISomoimDao {
 
 	List<Member> orginSomoimMember(@Param("somoim_number")int somoim_number);
 
-	int insertchatting(@Param("id")String id,@Param("msg")String msg, @Param("somoimNumber")int somoimNumber);
+	int insertchatting(@Param("id")String id,@Param("msg")String msg, @Param("somoimNumber")int somoimNumber, @Param("date")String date);
 	
 
 	List<ChattingSomoim> selectRecentChattingData(@Param("somoim_number")int somoimNumber);

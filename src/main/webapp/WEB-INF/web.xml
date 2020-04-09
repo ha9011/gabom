@@ -48,8 +48,6 @@
 
 
 
-
-
 	<!-- Processes application requests -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>

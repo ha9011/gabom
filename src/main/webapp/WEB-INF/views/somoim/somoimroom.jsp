@@ -32,8 +32,8 @@
 /* 채팅날짜 */
 #chatDate {
 	position: absolute;
-	left: 65%;
-	top: 40%;
+	left: 65.5%;
+	top: 33%;
 	width: 200px;
 	height: 35px;
 	border-radius: 10px;
@@ -437,7 +437,7 @@ display : flex;
 				<div id="day1">소모임 이름</div>
 				<div id="chattingRoom"></div>
 				<div id="cont2" style="height: 10%;">
-					<input type="text" id="chattingInput">
+					<input type="text" id="chattingInput" onkeypress="if( event.keyCode == 13 ){ $('#chattingBtn').trigger('click')}" >
 					<button id="chattingBtn" class="btn">전송</button>
 				</div>
 			</div>
@@ -1057,8 +1057,14 @@ $(document).on("click","#rejectSomoim",function(e){
 		
 	 console.log("---------시작")
 	 //게시글 사진 변경
-	
-	 $("#chatDate").text(getFormatDate("${nextDay}"));
+	if(${JsonchatData}.length==0){
+		
+	} else{
+		var showchatdate = (${JsonchatData}[${JsonchatData}.length-1].chatting_date).split("-").join("/")
+		 $("#chatDate").text(showchatdate);
+			
+	}
+	 
 	 
 	 
 	 //스크롤이벤트
@@ -1089,7 +1095,7 @@ $(document).on("click","#rejectSomoim",function(e){
          	let total = Number(v.offsetTop)+Number(v.offsetHeight) 
         	if(v.offsetTop < scrollTop && (total) > scrollTop ){
         		console.log("채팅날짜 이벤트 실행")
-        		
+        		console.log("v.dataset.date",v.dataset.date)
         		$("#chatDate").text(v.dataset.date);
         		$("#chatDate").show();
         		break;
@@ -1123,7 +1129,8 @@ $(document).on("click","#rejectSomoim",function(e){
     			//selectDay.setDate(selectDay.getDate()-1);
     			//	console.log("변경된 날짜")
     			//	console.log(selectDay);
-        			//console.log(data)
+        			console.log("인피니티 하기 위해 서버에 보낼 data",chatData)
+        			
 					let iDate =getFormatDate(selectDay)
 					let iDateChatFrame = $("<div id='yesterday' class='chatFrame' data-date='"+iDate+"'> </div>");
         		
@@ -1164,7 +1171,7 @@ $(document).on("click","#rejectSomoim",function(e){
     							let cCont = v.chatting_content;
     							let cDate = getFormatDate(v.chatting_date);
     							let cTime = getFormatOnlyTime(v.chatting_date)
-    							let cProfile ="."+v.chatting_profile;
+    							let cProfile =v.chatting_profile;
     							
 									if(${JsonMysomoimInfo} == null){
 										
@@ -1228,7 +1235,8 @@ $(document).on("click","#rejectSomoim",function(e){
 	
 	 
 	 function connect(){  //localhost
-		 var weAddress="ws://localhost:80/gabom/somoim/Chat?somoim_number=" + ${JsonBasicInfo}.somoim_number;
+		 var somoim_number = ${JsonBasicInfo}.somoim_number;
+		 var weAddress="ws://localhost:80/gabom/somoim/Chat?somoim_number=" + somoim_number;
 		 var ws = new WebSocket(weAddress);
 		 socket = ws;
 		    ws.onopen = function () {   //커넥션이 연결됬을때
@@ -1347,7 +1355,7 @@ $(document).on("click","#rejectSomoim",function(e){
   	  			"id" : ${JsonMysomoimInfo}.member_name,
     			"msg" :  $('#chattingInput').val(),
   	  			"somoimnumber" : ${JsonBasicInfo}.somoim_number,
-  	  	  		"profilePicture" : "."+${JsonMysomoimInfo}.member_profile_picture
+  	  	  		"profilePicture" : ${JsonMysomoimInfo}.member_profile_picture
     	  }
   	  	  let resultChatData = JSON.stringify(data);
     	  console.log("resultChatData : " +resultChatData)
@@ -2018,8 +2026,8 @@ $("#top").append(si);
 		let cId = v.chatting_name;
 		let cCont = v.chatting_content;
 		let cDate = getFormatDate(v.chatting_date);
-		let cTime = getFormatOnlyTime(v.chatting_date)
-		let cProfile ="."+v.chatting_profile;
+		let cTime = getFormatOnlyTime(v.chatting_time)
+		let cProfile =v.chatting_profile;
 		
 			if(${JsonMysomoimInfo}==null || ${JsonMysomoimInfo}.member_status==0){
 				
@@ -2346,7 +2354,6 @@ let somoimnumber = String(${JsonBasicInfo}.somoim_number);
 	// 날짜 포맷 변환기  str -> date ->str
 	function getFormatDate(strdate){
 		var date = new Date(strdate);
-		console.log(date);
   		 var year = date.getFullYear();              //yyyy
     	var month = (1 + date.getMonth());          //M
     	month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
