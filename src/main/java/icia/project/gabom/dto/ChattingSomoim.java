@@ -15,7 +15,8 @@ public class ChattingSomoim {
 	private String somoim_number;
 	private String chatting_name; //아이디
 	private String chatting_content;
-
+	private String chatting_time;
+	
 	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private String chatting_date;
 }

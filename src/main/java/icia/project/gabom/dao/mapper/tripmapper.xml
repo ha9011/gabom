@@ -87,7 +87,7 @@ WITH t As(
 )
 select * from(
 select tc.chatting_date from trip_chatting tc, t d
-where tc.chatting_date < d.chatting_date
+where tc.chatting_date+1 < d.chatting_date and tc.TRIP_NUMBER = #{trip_number}
 order by tc.chatting_date desc 
 ) where rownum = 1
 

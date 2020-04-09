@@ -423,20 +423,20 @@ select jr.*, nvl2(jm.member_number,1,0) as my_attend_check from JUNGMO_ROOM jr, 
 
 
 <insert id="insertchatting"  >
-	insert into somoim_chatting values(#{somoimNumber}, #{id},  sysdate, #{msg})
+	insert into somoim_chatting values(#{somoimNumber}, #{id},  sysdate, #{msg},#{date},SEQ_SOMOIM_CHATTING.nextval)
 </insert>
 
 
 
 <select id="selectRecentChattingData" parameterType="int" resultType="chattingsomoim">
 	<![CDATA[
-	 select sc.chatting_content, to_char(sc.chatting_date,'YYYY-MM-DD') as chatting_date ,sc.chatting_name, sc.somoim_number ,m.member_profile_picture chatting_profile 
+	 select sc.CHATTING_NUMBER ,sc.chatting_content, to_char(sc.chatting_date,'YYYY-MM-DD') as chatting_date ,sc.chatting_name, sc.somoim_number, sc.chatting_time ,m.member_profile_picture chatting_profile 
 	from somoim_chatting sc, member m  
 	where sc.chatting_name = m.Member_id 
 	and SOMOIM_NUMBER = #{somoim_number} 
 	and chatting_date between to_CHAR((select min(chatting_date) from (select * from somoim_chatting where SOMOIM_NUMBER = #{somoim_number} order by chatting_date desc ) where RowNum <= 10), 'YYYY/MM/DD') 
 	and to_CHAR((select min(chatting_date)+1 from (select * from somoim_chatting where SOMOIM_NUMBER = #{somoim_number} order by chatting_date desc ) where RowNum <= 10)+2, 'YYYY/MM/DD')
-	order by chatting_date asc
+		order by CHATTING_NUMBER asc
 	]]>
 </select>
 
@@ -467,7 +467,7 @@ WITH t As(
 )
 select * from(
 select sc.chatting_date from somoim_chatting sc, t d
-where sc.chatting_date < d.chatting_date
+where sc.chatting_date+1 < d.chatting_date and sc.somoim_number = #{somoim_number}
 order by sc.chatting_date desc 
 ) where rownum = 1
 

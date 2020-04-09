@@ -680,9 +680,9 @@ public class SomoimManagement {
 	
 	
 
-	public String insertchatting(String id, String msg, int somoimNumber) {
+	public String insertchatting(String id, String msg, int somoimNumber, String date) {
 		
-		int result = sDao.insertchatting(id,msg,somoimNumber);
+		int result = sDao.insertchatting(id,msg,somoimNumber,date);
 		System.out.println("채팅 db : " + result);
 		return null;
 	}

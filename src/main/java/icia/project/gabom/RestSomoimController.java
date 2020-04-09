@@ -292,6 +292,7 @@ public class RestSomoimController {
 				@RequestParam("id")String id,
 				@RequestParam("msg")String msg,
 				@RequestParam("somoimNumber")int somoimNumber,
+				@RequestParam("date")String date,
 				Principal pr
 			) {
 		   
@@ -299,8 +300,9 @@ public class RestSomoimController {
 		    System.out.println(" // id : " + id); 
 		    System.out.println(" // msg : " + msg);
 		    System.out.println(" // somoimNumber : " + somoimNumber);
-		    
-			String result = simm.insertchatting(id,msg,somoimNumber);		
+		    System.out.println("date : " +date);
+
+			String result = simm.insertchatting(id,msg,somoimNumber,date);		
 			
 			return null;
 		}

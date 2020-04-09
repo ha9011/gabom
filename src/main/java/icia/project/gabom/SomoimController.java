@@ -23,7 +23,7 @@ public class SomoimController {
 	private SomoimManagement simm;
 	
 	private ModelAndView mav;
-	@PreAuthorize("isAuthenticated()")
+	
 	@RequestMapping(value = "/mainsomoim", method = RequestMethod.GET)
 	public ModelAndView adminmenu(Principal pr) {
 		mav = new ModelAndView();
