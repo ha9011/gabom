@@ -468,8 +468,8 @@ display: flex;
 				<button id="apiup" class="addbtn btn-lg "
 					data-toggle="modal" data-target="#area_modal"
 					onclick="sigunguChange()">
-					<span><i class="far fa-map"></i></span>
-    				<span>장소추가 </span>
+					<span class="apiareacode1"><i class="far fa-map apiareacode2"></i></span>
+    				<span class="apiareacode3">장소추가 </span>
 				</button>
 			</div>
 
@@ -836,6 +836,10 @@ $("#chatareaCont").scrollTop($("#chatareaCont")[0].scrollHeight);
 //================================
 
 $("#apiup")[0].dataset.areacode=areaCode;
+$(".apiareacode1")[0].dataset.areacode=areaCode;
+$(".apiareacode2")[0].dataset.areacode=areaCode;
+$(".apiareacode3")[0].dataset.areacode=areaCode;
+
 //$("#apiup").data("test",areaCode);
 console.log(trip_data);
 
@@ -865,6 +869,7 @@ $("#day1").append(chatt);
 //--------------------------------areaCode로 지역 검색-------------------------------------
 $("#apiup").on("click",function(e) {
 	console.log('버튼클릭');
+	console.log('e타겟 가져오니',e.target.dataset.areacode);
 	var areaCode = e.target.dataset.areacode;
 	var data = {"areaCode" : areaCode};
 	console.log('data', data);

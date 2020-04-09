@@ -496,7 +496,7 @@ $("#write_modal_button").on("click",function(e){
 	}
 	var formData = new FormData();
 	formData.append("title",document.getElementById("title").value);
-	formData.append("member",document.getElementById("member").value);
+	//formData.append("member",document.getElementById("member").value);
 	
 	
 	var str = $('#content').val();
