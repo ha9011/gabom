@@ -2,6 +2,7 @@ package icia.project.gabom.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
@@ -27,5 +28,8 @@ public interface SnsDmDao {
 	List<SnsDmDto> getContets(@Param("userId") String userId,@Param("id") String id);
 
 	boolean insertDm(@Param("contents") String contents,@Param("id") String name,@Param("userId") String userId);
+	
+	@Delete("DELETE FROM SNS_DM WHERE DM_NUMBER=#{num}")
+	boolean deleteDm(@Param("num") int num);
 
 }

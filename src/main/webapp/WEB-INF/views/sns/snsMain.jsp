@@ -1043,7 +1043,7 @@ color: #337ab7;
 	<script type="text/javascript" src="resources/snsJS/userPost.js"></script>
 	<!-- 타임라인내 프로필1 -->
 	<script type="text/javascript"
-		src="resources/snsJS/timeLineInProfile.js?ver=2"></script>
+		src="resources/snsJS/timeLineInProfile.js?ver=4"></script>
 	<!-- 어사이드 유저 이름 클릭1 -->
 	<script type="text/javascript" src="resources/snsJS/asidePost.js"></script>
 	<!-- 댓글삭제 1-->
