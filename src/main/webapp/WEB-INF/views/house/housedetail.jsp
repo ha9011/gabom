@@ -626,14 +626,16 @@ $("#info").append(info);
 		    minDate:new Date(),
 		    maxDate: new Date(house[0].house_maxdate.substr(0,10)),
 			beforeShowDay:function(date){
-				console.log("date:",date);
+				//console.log("date:",date);
 		        var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
 		        return [ disabledDays.indexOf(string) == -1 ]
 		    },
  		    onSelect: function(dateText) {  
+ 		    	console.log("----달력에서 날짜 클릭시 ---------")
 		    	console.log(typeof dateText)
-		    	console.log(dateText)  // 2020-01-21
-		    	var select = new Date(dateText);
+		    	console.log(dateText)  // 클릭한 날짜가 나와야함!!
+		    	var select = new Date(dateText);  // 선택한 날짜가 나와야함!
+		    	console.log("select",select)
 		    	
 		    	/* if(a=="Invalid Date"){
 		    		
@@ -641,19 +643,29 @@ $("#info").append(info);
 		    		$("#datepicker1").datepicker('option', 'minDate', new Date(dateText));
 		    		$("#datepicker2").datepicker('option', 'minDate', new Date(dateText));
 	    			
+		    		console.log("disabledDays",disabledDays)  // 달력에서 불가능 한 날짜 클릭 안되게 하기
 		    		
 		    		for(i in disabledDays){
+		    			console.log("i",i)
 		    			var ss = new Date(disabledDays[i])
-		    			console.log(select.getDate());
-		    			console.log(ss.getDate());
+		    			console.log("내가 선택한 날짜",select.getDate());
+		    			console.log("불가능한 날짜",ss.getDate());
 		    			console.log(ss.getDate()-select.getDate())
-		    			if(ss.getDate()-select.getDate()>0){ //양수일때  // 1일차이일때 이벤트도 줘야함.
-		    				$("#datepicker1").datepicker('option', 'maxDate', new Date(disabledDays[i]));
-		    				$("#datepicker2").datepicker('option', 'maxDate', new Date(disabledDays[i]));
-		    				break;
-		    			}else{ //음수일때
-		    				
+		    			
+		    			console.log("내가 선택한 월",select.getMonth());
+		    			console.log("불가능한 월",ss.getMonth());
+		    			console.log(ss.getDate()-select.getDate());
+		    			
+		    			if(ss.getDate()-select.getDate()<=0){
+		    				if(ss.getDate()-select.getDate()>0){ //양수일때  // 1일차이일때 이벤트도 줘야함.
+			    				$("#datepicker1").datepicker('option', 'maxDate', new Date(disabledDays[i]));
+			    				$("#datepicker2").datepicker('option', 'maxDate', new Date(disabledDays[i]));
+			    				break;
+			    			}else{ //음수일때
+			    				
+			    			}
 		    			}
+		    			
 		    			
 		    		}
 		    		
@@ -700,7 +712,7 @@ $("#info").append(info);
 	
 	$('#dtcommit').on('click',function(){
 		console.log("testtest");
-		
+		//datepicker1
 		var sdate = $('#datepicker1').val();  
 		var ddate = $('#datepicker2').val();  
 		  
@@ -716,7 +728,7 @@ $("#info").append(info);
 	    var cYear = cMonth * 12; // 년 만듬
 		
 	    if(sdate && ddate){
-			console.log(parseInt(dif/cDay))
+			//console.log(parseInt(dif/cDay))
 			$("#totalprice").val(parseInt(dif/cDay)*house[0].house_price);
 		 } 
 
@@ -725,12 +737,17 @@ $("#info").append(info);
 	
 var listDate = [];
 var checkeddate = ${detailreser};
+console.log("checkeddate",checkeddate)
 for(i of checkeddate){
-	
+	console.log("i.reservation_checkin",i.reservation_checkin)
 	var st = new Date(i.reservation_checkin);
-
-	var smonth = st.getUTCMonth() + 1; //months from 1-12
-	var sday = st.getUTCDate();
+	console.log("rowST",st)
+	
+	var smonth = st.getMonth() + 1; //months from 1-12
+	var sday = st.getDate();
+	console.log("sday",sday);
+	console.log("smonth",smonth);
+	
 	if(sday<10){
 		sday = "0"+sday;
 	}		
@@ -747,13 +764,13 @@ for(i of checkeddate){
 	}
 	
 	
-	
+	console.log("----")
 	console.log("st : " +st)
 	//
 	var ed = new Date(i.reservation_checkout);
 
-	var emonth = ed.getUTCMonth() + 1; //months from 1-12
-	var eday = ed.getUTCDate();
+	var emonth = ed.getMonth() + 1; //months from 1-12
+	var eday = ed.getDate();
 	if(eday<10){
 		eday = "0"+eday;
 	}	
@@ -770,9 +787,10 @@ for(i of checkeddate){
 	console.log("ed : " +ed)
 	//
 	disabledDays = getDateRange(st,ed,disabledDays)
-	console.log()
+	console.log("예약된 날짜 정리 ")
 } 
 
+	//disabledDays 예약 가능한 날짜 첫날과 마지막 날 뽑아서 list에 저장
 	function getDateRange(startDate, endDate, listDate){
 
         var dateMove = new Date(startDate);
@@ -803,7 +821,7 @@ for(i of checkeddate){
     };
    
 	
-	console.log(disabledDays);
+	console.log("disabledDays",disabledDays);
 </script>
 
 </html>
