@@ -1,5 +1,6 @@
 package icia.project.gabom;
 
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -22,12 +23,13 @@ public class RestServiceCenter {
 	
 	//qna 글작성
 	@PostMapping(value = "/qnawrite", produces = "text/plain;charset=UTF-8")
-	public String qnawrite(@RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("member") String member) {
+	public String qnawrite(@RequestParam("title") String title, @RequestParam("content")String content
+			, Principal principal) {
 		System.out.println("레스트컨트룰러 qna작성모달");
 		System.out.println("qna작성 제목 : " + title);
 		System.out.println("qna작성 내용 : " + content);
-		System.out.println("qna작성자 : " + member);
-		boolean result = sDao.getqnawrite(title, content, member);
+		System.out.println("qna작성자 : " + principal.getName());
+		boolean result = sDao.getqnawrite(title, content, principal.getName());
 		System.out.println("글작성 성공?" + result);
 
 		List<Qnaboard> nlist = sDao.getQnaList(); // 전체qna 정보 출력
