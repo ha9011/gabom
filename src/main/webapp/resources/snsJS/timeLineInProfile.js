@@ -28,7 +28,7 @@ function makeTimeLineProfile(id) {
 			make+='</div>';
 			if(json.reverse==1){
 				make+='<div class="container friendRequestBtnBox">';
-				make+='<button type="button" class="btn-default messageBox" onclick="window.open(\'snsdm\',\'DM\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=400,top=150\')">';
+				make+='<button type="button" class="btn-default messageBox" onclick="window.open(\'sns/dm/detail?userid='+json.id+'\',\'DMDetail\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=800,top=150\')">';
 				make+='<i class="far fa-envelope fa-2x"></i></button>';
 				make+='<button type="button" class="btn-default pull-right friendRequestBtn" onclick="friendReqCancel(\''+json.id+'\')">거절</button><span>';
 				make+='<button type="button" class="btn-default pull-right friendRequestBtn" onclick="friendAccept(\''+json.id+'\')">수락</button></span>';
@@ -36,7 +36,7 @@ function makeTimeLineProfile(id) {
 			}
 			else if(json.friendStatus==0&&userId!=json.id){
 				make+='<div class="container friendRequestBtnBox">';
-				make+='<button type="button" class="btn-default messageBox" onclick="window.open(\'snsdm\',\'DM\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=400,top=150\')">';
+				make+='<button type="button" class="btn-default messageBox" onclick="window.open(\'sns/dm/detail?userid='+json.id+'\',\'DMDetail\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=800,top=150\')">';
 				make+='<i class="far fa-envelope fa-2x"></i></button>';
 				make+='<button type="button" class="btn-default pull-right friendRequestBtn"';
 				make+='onclick="friendRequest(\''+json.id+'\')">';
@@ -44,7 +44,7 @@ function makeTimeLineProfile(id) {
 			}
 			else if(json.friendStatus==1&&userId!=json.id){
 				make+='<div class="container friendRequestBtnBox messageBox">';
-				make+='<button type="button" class="btn-default messageBox" onclick="window.open(\'snsdm\',\'DM\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=400,top=150\')">';
+				make+='<button type="button" class="btn-default messageBox" onclick="window.open(\'sns/dm/detail?userid='+json.id+'\',\'DMDetail\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=800,top=150\')">';
 				make+='<i class="far fa-envelope fa-2x"></i></button>';
 				make+='<button type="button" class="btn-default pull-right friendRequestBtn"';
 				make+='onclick="friendRequestStatus(\''+json.id+'\')">';
@@ -53,7 +53,7 @@ function makeTimeLineProfile(id) {
 			}
 			else if(json.friendStatus==2&&userId!=json.id){
 				make+='<div class="container friendRequestBtnBox">';
-				make+='<button type="button" class="btn-default messageBox" onclick="window.open(\'snsdm\',\'DM\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=400,top=150\')">';
+				make+='<button type="button" class="btn-default messageBox" onclick="window.open(\'sns/dm/detail?userid='+json.id+'\',\'DMDetail\',\'width=600,height=700,toolbar=no,menubar=no,location=no,left=800,top=150\')">';
 				make+='<i class="far fa-envelope fa-2x"></i></button>';
 				make+='<button type="button" class="btn-default pull-right friendRequestBtn"';
 				make+='onclick="friendCancel(\''+json.id+'\')">';

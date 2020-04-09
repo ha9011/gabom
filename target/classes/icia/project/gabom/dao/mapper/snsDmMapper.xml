@@ -8,6 +8,7 @@
 	</select>
 	<select id="getNewContent" resultType="snsDmDto">
 	SELECT DISTINCT
+	tot.DMNUMBER,
     tot.SENDMEMBER,
     tot.GETMEMBER,
     tot.CONTENTS,
@@ -17,7 +18,9 @@
     INNER JOIN
     (SELECT ROW_NUMBER() 
     OVER(ORDER BY DM.DM_DATE DESC)
-    AS RANK,DM.SEND_MEMBER_ID SENDMEMBER,
+    AS RANK,
+    	DM.DM_NUMBER DMNUMBER,
+    	DM.SEND_MEMBER_ID SENDMEMBER,
 		DM.GET_MEMBER_ID GETMEMBER,
 		DM.DM_CONTENTS CONTENTS,
 		DM.DM_DATE DMDATE,
@@ -29,7 +32,9 @@
     WHERE tot.GETMEMBER=#{id} AND tot.SENDMEMBER=#{userId} AND tot.RANK=1
 	</select>
 	<select id="getContets" resultType="snsDmDto">
-	 SELECT DM.SEND_MEMBER_ID SENDMEMBER,
+	 SELECT
+	 	DM.DM_NUMBER DMNUMBER, 
+	 	DM.SEND_MEMBER_ID SENDMEMBER,
 		DM.GET_MEMBER_ID GETMEMBER,
 		DM.DM_CONTENTS CONTENTS,
 		DM.DM_DATE DMDATE,DM.DM_CHECK CHECKNUM,
@@ -47,6 +52,6 @@
     	AND DM_CHECK=1
 	</select>
 	<insert id="insertDm">
-	INSERT INTO SNS_DM VALUES(#{id},#{userId},#{contents},SYSDATE,1)
+	INSERT INTO SNS_DM VALUES(#{id},#{userId},#{contents},SYSDATE,1,DM_SEQ.NEXTVAL)
 	</insert>
 </mapper>
