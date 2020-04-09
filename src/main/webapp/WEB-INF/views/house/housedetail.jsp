@@ -378,6 +378,57 @@ $("#info").append(info);
                console.log(data)
                $("#reservation")[0].reset();
                
+               for(i of data){
+            		
+            		var st = new Date(i.reservation_checkin);
+
+            		var smonth = st.getUTCMonth() + 1; //months from 1-12
+            		var sday = st.getUTCDate();
+            		if(sday<10){
+            			sday = "0"+sday;
+            		}		
+            		
+            		
+            		
+            		var syear = st.getUTCFullYear();
+            		if(smonth<10){
+            			st = syear + "-0" + smonth + "-" + sday;
+            				
+            		}else{
+            			st = syear + "-" + smonth + "-" + sday;
+            			
+            		}
+            		
+            		
+            		
+            		console.log("st : " +st)
+            		//
+            		var ed = new Date(i.reservation_checkout);
+
+            		var emonth = ed.getUTCMonth() + 1; //months from 1-12
+            		var eday = ed.getUTCDate();
+            		if(eday<10){
+            			eday = "0"+eday;
+            		}	
+            		var eyear = ed.getUTCFullYear();
+
+            		if(emonth<10){
+            			ed = eyear + "-0" + emonth + "-" + eday;
+            				
+            		}else{
+            			ed = eyear + "-" + emonth + "-" + eday;
+            			
+            		}
+            		
+            		console.log("ed : " +ed)
+            		//
+            		disabledDays = getDateRange(st,ed,disabledDays)
+            		console.log()
+            	} 
+
+               
+               
+               
             },
             error:function(error){
                alert("예약실패")

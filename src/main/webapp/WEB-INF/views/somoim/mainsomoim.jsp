@@ -13,7 +13,7 @@
 <link href="../resources/css/owl.theme.default.min.css" rel="stylesheet">
 <link href="../resources/css/animate.css" rel="stylesheet">
 <link href="../resources/css/style.css" rel="stylesheet">
-
+<link href="../resources/css/deletebtn.css" rel="stylesheet">
 <meta charset="UTF-8">
 <title>소모임 메인</title>
 </head>
@@ -193,7 +193,8 @@ display: flex;
 }
 
 .makeSomoim {
-   width: 100%;
+   margin-top:20px;
+   width: 200px;
 }
 
 .mymoimFrame {
@@ -255,6 +256,16 @@ display: flex;
             <div id="flap"><span class="content">productive</span></div>
 
         </form>
+        		<div id="makeSomoim">
+					<a href="./makesomoim">
+						<button class="makeSomoim learn-more">
+							<span class="circle" aria-hidden="true">
+      							<span class="icon arrow"></span>
+    						</span>
+    						<span style="font-size:20px;font-weight:800;margin-top:5px;color:white;" class="button-text">소모임 개설하기 </span>
+						</button>
+					</a>
+				</div>
 
     </div>
 					</div>

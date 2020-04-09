@@ -24,22 +24,217 @@
 
 body{
 	display: flex;
+	background-color:#3abade; 
 }
 #frm{
  padding : 10px;
+ margin-top: 50px;
 }
 #main{
-	
+	background-color:white;
 	width : 40%; 
-	border : 2px solid aqua;
 	margin : 100px auto;
 	display: inline-block;
+	box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.7);
+	border-radius:10px;
 }
 
 #btn{
  text-align: center;;
 }
+	:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: .75rem;
+}
 
+
+/*  */
+
+
+.form-signin .btn {
+  font-size: 80%;
+  border-radius: 5rem;
+  letter-spacing: .1rem;
+  font-weight: bold;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group input{
+  height: auto;
+  border-radius: 2rem;
+  border: 1px solid #3abade;
+}
+.form-label-group textarea{
+  height: auto;
+  border-radius: 2rem;
+  border: 1px solid #3abade;
+}
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+}
+
+.form-label-group>label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+  padding-bottom: calc(var(--input-padding-y) / 3);
+}
+
+.form-label-group input:not(:placeholder-shown)~label {
+  padding-top: calc(var(--input-padding-y) / 3);
+  padding-bottom: calc(var(--input-padding-y) / 3);
+  font-size: 12px;
+  color: #777;
+}
+
+.btn-google {
+  color: white;
+  background-color: #ea4335;
+}
+
+.btn-facebook {
+  color: white;
+  background-color: #3b5998;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+
+@supports (-ms-ime-align: auto) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+/*  */
+
+h1 {
+  color: #f1c40f;
+  font-size: 4rem;
+  text-transform: uppercase;
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 3rem;
+  }
+}
+
+p {
+  color: #f1c40f;
+  font-size: 1.2rem;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+}
+
+.btn {
+  box-sizing: border-box;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: transparent;
+  border: 2px solid #e74c3c;
+  border-radius: 0.6em;
+  color: #e74c3c;
+  cursor: pointer;
+  display: -webkit-box;
+  display: flex;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  margin: 20px;
+  padding: 1.2em 2.8em;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+.btn:hover, .btn:focus {
+  color: #fff;
+  outline: 0;
+}
+
+.first {
+  -webkit-transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+  transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+}
+.first:hover {
+  box-shadow: 0 0 40px 40px #e74c3c inset;
+}
+
+.third {
+  border-color: #3498db;
+  color: #fff;
+  box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+  -webkit-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out;
+}
+.third:hover {
+  box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
+  color:black;
+}
 </style>
 
 <body>
@@ -48,54 +243,45 @@ body{
 		action="somoimregister?${_csrf.parameterName}=${_csrf.token}"
 		method="post" enctype="multipart/form-data">
 
-		<div>
-			<h4>메인사진</h4>
-			<img id="image_section" width="100%" height="300px" class="rounded" alt="메인이미지">
-			<input id="somoim_mainpicture" name="somoim_mainpicture" type="file" class="form-control-file border">
-			<br>
-		</div>
+		<div class="form-label-group">
+               	<img id="image_section" width="100%" height="300px" class="rounded" alt="메인이미지">
+                <input type="file" id="somoim_mainpicture" class="form-control"  name="somoim_mainpicture">
+                <label for="somoim_mainpicture">메인사진</label>
+              </div>
+              
+              <div class="form-label-group">
+                <input type="text" class="form-control" placeholder="지역" id="somoim_location" name="somoim_location">
+                <label for="somoim_location">지역</label>
+              </div>
+              
+              <div class="form-label-group">
+                <input type="text" class="form-control" placeholder="상세주소" id="somoim-detail_location" name="somoim_detail_location">
+                <label for="somoim-detail_location">상세주소</label>
+              </div>
+              
+              <div class="form-label-group">
+                <input type="text" class="form-control" placeholder="모임명" id="somoim_name" name="somoim_name">
+                <label for="somoim_name">모임명</label>
+              </div>
+              
+              <div class="form-label-group">
+				  <textarea class="form-control" placeholder="모임소개" rows="5" id="somoim_introduce" name = "somoim_introduce"></textarea>
+              </div>
+              
+              <div class="form-label-group">
+                <input type="text" class="form-control" placeholder="관심사" id="somoim_interest" name="somoim_interest">
+                <label for="somoim_interest">관심사</label>
+              </div>
+              
+              <div class="form-label-group">
+                <input type="number" class="form-control" placeholder="정원" id="somoim_person" name="somoim_person"  max="100">
+                <label for="somoim_person">정원</label>
+              </div>
 
-		<div id="infofrm">
-
-			<div class="form-group">
-				<label for="location">지역 : </label> <input type="text"
-					class="form-control" id="somoim_location" name="somoim_location">
-			</div>
-			<br>
-
-			<div class="form-group">
-				<label for="detailLocation">상세주소 : </label> <input type="text"
-					class="form-control" id="somoim-detail_location" name="somoim_detail_location">
-			</div>
-<br>
-			<div class="form-group">
-				<label for="name">모임명 :</label> <input type="text"
-					class="form-control" id="somoim_name" name="somoim_name">
-			</div>
-<br>
-
-			<div class="form-group">
-				<label for="comment">모임 소개:</label>
-				<textarea class="form-control" rows="5" id="somoim_introduce" name = "somoim_introduce"></textarea>
-			</div>
-<br>
-			<div class="form-group">
-				<label for="hobby">관심사 :</label> <input type="text"
-					class="form-control" id="somoim_interest" name="somoim_interest">
-			</div>
-<br>
-			<div class="form-group">
-				<label for="name">정원 :</label> <input type="number"
-					class="form-control" id="somoim_person" name="somoim_person"  max="100" >
-			</div>
-<br>
-
-			<div id="btn">
-			<button id="register" type="submit" class="btn btn-outline-primary">개설</button>
-			<button id="cancel" type="button" class="btn btn-outline-dark">취소</button>
-			</div>
-			<br>
-		</div>
+              <div style="display:flex;margin: 7% 25% 0 25%;">
+              	<button id="register" class="btn third" type="submit">개설하기</button>
+              	<button id="cancel" class="btn first" type="button">취소</button>
+			  </div>
 	</form>
 	</div>
 </body>
