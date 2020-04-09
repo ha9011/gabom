@@ -497,16 +497,26 @@ $(function() {
 			let idx = 0;
 			for(let i of data){
 				  
-			 	var sd = getFormatDate(i.trip_start_date);
-			 	var ed = getFormatDate(i.trip_end_date);
+				let sd = getFormatDate(i.trip_start_date);
+				let ed = getFormatDate(i.trip_end_date);
 			 	  
-				var a =$('<a class="modalplan" data-title="'+i.trip_title+'" name="'+i.trip_number+'" data-arrnum="'+idx+'"></a>');
-				var ul = $('<ul  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="ul_list"></ul>');
-				var li =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li"><i class="fas fa-fan"></i></li>');
-				var li1 =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li">'+i.trip_title+'</li>');
+				let a =$('<a class="modalplan" data-title="'+i.trip_title+'" name="'+i.trip_number+'" data-arrnum="'+idx+'"></a>');
+				let ul = $('<ul  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="ul_list"></ul>');
+				let li;
+				if(idx == 0){
+					 li =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li"><i style="color:gold;" class="fas fa-fan fa-spin"></i></li>');
+				}else if(idx == 1){
+					 li =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li"><i style="color:silver;" class="fas fa-fan fa-spin"></i></li>');
+				}else if(idx == 2){
+					 li =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li"><i style="color:#cd7f32;" class="fas fa-fan fa-spin"></i></li>');
+				}else{
+					 li =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li"><i style="color:black;" class="fas fa-fan fa-spin"></i></li>');
+				}
+				
+				let li1 =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li">'+i.trip_title+'</li>');
 				//var li2 =$('<li class="t_li">'+i.trip_area+'</li>');
-				var li3 =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li">'+sd+'   ~   '+'</li>');
-				var li4 =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li">'+ed+'</li>');
+				let li3 =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li">'+sd+'   ~   '+'</li>');
+				let li4 =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li">'+ed+'</li>');
 				//var li5 =$('<li class="t_li">'+i.trip_share_count+'</li>');
 				
 				
