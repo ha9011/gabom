@@ -1134,7 +1134,7 @@ color: #337ab7;
 	<script type="text/javascript" src="resources/snsJS/postSecurity.js"></script>
 	<!-- 타임라인 생성 스크립트 1-->
 	<script type="text/javascript"
-		src="resources/snsJS/timeLinePrint.js?ver=7"></script>
+		src="resources/snsJS/timeLinePrint.js?ver=8"></script>
 	<!-- 글작성 취소 스크립트 1-->
 	<script type="text/javascript" src="resources/snsJS/postCancel.js"></script>
 	<!-- 페이지 로딩시 해당 회원 정보 출력 스크립트1 -->
