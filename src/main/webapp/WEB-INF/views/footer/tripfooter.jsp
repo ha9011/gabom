@@ -205,11 +205,6 @@ color:gray;
 		<p id="back-top">
 			<a href="#top"><i class="fa fa-angle-up"></i></a>
 		</p>
-		<footer style="background-color:#3abade">
-			<div class="container text-center" >
-				<p style="color:black;">Theme made by <a href="http://moozthemes.com"><span>MOOZ</span>Themes.com</a></p>
-			</div>
-		</footer>
 
 	</div>
 	

@@ -377,4 +377,15 @@ public class TripRestController {
 					//System.out.println("여행날짜 삭제 하고 최종결과값 : " + json);
 					return json;
 				}
+				
+				
+				@PostMapping(value = "/showmember",produces = "application/json;charset=utf-8")
+				public String showmember(int trip_number){
+					System.out.println("여행 멤버보기");
+					
+					String json = trs.showmember(trip_number);
+					
+					return json;
+				}		
+				
 }

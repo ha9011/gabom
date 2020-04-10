@@ -201,7 +201,7 @@ font-weight: bold;
 							<a class="page-scroll" href="foodmain">맛집</a>
 						</li>
 						<li>
-							<a class="page-scroll" href="#team">VIP</a>
+							<a class="page-scroll" href="somoim/mainsomoim">소모임</a>
 						</li>
 						<li>
 							<a class="page-scroll" href="#contact">고객센터</a>

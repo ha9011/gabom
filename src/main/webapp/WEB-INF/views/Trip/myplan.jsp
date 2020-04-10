@@ -75,7 +75,7 @@ tr {
 }
 
 #ct {
-	width: 600px;
+	width: 450px;
 	height: 1100px;
 	background-color: rgba(0, 46, 102, 0.8);
 	margin-top: 80px;
@@ -97,8 +97,9 @@ tr {
 /* 버튼 */
 #jbtn {
 	float: right;
-	margin: 10px 200px;
+	margin: 10px 50px;
 	font-size: 15px;
+	width: 60%;
 }
 
 #t_title {
@@ -173,7 +174,8 @@ border-radius:100px;
 
 					<li><a class="page-scroll" href="/gabom/">Home</a></li>
 					<li><a class="page-scroll" href="snsmain">SNS</a></li>
-					<li><a class="page-scroll" href="myplan">내여행</a></li>
+					<li><a class="page-scroll" href="trip">여행계획</a></li>
+					<li><a class="page-scroll" href="snsmain">sns</a></li>
 					<li><a class="page-scroll" href="housechoice">숙박</a></li>
 					<li><a class="page-scroll" href="foodmain">맛집</a></li>
 					<li><a class="page-scroll" href="somoim/mainsomoim">소모임</a></li>
@@ -300,6 +302,28 @@ border-radius:100px;
 		</div>
 	</div>
 
+
+
+
+<!-- 멤버보기  -->
+<div class="modal" id="member" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+       <div id="m_list"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="c-modal btn btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
 	<footer>
 		<jsp:include page="/WEB-INF/views/footer/tripfooter.jsp" />
 	</footer>
@@ -359,8 +383,8 @@ border-radius:100px;
  
   for(i of reqmel){//내가 받은 리스트 
 	 var tr_id =$('<p>'+i.trip_id+'님이 '+i.trip_title+'에 '+i.share_id+'초대하셨습니다'+'</p>');
-	 var sbtn=$('<button class="sbtn btn-success" data-trnum="'+i.trip_number+'">승인 </button>');
-	 var cbtn=$('<button class="cbtn btn-danger" data-trnum="'+i.trip_number+'">거절  </button>');
+	 var sbtn=$('<button class="sbtn btn btn-success" data-trnum="'+i.trip_number+'">승인 </button>');
+	 var cbtn=$('<button class="cbtn btn btn-danger" data-trnum="'+i.trip_number+'">거절  </button>');
 	 $("#mql").append(tr_id);
 	 $("#mql").append(sbtn);
 	 $("#mql").append(cbtn);
@@ -397,7 +421,7 @@ border-radius:100px;
 	}
  
  //-------------------------------------------------------------------유저 정보 영역
- 	let thead = $("<tr><th class='bar' id='t'>여행 제목</th><th class='bar'>여행지</th><th class='bar'>여행 날짜</th><th style='width: 300px' class='bar'>친구와 함께하기</th><th style='width: 200px' class='bar'>변경하기</th></tr>")
+ 	let thead = $("<tr><th class='bar' id='t'>여행 제목</th><th class='bar'>여행지</th><th class='bar'>여행 날짜</th><th class='bar'>멤버</th><th class='bar'>친구와 함께하기</th><th class='bar'>변경하기</th><th  class='bar'>삭제하기</th></tr>")
 	$("#mylist").append(thead) 
   
   let idx = 0;	
@@ -469,16 +493,20 @@ border-radius:100px;
    
     let area =$('<td>'+i.trip_area+'</td>');
     let date =$('<td>'+sd+' - '+ed+'</td>');
-    let btn =$('<td><button id="jbtn" class="joinbtn btn btn-info" data-toggle="modal" data-target="#exampleModal"  data-tripnum ="'+i.trip_number+'">친구 초대</button></td>');
+    let btn =$('<td><button style="margin-left:5px;" id="jbtn" class="joinbtn btn btn-info" data-toggle="modal" data-target="#exampleModal"  data-tripnum ="'+i.trip_number+'">친구 초대</button></td>');
+    let member =$('<td><button class="mbbtn btn btn-info" data-tnum="'+i.trip_number+'">멤버보기</button></td>')
     let changeDate =$('<td><button id="changebtn"  class="changeDateBtn btn btn-info" data-order="'+idx+'" data-toggle="modal" data-target="#dateChangeModal"  data-tripnum ="'+i.trip_number+'">날짜 변경</button></td>');
+    let deleteplan =$('<td><button id="deleteplanbtn"  class="deleteplanbtn btn btn-danger" data-order="'+idx+'"  data-tripnum ="'+i.trip_number+'">삭제하기</button></td>');
     
     
     $("#mylist").append(tr);
     $(tr).append(title);
     $(tr).append(area);
     $(tr).append(date);
+    $(tr).append(member);
     $(tr).append(btn);
     $(tr).append(changeDate);
+    $(tr).append(deleteplan);
     
 
     idx++;
@@ -495,6 +523,63 @@ border-radius:100px;
   	var number = e.target.dataset.name;
   	location.href="detailplan?trip_number="+number;
   });
+  
+  $(document).on('click', ".mbbtn", function name(e) {// 멤버보기 클릭시 
+		
+	  $("#member").show();
+	  
+	  var trip_number = e.target.dataset.tnum
+	  
+	  $.ajaxSetup({         
+	      beforeSend : function(xhr){
+	         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+	      });//먼저 보냄
+   
+   
+   $.ajax({
+      
+        url: "tprest/showmember",
+         type: 'post',
+         data :{"trip_number":trip_number},
+         dataType: "json", //rest 컨트롤 이용   
+         success:function(data){ 
+        	console.log("member",data);
+        	 $("#m_list").empty();
+
+         
+         for(i of data){
+        	 
+        	var f_div =$('<div style="display:flex"></div>');
+        	var f_img = $('<img class="f_img" src="'+i.member_profile_picture+'">');
+        	var freind =$('<div id="f"><h4>'+i.member_name+'님'+'</h4></div>');
+        	 
+        	 $("#m_list").append(f_div);
+        	 f_div.append(f_img);
+        	 f_div.append(freind);
+         }
+         },
+         error:function(error){
+            alert("실패.");
+               console.log(error);
+            }
+ 
+ 
+	});//ajax 끝
+})
+  
+  $(document).on('click', ".c-modal", function () {
+	 
+	  $("#member").hide();
+})
+  
+  
+  
+  
+  
+  
+  
+  
+  
 //------------------------------------------------------------------------------------------게시글 영역
 $(".joinbtn").on('click', function(e) { // 친구 추가시 여행번호 
 	var trip_number = e.target.dataset.tripnum
@@ -1159,6 +1244,58 @@ $("#inputfirstday").on("change",function(){
 	$("#inputfirstdaybtn").prop("disabled",false)
 })
 //--------------------------------------------------------------------------------------------- 승인 거절이벤트 
+$(document).on('click','.deleteplanbtn',function(e){
+	
+var	tripnumber = e.target.dataset.tripnum
+
+var data = {
+         "tripnumber":tripnumber
+      }
+      
+      
+      
+      $.ajaxSetup({         
+          beforeSend : function(xhr){
+          xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
+       });//먼저 보냄
+                   
+       $.ajax({
+          url:'tprest/deleteTripPlan',
+          type:'post',
+          data:data,
+          success:function(data){
+            alert("여행계획을 삭제 했습니다.");
+             location.href="myplan";
+             
+             
+          },
+          error:function(error){
+            alert("fail")
+            console.log(error);
+         }
+      })  // ajax end
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //날짜 포맷 변환기  str -> date ->str
    function getFormatDate(strdate){
