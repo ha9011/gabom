@@ -245,14 +245,14 @@ margin:0 20px;
        <form id="hre" enctype="multipart/form-data">
       <div class="modal-body">
     		<div class="filebox"> 
-    			<label for="ex_filename">업로드</label> 
-    			<input type="file" id="ex_filename" class="upload-hidden" name="house_review_orifile" multiple >
-    				<div class="showPics"></div>
-    				<div class="detail">
-						<ul class="detailImage_sections"></ul>
+    			<label for="ex_filename1">업로드</label> 
+    			<input type="file" id="ex_filename1" class="upload-hidden" name="house_review_orifile" multiple >
+    				<div class="showPics1"></div>
+    				<div class="detail1">
+						<ul class="detailImage_sections1"></ul>
 					</div>
     		</div>
-    		<input class="hreview_content" style="width:100%;min-height:400px;" type="text" name="house_review_content">
+    		<textarea id="hreview_content" style="width:100%;min-height:400px;" name="house_review_content"></textarea>
     		<input type="hidden" id="h_number" name="house_number">
     		<input type="hidden" id="r_number" name="reservation_number">
       </div>
@@ -278,13 +278,14 @@ margin:0 20px;
       <form id="fre" enctype="multipart/form-data">
       <div class="modal-body">
     		<div class="filebox"> 
-    			<label for="ex_filename">업로드</label> 
-    			<input type="file" id="ex_filename" class="upload-hidden" name="food_review_orifile"multiple >
-    			<div class="detail">
-						<ul class="detailImage_sections"></ul>
-				</div>
+    			<label for="ex_filename2">업로드</label> 
+    			<input type="file" id="ex_filename2" class="upload-hidden" name="food_review_orifile"multiple >
+    			<div class="showPics2"></div>
+    				<div class="detail2">
+						<ul class="detailImage_sections2"></ul>
+					</div>
     		</div>
-    		<input id="freview_content" style="width:100%;min-height:400px;" type="text" name="food_review_content">
+    		<textarea id="freview_content" style="width:100%;min-height:400px;" name="food_review_content"></textarea>
     		<input type="hidden" id="f_number" name="food_number">
     		<input type="hidden" id="fr_number" name="freservation_number">
       </div>
@@ -490,12 +491,11 @@ $("#myreser").on('click', function(e) {
 			t_tr.append(t_th8);
 			
 			
-			if(data == null){
-				
+			if(data == []){
+				var none = $('<h1>예약된 목록이 없습니다.</h1>')
+				$("#Content").append(none);
 			}else{
-				
-			
-			
+
   			for(i of data){
   				
   				var cid = getFormatDate(i.reservation_checkin);
@@ -893,8 +893,23 @@ $("#myreview").on('click', function(e) {
 	              }
 	     });//ajax 끝
 	     
-	    
-})//---------------------------------------------------------------리뷰 작성 끝 
+	  
+})
+
+$(document).on('click', ".hreviewbtn", function() {
+	 $(".showPics1").empty();
+	$("#hreview_content").empty();
+})
+$(document).on('click', ".freviewbtn", function() {
+	 $(".showPics2").empty();
+	$("#freview_content").empty();
+})
+
+
+
+
+
+//---------------------------------------------------------------리뷰 작성 끝 
 
 $(document).on('click',".detail", function() {
 	console.log("클릭한 리뷰번호"+$(this).attr("name"));
@@ -956,11 +971,9 @@ $(".upload-hidden").change(function(e){
          reader.readAsDataURL(f);
 	});//end forEach
 })
-//-----------------------------------------------------------------------이미지 
+//-----------------------------------------------------------------------리뷰이미지 
 
  $(document).on('click',".hreview",function(e){//리뷰 작성
-	 $(".showPics").empty();
-	 $(".hreview_content").empty();
 	 
 	 var house_number = e.target.dataset.hnum
 	 var reservation_number= e.target.dataset.resernum
@@ -1036,6 +1049,9 @@ $(".upload-hidden").change(function(e){
 }) 
 
 $(document).on('click',".freview",function(e){
+	
+	//$(".showPics").empty();
+	 //$("#hreview_content").empty();
 	 
 	 var food_number = e.target.dataset.fnum
 	 var food_reservation_number= e.target.dataset.fresernum
@@ -1456,8 +1472,8 @@ $(document).on('click','.delbtnsomo',function(e){// 게시글 삭제
 
 
 
-$("#ex_filename").change(function(e){
-		$("#showPics").empty();  // 변할 때마다 리셋
+$("#ex_filename1").change(function(e){
+		$("#showPics1").empty();  // 변할 때마다 리셋
 		console.log("???")
 		
 		var files = e.target.files;
@@ -1478,7 +1494,7 @@ $("#ex_filename").change(function(e){
 	         reader.onload = function(e) {
 	         	var $li = $("<span></span>").attr("class","detailPictures");
 	         	var $tt = $li.append($('<img/>').attr('src', e.target.result).css("width", "100px").css("heigh","100px"));
-	         	$(".showPics").append($tt);
+	         	$(".showPics1").append($tt);
 	         }
 	         reader.readAsDataURL(f);
 	         //$("#detail").show();
@@ -1486,6 +1502,34 @@ $("#ex_filename").change(function(e){
 	})
 
 
+$("#ex_filename2").change(function(e){
+		$("#showPics2").empty();  // 변할 때마다 리셋
+		console.log("???")
+		
+		var files = e.target.files;
+		var filesArr = Array.prototype.slice.call(files);
+		
+		console.log(filesArr); // 파일 어떤 내용들었는지 보기 1개니깐 [0]
+		
+		filesArr.forEach(function(f,i){
+			console.log(f)
+			console.log(i)
+			if(!f.type.match("image.*")){
+				alert("확장자는 이미지 확장자만 가능함")
+				return 	
+			}
+			
+			
+			 var reader = new FileReader();
+	         reader.onload = function(e) {
+	         	var $li = $("<span></span>").attr("class","detailPictures");
+	         	var $tt = $li.append($('<img/>').attr('src', e.target.result).css("width", "100px").css("heigh","100px"));
+	         	$(".showPics2").append($tt);
+	         }
+	         reader.readAsDataURL(f);
+	         //$("#detail").show();
+		});//end forEach
+	})
 
 
 
