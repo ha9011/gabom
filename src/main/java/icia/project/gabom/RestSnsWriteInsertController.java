@@ -26,7 +26,9 @@ public class RestSnsWriteInsertController {
 								@RequestParam("sns_posts_content") String snsWriteContents,
 								@RequestParam("security") String security,
 								HttpServletRequest req,@RequestParam("low") int low) {
-					
+		for(int i=0;i<file.size();i++) {
+			System.out.println(file.get(i));
+		}
 		String json=snsWriteInsert.snsWriteInsert(file,principal,snsWriteContents,security,req,low);
 		
 		
