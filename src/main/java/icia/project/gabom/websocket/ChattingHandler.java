@@ -102,7 +102,11 @@ public class ChattingHandler extends TextWebSocketHandler {
 
 	@Override//연결 끈어졌을때
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-
+			
+		
+		
+		
+		
 	}
 	
 	

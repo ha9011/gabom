@@ -10,7 +10,7 @@ import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
-public class AlramChattingHandler extends HttpSessionHandshakeInterceptor{
+public class AlramHandler extends HttpSessionHandshakeInterceptor{
 
 	
 	@Override

@@ -1600,7 +1600,7 @@ function getFormatDateDB(strdate){
  	connect();
 	function connect(){ 
 		
-		var weAddress="ws://localhost:80/gabom/detailplan/ChatTrip?trip_number="+tripNum; // 번호 수정해야함
+		var weAddress="ws://192.168.0.119:80/gabom/detailplan/ChatTrip?trip_number="+tripNum; // 번호 수정해야함
 		 var ws = new WebSocket(weAddress);
 		 socket = ws;
 		    ws.onopen = function () {   //커넥션이 연결됬을때
@@ -1612,6 +1612,7 @@ function getFormatDateDB(strdate){
 		            var data = JSON.parse(event.data);
 		            var date = new Date();
 		            var chatTime = 	getFormatOnlyTime(date);
+		            var chatMyPic = data.profilePicture;
 		            console.log("---------------")
 		            console.log(data);
 		    		//여기서 데이터 쏴주고, 쏴준후 db 저장해야하는데 트랜잭션...어떻게?
@@ -1637,7 +1638,7 @@ function getFormatDateDB(strdate){
 
 						var media = $("<div class='yourCommnet'></div>");
 						
-						var img = $("<img style='margin:3px;' src='"+myPic+"'  class='mr-3 mt-3 rounded-circle' width='40px' height='40px' >")
+						var img = $("<img style='margin:3px;' src='"+chatMyPic+"'  class='mr-3 mt-3 rounded-circle' width='40px' height='40px' >")
 						media.append(img);
 						
 						var mediabody = $("<div class='media-body'></div>");
@@ -1683,7 +1684,7 @@ function getFormatDateDB(strdate){
   	  			"id" : memberID,
     			"msg" :  $('#chatInput').val(),
   	  			"tripNum" : tripNum,
-  	  	  		"profilePicture" : "."+myPic
+  	  	  		"profilePicture" : myPic
     	  }
   	  	  let resultChatData = JSON.stringify(data);
     	  console.log("resultChatData : " +resultChatData)

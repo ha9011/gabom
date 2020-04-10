@@ -1062,6 +1062,8 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	$("<button>").addClass("btn btn-info custom").attr("id","write").attr("data-toggle","modal").attr("data-target","#write_modal").text("글쓰기").appendTo($("#write_button_area"));
 	
 	//---------------------------------------------------------------------글쓰기 모달 생성---------------------------------------------------------------------
+	
+	//공지사항 글쓰기
 	$("#write_modal_button").on("click",function(){
 		console.log("글쓰기 클릭");
 		
@@ -1172,20 +1174,20 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	 				console.log("qweqwe")
 	 				
 	 				
-	 //--- 전체 공지 알람 
+	 //	--- 전체 공지 알람 
 	 
-//	  	let somoimAllMemberObj ={
-//	 			"type" : "noti",
-//	 			"somoimNumber" : somoimnumber,
-//	 			"members" : somoimAllMember
-				
-//	 				};
+		  	let AllMemberAlramObj ={
+		 			"type" : "adminnoti",
+		 			//"somoimNumber" : somoimnumber,
+		 			//"members" : somoimAllMember
+			};
 		
 		
-//	 		let resultMemberData = JSON.stringify(somoimAllMemberObj);
-//	  				socketalarm.send(resultMemberData); 
+		 		let AllMemberAlramData = JSON.stringify(AllMemberAlramObj);
+	  			socketalarm.send(AllMemberAlramData); 
 	 				
-	 //--
+	 //	--
+		
 	            }, error : function(jqXHR, status, e) {
 	                console.log("글쓰기 에러");
 	            }

@@ -1238,7 +1238,7 @@ $(document).on("click","#rejectSomoim",function(e){
 	 
 	 function connect(){  //localhost
 		 var somoim_number = ${JsonBasicInfo}.somoim_number;
-		 var weAddress="ws://localhost:80/gabom/somoim/Chat?somoim_number=" + somoim_number;
+		 var weAddress="ws://192.168.0.119:80/gabom/somoim/Chat?somoim_number=" + somoim_number;
 		 var ws = new WebSocket(weAddress);
 		 socket = ws;
 		    ws.onopen = function () {   //커넥션이 연결됬을때

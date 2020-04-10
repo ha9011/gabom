@@ -54,7 +54,7 @@ color:gray;
 			console.log("연결 성공");
 			
 			//자체 지원,
-			var wsalarm = new WebSocket("ws://localhost:80/gabom/Echo");  // 
+			var wsalarm = new WebSocket("ws://192.168.0.119:80/gabom/Echo");  // 
 			socketalarm = wsalarm
 			//커넥션이 연결됐을때 이부분을 탄다.
 			console.log("socketalarm : ", socketalarm)
@@ -123,6 +123,19 @@ color:gray;
 			//var alarmNum = JsonRespon.somoimNumber; 	
 			//console.log("페이지 : " + alarmNum)
 			var toastCont = $("<a href='/gabom/myplan'>"+alarmName+"님 께서 여행계획을 공유하셨습니다.</a>")
+			$("#content").append(toastCont);
+		
+			$('#alarm').show();
+			  setTimeout(function() { 
+			   $('#alarm').hide();
+			  }, 5000);
+		}else if(JsonRespon.type=='adminnoti'){
+			$("#content").empty();
+			console.log("공지사항 알람 전달")
+			console.log("JsonRespon",JsonRespon)
+			//var alarmNum = JsonRespon.somoimNumber; 	
+			//console.log("페이지 : " + alarmNum)
+			var toastCont = $("<a href='/gabom/servicecenter'>새로운 공지사항이 등록되었습니다.</a>")
 			$("#content").append(toastCont);
 		
 			$('#alarm').show();

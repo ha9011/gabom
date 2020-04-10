@@ -34,7 +34,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		 
 		 if(map.containsKey("userID")) {
 			 String userID = (String)map.get("userID"); //유저아이디
-			 loginMember.put(userID,session);  //접속중인 친구에게 보내기
+			 loginMember.put(userID,session);  //접속중인 친구에게 보내기  // [해당아이디, 소켓세션] 넣기
 		 }else {
 			 
 		 }
@@ -90,6 +90,19 @@ public class EchoHandler extends TextWebSocketHandler{
 					System.out.println("접속중이 아닙니다. : " +asp.getShare_id() );
 				}
 				
+		}else if(memberList.get("type").equals("adminnoti")) {  // 알람 공지
+			
+			
+			for(String userId : loginMember.keySet()) {  // 없는 놈들한테도 보낼라 하니깐 오류뜸. 있는지 없는지 확인 하고 해야함.
+				System.out.println("맴버아이디 : " +userId);
+				
+				System.out.println("로그인 중입니다 : " +userId );
+				loginMember.get(userId).sendMessage(new TextMessage(message.getPayload()));
+				
+			}
+			
+			
+			
 		}
 		
 		

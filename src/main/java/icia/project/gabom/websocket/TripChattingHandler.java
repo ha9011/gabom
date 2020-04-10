@@ -34,6 +34,7 @@ public class TripChattingHandler extends TextWebSocketHandler {
 	@Override  //연결 됐을때
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("afterConnectionEstablished 여행 트립 socket 접근: " + session );
+		System.out.println("111");
 		sessions.add(session);
 		
         Map<String, Object> map = session.getAttributes();  // 담긴 친구 부르기 handler에서
@@ -51,6 +52,7 @@ public class TripChattingHandler extends TextWebSocketHandler {
     	   personalMember.put(userID, session);  //session.getId로 아이디 뽑기가능
     	   userChatMember.put(tripNumber,personalMember);
        }
+       System.out.println("222");
 	}
 
 	
@@ -102,9 +104,23 @@ public class TripChattingHandler extends TextWebSocketHandler {
 		
 	}
 
-	@Override//연결 끈어졌을때
+	@Override//연결 끈어졌을때  // 방 지워야하나....
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-
+		System.out.println("....나가기.............");
+		System.out.println("나가기: " + session );
+		Map<String, Object> map = session.getAttributes();  // 담긴 친구 부르기 handler에서
+		String userID = (String)map.get("userID");  //소켓 유저의 아이디 가져오기(로그인한 아이디)
+        System.out.println("userID : " +userID);
+        
+        String tripNumber = (String)map.get("trip_number");
+        System.out.println("trip_number : " +tripNumber);
+		
+        
+        //Map<Integer, Map<String, WebSocketSession>> userChatMember
+        
+        userChatMember.get(Integer.parseInt(tripNumber)).remove(userID);
+        
+        
 	}
 	
 	
