@@ -932,7 +932,6 @@ $(document).on("click","#kickOut",function(e){
 		data:data,
 		dataType:'json',
 		success:function(data){
-			alert("삭제 성공");
 			showOriginMember(data);
 			JsonMemberList = data['기존']
 			
@@ -967,7 +966,6 @@ $(document).on("click","#agreeSomoim",function(e){
 		data:data,
 		dataType:'json',
 		success:function(data){
-			alert("승인 성공");
 			showOriginMember(data);
 			showIngMember(data);
 			JsonMemberList = data['기존']
@@ -1001,7 +999,6 @@ $(document).on("click","#rejectSomoim",function(e){
 		data:data,
 		dataType:'json',
 		success:function(data){
-			alert("삭제 성공");
 			showIngMember(data);
 		},
 		error:function(error){
@@ -1070,7 +1067,7 @@ $(document).on("click","#rejectSomoim",function(e){
 	 //스크롤이벤트
 	
 	let basicDate = new Date("${nextDay}");
-	console.log("다음 검색 할 날짜 : " + basicDate)
+	console.log("다음 검색 할 날짜..? : " + basicDate)
 	let selectDay = basicDate;  // 기준날짜 
 	//console.log("날짜")
 	//console.log(selectDay);
@@ -1134,7 +1131,11 @@ $(document).on("click","#rejectSomoim",function(e){
 					let iDate =getFormatDate(selectDay)
 					let iDateChatFrame = $("<div id='yesterday' class='chatFrame' data-date='"+iDate+"'> </div>");
         		
-        		
+        		console.log("NaN/0NaN/0NaN", chatData.date == "NaN/0NaN/0NaN" )
+        		if(chatData.date == "NaN/0NaN/0NaN" ){
+        			console.log("인피티니 검색 데이터 없음")
+        		}else{
+        			
         		
             	$.ajaxSetup({         
     			    	  beforeSend : function(xhr){
@@ -1221,6 +1222,7 @@ $(document).on("click","#rejectSomoim",function(e){
     						console.log(error);
     					}
     				})
+        		}
 			}, 400);
         	
         	
@@ -1383,7 +1385,6 @@ $(document).on("click","#rejectSomoim",function(e){
 				type:'post',
 				data:chatData,
 				success:function(data){
-					alert("success");
 					console.log(data)
 					 $('#chattingInput').val("");
 			    	  $('#chattingInput').focus();
@@ -1437,7 +1438,6 @@ $(document).on("click","#rejectSomoim",function(e){
 					data:data,
 				 	dataType:"json", //rest 컨트롤 이용	
 					success:function(data){
-						alert("success");
 						console.log(data)
 						
 					    $("#replelist").empty();
@@ -1514,7 +1514,6 @@ $(document).on("click","#rejectSomoim",function(e){
 						type:'post',
 						data:data,
 						success:function(data){
-							alert("success");
 							console.log(data)
 							
 						},
@@ -1633,7 +1632,6 @@ $(document).on("click","#rejectSomoim",function(e){
 					data:data,
 				 	dataType:"json", //rest 컨트롤 이용	
 					success:function(data){
-						alert("success");
 						console.log(data)
 					    $("#somoimBoardCont").empty();
 						
@@ -1700,7 +1698,6 @@ $(document).on("click","#rejectSomoim",function(e){
 				data:data,
 			 	dataType:"json", //rest 컨트롤 이용	
 				success:function(data){
-					alert("success");
 					console.log(data)
 					$("#jungmolist").empty();
 					showJungmoList(data);
@@ -1748,7 +1745,6 @@ $(document).on("click","#rejectSomoim",function(e){
 				data:data,
 			 	dataType:"json", //rest 컨트롤 이용	
 				success:function(data){
-					alert("success");
 					console.log(data)
 					
 					
@@ -2170,7 +2166,6 @@ let somoimnumber = String(${JsonBasicInfo}.somoim_number);
 		contentType:false,  //제이슨 아니니깐 까보지마!!
 	 	dataType:"json", //rest 컨트롤 이용	
 		success:function(data){
-			alert("success");
 			console.log("정모만든후 ",data)
 			$("#jungmolist").empty(); // 리스트
 			// 부르기
@@ -2287,7 +2282,6 @@ let somoimnumber = String(${JsonBasicInfo}.somoim_number);
 		contentType:false,  //제이슨 아니니깐 까보지마!!
 	 	dataType:"json", //rest 컨트롤 이용	
 		success:function(data){
-			alert("success");
 			console.log("정모만든후 ",data)
 			$("#jungmolist").empty(); // 리스트
 			// 부르기
@@ -2433,7 +2427,6 @@ let somoimnumber = String(${JsonBasicInfo}.somoim_number);
 		  		data: data,
 		  		dataType: "json", //rest 컨트롤 이용	
 		  		success:function(data){
-		  			alert("success");
 		  			console.log(data)
 		  			if(data.result==="참석"){
 		  				$("button[data-jungmonum='"+e.target.dataset.jungmonum+"']").text("취소")
@@ -2548,7 +2541,7 @@ let somoimnumber = String(${JsonBasicInfo}.somoim_number);
 	  		data : data,
 	  		dataType: "json", //rest 컨트롤 이용	
 	  		success:function(data){
-	  			alert("success");
+	  			alert("탈퇴에 성공했습니다.");
 	  			console.log(data)
 	  			location.href = "./mainsomoim";
 			
@@ -2588,7 +2581,6 @@ $("#joinsomoim").on("click",function(e){
 			data:data,
 		 	 //rest 컨트롤 이용	
 			success:function(data){
-				alert("success");
 				console.log("조인신청")
 				console.log(data)
 				
@@ -2670,7 +2662,6 @@ $("#joinsomoim").on("click",function(e){
 		 	dataType:"json", //rest 컨트롤 이용	
 			success:function(data){
 				$("#somoimBoardCont").empty();
-				alert("board 게시글 작성 성공");
 				//somoimBoardCont
 				console.log(data.result)
 				console.log(typeof data.result)
@@ -2767,7 +2758,6 @@ $("#joinsomoim").on("click",function(e){
 		 	dataType:"json", //rest 컨트롤 이용	
 			success:function(data){
 				$("#somoimBoardCont").empty();
-				alert("board 게시글 업데이트 성공");
 				//somoimBoardCont
 				console.log(data.result)
 				console.log(typeof data.result)
@@ -3005,7 +2995,6 @@ $("#joinsomoim").on("click",function(e){
 	  		data : data,
 	  		dataType: "json", //rest 컨트롤 이용	
 	  		success:function(data){
-	  			alert("success");
 	  			console.log(data)
 	  			
 	  			$("#boardlikebtnframe").empty()
@@ -3074,7 +3063,6 @@ $("#joinsomoim").on("click",function(e){
   		data : data,
   		dataType: "json", //rest 컨트롤 이용	
   		success:function(data){
-  			alert("success");
   			console.log(data)
   			
   			

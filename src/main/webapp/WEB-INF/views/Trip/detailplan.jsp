@@ -2106,7 +2106,7 @@ const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 �
 	    	type:'post',
 	    	data:data,
 	    	success:function(data){
-				alert("마지막 페이지 삭제 되었습니다.");
+				alert("여행계획을 삭제 했습니다.");
 	    		location.href="myplan";
 	 			
 	    	},
@@ -2118,7 +2118,7 @@ const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 �
 	
 	}else if(currentPlanDay==objlength){//----------------------마지막삭제
 		console.log("------------------------------")
-		alert("마지막삭제")
+		
 		console.log("trip_data",trip_data[0].trip_end_date);
 		var endDate = new Date(trip_data[0].trip_end_date);   // 마지막 여행날짜에서 하루 줄어들어야함
 		endDate.setDate(endDate.getDate()-1);  
@@ -2153,6 +2153,7 @@ const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 �
 	    	dataType: "json",
 	    	success:function(data){
 	    		//console.log("원래 하우스",HouseReserCheck)
+	    		alert(currentPlanDay+"번째 날, 여행계획이 삭제되었습니다.");
 	    		console.log("어떻게 나올까",data);
 	    		
 				HouseReserCheck=JSON.parse(data.HouseReserCheck);
@@ -2244,7 +2245,6 @@ const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 �
 		})  // ajax end
 	}else{  // 일반 삭제
 		console.log("------------------------------")
-		alert("일반 가운데 삭제")
 		console.log("원래 여행 마지막날",trip_data[0].trip_end_date);
 		var endDate = new Date(trip_data[0].trip_end_date);   // 마지막 여행날짜에서 하루 줄어들어야함
 		endDate.setDate(endDate.getDate()-1);  
@@ -2282,7 +2282,7 @@ const deleDate= () => {  // 여행계획이 1개일때 지우면, 여행계획 �
 	    		//console.log("원래 하우스",HouseReserCheck)
 	    		
 	    		console.log("---AJAX 결과값---",data);
-	    		
+	    		alert(currentPlanDay+"번째 날, 여행계획이 삭제되었습니다.");
 				HouseReserCheck=JSON.parse(data.HouseReserCheck);
 	     		trip_data = JSON.parse(data.detail);
 	    		

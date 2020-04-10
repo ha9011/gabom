@@ -457,7 +457,7 @@ select jr.*, nvl2(jm.member_number,1,0) as my_attend_check from JUNGMO_ROOM jr, 
 
      
 WITH t As(
-	select chatting_date 
+	select TO_CHAR(chatting_date,'YY/MM/DD') as chatting_date 
 	 from somoim_chatting sc, member m  
 	 where sc.chatting_name = m.Member_id 
 	 and SOMOIM_NUMBER = #{somoim_number} 
@@ -465,9 +465,9 @@ WITH t As(
 	 and TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')+1, 'YYYY/MM/DD') 
 	  and rownum = 1       
 )
-select * from(
+select TO_CHAR(chatting_date,'YYYY-MM-DD') as chatting_date from(
 select sc.chatting_date from somoim_chatting sc, t d
-where sc.chatting_date+1 < d.chatting_date and sc.somoim_number = #{somoim_number}
+where sc.chatting_date < d.chatting_date and sc.somoim_number = #{somoim_number}
 order by sc.chatting_date desc 
 ) where rownum = 1
 

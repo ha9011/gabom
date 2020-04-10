@@ -77,17 +77,17 @@
 <select id="selectNextDayInfinityChattingData"  resultType="String">
 <![CDATA[
 WITH t As(
-	select chatting_date 
-	 from trip_chatting tc, member m  
+	select TO_CHAR(chatting_date,'YY/MM/DD') as chatting_date
+	from trip_chatting tc, member m  
 	 where tc.chatting_name = m.Member_id 
 	 and TRIP_NUMBER = #{trip_number} 
 	 and chatting_date between #{date} 
-	 and TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD'), 'YYYY/MM/DD') 
+	 and TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')+1, 'YYYY/MM/DD') 
 	  and rownum = 1       
 )
-select * from(
+select TO_CHAR(chatting_date,'YYYY-MM-DD') as chatting_date from(
 select tc.chatting_date from trip_chatting tc, t d
-where tc.chatting_date+1 < d.chatting_date and tc.TRIP_NUMBER = #{trip_number}
+where tc.chatting_date < d.chatting_date and tc.TRIP_NUMBER = #{trip_number}
 order by tc.chatting_date desc 
 ) where rownum = 1
 
