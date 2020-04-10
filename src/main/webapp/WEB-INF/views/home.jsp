@@ -25,6 +25,7 @@ section {
 }
 .ul_list{
 	list-style: none;
+	cursor:pointer;
 }
 .ul_list > li{
 	float:left;
@@ -504,13 +505,13 @@ $(function() {
 				let ul = $('<ul  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="ul_list"></ul>');
 				let li;
 				if(idx == 0){
-					 li =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li"><i style="color:gold;" class="fas fa-fan fa-spin"></i></li>');
+					 li =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li"><i style="color:gold;" class="fas fa-fan fa-spin"></i><span class="badge badge-success">'+i.trip_share_count+'</span></li>');
 				}else if(idx == 1){
-					 li =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li"><i style="color:silver;" class="fas fa-fan fa-spin"></i></li>');
+					 li =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li"><i style="color:silver;" class="fas fa-fan fa-spin"></i><span class="badge badge-success">'+i.trip_share_count+'</span></li>');
 				}else if(idx == 2){
-					 li =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li"><i style="color:#cd7f32;" class="fas fa-fan fa-spin"></i></li>');
+					 li =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li"><i style="color:#cd7f32;" class="fas fa-fan fa-spin"></i><span class="badge badge-success">'+i.trip_share_count+'</span></li>');
 				}else{
-					 li =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li"><i style="color:black;" class="fas fa-fan fa-spin"></i></li>');
+					 li =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li"><i style="color:black;" class="fas fa-fan fa-spin"></i><span class="badge badge-success">'+i.trip_share_count+'</span></li>');
 				}
 				
 				let li1 =$('<li  data-arrnum="'+idx+'" data-title="'+i.trip_title+'" class="t_li">'+i.trip_title+'</li>');

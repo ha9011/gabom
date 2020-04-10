@@ -248,7 +248,7 @@ border-bottom: 1px solid lightgray;
 				<button type="button" id="dtcommit" class="btn btn-info">날짜확정</button>
 				<br> <input class="date" name="reservation_totalprice" type="text"
 						id="totalprice" placeholder="">만원<br> 
-				<input class="date" name="reservation_person" type="number" id="person" value="" placeholder="인원수를 선택하세요">명
+				<input class="date" name="reservation_person" type="text" id="person" value="" placeholder="인원수를 선택하세요">명
 				<input type="hidden" name="house_hostid" id="hostid">
 				<input type="hidden" name="house_number" id="house_number"><br>
 
