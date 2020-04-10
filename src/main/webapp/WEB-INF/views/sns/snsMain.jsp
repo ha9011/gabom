@@ -599,6 +599,8 @@ td a {
 			display: flex;
 			margin-bottom: 50px;
 			cursor: pointer;
+			background-color: #F2F2F2;
+			border-radius: 15px;
 		}
 .writeEmo{
 margin-right: 15px;
@@ -732,6 +734,15 @@ color: #337ab7;
 			<i class="fas fa-arrow-circle-up fa-5x faa-float animated "></i>
 		</div>
 	</div>
+	<script type="text/javascript">
+	imgCon=new Array;
+	$("#writeBox").on('change','#ex_file',function(){
+		for(var i=0;i<$("#ex_file")[0].files.length;i++){
+			imgCon.push($("#ex_file")[0].files[i]);
+		}
+	});	
+	
+	</script>
 	<!-- 이모티콘 -->
 	<script type="text/javascript">
 	var emotype=undefined;
@@ -880,6 +891,48 @@ color: #337ab7;
 		make+='	<div>🎅</div>';
 		make+='	<div>🍀</div>';
 		make+='	<div>🐉</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>💁‍♀️</div>';
+		make+='	<div>👨‍👨‍👧‍👧</div>';
+		make+='	<div>🏃‍♀️</div>';
+		make+='	<div>💅</div>';
+		make+='	<div>🎓</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>⛑</div>';
+		make+='	<div>🎩</div>';
+		make+='	<div>👕</div>';
+		make+='	<div>👨‍✈️</div>';
+		make+='	<div>👩‍🌾</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>👨‍🌾</div>';
+		make+='	<div>👮‍♀️</div>';
+		make+='	<div>👮‍♂️</div>';
+		make+='	<div>💂‍♀️</div>';
+		make+='	<div>💂‍♂️</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>🕵️‍♀️</div>';
+		make+='	<div>🕵️‍♂️</div>';
+		make+='	<div>🐃</div>';
+		make+='	<div>🐿</div>';
+		make+='	<div>🌴</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>🌞</div>';
+		make+='	<div>🎍</div>';
+		make+='	<div>🐩</div>';
+		make+='	<div>🦌</div>';
+		make+='	<div>🐎</div>';
+		make+='	</div>';
+		make+='<div class="emoRow">';
+		make+='<div>🍬</div>';
+		make+='	<div>🍫</div>';
+		make+='	<div>🍾</div>';
+		make+='	<div>🍯</div>';
+		make+='	<div>🎂</div>';
 		make+='	</div>';
 		make+='<div style="margin-left:24px;" onclick="emoCancel()">';
 		make+='<i class="fas fa-times"></i>'
@@ -1070,7 +1123,7 @@ color: #337ab7;
 	<script type="text/javascript" src="resources/snsJS/commentInsert.js"></script>
 	<!-- 글쓰기 1-->
 	<script type="text/javascript"
-		src="resources/snsJS/postInsert.js?ver=3"></script>
+		src="resources/snsJS/postInsert.js?ver=4"></script>
 	<!-- 호버시 아이콘 변환 스크립트1 -->
 	<script type="text/javascript" src="resources/snsJS/snsHover.js?ver=2"></script>
 	<!-- 글쓰기칸 만드는 스크립트1 -->
