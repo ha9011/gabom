@@ -2413,7 +2413,7 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 			let dbnum = arr[currentPlanDay][planidx-1].trip_order;
 			let cancelPlan
 			 if(HouseReserCheck[currentPlanDay-1].RESERVATION_NUMBER!=0){ // 예약이 있는 경우
-				 cancelPlan = $("<div ><button class='cancelplan cancelReser' data-resernumber='"+HouseReserCheck[currentPlanDay-1].RESERVATION_NUMBER+"' data-dbnum='"+dbnum+"' data-idx='"+(planidx-1)+"'>예약취소</button></div>"); 
+				 cancelPlan = $("<div ><button class='btn btn-warning cancelplan cancelReser' data-resernumber='"+HouseReserCheck[currentPlanDay-1].RESERVATION_NUMBER+"' data-dbnum='"+dbnum+"' data-idx='"+(planidx-1)+"'style='border-radius:5px;margin-top:5px'>예약취소</button></div>"); 
 			 }else{ //예약이 없는 경우
 				 cancelPlan = $("<div ><button class='cancelPlan' data-idx='"+(planidx-1)+"'>x</button><span>공유자의 여행계획 숙소입니다.</span></div>");
 			 }
