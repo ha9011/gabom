@@ -103,7 +103,19 @@ public class ChattingHandler extends TextWebSocketHandler {
 	@Override//연결 끈어졌을때
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 			
+		System.out.println("....나가기.........");
 		
+		System.out.println("나가기: " + session );
+		Map<String, Object> map = session.getAttributes();  // 담긴 친구 부르기 handler에서
+		String userID = (String)map.get("userID");  //소켓 유저의 아이디 가져오기(로그인한 아이디)
+        System.out.println("userID : " +userID);
+        
+        String somoimNum = (String)map.get("somoim_number");
+        System.out.println("somoim_number : " +somoimNum);
+		
+        //Map<Integer, Map<String, WebSocketSession>> userChatMember
+        
+        userChatMember.get(Integer.parseInt(somoimNum)).remove(userID);
 		
 		
 		

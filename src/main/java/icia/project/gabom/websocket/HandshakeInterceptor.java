@@ -29,7 +29,6 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor{
         System.out.println("param, somoim_number:"+somoimNum);
         attributes.put("somoimNum", somoimNum);
       
-       
            
       // HttpSession 에 저장된 이용자의 아이디를 추출하는 경우  (세션으로 아이디 가져오기)
       String userID = (String)req.getSession().getAttribute("userID"); // 세션에서 값을 가져오는거
