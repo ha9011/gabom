@@ -203,6 +203,8 @@ public interface ITripplanDao {
 
    @Delete("DELETE FROM TRIP_MEMBER where TRIP_NUMBER =#{tripnumber}")
    int deleteTripMember(@Param("tripnumber")int tripnumber);
+   
+   List<Trip_member> getmember(int trip_number);
 
 //   @Select("select trip_number,trip_date,trip_destination,trip_memo,trip_title,trip_order from trip_plan_detail where trip_number = #{trip_number} and trip_date = #{trip_date} and trip_order = #{trip_order} and trip_title = #{trip_title}")
 //   String selecttripmemo(Tripmemoupdate tripup);

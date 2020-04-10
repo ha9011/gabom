@@ -26,4 +26,8 @@ public class Trip_member {
 	private Trip_plan trip;
 	
 	private int trip_plan_appry_status = 0;
+	
+	//여행에서 친구 이름 , 사진 가져옴 
+		private String member_name;
+		private String member_profile_picture;
 }

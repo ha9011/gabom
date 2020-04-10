@@ -385,7 +385,7 @@ $(document).on("click","#qna_li",function(){
         	let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>글쓴이</th><th>날짜</th></tr></thead>")
         	let tbody = $("<tbody></tbody>")	
         	
-        	for(i=0;i<qna.length;i++){
+        	for(i=0;i<response.length;i++){
         		
         		let tr = $("<tr></tr>")
         		let td1 =$('<td>'+response[i].qna_number+'</td><td><a id="qna_detail" class="qna_detail" href="#;" data-toggle="modal" data-target="#qnaModal" data-number="'+response[i].qna_number+'">'+response[i].qna_title+'</a></td><td>'+response[i].qna_member_id+'</td>');
@@ -532,18 +532,18 @@ $("#write_modal_button").on("click",function(e){
         	let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>글쓴이</th><th>날짜</th></tr></thead>")
         	let tbody = $("<tbody></tbody>")	
         	
-        	for(i=0;i<qna.length;i++){
-        		
-        		let tr = $("<tr></tr>")
+        	for(i=0;i<response.length;i++){
+        		console.log("kajsdjasd",response[i]);
+        		let tr = $("<tr></tr>");
         		let td1 =$('<td>'+response[i].qna_number+'</td><td><a id="qna_detail" class="qna_detail" href="#;" data-toggle="modal" data-target="#qnaModal" data-number="'+response[i].qna_number+'">'+response[i].qna_title+'</a></td><td>'+response[i].qna_member_id+'</td>');
-        		$("#write_modal_header").append("<input type='hidden' class='form-control' id='member' name='member' value='"+response[i].qna_member_id+"'>")	
+        		$("#write_modal_header").append("<input type='hidden' class='form-control' id='member' name='member' value='"+response[i].qna_member_id+"'>");
         		const writeDate=response[i].resultDate.split(" ");  //split(쪼개다)
         		
         		const today = getToday(); //오늘 날짜를 직접 정의
         		
         		let td2 ;
         			if(today==writeDate[0]){ //날 짜
-        				td2 = $('<td>'+writeDate[1]+'</td>')
+        				td2 = $('<td>'+writeDate[1]+'</td>');
         			}else{
         				td2= $('<td>'+writeDate[0]+'</td>');
         			}
@@ -560,7 +560,7 @@ $("#write_modal_button").on("click",function(e){
         		
         		$("#right_div").append(boards);
         		$("#right_div").append(div);
-        		
+				$("<button>").addClass("btn btn-info custom").attr("id","write").attr("data-toggle","modal").attr("data-target","#write_modal").text("글쓰기").appendTo($("#write_button_area"));
         		setTimeout(() => {
         			dtable =$("#data_table").DataTable({
         				 "order": [[0, 'desc']], // asc 또는 desc

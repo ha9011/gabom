@@ -1,6 +1,7 @@
 //타임 라인 생성 함수
 	function makeTimeLine(timeLineJson){
 		$("#snsTimeLineMain").empty();
+		console.log(timeLineJson);
 		 for(let j in timeLineJson){
 			let postsContents = timeLineJson[j]["content"];
 	 		let RePostsContents=postsContents.split("<br/>").join("\r\n");

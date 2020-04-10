@@ -9,10 +9,13 @@ $("#writeBox").on("click","#writeButton",function(){
 			$("#sns_posts_content").val(str);
 		});
 		let form=$("#writeBoxForm")[0];	
-		
-		var writeData= new FormData(form);
+		var writeData= new FormData();
 		writeData.append("low",low);
-		
+		for(var i=0;i<imgCon.length;i++){
+			writeData.append("snsWriteImage",imgCon[i]);
+		}
+		writeData.append("sns_posts_content",$("#sns_posts_content").val());
+		writeData.append("security",$("#security option:selected").val());
 		$.ajaxSetup({
 			beforeSend : function(xhr){
 	 		xhr.setRequestHeader(header,token);}
@@ -25,6 +28,7 @@ $("#writeBox").on("click","#writeButton",function(){
  			processData: false,
             contentType: false,
 		}).done((json)=>{
+			imgCon=[];
 			makeTimeLine(json);
 			$("#writeBox").css("border","0 solid white");
 			$("#writeBox").empty();

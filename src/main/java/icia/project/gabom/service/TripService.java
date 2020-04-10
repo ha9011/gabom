@@ -789,6 +789,17 @@ public class TripService {
 			    
 				return new Gson().toJson(result);
 			}
+
+
+	public String showmember(int trip_number) {
+		String json = null;
+		
+		List<Trip_member> tpmember = tpDao.getmember(trip_number);
+		
+		json = new Gson().toJson(tpmember);
+		
+		return json;
+	}
 	 
 
 	
