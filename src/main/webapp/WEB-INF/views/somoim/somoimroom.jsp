@@ -702,9 +702,9 @@ const showJungmoList = (JungmoRoom)=>{
 		
 		
 		if(i.my_attend_check == 1){
-			joinbtn= $("<div><button data-jungmonum='"+i.jungmo_number +"' data-somoim='"+i.somoim_number +"' class='jungmojoinbtn'>취소</button></div>");
+			joinbtn= $("<div><button data-jungmonum='"+i.jungmo_number +"' data-somoim='"+i.somoim_number +"' class='btn btn-outline-primary jungmojoinbtn'>취소</button></div>");
 		}else{
-			joinbtn= $("<div><button data-jungmonum='"+i.jungmo_number +"' data-somoim='"+i.somoim_number +"' class='jungmojoinbtn'>참석</button></div>");
+			joinbtn= $("<div><button data-jungmonum='"+i.jungmo_number +"' data-somoim='"+i.somoim_number +"' class='btn btn-outline-success jungmojoinbtn'>참석</button></div>");
 		}	
 		
 		
@@ -713,7 +713,7 @@ const showJungmoList = (JungmoRoom)=>{
 			
 		
 		
-		var showjoinlist = $("<div><button data-toggle='modal' data-title='"+getFormatTime(i.jungmo_date, i.jungmo_time)+"' data-target='#infoJungmo' class='showAttendList' data-jungmonumattend='"+i.jungmo_number +"'>참석자</button></div>");
+		var showjoinlist = $("<div><button data-toggle='modal' data-title='"+getFormatTime(i.jungmo_date, i.jungmo_time)+"' data-target='#infoJungmo' class='btn btn-outline-dark showAttendList' data-jungmonumattend='"+i.jungmo_number +"'>참석자</button></div>");
 		btns.append(joinbtn);
 		btns.append(showjoinlist);
 		
@@ -2700,18 +2700,25 @@ $("#joinsomoim").on("click",function(e){
 		console.log(formdata.get('firstPic').name)
 		console.log(boardinfo.board_first_pic)
 		
- 		console.log("첫번쨰 사진!!!!!!!!!!!!!!!")
-		
+ 		console.log("------------사진비교----------------")
+		console.log("boardinfo",boardinfo)
  		if($("#imgfirstPic").attr('src') ==""+boardinfo.board_first_syspic && formdata.get('firstPic').name.length == 0){ //암것도 안할때
  			 console.log("그대로1")
+ 			 console.log("imgfirstPic",$("#imgfirstPic").attr('src'))
+ 			 console.log("board_first_syspic",boardinfo.board_first_syspic)
+ 			 
  			 formdata.append("oripic1", boardinfo.board_first_pic)
  			 formdata.append("syspic1", boardinfo.board_first_syspic)
+ 		}else if($("#imgfirstPic").attr('src') == "../resources/somoimimage/camera.PNG" ){ //기본사진으로 변경할때(사진x 버튼)
+ 			 
+ 			 console.log("기본사진변경1")
+ 		 	 console.log("imgfirstPic",$("#imgfirstPic").attr('src'))
+ 			 console.log("board_first_syspic",boardinfo.board_first_syspic)
  		}else if(formdata.get('firstPic').name.length != 0){ //사진변경할때
  			 console.log("사진변경1");
+ 			 console.log("imgfirstPic",$("#imgfirstPic").attr('src'))
+ 			 console.log("board_first_syspic",boardinfo.board_first_syspic)
  			 
- 		}else if($("#imgfirstPic").attr('src') == "../resources/somoimimage/camera.PNG" ){ //기본사진으로 변경할때(사진x 버튼)
- 			 console.log("기본사진변경1")
- 		 
  		}
 
 		
@@ -2719,10 +2726,12 @@ $("#joinsomoim").on("click",function(e){
 			 console.log("그대로2")
 			 formdata.append("oripic2", boardinfo.board_second_pic)
  			 formdata.append("syspic2", boardinfo.board_second_syspic)
-		 }else if(formdata.get('secondPic').name.length != 0){ // 사진변경할때
-			 console.log("사진변경2");
 		 }else if($("#imgsecondPic").attr('src') == "../resources/somoimimage/camera.PNG" ){ //기본사진으로 변경할때(사진x 버튼)
 			 console.log("기본사진변경2")
+			 
+		 }else if(formdata.get('secondPic').name.length != 0){ // 사진변경할때
+			 console.log("사진변경2");
+		 
 		 }
 		
 		
@@ -2730,10 +2739,10 @@ $("#joinsomoim").on("click",function(e){
 			 console.log("그대로3")
 			  formdata.append("oripic3", boardinfo.board_third_pic)
  			  formdata.append("syspic3", boardinfo.board_third_syspic)
-		 }else if(formdata.get('thirdPic').name.length != 0){ // 사진변경할때
-			 console.log("사진변경3");
 		 }else if($("#imgthirdPic").attr('src') == "../resources/somoimimage/camera.PNG" ){ //기본사진으로 변경할때(사진x 버튼)
 			 console.log("기본사진변경3")
+		 }else if(formdata.get('thirdPic').name.length != 0){ // 사진변경할때
+			 console.log("사진변경3");
 		 }
 
 		
@@ -2894,7 +2903,7 @@ $("#joinsomoim").on("click",function(e){
 	  			
 	  			if(data.board_writer == ${JsonMysomoimInfo}.member_name ){  //글쓴이와 접속아이디가 일치하면
 	  				console.log("일치-> 수정, 삭제 버튼 추가")
-	  				$(".showboardh").append($("<h4>"+data.board_title+"</h4><div><button  data-dismiss='modal' id='boardModify'  >수정</button><button id='boardDelete' data-dismiss='modal'>삭제</button></div>"))
+	  				$(".showboardh").append($("<h4>"+data.board_title+"</h4><div><button class='btn btn-info' data-dismiss='modal' id='boardModify'  >수정</button><button id='boardDelete' class='btn btn-warning' data-dismiss='modal'>삭제</button></div>"))
 					
 	  				//$(".infomodaljmh").append($("<div><button  data-dismiss='modal' id='jmModify' data-jmnumber='"+data.jungmo_number+"' data-smnumber='"+data.somoim_number+"' >수정</button><button id='jmDelete' data-dismiss='modal' data-jmnumber='"+data.jungmo_number+"'  data-smnumber='"+data.somoim_number+"' >삭제</button></div>"))
 					
@@ -3158,10 +3167,13 @@ $("#joinsomoim").on("click",function(e){
 		
 		if(picNum==1){
 			$("#imgfirstPic").attr("src","../resources/somoimimage/camera.PNG");
+			$("#firstPic").val("");
 		}else if(picNum==2){
 			$("#imgsecondPic").attr("src","../resources/somoimimage/camera.PNG");
+			$("#secondPic").val("");
 		}else if(picNum==3){
 			$("#imgthirdPic").attr("src","../resources/somoimimage/camera.PNG");
+			$("#thirdPic").val("");
 		}
 		$(this).remove();
 	})

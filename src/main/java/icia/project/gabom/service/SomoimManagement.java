@@ -596,7 +596,7 @@ public class SomoimManagement {
 
 			smb.setBoard_second_pic(board_second_pic).setBoard_second_syspic(board_second_syspic);
 		}else if(multi.getParameterMap().containsKey("oripic2")) {
-			smb.setBoard_first_pic(multi.getParameter("oripic2")).setBoard_first_syspic(multi.getParameter("syspic2"));
+			smb.setBoard_second_pic(multi.getParameter("oripic2")).setBoard_second_syspic(multi.getParameter("syspic2"));
 		}
 		
 		String board_third_pic = "";
@@ -612,7 +612,7 @@ public class SomoimManagement {
 
 			smb.setBoard_third_pic(board_third_pic).setBoard_third_syspic(board_third_syspic);
 		}else if(multi.getParameterMap().containsKey("oripic3")) {
-			smb.setBoard_first_pic(multi.getParameter("oripic3")).setBoard_first_syspic(multi.getParameter("syspic3"));
+			smb.setBoard_third_pic(multi.getParameter("oripic3")).setBoard_third_syspic(multi.getParameter("syspic3"));
 		}
 
 		System.out.println("smb : " + smb.toString());
