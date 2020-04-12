@@ -71,6 +71,8 @@ public class TripService {
       int trip_number2=tpl.getTrip_number();
       System.out.println("여행번호:"+trip_number2);
       
+      boolean addplanme = tpDao.tripaddme(trip_number2,trip_id);//내 여행 멤버에 본인 추가 
+      
        SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN); //날짜 패턴 형식으로 변환
         
        Date startDate = sdf.parse(trip_start_date);//시작날짜
