@@ -15,6 +15,12 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a7e29fa39462f45fc2138a8307dbe830&libraries=services"></script>
 	  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 <style>
+a{
+cursor: pointer;
+}
+.icon{
+cursor: pointer;
+}
 section {
   position: relative;
   height: 75vh;
