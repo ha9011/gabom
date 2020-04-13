@@ -35,7 +35,9 @@ float: right;
 width: 70%;
 margin: 3% 3% 3% 3%;
 }
-    
+.modal-content{
+	font-size: 18px;
+}    
     
 </style>
 </head>
@@ -471,10 +473,10 @@ $(document).on("click", "#qna_detail",function(e){
 				strn += '<div>작 성 자 : '+ response.nlist[0].qna_member_id + '<span> 글 번 호 : '+ response.nlist[0].qna_number+'<br>';
 				strn += '<input type="hidden" name="number" id="number" value="'+response.nlist[0].qna_number+'">';
 				strn += '작성일 : '+response.nlist[0].resultDate+'</div>';
-				strn += '<div>내용 : '+response.nlist[0].qna_body+'</div>';
+				strn += '<br><div>내용 : '+response.nlist[0].qna_body+'</div>';
 				strn += '<br><div id="qna_reply_div">답변</div><br>';
 					for(i=0;i<response.alist.length;i++){
-						strn += '<div class="qna_reply_div" style="border-top: 1px solid #D8D8D8">'+response.alist[i].qna_reply+'</div>';
+						strn += '<div class="qna_reply_div" style="border-top: 1px solid #D8D8D8"><br>'+response.alist[i].qna_reply+'<br></div>';
 					}
 				$("#qna_modal_body").append(strn);
 				
