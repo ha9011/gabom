@@ -802,6 +802,7 @@ $("#dataChangeSave").on("click", function(){
      	$("#dataChangeSave").prop("disabled",true)
     	$("#inputfirstdaybtn").prop("disabled",true)   
                  
+    	location.href="myplan";
               },
               error:function(error){
                  alert("여행 거절 실패.");

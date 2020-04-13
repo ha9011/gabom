@@ -157,7 +157,7 @@
 }
 
 .attendListFrame {
-	border: 1px solid black;
+	border-bottom:1px solid lightgray;
 	margin-top: 3px;
 	display: flex;
 }
@@ -769,7 +769,7 @@ const showAllMemberList= (JsonMemberList)=>{
 	for( v of JsonMemberList){
 		console.log("맴버 리스트 나옴?")
 		var MemberListFrame = $("<div class='attendListFrame'> </div>");
-		var MemberListPic = $("<div class='attendPicFrame'> <img src='"+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
+		var MemberListPic = $("<div class='attendPicFrame'> <img style='height:80px;' src='"+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
 			var MemberListCont =  $("<div class='attendCont'> </div>");	
 			var MemberListTitle = $("<div class='attendTitle'>"+v.member_name+"</div>");	
 			var MemberListIntroduce = $("<div class='attendIntroduce'>"+v.member_profile_contents+"</div>");
@@ -2491,7 +2491,7 @@ let somoimnumber = String(${JsonBasicInfo}.somoim_number);
 				//$(".modal-body").empty(); // 작은 모달 초기화
 				for(let v of data){
 					var attendListFrame = $("<div class='attendListFrame'> </div>");
-					var attendPic = $("<div class='attendPicFrame'> <img src='"+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
+					var attendPic = $("<div class='attendPicFrame'> <img style='height:80px;' src='"+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
 		  			var attendCont =  $("<div class='attendCont'> </div>");	
 		  			var attendTitle = $("<div class='attendTitle'>"+v.member_name+"</div>");	
 		  			var attendIntroduce = $("<div class='attendIntroduce'>"+v.member_profile_contents+"</div>");
@@ -3114,7 +3114,7 @@ $("#joinsomoim").on("click",function(e){
 		for( v of data['기존']){
 			var attendListFrame = $("<div class='attendListFrame '> </div>");  // 여기에 채워넣어야함
 			
-			var attendPic = $("<div class='attendPicFrame fitem item1'> <img src='"+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
+			var attendPic = $("<div class='attendPicFrame fitem item1'> <img style='height:80px;' src='"+v.member_profile_picture+"' class='rounded-circle attendPic' alt='Cinque Terre'> </div>");
   			
 			var attendCont =  $("<div class='attendCont fitem item2'> </div>");	
   			var attendTitle = $("<div class='attendTitle'>"+v.member_id+"</div>");	
