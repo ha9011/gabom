@@ -740,11 +740,15 @@ public class TripService {
 
 	
 	  //home에서 여행계획들 불러옴 
-	public String getplanlist() {
+	public String getplanlist(Principal principal) {
 		String json = null;
 		
 		List<Trip_plan> tplist = tpDao.gettplist();
-		
+		for(Trip_plan plan: tplist) {
+			if(principal==null) {
+				plan.setTrip_id("없음");
+			}
+		}
 		json = new Gson().toJson(tplist);
 	 
 		return json; 
