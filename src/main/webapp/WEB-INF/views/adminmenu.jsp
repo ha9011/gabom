@@ -106,8 +106,9 @@
 	height: auto;
 	width: 100%;
 	/* display: block; */
-	border: 1px solid black;
+/* 	border: 1px solid black; */
 	overflow: auto;
+	font-size: 20px;
 }
 
 #foodmain_judge {
@@ -117,9 +118,10 @@
 
 #food_judge {
 	display: block;
-	border: 1px solid black;
+/* 	border: 1px solid black; */
 	width: 100%;
 	overflow: auto;
+	font-size: 20px;
 }
 
 #list_left {
@@ -186,6 +188,9 @@ li {
 #dayFrame {
    display: flex;
    margin: 0 0 0 8px;
+}
+.modal-body{
+	font-size: 20px;
 }
 
 </style>
@@ -754,10 +759,10 @@ $(document).on("click",".sns_comment_delete",function(e) {
 					strn += '<input type="hidden" name="number" id="number" value="'+response.nlist[0].qna_number+'">';
 					
 					strn += '작성일 : '+response.nlist[0].resultDate+'</div>';
-					strn += '<div>내용 : '+response.nlist[0].qna_body+'</div>';
+					strn += '<br><div>내용 : '+response.nlist[0].qna_body+'</div>';
 					strn += '<br><div id="qna_reply_div">답변</div><br>';
 						for(i=0;i<response.alist.length;i++){
-							strn += '<div class="qna_reply_div" style="border-top: 1px solid #D8D8D8">'+response.alist[i].qna_reply+'</div>';
+							strn += '<div class="qna_reply_div" style="border-top: 1px solid #D8D8D8"><br>'+response.alist[i].qna_reply+'</div><br>';
 						}
 					strn += '<textarea class="form-control" rows="5" id="qnaanswer" name="qnaanswer"></textarea>';
 					$("#qna_modal_body").append(strn);
@@ -1215,7 +1220,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
  			console.log("house break");
  			break;
  		}
- 		strh+='<div style="border: 1px solid black; margin-top: 5px; id="house_judge">';
+ 		strh+='<hr><div style="margin-top: 5px;" id="house_judge">';
 		strh+='<div id="house_judge">';
 
 		strh+='<div id="list_left"><img style="height:200px; width:100%;" src="'+house[i].house_sysname+'"></div>';
@@ -1247,7 +1252,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
  			console.log("food break");
  			break;
  		}
- 		strf+='<div style="border: 1px solid black; margin-top: 5px; id="food_judge">';
+ 		strf+='<hr><div style="margin-top: 5px;" id="food_judge">';
 		strf+='<div id="food_judge">';
 		strf+='<div id="list_left"><img style="height:200px; width:100%;" src="'+food[i].food_sysname+'"></div>';
 		strf+='<div id="list_right_sec">';
@@ -1301,7 +1306,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
  	 			 			console.log("house break");
  	 			 			break;
  	 			 		}
- 	 			 		strh+='<div style="border: 1px solid black; margin-top: 5px;" id="house_judge">';
+ 	 			 		strh+='<hr><div style="margin-top: 5px;" id="house_judge">';
  	 					strh+='<div id="house_judge">';
 
  	 					strh+='<div id="list_left"><img style="height:200px; width:100%;" src="'+response.hlist[i].house_sysname+'"></div>';
@@ -1334,7 +1339,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
  	 			 			console.log("food break");
  	 			 			break;
  	 			 		}
- 	 			 		strf+='<div style="border: 1px solid black; margin-top: 5px;" id="food_judge">';
+ 	 			 		strf+='<hr><div style="margin-top: 5px;" id="food_judge">';
  	 					strf+='<div id="food_judge">';
  	 					strf+='<div id="list_left"><img style="height:200px; width:100%;" src="'+response.flist[i].food_sysname+'"></div>';
  	 					strf+='<div id="list_right_sec">';
