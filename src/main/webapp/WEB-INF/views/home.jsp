@@ -494,6 +494,9 @@ $(function() {
         dataType:"json", //rest 컨트롤 이용   
         success:function(data){
 			console.log("여행데이터",data);
+			if(data[0]["trip_id"]=="없음"){
+				$(".planjudgebtn").css("display","none");
+			}
 			arr = data;
 			let idx = 0;
 			for(let i of data){
