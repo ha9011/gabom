@@ -434,7 +434,7 @@ display : flex;
 			</div>
 
 			<div id="out2">
-				<div id="day1">소모임 이름</div>
+				<div id="day1"></div>
 				<div id="chattingRoom"></div>
 				<div id="cont2" style="height: 10%;">
 					<input type="text" id="chattingInput" onkeypress="if( event.keyCode == 13 ){ $('#chattingBtn').trigger('click')}" >
@@ -694,7 +694,7 @@ const showJungmoList = (JungmoRoom)=>{
 		//mySMModal
 		var frame = $("<div class='basicInfoframe' data-jungmonum='"+i.jungmo_number +"'></div>")
 		var img = $("<div class='jmimg' data-target='#infoJungmo' data-toggle='modal'  ><div class='upDate btn btn-danger btn-sm'>"+week[new Date(i.jungmo_date).getDay()] +"</div><div class='downDate'><div class='jmday'>"+new Date(i.jungmo_date).getDate()+"</div></div></div>")
-		var detail = $("<div class='jmdetail'><div><img width='13px' height='13px' src='"+"../resources/somoimimage/time.PNG"+"' >&nbsp&nbsp"+getFormatTime(i.jungmo_date, i.jungmo_time) +"</div><div><img width='13px' height='13px' src='"+"../resources/somoimimage/location.PNG"+"' >&nbsp&nbsp"+i.jungmo_location +"</div><div><img width='13px' height='18px' src='"+"../resources/somoimimage/coin.PNG"+"' >&nbsp&nbsp"+i.jungmo_money +"</div></div>")
+		var detail = $("<div class='jmdetail'><div><img width='13px' height='13px' src='"+"../resources/somoimimage/time.PNG"+"' >&nbsp&nbsp"+ i.jungmo_time +"</div><div><img width='13px' height='13px' src='"+"../resources/somoimimage/location.PNG"+"' >&nbsp&nbsp"+i.jungmo_location +"</div><div><img width='13px' height='18px' src='"+"../resources/somoimimage/coin.PNG"+"' >&nbsp&nbsp"+i.jungmo_money +"</div></div>")
 		var btns = $("<div class='Jungmobtns'></div>");
 		var joinbtn ;
 		

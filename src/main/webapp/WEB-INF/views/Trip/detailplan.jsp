@@ -1307,6 +1307,7 @@ function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
 
 
  $("#left").on("click",function(e){
+	 houseNum=null;
 	 $("#savebtn").prop("disabled", true);
 	 $("#savebtn").css('opacity',0.5);
 	 
@@ -1380,7 +1381,7 @@ function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
 
 
  $("#right").on("click",function(e){
-	 
+	 houseNum=null;
 	 $("#savebtn").prop("disabled", true);
 	 $("#savebtn").css('opacity',0.5);
 	 
@@ -2541,7 +2542,7 @@ const createPlanForm = (arrFrame,pointsFrame) =>{
 	// 커스텀 오버레이에 표시할 내용입니다     
 	// HTML 문자열 또는 Dom Element 입니다 
 	let content;
-	if(houseNum-1 == i){
+	if(houseNum-1 == i){ // 
 		content = " <img style='width:40;height:40px;'src='./resources/tripImage/bookhouse.png'>  ";
 		checkHouse = true;
 	}else{

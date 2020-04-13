@@ -142,6 +142,11 @@ var tripinfo= ${tripinfo};
 console.log("집 목록",test);
 console.log("여행정보",tripinfo)
 var house_list = document.getElementById("house_list");
+let positions  =new Array; 
+let xavg = 0;
+let yavg =0;
+
+
 
 for(let i of test ){
 	console.log("집리스트 보여줘",i)
@@ -153,30 +158,33 @@ for(let i of test ){
 	out.append(img);
 	out.append(info);
 	
-};
+	
+	//이거 갈굼1
 	$(".house").on('click', function() { // 이미지 클릭시 url 이동
 		console.log("집 클릭") 
 		console.log($(this).attr("name"));
-	    location.href="triphousedetail?house_number="+$(this).attr("name")+"&trip_number="+tripinfo[0].trip_number+"&trip_day="+tripinfo[0].trip_day;
+	    location.href="housedetail?house_number="+$(this).attr("name");
 	});	
-
+	
+	
+	console.log("지도")
+	console.log(i)
+	
+	let innerList = {  
+		title : i.house_name,
+		content: '<div id="showhouse"><img style="width:100px" src="'+i.house_sysname+'">&nbsp&nbsp'+i.house_name+'</div>',
+		latlng: new kakao.maps.LatLng(i.house_ypoint, i.house_xpoint)
+	};
+	
+	yavg += Number(i.house_ypoint);
+	xavg += Number(i.house_xpoint);
+	
+	positions.push(innerList)
+	
+}
 
 
 //--------------------------------------지도 마커싱
-let positions  =new Array; 
-let xavg = 0;
-let yavg =0;
-
-for(i of test){
-	console.log(i)
-	let innerList = {  
-		latlng: new kakao.maps.LatLng(i.house_ypoint, i.house_xpoint)
-	};
-	yavg += Number(i.house_ypoint);
-	xavg +=  Number(i.house_xpoint);
-	
-	positions.push(innerList)
-}
 
 xavg=xavg/test.length;
 
@@ -186,9 +194,11 @@ console.log(xavg);
 console.log(yavg);
 
 
-console.log(positions)
+console.log("positions[좌표모음]",positions)
 
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+
+
+let mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 
 mapOption = { 
     center: new kakao.maps.LatLng(yavg, xavg), // 지도의 중심좌표
@@ -196,27 +206,62 @@ mapOption = {
    };
 
 //지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-var map = new kakao.maps.Map(mapContainer, mapOption); 
+let map = new kakao.maps.Map(mapContainer, mapOption); 
 
-var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+let imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+let customOverlay ;
 
-for (var i = 0; i < positions.length; i ++) {
+let bounds = new kakao.maps.LatLngBounds();
+for (let i = 0; i < positions.length; i ++) {
     console.log(positions[i].latlng)
     // 마커 이미지의 이미지 크기 입니다
-    var imageSize = new kakao.maps.Size(24, 35); 
+    let imageSize = new kakao.maps.Size(24, 35); 
     
     // 마커 이미지를 생성합니다    
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+    let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
     
     // 마커를 생성합니다
-    var marker = new kakao.maps.Marker({
+    let marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
         position: positions[i].latlng, // 마커를 표시할 위치
-        /* title : positions[i].title, */ // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-        image : markerImage // 마커 이미지 
+        image : markerImage, // 마커 이미지 
+        title : positions[i].content
     });
+    
+    
+    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker));
+    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener());
+   
+    bounds.extend(positions[i].latlng);
+	
+}
+map.setBounds(bounds)
+
+
+function makeOverListener(map, marker) {
+    return function() {
+    	console.log(marker.getPosition())
+    	console.log(marker.getTitle())
+    	var t = marker.getPosition()
+		t["Ga"] += 0.000;
+    	t["Ha"] += 0.013;
+    	console.log("t",t)
+    	var content = marker.getTitle();
+    	console.log("content",content);
+    	customOverlay = new kakao.maps.CustomOverlay({
+            position: t,
+            content: content   
+        });
+    	customOverlay.setMap(map);
+    };
 }
 
+// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+function makeOutListener() {
+    return function() {
+    	customOverlay.setMap(null);
+    };
+}
 //---------------------------------------------------------------------------------------------------------
  $("#searchbtn").on("click", function() {
 	 	console.log("ajax 재검색")

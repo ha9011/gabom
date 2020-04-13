@@ -120,7 +120,7 @@ height:150px;
 </style>
          <div id="title">
              <div>
-             <h1 class="font-weight-light text-lg " id="name">소모임 이름 Gallery</h1>         
+             <h1 class="font-weight-light text-lg " id="name">Gallery</h1>         
             </div>
                <form  id="uploadimg" name="uploadimg" method="post" enctype="multipart/form-data"> 
                      <div id="btnbox" class="filebox bs3-primary">
