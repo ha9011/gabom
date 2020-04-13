@@ -110,7 +110,7 @@ public class ChattingHandler extends TextWebSocketHandler {
 		String userID = (String)map.get("userID");  //소켓 유저의 아이디 가져오기(로그인한 아이디)
         System.out.println("userID : " +userID);
         
-        String somoimNum = (String)map.get("somoim_number");
+        String somoimNum = (String)map.get("somoimNum");
         System.out.println("somoim_number : " +somoimNum);
 		
         //Map<Integer, Map<String, WebSocketSession>> userChatMember
