@@ -31,6 +31,9 @@
 
 
 <style>
+a{
+cursor:pointer;
+}
 body {
 	overflow: hidden;
 }
@@ -175,7 +178,6 @@ border-radius:100px;
 					<li><a class="page-scroll" href="/gabom/">Home</a></li>
 					<li><a class="page-scroll" href="snsmain">SNS</a></li>
 					<li><a class="page-scroll" href="trip">여행계획</a></li>
-					<li><a class="page-scroll" href="snsmain">sns</a></li>
 					<li><a class="page-scroll" href="housechoice">숙박</a></li>
 					<li><a class="page-scroll" href="foodmain">맛집</a></li>
 					<li><a class="page-scroll" href="somoim/mainsomoim">소모임</a></li>

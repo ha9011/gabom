@@ -415,7 +415,7 @@ display: flex;
 					<li><a class="page-scroll" href="myplan">내여행</a></li>
 					<li><a class="page-scroll" href="housechoice">숙박</a></li>
 					<li><a class="page-scroll" href="foodmain">맛집</a></li>
-					<li><a class="page-scroll" href="#team">VIP</a></li>
+					<li><a class="page-scroll" href="somoim/mainsomoim">소모임</a></li>
 					<li><a class="page-scroll" href="#contact">고객센터</a></li>
 				</ul>
 			</div>

@@ -22,6 +22,9 @@
 <link href="./resources/css/modern-business.css" rel="stylesheet">
   
 <style>
+a{
+cursor: pointer;
+}
 .out{
 width:100%;
 border:1px solid lightgray;
