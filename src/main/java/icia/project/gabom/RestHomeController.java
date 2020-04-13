@@ -1,5 +1,7 @@
 package icia.project.gabom;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,10 +31,10 @@ public class RestHomeController {
 	
 	
 	 @RequestMapping(value = "/planlist", produces="text/plain;charset=utf-8")//시작할때 불러오는거 
-	 public String planlist() {
+	 public String planlist(Principal principal) {
 		 System.out.println("목록 불러와라 ");
 	  
-		 String json =trs.getplanlist(); 
+		 String json =trs.getplanlist(principal); 
 		 return json; 
 	 }
 	 

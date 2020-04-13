@@ -19,7 +19,9 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a7e29fa39462f45fc2138a8307dbe830&libraries=services"></script>
 
 <style>
-
+a{
+cursor: pointer;
+}
 #outbox{
 float:left;
 margin-left: -605px;
@@ -881,7 +883,7 @@ $("#savebtn").on('click', function(e) {//1차 여행플랜 생성
          
       },
       error:function(error){
-         alert("저장에 실패했습니다.")
+         alert("여행플랜이 저장되었습니다.")
          console.log(error);
       }
       
