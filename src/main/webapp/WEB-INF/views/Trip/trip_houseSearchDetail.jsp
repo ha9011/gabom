@@ -40,6 +40,7 @@ body{overflow:scroll;}
 	
 }
 .house{
+	cursor:pointer;
 	margin:15px;
 	width:80%;
 	border-bottom:2px solid gray;
