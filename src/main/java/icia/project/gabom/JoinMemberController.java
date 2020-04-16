@@ -23,17 +23,14 @@ public class JoinMemberController {
 	//회원가입 페이지로 이동
 	@RequestMapping(value = "/joinselecttype", method = RequestMethod.GET)
 	public String joinselecttype() {
-		System.out.println("회원가입 페이지 첫단계 type설정");
 		return "joinMember/joinselecttype";
 	}
 	
 	@RequestMapping(value = "/joinmember", method = RequestMethod.GET)
 	public ModelAndView joinmember(Member mb) {
-		System.out.println("회원가입 페이지 이동");
-		System.out.println("맴버 타입 : " +mb.getMember_type());
 		mav = new ModelAndView();
-		mav.addObject("type", mb.getMember_type());
-		mav.setViewName("joinMember/joinmember");
+		mav.addObject("type", mb.getMember_type());  // 여행객, 서비스업체 둘중 한 타입 선택
+		mav.setViewName("joinMember/joinmember");    // 본격 회가입 페이지 이동
 		return mav;
 	}
 	
@@ -42,17 +39,8 @@ public class JoinMemberController {
 	//회원가입버튼 누름
 	@RequestMapping(value = "/joinmemberAction", method = RequestMethod.POST)
 	public ModelAndView joinmemberAction(MultipartHttpServletRequest multi) {
-		System.out.println("회원가입 데이터 입력");
-		
-//		Enumeration<String> e = multi.getParameterNames();
-//		while(e.hasMoreElements()) {
-//			System.out.println("e의 요소 : " + e.nextElement());
-//		}
 		mav = new ModelAndView();
-		
-		mav = JMMM.joinmemberAction(multi); //회원가입insert
-		
-		
+		mav = JMMM.joinmemberAction(multi); //회원가입 input들의 데이터는 multi에 담겨있음
 		return mav;
 	}
 	

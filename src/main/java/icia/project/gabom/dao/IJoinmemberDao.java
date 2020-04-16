@@ -13,7 +13,6 @@ public interface IJoinmemberDao {
 
 	int resultJoinMemberSecurityROLEUSER(@Param("member_id") String member_id, @Param("ROLE_USER")String ROLE_USER);
 	
-	//@Select("SELECT MEMBER_ID FROM MEMBER where MEMBER_ID = #{userid}")
 	Member idCheck(Member mb);
 
 	Member emailCheck(Member mb);

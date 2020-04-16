@@ -379,17 +379,12 @@
 
 	
 	$("#member_id").on("blur", function(e){
-		console.log("아이디 중복 확인 blur");
 		var userCheck = $("#checkID");
 		var id = e.target.value;
-		console.log(id);
-		
-
 		$.ajaxSetup({         
 		      beforeSend : function(xhr){
 		         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");}
 		      });//먼저 보냄
-		      
 		$.ajax({
 			url:"join/userid",
 			data:"member_id="+id,
@@ -399,15 +394,10 @@
 			// jquery 방식은 - deferred객체를 쓴다. 
 		})
 		.done((rest)=>{
-				
-				console.log("test : " +rest);
 				var userCheck = $("#checkID");
 				userCheck.empty()
-				
 				var userId = $("#member_id");
-				
 				// 아이디 입력 유무 체크
-				
 				if (id == '') {
 					userCheck.empty()
 					userCheck.css("color","red").text("필수 기재 사항입니다.")
@@ -421,11 +411,8 @@
 					userCheck.empty()
 					userCheck.css("color","green").text("사용가능한 아이디 입니다.")
 				}	
-				
 		})
 		.fail((rest)=>{console.log("실패 : " + rest)});
-		
-		
 	})
 	
 	

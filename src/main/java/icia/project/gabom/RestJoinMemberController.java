@@ -17,9 +17,7 @@ public class RestJoinMemberController {
 	
 	@RequestMapping(value = "/userid", produces="text/plain;charset=utf-8")
 	public String idCheck(Member mb){
-		System.out.println("ajax 접근");
-		System.out.println("id="+mb.getMember_id());
-		
+		//가입할 아이디의 값을 받아 중복체크 처리
 		Member resultMember_id = JMMM.idCheck(mb);
 		String result = null;
 		if( resultMember_id == null) {
@@ -27,15 +25,12 @@ public class RestJoinMemberController {
 		}else {
 			result="1"; // 있을 경우
 		}
-		return result;
+		return result;  
 		
 	}
 	
 	@RequestMapping(value = "/useremail", produces="text/plain;charset=utf-8")
 	public String emailCheck(Member mb){
-		System.out.println("ajax 접근");
-		System.out.println("id="+mb.getMember_id());
-		
 		Member resultMember_email = JMMM.emailCheck(mb);
 		String result = null;
 		if( resultMember_email == null) {

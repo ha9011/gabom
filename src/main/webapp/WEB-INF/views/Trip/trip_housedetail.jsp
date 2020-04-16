@@ -380,6 +380,7 @@ $("#info").append(info);
             contentType:false,  //제이슨 아니니깐 까보지마!!
             success:function(data){
                alert("예약완료");
+               alert("예약진짜완료")
                console.log(data)
                $("#reservation")[0].reset();
                location.href="detailplan?trip_number="+trip_number;

@@ -164,7 +164,7 @@ for(let i of test ){
 	$(".house").on('click', function() { // 이미지 클릭시 url 이동
 		console.log("집 클릭") 
 		console.log($(this).attr("name"));
-	    location.href="housedetail?house_number="+$(this).attr("name");
+		location.href="triphousedetail?house_number="+$(this).attr("name")+"&trip_number="+tripinfo[0].trip_number+"&trip_day="+tripinfo[0].trip_day;
 	});	
 	
 	

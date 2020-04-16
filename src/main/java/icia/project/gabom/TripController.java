@@ -87,9 +87,9 @@ public class TripController {
    @RequestMapping(value = "/triphousedetail", method = RequestMethod.GET)
 	public ModelAndView triphousedetail(int house_number,Housereservation reserlist,Principal ppl,Trip_plan_date td) {
 		System.out.println("여행숙박선택");
-		System.out.println(house_number);
-		System.out.println(td.getTrip_day());
-		System.out.println(td.getTrip_number());
+		System.out.println("숙소 번호 : " + house_number);
+		System.out.println("여행 N날짜 : " +td.getTrip_day());
+		System.out.println("여행 고유번호 : " +td.getTrip_number());
 		mav = trs.triphousedetail(house_number,reserlist,ppl,td);
 		return mav;
 	}
