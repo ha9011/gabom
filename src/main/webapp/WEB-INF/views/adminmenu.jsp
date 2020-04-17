@@ -215,7 +215,7 @@ li {
 <!-- 			<li class="nav-item"><a class="nav-link" data-toggle="tab" -->
 <!-- 				href="#service_declaration">서비스업체 신고관리</a></li> -->
 			<li class="qwe nav-item"><a class="nav-link" data-toggle="tab"
-				href="#tourist_judge" id="judgeTripPlan">여행객계획 등록심사</a></li>  
+				href="#tourist_judge" id="judgeTripPlan">여행플랜 등록심사</a></li>  
 				
 			<li class="qwe nav-item"><a class="nav-link" data-toggle="tab"
 				href="#sns_declaration" id="snsmanage" >SNS 신고관리</a>
@@ -246,7 +246,7 @@ li {
 				<p>메 뉴 1</p>
 			</div>
 			<div id="tourist_judge" class="container tab-pane fade">
-				<h3>여행객계획 등록심사</h3>
+				<h3>여행플랜 등록심사</h3>
 				<div id="TripSharePlanList"></div>
 			</div>
 			<div id="sns_declaration" class="container tab-pane fade">
@@ -479,10 +479,15 @@ li {
 		return yyyy+"-"+mm+"-"+dd;
 	}
 	//---------------------------------------------------------sns게시글 신고 출력 ----------------------------------------------------------------
-// 	$("#snsmanage").on("click",function(){
-// 		console.log("1111sns신고관리 클릭");
-// 		$("#snsmanage").trigger(sns_posts());
-// 	});
+
+	$("#snsmanage").on("click",function(){
+		console.log("SNS관리");
+		console.log(dtable);
+		if(dtable!=null){
+			dtable.destroy();
+		}
+		$("#sns_trigger").trigger('click');
+	})
 	
 	
 function sns_posts() {
@@ -1544,16 +1549,8 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	         });//승인거절 ajax End
 	})//on click함수 End
 	
-	//----------
-	$("#snsmanage").on("click",function(){
-		console.log("SNS관리");
-		console.log(dtable);
-		if(dtable!=null){
-			dtable.destroy();
-		}
-		$("#sns_trigger").trigger('click');
-	})
-
+	
+//-----------------------------------------------여행플랜 등록심사------------------------------------------
 	$("#judgeTripPlan").on("click",function(){
 		console.log("여행관리계획");
 		console.log(dtable);
@@ -1576,7 +1573,6 @@ $(document).on("click",".sns_comment_delete",function(e) {
 				success : function(response) {
 					console.log("승인대기 목록 : " , response);
 					
-					
 					 $("#sns_table").empty();
 	  				console.log(response);
 	  				console.log("전체공지 사이즈",response.length);
@@ -1584,16 +1580,11 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	  				console.log("페이지사이즈",pagesize);
 	  				$("#TripSharePlanList").empty();
 	  				
-	  				
-
-	  				
 	  				let boards = $("<table id='boards' class='table table-bordered table-hover'></table>")
 	  				let colgroup =$("<colgroup><col width='25%'><col width='30%'><col width='45%'></colgroup>")
 	  				let thead = $("<thead><tr><th>지역</th><th>이름</th><th>날짜</th></tr></thead>")
 	  		        
 	  				let tbody = $("<tbody ></tbody>")		
-	  				
-	  				
 	  		        
 	  		        console.log("포문직전")
 	  				for(  i of response){
@@ -1625,23 +1616,14 @@ $(document).on("click",".sns_comment_delete",function(e) {
 	  				setTimeout(() => {
 	  					dtable =$("#boards").DataTable({
 	  						 "order": [[0, 'desc']], // asc 또는 desc
-
 	  						 "dom" : '<"top"il>t<"bottom"prf><"clear">',
-
 	  			             	// 검색 기능 숨기기
 	  			             	searching: false,
-//	  			             	// 정렬 기능 숨기기
-//	  			             	ordering: false,
-//	  			             	// 정보 표시 숨기기
+	  			             	// 정보 표시 숨기기
 	  			             	info: false,
-//	  			             	// 페이징 기능 숨기기
-//	  			             	paging: false
 	  			            	
 	  			            });
 	  				}, 100);
-					
-					
-					
 				},
 				error : function(jqXHR, status, e) {
 					console.log("서비스업체심사리스트 에러");
@@ -1649,11 +1631,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
 			}); //ajax end	
 		}, 200)
 		//TripSharePlanList
-		
-		
-		
-		
-	})
+	})//여행플랜 등록심사 ajax End
 	
 	//----------------날짜 바꾸기
 	function getFormatDate(strdate){
@@ -1713,7 +1691,7 @@ $(document).on("click",".sns_comment_delete",function(e) {
  	$(document).on('click','.dsbtn',function(){//모달 닫음
    $("#detail").hide();
 })
-
+//---------------------------------------------------여행플랜상세 모달--------------------------------------------------
 $(document).on('click','.modalplan',function(e){//모달 열고 지도 및 정보 표시
 	arr={};
 	points={};
@@ -2059,7 +2037,7 @@ function displayCircleDot(position, distance) {
 
 
 
-//--------------------------------------------------거절 승인
+//--------------------------------------------------여행플랜 거절 승인----------------------------------------------
 $(".planjudgebtn").on('click',function(e){
 	console.dir(e.target.innerText)  //승인or거절
 	var judge = e.target.innerText
@@ -2138,12 +2116,9 @@ $(".planjudgebtn").on('click',function(e){
 
 		  			             	// 검색 기능 숨기기
 		  			             	searching: false,
-//		  			             	// 정렬 기능 숨기기
-//		  			             	ordering: false,
-//		  			             	// 정보 표시 숨기기
+
+		  			             	// 정보 표시 숨기기
 		  			             	info: false,
-//		  			             	// 페이징 기능 숨기기
-//		  			             	paging: false
 		  			            	
 		  			            });
 		  				}, 100);

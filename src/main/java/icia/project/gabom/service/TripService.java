@@ -562,10 +562,6 @@ public class TripService {
 	}
 
 
-
-
-
-
 	public String getplan(int trip_number) {
 		String json = null;
 		

@@ -24,13 +24,13 @@
 		WHERE FF.FOOD_IMAGETYPE = 1 AND FS.FOOD_GRANTTYPE = 0 ORDER BY FOOD_NUMBER DESC
 	</select>
 	
-	<!-- 하우스 모달창 데이터 -->
+	<!-- 하우스 상세페이지 데이터 -->
 	<select id="gethousemodal" parameterType="String" resultType="adminhouse">
 		SELECT * FROM REGISTHOUSE JOIN HOUSEFILE ON REGISTHOUSE.HOUSE_NUMBER = HOUSEFILE.HOUSE_NUMBER 
 		WHERE registhouse.house_number = #{num} 
 	</select>
 	
-	<!-- 음식점 모달창 데이터 -->
+	<!-- 음식점 상세페이지 데이터 -->
 	<select id="getfoodmodal" parameterType="String" resultType="adminfood">
 		SELECT * FROM FOODSHOP JOIN FOODFILE ON FOODSHOP.FOOD_NUMBER = FOODFILE.FOOD_NUMBER
 		WHERE FOODSHOP.FOOD_NUMBER = #{num}
@@ -67,7 +67,7 @@
 		UPDATE ALL_NOTICES_BOARD SET ALL_NOTICES_VIEWS = ALL_NOTICES_VIEWS + 1 WHERE ALL_NOTICES_NUMBER = #{num}
 	</update>
 	
-	<!-- 전체공지 디테일 모달 띄우기 -->
+	<!-- 공지사항 디테일 띄우기 -->
 	<select id="getnoticesmodal" resultType="adminnotices">
 		SELECT ALL_NOTICES_NUMBER, ALL_NOTICES_TITLE, ALL_NOTICES_BODY, ALL_NOTICES_DATE, 
 		ALL_NOTICES_VIEWS FROM ALL_NOTICES_BOARD WHERE ALL_NOTICES_NUMBER = #{num}
@@ -81,7 +81,7 @@
 	DELETE FROM ALL_NOTICES_BOARD WHERE ALL_NOTICES_NUMBER = #{num}
 	</delete>
 	
-	<!-- qna전체리스트 출력 -->
+	<!-- QNA전체리스트 출력 -->
 	<select id="getqnaboard" resultType="qnaboard">
 		SELECT QNA_NUMBER, QNA_TITLE, QNA_BODY, QNA_MEMBER_ID, QNA_DATE  FROM QNA_BOARD ORDER BY QNA_DATE DESC
 	</select>
@@ -104,45 +104,20 @@
 		SELECT QNA_NUMBER, QNA_TITLE, QNA_BODY, QNA_MEMBER_ID, QNA_DATE,QNA_ANSWER_NUMBER, QNA_REPLY 
 		FROM QNA_BOARD JOIN QNA_ANSWER ON QNA_BOARD.QNA_NUMBER = QNA_ANSWER.QNA_ANSWER_NUMBER WHERE QNA_NUMBER = #{num}
 	</select>
+	<!-- sns신고게시글 출력 -->
 	<select id="getsnspostsreport" resultType="adminsns">
-		SELECT SNS_POSTS_NUMBER, SNS_POSTS_CONTENT, SNS_POSTS_WRITER,SNS_POSTS_REPORT FROM SNS_POSTS WHERE SNS_POSTS_REPORT >=1
+		SELECT SNS_POSTS_NUMBER, SNS_POSTS_CONTENT, SNS_POSTS_WRITER,SNS_POSTS_REPORT FROM SNS_POSTS 
+		WHERE SNS_POSTS_REPORT >=1
 	</select>
+	<!-- sns신고댓글 출력 -->
 	<select id="getsnscommentreport" resultType="adminsns">
-		SELECT SNS_COMMENT_NUMBER,SNS_COMMENT_CONTENT,SNS_POSTS_NUMBER,SNS_COMMENT_REPORT,SNS_COMMENT_MEMBER_ID FROM SNS_COMMENT WHERE SNS_COMMENT_REPORT >=1
+		SELECT SNS_COMMENT_NUMBER,SNS_COMMENT_CONTENT,SNS_POSTS_NUMBER,SNS_COMMENT_REPORT,SNS_COMMENT_MEMBER_ID 
+		FROM SNS_COMMENT WHERE SNS_COMMENT_REPORT >=1
 	</select>
 	
 	<select id="getmyplan" resultType="trfriend">
-		select * from trip_plan_recommand tpr, TRIP_PLAN tp where tpr.TRIP_NUMBER = tp.TRIP_NUMBER and tpr.trip_plan_apply = 1 
+		select * from trip_plan_recommand tpr, TRIP_PLAN tp where 
+		tpr.TRIP_NUMBER = tp.TRIP_NUMBER and tpr.trip_plan_apply = 1 
 	</select>
-	
-	
-<!-- 	<select id="getjudgedetail" > -->
-<!-- 		SELECT * FROM  -->
-<!-- 	</select> -->
-	<!-- <insert id="memberJoin" parameterType="member" > -->
-	<!-- INSERT INTO M VALUES(#{m_id},#{m_pwd},#{m_name},#{m_birth},#{m_addr},#{m_phone},default,1) -->
-	<!-- </insert> -->
-
-	<!-- <select id="getSecurityPwd" parameterType="String" resultType="String" 
-		> -->
-	<!-- select M_PWD from member where m_id=#{id} -->
-	<!-- </select> -->
-
-	<!-- <select id="getMemberInfo" parameterType="String" resultType="member" 
-		> -->
-	<!-- select * from member where m_id=#{id} -->
-	<!-- select * from G, M where M.M_POINT BETWEEN G.G_LOWPOINT and G.G_highpoint 
-		and M.M_ID=#{id} -->
-	<!-- </select> -->
-
-	<!-- <select id="hashMapTest" parameterType="Map" resultType="boolean"> -->
-	<!-- select count(*) from member where m_id=#{id} and m_pwd=#{pw} -->
-
-	<!-- </select> -->
-
-	<!-- <select id="hashMapTest2" parameterType="String" resultType="Map"> -->
-	<!-- select M_NAME, G_NAME from MINFO member where m_id=#{id} -->
-
-	<!-- </select> -->
 
 </mapper>
