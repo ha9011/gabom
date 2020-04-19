@@ -86,11 +86,11 @@
 		SELECT QNA_NUMBER, QNA_TITLE, QNA_BODY, QNA_MEMBER_ID, QNA_DATE  FROM QNA_BOARD ORDER BY QNA_DATE DESC
 	</select>
 	
-	<!-- QNA질문 디테일 모달 띄우기 -->
+	<!-- QNA질문 디테일 정보 띄우기 -->
 	<select id="getqnamodal" resultType="qnaboard">
 		SELECT QNA_NUMBER,QNA_TITLE,QNA_BODY,QNA_MEMBER_ID,QNA_DATE FROM QNA_BOARD WHERE QNA_NUMBER = #{num}
 	</select>
-	<!-- QNA답글 디테일 모달 띄우기 -->
+	<!-- QNA답글 디테일 정보 띄우기 -->
 	<select id="getanswermodal" resultType="qnaboard">
 		SELECT QNA_ANSWER_NUMBER, QNA_REPLY FROM QNA_ANSWER WHERE QNA_ANSWER_NUMBER = #{num}
 	</select>
@@ -99,6 +99,7 @@
 	<insert id="getqnaanswer" parameterType="String">
 		INSERT INTO QNA_ANSWER VALUES (#{number}, #{qnaanswer})
 	</insert>
+	
 	<!-- QNA답글 작성 후 디테일 모달 띄우기 -->
 	<select id="getqnaanswermodal" resultType="qnaboard">
 		SELECT QNA_NUMBER, QNA_TITLE, QNA_BODY, QNA_MEMBER_ID, QNA_DATE,QNA_ANSWER_NUMBER, QNA_REPLY 
