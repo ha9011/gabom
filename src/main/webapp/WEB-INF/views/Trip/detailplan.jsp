@@ -1220,8 +1220,6 @@ function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
 	console.log("currentPlanDay",currentPlanDay);  // 몇번째 날에
 	console.log("tripNum",tripNum)
 	
-	
-	
 	var jsonTripData = JSON.stringify(arr[currentPlanDay])
 	console.log(jsonTripData)
 	
@@ -1230,8 +1228,6 @@ function destinationselect(params) { //tripdetailapi 데이터 받아오는곳
 		"tripNum" : trip_data[0].trip_number,
 		"tripData" : jsonTripData
 	}
-	
-	
 	
 	$.ajaxSetup({         
     	beforeSend : function(xhr){

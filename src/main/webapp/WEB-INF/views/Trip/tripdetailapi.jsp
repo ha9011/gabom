@@ -128,15 +128,6 @@
 			li += "</li>"; 			
  		}
  	}
- 	
- 	
- 	/* if(detail.addr2 != undefined){ //주소2가 존재할때
- 		addr2 += "<span>" + detail.addr2 + "</span></li>";
-	 	console.log('addr2',addr2);
- 	}else{
- 		+ "</li>";
- 	} */
- 		//$("#addr1").append(addr2);
 	 
 	$("#title_ul").append(li);
 	

@@ -28,22 +28,16 @@ import icia.project.gabom.service.AdminjudgeManagement;
 
 @RestController
 public class RestApiController {
-
-
 	
 	@RequestMapping(value = "/apisearch", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
-	public String apisearch(@RequestParam("areaCode") String areaCode) throws JsonMappingException, JsonProcessingException {
-		//String areaCode = areaCode;
-		//String areaCode = null;
-		//System.out.println("apiuptest 들어왔나?" + apisearch.toString());
-		System.out.println("areaCode는 잘 들고왓니??"+areaCode);
+	public String apisearch(@RequestParam("areaCode") String areaCode) throws JsonMappingException, 
+							JsonProcessingException {
 			
 		String addr = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=";
 		String serviceKey = "%2B%2BXC1MAaQv2wQPBU5ZLVxzXuxpix4TpZqHJvYRBf4hHytxBnkk%2B227wTPvDoN8BrUyVEKMtvsdeHKmbRKmZz%2BQ%3D%3D"; //인증키
 		String parameter = "";
 		parameter = parameter + "&" + "contentTypeId=12";
 		parameter = parameter + "&" + "areaCode="+areaCode;  //지역코드(변경되는 부분)
-		//parameter = parameter + "&" + "sigunguCode="; //시군구 코드 
 		parameter = parameter + "&" + "pageNo=1&numOfRows=300"; //페이지번호,한페이지 검색 결과 수
 		parameter = parameter + "&" + "MobileOS=ETC"; 			//필수 os구분
 		parameter = parameter + "&" + "MobileApp=gabom"; 		//필수 서비스명
@@ -51,7 +45,6 @@ public class RestApiController {
 		
 		
 		addr = addr + serviceKey + parameter;
-		System.out.println(addr);
 		
 		String json = null;
 		try {
@@ -64,38 +57,21 @@ public class RestApiController {
 				IOUtils.copy(in, bos1);	//데이터를 바이트 배열로 복사
 				in.close();
 				bos1.close();
-			    //System.out.println("bos1"+bos1.to());
 			    
-			    
-//				String mbos = bos1.toString("UTF-8");
 				json = bos1.toString();
-				System.out.println("mbos: "+json);
-				
-			    
-				//byte[] b = mbos.getBytes("UTF-8");
-				//String s = new String(b, "UTF-8");	
-//				out.println(s);
-				
-				//json= mbos;
-				
+			    				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 	//URL로 부터 자바로 데이터 읽어오도록 URL객체로 스트림 열기
 			
 		
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-//		
-//		ObjectMapper mapper = new ObjectMapper();
-//		TripAreaBasedList[] areabasedlist = mapper.readValue(json, TripAreaBasedList[].class);
+		//사진파일 없는경우 제외
 		ObjectMapper mapper =new ObjectMapper();
 		TripAreaBasedresponse areabasedlist = mapper.readValue(json, TripAreaBasedresponse.class);
 		List<TripAreaBasedList> result = areabasedlist.getResponse().getBody().getItems().getItem();
-//		json.put("data", data);
 		
 		List<TripAreaBasedList> result1 = new ArrayList<TripAreaBasedList>();
 		TripAreaBasedList innerDto = new TripAreaBasedList();
@@ -110,19 +86,12 @@ public class RestApiController {
 		
 		String resultJson = new Gson().toJson(result1);
 		
-		System.out.println("resultJson : " + resultJson);
-		
-		
 		return resultJson;
 	}
+
 	@RequestMapping(value = "/sigungusearch", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
-	public String sigungusearch(@RequestParam("areaCode") String areaCode, @RequestParam("sigunguCode") Object sigunguCode) throws JsonMappingException, JsonProcessingException {//
-		//String areaCode = areaCode;
-		//String areaCode = null;
-		//System.out.println("apiuptest 들어왔나?" + apisearch.toString());s
-		System.out.println("areaCode는 잘 들고왓니??"+areaCode);
-		System.out.println("sigunguCode는 잘 들고왓니??"+sigunguCode);
-			
+	public String sigungusearch(@RequestParam("areaCode") String areaCode, @RequestParam("sigunguCode") Object sigunguCode) 
+			throws JsonMappingException, JsonProcessingException {//
 		String addr = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=";
 		String serviceKey = "%2B%2BXC1MAaQv2wQPBU5ZLVxzXuxpix4TpZqHJvYRBf4hHytxBnkk%2B227wTPvDoN8BrUyVEKMtvsdeHKmbRKmZz%2BQ%3D%3D"; //인증키
 		String parameter = "";
@@ -641,7 +610,6 @@ public class RestApiController {
 		
 		
 		addr = addr + serviceKey + parameter;
-		System.out.println(addr);
 		
 		String json = null;
 		try {
@@ -654,31 +622,16 @@ public class RestApiController {
 				IOUtils.copy(in, bos1);	//데이터를 바이트 배열로 복사
 				in.close();
 				bos1.close();
-			    //System.out.println("bos1"+bos1.to());
-			    
-//				String mbos = bos1.toString("UTF-8");
 				json = bos1.toString();
-				System.out.println("mbos: "+json);
-				
-			    
-				//byte[] b = mbos.getBytes("UTF-8");
-				//String s = new String(b, "UTF-8");	
-//				out.println(s);
-				
-				//json= mbos;
 				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 	//URL로 부터 자바로 데이터 읽어오도록 URL객체로 스트림 열기
 			
 		
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		
 		
 		String resultJson;
 		try {
@@ -687,7 +640,6 @@ public class RestApiController {
 			TripAreaBasedresponse areabasedlist = mapper.readValue(json, TripAreaBasedresponse.class);
 			
 			List<TripAreaBasedList> result = areabasedlist.getResponse().getBody().getItems().getItem();
-//			json.put("data", data);
 			
 			List<TripAreaBasedList> result1 = new ArrayList<TripAreaBasedList>();
 			TripAreaBasedList innerDto = new TripAreaBasedList();
@@ -701,27 +653,12 @@ public class RestApiController {
 			}
 			
 			resultJson = new Gson().toJson(result1);
-			System.out.println("resultJson : " + resultJson);
-			System.out.println("areaCode는 잘 들고왓니??"+areaCode);
-			System.out.println("sigunguCode는 잘 들고왓니??"+sigunguCode);
-			System.out.println(addr);
 			
 			return resultJson;     // 이놈이 최종값임
 		} catch (MismatchedInputException e) {
-			System.out.println("어어어어랏 에러?");
 			throw new NoTouristSpotException("검색결과가 없습니다..");
 		}
 		
 	}
-//	@RequestMapping(value = "/destinationselect", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
-//	public String destinationselect(@RequestParam("mapx") String mapx, @RequestParam("mapy") String mapy, @RequestParam("title") String title){
-//		System.out.println("일정선택완료");
-//		System.out.println("mapx="+mapx);
-//		System.out.println("mapy="+mapy);
-//		System.out.println("title="+title);
-//		
-//		return null;
-//	}
-	
 
 }

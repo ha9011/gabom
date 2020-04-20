@@ -104,7 +104,8 @@ order by tc.chatting_date desc
 
 
 	<insert id="insertPlanDetail" parameterType="tripplandetail">
-		INSERT INTO TRIP_PLAN_DETAIL VALUES(#{trip_number},#{trip_date},#{trip_destination}, '없음',#{trip_xpoint},#{trip_ypoint},#{trip_title},#{trip_img},#{trip_order},#{trip_type})
+		INSERT INTO TRIP_PLAN_DETAIL VALUES(#{trip_number},#{trip_date},#{trip_destination}, 
+		'없음',#{trip_xpoint},#{trip_ypoint},#{trip_title},#{trip_img},#{trip_order},#{trip_type})
 	</insert>
 	
 	
