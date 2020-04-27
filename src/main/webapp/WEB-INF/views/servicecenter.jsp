@@ -194,7 +194,7 @@ function getToday() {
 //      });
 //  });
 
-	let boards = $("<table id='data_table' class='table table-bordered table-hover'></table>")
+let boards = $("<table id='data_table' class='table table-bordered table-hover'></table>")
 let colgroup =$("<colgroup><col width='15%'><col width='45%'><col width='20%'><col width='20%'></colgroup>")
 let thead = $("<thead><tr><th>글번호</th><th>제목</th><th>날짜</th><th>조회수</th></tr></thead>")
 
@@ -499,7 +499,6 @@ $("#write_modal_button").on("click",function(e){
 	var formData = new FormData();
 	formData.append("title",document.getElementById("title").value);
 	//formData.append("member",document.getElementById("member").value);
-	
 	
 	var str = $('#content').val();
 	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');

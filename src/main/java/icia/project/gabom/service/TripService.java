@@ -335,10 +335,6 @@ public class TripService {
 
 
 	public String insertPlanDetail(String day, String tripNum, String tripData, Principal ppl) {
-		 //1 delete 2 insert 3select
-		  System.out.println("day : " +day);
-	      System.out.println("tripNum : " +tripNum);
-	      System.out.println("tripData : " +tripData);
 	      Gson gs = new Gson();
 	      ArrayList<Map<String,String>> mList= new ArrayList<Map<String,String>>();
 	      
@@ -505,9 +501,7 @@ public class TripService {
 		return json;
 	}
 	public String selecttripmemo(Tripmemoupdate tripup) {
-		System.out.println("메모셀렉 서비스");
 		String json = tpDao.selecttripmemo(tripup); 
-		System.out.println("셀렉한 메모="+json);
 		return json;
 	}
 
@@ -560,10 +554,6 @@ public class TripService {
 		json = new Gson().toJson(trlist);
 		return json;
 	}
-
-
-
-
 
 
 	public String getplan(int trip_number) {
@@ -629,7 +619,6 @@ public class TripService {
 		// 숙소 예약했는지 파악 - 단순 공유인지 확인하기 위해 추가함;
 	  	List<Map<String,Integer>> HouseReserCheck = tpDao.selectHouseReserCheck(Integer.toString(tripNum));//해당 여행번호에 , 몇번째 여행일
 	    String jsonHouseReserCheck = new Gson().toJson(HouseReserCheck);
-	    System.out.println("HouseReserCheck : " + jsonHouseReserCheck);
 	  	
 		return jsonHouseReserCheck;
 	}

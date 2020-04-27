@@ -118,7 +118,8 @@ public interface ITripplanDao {
 
    int updatetripmemo(Tripmemoupdate tripup);
 
-   @Select("select trip_memo from trip_plan_detail where trip_number = #{trip_number} and trip_date = #{trip_date} and trip_order = #{trip_order}")
+   @Select("select trip_memo from trip_plan_detail where trip_number = #{trip_number} and "
+   		+ "trip_date = #{trip_date} and trip_order = #{trip_order}")
    String selecttripmemo(Tripmemoupdate tripup);
 
    @Insert("insert into trip_plan_recommand values(#{tripPlanNum}, 1)") //1번은 대기
@@ -151,10 +152,12 @@ public interface ITripplanDao {
 
    
    
-   @Update("update TRIP_PLAN_DATE set reservation_number = null where trip_number =#{tripNum} and TRIP_DAY=#{currentPlanDay} and reservation_number = #{resernumber}")
+   @Update("update TRIP_PLAN_DATE set reservation_number = null where trip_number =#{tripNum} and TRIP_DAY=#{currentPlanDay} and"
+   		+ " reservation_number = #{resernumber}")
    int updateTripPlanDate(@Param("tripNum")int tripNum, @Param("currentPlanDay")int currentPlanDay, @Param("resernumber")int resernumber);
 
-   @Delete("DELETE FROM TRIP_PLAN_DETAIL where trip_number =#{tripNum} and TRIP_DATE=#{currentPlanDay} and trip_order = #{dbnum}")
+   @Delete("DELETE FROM TRIP_PLAN_DETAIL where trip_number =#{tripNum} and "
+   		+ "TRIP_DATE=#{currentPlanDay} and trip_order = #{dbnum}")
    int deleteTripPlanDatail(@Param("tripNum")int tripNum, @Param("currentPlanDay")int currentPlanDay, @Param("resernumber")int resernumber, @Param("dbnum")int dbnum);
 
    @Delete(" DELETE FROM HOUSERESERVATION where RESERVATION_NUMBER =#{resernumber} ")

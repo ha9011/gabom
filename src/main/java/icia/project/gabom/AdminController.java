@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import icia.project.gabom.service.AdminjudgeManagement;
 
 @Controller
-public class AdminjudgeController {
+public class AdminController {
 	private ModelAndView mav;
 	@Autowired
 	private AdminjudgeManagement am; //관리자
@@ -18,7 +18,6 @@ public class AdminjudgeController {
 	@RequestMapping(value = "/adminmenu", method = RequestMethod.GET)
 	public ModelAndView adminmenu() {
 		mav = new ModelAndView();
-		System.out.println("adminmenu");
 		mav = am.housejudgelist();
 		
 		return mav;
